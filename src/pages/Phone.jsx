@@ -916,15 +916,18 @@ const Phone = () => {
           {/* Phone mockup */}
           <div
             ref={phoneRef}
-            className="relative w-[360px] h-[700px] z-20 transform-gpu"
+            className="relative w-[350px] h-[700px] z-20 transform-gpu"
           >
             {/* Glow effect */}
-            <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-3xl rounded-[80px]" />
+            <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-3xl rounded-[70px]" />
 
-            {/* Outer phone frame */}
-            <div className="relative w-full h-full bg-black rounded-[50px] border-[10px] border-black shadow-2xl overflow-hidden">
+            {/* Drop shadow for depth */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[320px] h-12 bg-gradient-to-t from-black/40 via-transparent to-transparent blur-xl rounded-full" />
+
+            {/* Outer phone frame with enhanced 3D shadows */}
+            <div className="relative w-full h-full bg-black rounded-[37px] border-[2px] border-black shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.1)_inset,0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden">
               {/* Screen notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-black rounded-b-2xl z-20 shadow-sm" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20 shadow-sm" />
 
               {/* Screens Container */}
               <div className="absolute inset-[2px] rounded-[34px] overflow-hidden">
