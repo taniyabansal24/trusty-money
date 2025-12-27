@@ -358,15 +358,15 @@ const Problem = () => {
         {/* Phone mockup */}
         <div
           ref={phoneRef}
-          className="relative w-[360px] h-[720px] z-20 transform-gpu"
+          className="relative w-[360px] h-[700px] z-20 transform-gpu"
         >
           {/* Glow effect */}
           <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-3xl rounded-[80px]" />
 
           {/* Outer phone frame */}
-          <div className="relative w-full h-full bg-gradient-to-br from-gray-50 to-white rounded-[50px] border-[18px] border-gray-100 shadow-2xl overflow-hidden">
+          <div className="relative w-full h-full bg-black rounded-[50px] border-[10px] border-black shadow-2xl overflow-hidden">
             {/* Screen notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-100 rounded-b-2xl z-20 shadow-sm" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-black rounded-b-2xl z-20 shadow-sm" />
 
             {/* Screen content */}
             <div
@@ -583,6 +583,8 @@ const Problem = () => {
           </div>
         </div>
       </div> */}
+
+      
 
       {/* Add CSS for floating animation */}
       <style jsx>{`

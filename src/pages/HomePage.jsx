@@ -4,6 +4,7 @@ import {
   HeroSection,ProblemSection,SolutionSection
 } from '../sections';
 import Problem from './Problem';
+import Phone from './Phone';
 
 
 const HomePage = () => {
@@ -12,9 +13,8 @@ const HomePage = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <Problem />
-        {/* <ProblemSection/> */}
-        {/* <SolutionSection/> */}
+        {/* Problem Section */}
+        <Phone />
       </main>
       <Footer />
     </div>
