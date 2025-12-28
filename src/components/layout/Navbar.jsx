@@ -4,6 +4,7 @@ import { Button, Container } from '../ui';
 import { NAVIGATION_LINKS, COMPANY_NAME } from '../../constants';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { scrollToSection } from '../../utils/helpers';
+import logo from '../../assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,9 +26,10 @@ const Navbar = () => {
       }`}
     >
       <Container>
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="relative flex items-center h-16 lg:h-20">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center ml-6">
+            <img src={logo} alt="Company Logo" className="h-8 w-8 mr-2"/>
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="text-2xl font-bold gradient-text cursor-pointer"
@@ -37,7 +39,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
             {NAVIGATION_LINKS.map((link) => (
               <button
                 key={link.name}
@@ -47,8 +49,13 @@ const Navbar = () => {
                 {link.name}
               </button>
             ))}
+          </div>
+          <div className="hidden lg:flex items-center space-x-3 ml-auto mr-6">
             <Button variant="primary" size="sm">
               Get Demo
+            </Button>
+            <Button variant="primary" size="sm">
+              Sign Up
             </Button>
           </div>
 
@@ -92,9 +99,12 @@ const Navbar = () => {
                 {link.name}
               </button>
             ))}
-            <div className="px-4">
+            <div className="px-4 space-y-2">
               <Button variant="primary" size="sm" className="w-full">
-                Get Started
+                Get Demo
+              </Button>
+              <Button variant="primary" size="sm" className="w-full">
+                Sign Up
               </Button>
             </div>
           </motion.div>

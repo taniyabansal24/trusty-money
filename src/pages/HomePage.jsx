@@ -1,10 +1,9 @@
-import React from 'react';
-import { Navbar, Footer } from '../components/layout';
-import {
-  HeroSection,ProblemSection,SolutionSection
-} from '../sections';
-import Problem from './Problem';
-import Phone from './Phone';
+import React from "react";
+import { Navbar, Footer } from "../components/layout";
+import { HeroSection } from "../sections";
+import {TransparencySection} from "../sections/TransparencySection.jsx";
+import {SolutionOverview} from "../sections/SolutionOverview.jsx"
+import ProblemSection from "../sections/ProblemSection";
 
 
 const HomePage = () => {
@@ -13,8 +12,13 @@ const HomePage = () => {
       <Navbar />
       <main>
         <HeroSection />
-        {/* Problem Section */}
-        <Phone />
+        <ProblemSection />
+        <div className="min-h-screen bg-white">
+          <SolutionOverview />
+          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-50 py-12">
+            <TransparencySection />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
