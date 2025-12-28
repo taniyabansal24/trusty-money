@@ -695,30 +695,6 @@ const ProblemSection = () => {
           },
           "<+=0.1"
         );
-
-      // Fade out last screen and reset background at the end
-      masterTl
-        .to(backgroundRef.current, {
-          backgroundColor: "#ffffff", // White
-          duration: 0.3,
-        })
-        .to(
-          [blob1Ref.current, blob2Ref.current, blob3Ref.current],
-          {
-            opacity: 0,
-            duration: 0.3,
-          },
-          "<"
-        )
-        .to(
-          screensRef.current[5],
-          {
-            opacity: 0,
-            pointerEvents: "none",
-            duration: 0.3,
-          },
-          "<"
-        );
     });
 
     return () => ctx.revert();
