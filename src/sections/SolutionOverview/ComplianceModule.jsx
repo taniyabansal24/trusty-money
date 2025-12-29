@@ -32,7 +32,7 @@ function FeatureBlock({ title, children, index }) {
         perspective: '1000px'
       }}
     >
-      {/* Hover radial glow (same feel as first block) */}
+      {/* Hover radial glow - green theme */}
       <motion.div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         animate={{
@@ -42,7 +42,7 @@ function FeatureBlock({ title, children, index }) {
         }}
       />
 
-      {/* Subtle inner border glow */}
+      {/* Subtle inner border glow - green theme */}
       <motion.div
         className="absolute inset-0 rounded-xl pointer-events-none"
         animate={{
@@ -53,7 +53,7 @@ function FeatureBlock({ title, children, index }) {
       />
 
       <div className="relative flex items-start gap-4">
-        {/* Animated 3D icon */}
+        {/* Animated 3D icon - green theme */}
         <motion.div
           animate={isHovered ? { 
             rotateY: 360,
@@ -70,8 +70,8 @@ function FeatureBlock({ title, children, index }) {
           className="relative flex-shrink-0"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-400 shadow-lg shadow-green-500/20">
-  <div className="absolute inset-1 rounded-lg bg-gradient-to-br from-green-600 to-emerald-500 shadow-inner" />
+          <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 shadow-lg shadow-emerald-500/20">
+            <div className="absolute inset-1 rounded-lg bg-gradient-to-br from-emerald-600 to-green-600 shadow-inner" />
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.svg
                 className="h-5 w-5 text-white"
@@ -85,7 +85,7 @@ function FeatureBlock({ title, children, index }) {
             </div>
           </div>
           
-          {/* Animated connecting line with gradient */}
+          {/* Animated connecting line with gradient - green theme */}
           {index < 2 && (
             <motion.div
               initial={{ scaleY: 0, transformOrigin: "top" }}
@@ -93,13 +93,14 @@ function FeatureBlock({ title, children, index }) {
               transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
               className="absolute left-5 top-10 h-6 w-0.5"
             >
-              <div className="h-full w-full bg-gradient-to-b from-green-400/50 to-transparent" />
+              <div className="h-full w-full bg-gradient-to-b from-emerald-400/50 to-transparent" />
             </motion.div>
           )}
         </motion.div>
         
         <div className="flex-1 space-y-2">
-          <h3 className="text-base font-semibold text-slate-900 group-hover:text-blue-700 transition-colors duration-300">
+          {/* Heading - changed from blue-700 to emerald-700 for green theme */}
+          <h3 className="text-base font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors duration-300">
             {title}
           </h3>
           <AnimatePresence mode="wait">
@@ -119,7 +120,7 @@ function FeatureBlock({ title, children, index }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.8 }}
                 exit={{ opacity: 0 }}
-                className="h-4 bg-gradient-to-r from-blue-100/50 to-transparent rounded"
+                className="h-4 bg-gradient-to-r from-emerald-100/50 to-transparent rounded"
               />
             )}
           </AnimatePresence>
