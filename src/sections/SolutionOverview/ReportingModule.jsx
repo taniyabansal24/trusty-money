@@ -1,5 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Container } from '../../components/ui';
+
+// Reusable feature block with custom bullets - matching other modules
+function FeatureBlock({ title, children, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.1 * index }}
+      className="group relative rounded-xl border border-slate-200/60 bg-white/80 backdrop-blur-sm p-4 hover:border-indigo-200 hover:bg-white/90 transition-all duration-300"
+    >
+      <div className="flex items-start gap-3">
+        {/* Custom bullet - matching style but in indigo */}
+        <div className="relative flex-shrink-0">
+          <div className="flex h-6 w-6 items-center justify-center">
+            <div className="absolute h-4 w-4 rounded-full bg-indigo-100 group-hover:bg-indigo-200 transition-colors duration-300" />
+            <div className="absolute h-2 w-2 rounded-full bg-indigo-600 group-hover:bg-indigo-700 transition-colors duration-300" />
+          </div>
+          {/* Connecting line for visual flow */}
+          {index < 2 && (
+            <div className="absolute left-3 top-6 h-4 w-0.5 bg-indigo-100 group-hover:bg-indigo-200 transition-colors duration-300" />
+          )}
+        </div>
+        
+        <div className="flex-1">
+          <h3 className="mb-1 text-sm font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors duration-300">
+            {title}
+          </h3>
+          {children && (
+            <div className="text-xs text-slate-600">{children}</div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export function ReportingModule() {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,6 +63,22 @@ export function ReportingModule() {
 
     return () => observer.disconnect();
   }, []);
+
+  const features = [
+  {
+    title: "Real-Time Transaction Tracking",
+    description: "Track invoices and payments in real time across all supported currencies."
+  },
+  {
+    title: "Automated Reconciliation",
+    description: "Automatically match payments to invoices across banks and payment rails."
+  },
+  {
+    title: "Finance-Ready Reports",
+    description: "Generate standardized reports ready for accounting and finance teams."
+  }
+];
+
 
   const transactions = [
     { 
@@ -62,71 +114,42 @@ export function ReportingModule() {
   ];
 
   return (
-    <div ref={sectionRef} className="border-t border-blue-100 bg-gradient-to-br from-white via-sky-50/30 to-blue-50/20 py-20 md:py-24">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Content */}
-          <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1">
-              <span className="text-xs tracking-wide text-blue-600">05 • Financial Intelligence</span>
-            </div>
-            
-            <h2 className="mb-4 text-slate-900">
-              Reporting & Reconciliation
-            </h2>
-            
-            <p className="mb-8 text-lg leading-relaxed text-slate-600">
-              Unified visibility across billing, payments, and cash flows. Eliminate manual reconciliation with automated matching, real-time reporting, and finance-ready exports.
-            </p>
-
-            {/* Feature Blocks - Text Reduced */}
-            <div className="space-y-4">
-              <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100">
-                    <svg className="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-slate-900">Real-Time Transaction Tracking</h3>
-                </div>
-                <p className="text-sm text-slate-600">
-                  Monitor every invoice and payment in real-time across all currencies and payment methods.
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100">
-                    <svg className="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                  </div>
-                  <h3 className="text-slate-900">Automated Reconciliation</h3>
-                </div>
-                <p className="text-sm text-slate-600">
-                  Automatically match payments to invoices across multiple bank accounts and payment rails.
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100">
-                    <svg className="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-slate-900">Finance-Ready Reports</h3>
-                </div>
-                <p className="text-sm text-slate-600">
-                  Export comprehensive reports in standard formats for your accounting systems.
-                </p>
-              </div>
-            </div>
+    <div 
+      ref={sectionRef} 
+      className="border-t border-indigo-100 bg-gradient-to-br from-indigo-50/30 via-white to-violet-50/20 py-20 md:py-24"
+    >
+      <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* Content */}
+        <div className="order-1 lg:order-2">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-indigo-200/50 bg-white/50 backdrop-blur-sm px-3 py-1">
+            <span className="text-xs font-medium tracking-wide text-indigo-700">
+              05 • Financial Intelligence
+            </span>
           </div>
 
-          {/* Visual - Transaction Table */}
+          <h2 className="mb-4 text-3xl font-bold text-slate-900">
+            Reporting & Reconciliation
+          </h2>
+
+          <p className="mb-8 text-lg leading-relaxed text-slate-600">
+            Unified visibility across billing, payments, and cash flows. Eliminate manual reconciliation with automated matching, real-time reporting, and finance-ready exports.
+          </p>
+
+          {/* Feature Blocks with Custom Bullets */}
+          <div className="space-y-3">
+            {features.map((feature, index) => (
+              <FeatureBlock 
+                key={index} 
+                title={feature.title}
+                index={index}
+              >
+                {feature.description}
+              </FeatureBlock>
+            ))}
+          </div>
+        </div>
+
+        {/* Visual - Transaction Table */}
           <motion.div style={{ y }} className="relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -262,8 +285,7 @@ export function ReportingModule() {
               </div>
             </motion.div>
           </motion.div>
-        </div>
-      </div>
+      </Container>
     </div>
   );
 }

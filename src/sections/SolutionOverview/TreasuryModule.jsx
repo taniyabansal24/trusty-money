@@ -1,5 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Container } from '../../components/ui';
+
+// Reusable feature block with custom bullets - matching other modules
+function FeatureBlock({ title, children, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.1 * index }}
+      className="group relative rounded-xl border border-slate-200/60 bg-white/80 backdrop-blur-sm p-4 hover:border-blue-200 hover:bg-white/90 transition-all duration-300"
+    >
+      <div className="flex items-start gap-3">
+        {/* Custom bullet - matching style but in blue */}
+        <div className="relative flex-shrink-0">
+          <div className="flex h-6 w-6 items-center justify-center">
+            <div className="absolute h-4 w-4 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-colors duration-300" />
+            <div className="absolute h-2 w-2 rounded-full bg-blue-600 group-hover:bg-blue-700 transition-colors duration-300" />
+          </div>
+          {/* Connecting line for visual flow */}
+          {index < 2 && (
+            <div className="absolute left-3 top-6 h-4 w-0.5 bg-blue-100 group-hover:bg-blue-200 transition-colors duration-300" />
+          )}
+        </div>
+        
+        <div className="flex-1">
+          <h3 className="mb-1 text-sm font-semibold text-slate-900 group-hover:text-blue-700 transition-colors duration-300">
+            {title}
+          </h3>
+          {children && (
+            <div className="text-xs text-slate-600">{children}</div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export function TreasuryModule() {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,6 +64,22 @@ export function TreasuryModule() {
     return () => observer.disconnect();
   }, []);
 
+  const features = [
+  {
+    title: "Real-Time Fund Visibility",
+    description: "Monitor incoming international payments in real time across all supported currencies."
+  },
+  {
+    title: "Smart FX Controls",
+    description: "Manage exchange rates with automated conversions and built-in currency risk controls."
+  },
+  {
+    title: "Automated Collections",
+    description: "Improve cash flow using automated payment reminders and smart reconciliation tools."
+  }
+];
+
+
   const chartData = [
     { month: 'Jan', value: 2100000, display: '$2.1M' },
     { month: 'Feb', value: 2400000, display: '$2.4M' },
@@ -40,10 +92,42 @@ export function TreasuryModule() {
   const maxValue = Math.max(...chartData.map(d => d.value));
 
   return (
-    <div ref={sectionRef} className="border-t border-blue-100 bg-gradient-to-br from-sky-50/30 via-white to-blue-50/20 py-20 md:py-24">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Visual */}
+    <div 
+      ref={sectionRef} 
+      className="border-t border-blue-100 bg-gradient-to-br from-blue-50/30 via-white to-sky-50/20 py-20 md:py-24"
+    >
+      <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* Content */}
+        <div className="order-1 lg:order-2">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-white/50 backdrop-blur-sm px-3 py-1">
+            <span className="text-xs font-medium tracking-wide text-blue-700">
+              04 • Treasury Operations
+            </span>
+          </div>
+
+          <h2 className="mb-4 text-3xl font-bold text-slate-900">
+            Treasury & Working Capital Management
+          </h2>
+
+          <p className="mb-8 text-lg leading-relaxed text-slate-600">
+            Operational treasury designed to free trapped working capital. Gain complete visibility into your international cash flows, optimize FX timing, and accelerate collections through intelligent automation.
+          </p>
+
+          {/* Feature Blocks with Custom Bullets */}
+          <div className="space-y-3">
+            {features.map((feature, index) => (
+              <FeatureBlock 
+                key={index} 
+                title={feature.title}
+                index={index}
+              >
+                {feature.description}
+              </FeatureBlock>
+            ))}
+          </div>
+        </div>
+
+        {/* Visual */}
           <motion.div style={{ y }} className="relative order-2 lg:order-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -270,69 +354,7 @@ export function TreasuryModule() {
               </div>
             </motion.div>
           </motion.div>
-
-          {/* Content - New Format */}
-          <div className="order-1 lg:order-2">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1">
-              <span className="text-xs tracking-wide text-blue-600">04 • Treasury Operations</span>
-            </div>
-            
-            <h2 className="mb-4 text-slate-900">
-              Treasury / Working Capital Management
-            </h2>
-            
-            <p className="mb-8 text-lg leading-relaxed text-slate-600">
-              Operational treasury designed to free trapped working capital. Gain complete visibility into your international cash flows, optimize FX timing, and accelerate collections through intelligent automation.
-            </p>
-
-            {/* Feature Blocks - Text Reduced */}
-            <div className="space-y-4">
-              <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100">
-                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-slate-900">Real-Time Fund Visibility</h3>
-                </div>
-                <p className="text-sm text-slate-600">
-                  Track all incoming international payments in real-time across multiple currencies and banking channels.
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100">
-                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                    </svg>
-                  </div>
-                  <h3 className="text-slate-900">Smart FX Controls</h3>
-                </div>
-                <p className="text-sm text-slate-600">
-                  Lock favorable exchange rates, schedule conversions, and eliminate currency exposure with automated hedging.
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100">
-                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-slate-900">Automated Collections</h3>
-                </div>
-                <p className="text-sm text-slate-600">
-                  Reduce DSO by up to 40% with intelligent payment reminders and automatic reconciliation workflows.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </Container>
     </div>
   );
 }

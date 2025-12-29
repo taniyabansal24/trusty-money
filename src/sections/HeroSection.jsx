@@ -56,6 +56,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 gradient-bg overflow-hidden">
+      
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>

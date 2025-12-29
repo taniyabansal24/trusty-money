@@ -28,7 +28,7 @@ const Navbar = () => {
       <Container>
         <div className="relative flex items-center h-16 lg:h-20">
           {/* Logo */}
-          <div className="flex items-center ml-6">
+          <div className="flex items-center">
             <img src={logo} alt="Company Logo" className="h-8 w-8 mr-2"/>
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -50,7 +50,7 @@ const Navbar = () => {
               </button>
             ))}
           </div>
-          <div className="hidden lg:flex items-center space-x-3 ml-auto mr-6">
+          <div className="hidden lg:flex items-center space-x-3 ml-auto ">
             <Button variant="primary" size="sm">
               Get Demo
             </Button>
