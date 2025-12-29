@@ -96,21 +96,21 @@ export function ParticleBackground() {
   );
 }
 
-// Enhanced Feature Block with 3D effect
+// Enhanced Feature Block with magnetic hover effect
 function FeatureBlock({ title, children, index }) {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
+  
   const handleMouseMove = (e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     setPosition({
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      y: e.clientY - rect.top
     });
   };
-
+  
   return (
     <motion.div
       ref={ref}
@@ -120,32 +120,34 @@ function FeatureBlock({ title, children, index }) {
       onMouseMove={handleMouseMove}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative rounded-xl border border-slate-200/60 bg-white/80 backdrop-blur-sm p-4 hover:border-emerald-200 hover:bg-white/90 transition-all duration-300 overflow-hidden"
+      className="group relative rounded-xl border border-slate-200/60 bg-white/90 backdrop-blur-sm p-6 hover:border-blue-300/50 hover:shadow-2xl hover:shadow-blue-100/30 transition-all duration-500 overflow-hidden"
       style={{
         transformStyle: 'preserve-3d',
         perspective: '1000px'
       }}
     >
-      {/* Hover radial glow (same feel as first block) */}
+      {/* Animated gradient background */}
       <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        initial={false}
         animate={{
-          background: isHovered
-            ? `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(16,185,129,0.12), transparent 60%)`
-            : "transparent",
+          background: isHovered 
+            ? `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59, 130, 246, 0.08), transparent 50%)`
+            : 'transparent'
         }}
       />
-
-      {/* Subtle inner border glow */}
+      
+      {/* Subtle border glow */}
       <motion.div
         className="absolute inset-0 rounded-xl pointer-events-none"
+        initial={false}
         animate={{
-          boxShadow: isHovered
-            ? "inset 0 0 0 1px rgba(16,185,129,0.35)"
-            : "inset 0 0 0 1px transparent",
+          boxShadow: isHovered 
+            ? 'inset 0 0 0 1px rgba(59, 130, 246, 0.3)'
+            : 'inset 0 0 0 1px transparent'
         }}
       />
-
+      
       <div className="relative flex items-start gap-4">
         {/* Animated 3D icon */}
         <motion.div
@@ -164,8 +166,8 @@ function FeatureBlock({ title, children, index }) {
           className="relative flex-shrink-0"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg shadow-green-500/20">
-  <div className="absolute inset-1 rounded-lg bg-gradient-to-br  from-blue-500 to-blue-700 shadow-inner" />
+          <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-sky-500 shadow-lg shadow-blue-500/20">
+            <div className="absolute inset-1 rounded-lg bg-gradient-to-br from-blue-600 to-sky-600 shadow-inner" />
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.svg
                 className="h-5 w-5 text-white"
@@ -187,7 +189,7 @@ function FeatureBlock({ title, children, index }) {
               transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
               className="absolute left-5 top-10 h-6 w-0.5"
             >
-              <div className="h-full w-full bg-gradient-to-b from-blue-200  to-transparent" />
+              <div className="h-full w-full bg-gradient-to-b from-blue-400/50 to-transparent" />
             </motion.div>
           )}
         </motion.div>
