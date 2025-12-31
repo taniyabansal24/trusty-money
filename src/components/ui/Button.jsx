@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { hoverScale } from '../../utils/animations';
 
@@ -14,9 +13,9 @@ const Button = ({
   const baseStyles = 'font-medium rounded-lg transition-all duration-300 inline-flex items-center justify-center';
   
   const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg',
-    secondary: 'bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-50',
-    outline: 'bg-transparent text-gray-700 border-2 border-gray-300 hover:border-primary-600 hover:text-primary-600',
+    primary: 'text-white hover:shadow-lg',
+    secondary: 'bg-white border-2 hover:bg-primary-50',
+    outline: 'bg-transparent border-2 border-gray-300 hover:border-gray-700 hover:text-gray-700',
     ghost: 'bg-transparent text-gray-700 hover:bg-gray-100',
     success: 'bg-trusty-green text-white hover:bg-green-600',
   };
@@ -29,6 +28,17 @@ const Button = ({
   
   const disabledStyles = 'opacity-50 cursor-not-allowed';
   
+  const getVariantStyle = (variant) => {
+    switch(variant) {
+      case 'primary':
+        return { backgroundColor: '#073f9e' };
+      case 'secondary':
+        return { color: '#073f9e', borderColor: '#073f9e' };
+      default:
+        return {};
+    }
+  };
+  
   return (
     <motion.button
       {...hoverScale}
@@ -39,6 +49,7 @@ const Button = ({
         ${disabled ? disabledStyles : ''}
         ${className}
       `}
+      style={getVariantStyle(variant)}
       onClick={onClick}
       disabled={disabled}
       {...props}

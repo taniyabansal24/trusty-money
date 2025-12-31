@@ -67,20 +67,20 @@ const HeroSection = () => {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Left Side - Text Content */}
           <motion.div
             variants={staggerContainer}
             initial="initial"
             animate="animate"
-            className="text-left relative"
+            className="text-left relative pt-8 lg:pt-0"
           >
-            {/* Badge */}
+          {/* Badge */}
             <motion.div
               variants={staggerItem}
-              className="mb-6 flex items-center gap-3"
+              className="mb-8 flex items-center gap-3"
             >
-              <span className="inline-block px-4 py-2 bg-primary-100 text-primary-600 rounded-full text-sm font-semibold">
+              <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold" style={{ backgroundColor: '#073f9e12', color: '#073f9e' }}>
                 Cross-Border Operating System
               </span>
             </motion.div>
@@ -177,7 +177,7 @@ const HeroSection = () => {
               className="absolute top-0 -right-60 w-[260px] h-[260px] bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 hidden xl:block z-0"
               style={{
                 background:
-                  "linear-gradient(135deg, #f093fb20 0%, #4facfe20 100%)",
+                  "linear-gradient(135deg, #073e9e13 0%, #073e9e5e 100%)",
                 backdropFilter: "blur(10px)",
               }}
             >
@@ -218,7 +218,7 @@ const HeroSection = () => {
 
                     {/* Animated segments */}
                     {[
-                      { percent: 35, color: "#667eea", offset: 0, delay: 0.6 },
+                      { percent: 35, color: "##073f9e", offset: 0, delay: 0.6 },
                       { percent: 28, color: "#764ba2", offset: 35, delay: 0.8 },
                       { percent: 22, color: "#f093fb", offset: 63, delay: 1.0 },
                       { percent: 15, color: "#4facfe", offset: 85, delay: 1.2 },
@@ -371,10 +371,10 @@ const HeroSection = () => {
               initial={{ opacity: 0, scale: 0.8, x: -50 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="absolute right-80 top-2/3 w-[260px] h-[330px] bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 hidden lg:block z-0"
+              className="absolute -top 20 right-80 w-[260px] h-[330px] bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 hidden lg:block z-0"
               style={{
                 background:
-                  "linear-gradient(135deg, #667eea10 0%, #764ba210 100%)",
+                  "linear-gradient(135deg, #667eea10 0%, #073e9e18 100%)",
                 backdropFilter: "blur(10px)",
               }}
             >
@@ -431,8 +431,8 @@ const HeroSection = () => {
                       x2="100%"
                       y2="0%"
                     >
-                      <stop offset="0%" stopColor="#667eea" />
-                      <stop offset="100%" stopColor="#764ba2" />
+                      <stop offset="0%" stopColor="#073f9e" />
+                      <stop offset="100%" stopColor="#073f9e" />
                     </linearGradient>
                   </defs>
 
@@ -452,8 +452,8 @@ const HeroSection = () => {
                       x2="0%"
                       y2="100%"
                     >
-                      <stop offset="0%" stopColor="#667eea" />
-                      <stop offset="100%" stopColor="#667eea00" />
+                      <stop offset="0%" stopColor="#073f9e" />
+                      <stop offset="100%" stopColor="#073f9e60" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -551,7 +551,10 @@ const HeroSection = () => {
                           initial={{ opacity: 0, y: -20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.6 }}
-                          className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-6 text-white mb-4"
+                          className="rounded-2xl p-6 text-white mb-4"
+                          style={{
+                            background: 'linear-gradient(135deg, #073e9e83 0%, #073f9e 100%)'
+                          }}
                         >
                           <p className="text-sm opacity-90">Total Balance</p>
                           <h2 className="text-3xl font-bold mt-1">
@@ -615,7 +618,10 @@ const HeroSection = () => {
                                     delay: 1.4 + index * 0.1,
                                     duration: 0.5,
                                   }}
-                                  className="flex-1 bg-gradient-to-t from-primary-500 to-primary-300 rounded-t-lg"
+                                  className="flex-1 rounded-t-lg"
+                                  style={{
+                                    background: 'linear-gradient(to top, #073e9ee8 0%, #073e9eda 100%)'
+                                  }}
                                 />
                               )
                             )}
@@ -684,7 +690,13 @@ const HeroSection = () => {
                         initial={{ opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
-                        className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 h-full p-6 relative"
+                        className="h-98% p-6 relative m-5"
+                        style={{
+                          background: 'linear-gradient(135deg, #073f9e12 0%, #7bb6b321 50%, #073e9e2d 100%)',
+                          border: '1px solid #0000009a',
+                          borderRadius: '12px',
+                        }}
+                        
                       >
                         {/* Mind Map Header */}
                         <motion.div
@@ -740,82 +752,134 @@ const HeroSection = () => {
                         </div>
 
                         {/* Mind Map Branches - Grid Layout */}
-                        <div className="grid grid-cols-2 gap-10">
-                          {[
-                            {
+                        <div className="relative w-full h-72">
+                          {/* SVG Connection Lines */}
+                          <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+                            <defs>
+                              <linearGradient id="line1" x1="0%" y1="100%" x2="0%" y2="100%">
+                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#0891b2" stopOpacity="0.4" />
+                              </linearGradient>
+                              <linearGradient id="line2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#6d28d9" stopOpacity="0.4" />
+                              </linearGradient>
+                              <linearGradient id="line3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#0891b2" stopOpacity="0.4" />
+                              </linearGradient>
+                              <linearGradient id="line4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#6d28d9" stopOpacity="0.4" />
+                              </linearGradient>
+                            </defs>
+
+                            {/* Center vertical line from logo */}
+                            <motion.line
+                              x1="50%"
+                              y1="0%"
+                              x2="50%"
+                              y2="80%"
+                              stroke="#cbd5e1"
+                              strokeWidth="2"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ delay: 0.8, duration: 0.6 }}
+                            />
+
+                            {/* Connection Lines to boxes */}
+                            <motion.line
+                              x1="50%"
+                              y1="80%"
+                              x2="20%"
+                              y2="80%"
+                              stroke="url(#line1)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ delay: 0.9, duration: 0.8 }}
+                            />
+                            <motion.line
+                              x1="88%"
+                              y1="79%"
+                              x2="20%"
+                              y2="80%"
+                              stroke="url(#line2)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ delay: 1.0, duration: 0.8 }}
+                            />
+                            <motion.line
+                              x1="50%"
+                              y1="36.1%"
+                              x2="20%"
+                              y2="36%"
+                              stroke="url(#line3)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ delay: 1.1, duration: 0.8 }}
+                            />
+                            <motion.line
+                              x1="50%"
+                              y1="36.1%"
+                              x2="80%"
+                              y2="36%"
+                              stroke="url(#line4)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ delay: 1.2, duration: 0.8 }}
+                            />
+                          </svg>
+
+                          {/* Nodes Grid */}
+                          <div className="absolute inset-0 grid grid-cols-2 gap-6 p-4 pt-16">
+                            {[{
                               label: "Billing & Invoices",
-                              color: "from-green-600 to-green-600",
-                              delay: 1,
+                              delay: 1.3,
                             },
                             {
                               label: "FX & Treasury",
-                              color: "from-yellow-600 to-yellow-600",
-                              delay: 1,
+                              delay: 1.4,
                             },
                             {
                               label: "Dashboards",
-                              color: "from-purple-600 to-purple-600",
-                              delay: 1,
+                              delay: 1.5,
                             },
                             {
                               label: "Security",
-                              color: "from-indigo-600 to-indigo-600",
-                              delay: 1,
-                            },
-                          ].map((node, index) => {
-                            // Calculate connection line position
-                            const row = Math.floor(index / 2);
-                            const col = index % 2;
-                            const centerX = 50;
-                            const centerY = 30;
-                            const nodeX = col === 0 ? 25 : 75;
-                            const nodeY = 55 + row * 12;
+                              delay: 1.6,
+                            }].map((node, index) => (
+                            <motion.div
+                              key={index}
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{
+                                delay: node.delay,
+                                type: "spring",
+                                stiffness: 150,
+                                damping: 12,
+                              }}
+                              whileHover={{ scale: 1.08, y: -4 }}
+                              className="relative bg-white rounded-lg p-3 shadow-md cursor-pointer group border border-slate-200 overflow-hidden flex items-center justify-center min-h-14"
+                            >
+                              {/* Silver Border Accent */}
+                              <div className="absolute inset-0 rounded-lg border-[1px] border-slate-300/60 pointer-events-none" />
 
-                            return (
-                              <React.Fragment key={index}>
-                                {/* Node */}
-                                <motion.div
-                                  initial={{ scale: 0, opacity: 0 }}
-                                  animate={{ scale: 1, opacity: 1 }}
-                                  transition={{
-                                    delay: node.delay,
-                                    type: "spring",
-                                    stiffness: 200,
-                                  }}
-                                  whileHover={{ scale: 1.1, y: -5 }}
-                                  className={`relative bg-gradient-to-br ${node.color} rounded-xl p-3 shadow-lg cursor-pointer z-10`}
-                                >
-                                  <motion.div
-                                    animate={{ rotate: [0, 10, -10, 0] }}
-                                    transition={{
-                                      duration: 2,
-                                      delay: node.delay + 0.5,
-                                      repeat: Infinity,
-                                      repeatDelay: 3,
-                                    }}
-                                    className="text-2xl mb-1 text-center"
-                                  >
-                                    {node.icon}
-                                  </motion.div>
-                                  <p className="text-xs font-bold text-white text-center leading-tight">
-                                    {node.label}
-                                  </p>
-
-                                  {/* Shimmer Effect */}
-                                  <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent rounded-xl opacity-20"
-                                    animate={{ x: ["-100%", "100%"] }}
-                                    transition={{
-                                      duration: 2,
-                                      delay: node.delay + 1,
-                                      repeat: Infinity,
-                                      repeatDelay: 4,
-                                    }}
-                                  />
-                                </motion.div>
-                              </React.Fragment>
-                            );
-                          })}
+                              <div className="relative z-10">
+                                <p className="text-xs font-semibold text-center" style={{ color: 'rgb(7, 63, 158)' }}>
+                                  {node.label}
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
                         </div>
 
                         {/* Bottom Tag Line */}
@@ -823,7 +887,7 @@ const HeroSection = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 3 }}
-                          className="absolute bottom-4 left-0 right-0 text-center"
+                          className="absolute bottom-0 left-0 right-0 text-center"
                         >
                           <h1 className="text-xs text-gray-600 font-medium">
                             All-in-One Infrastructure
