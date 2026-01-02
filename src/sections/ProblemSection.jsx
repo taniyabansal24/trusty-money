@@ -921,7 +921,7 @@ const ProblemSection = () => {
 
         {/* Main container */}
         <Container className="relative z-0">
-          <div className="h-screen flex items-center justify-center overflow-hidden pt-20 pb-20">
+          <div className="h-screen flex items-center justify-center overflow-hidden pb-20">
             {/* Phone mockup */}
             <div
               ref={phoneRef}
@@ -933,8 +933,8 @@ const ProblemSection = () => {
               {/* Drop shadow for depth */}
               <div className="phone-shadow absolute -bottom-6 left-1/2 -translate-x-1/2 w-[320px] h-12 bg-gradient-to-t from-black/40 via-transparent to-transparent blur-xl rounded-full" />
 
-              {/* Outer phone frame with enhanced 3D shadows */}
-              <div className="relative w-full h-full bg-black rounded-[37px] border-[2px] border-black shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.1)_inset,0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden">
+              {/* Outer phone frame with softer shadows */}
+<div className="relative w-full h-full bg-black rounded-[37px] border-[2px] border-black shadow-[0_15px_30px_-8px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden">
                 {/* Screen notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20 shadow-sm" />
 

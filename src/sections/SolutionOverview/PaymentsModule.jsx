@@ -6,39 +6,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Container } from "../../components/ui";
-
-// Reusable feature block with custom bullets - matching BillingModule/ComplianceModule
-function FeatureBlock({ title, children, index }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.1 * index }}
-      className="group relative rounded-xl border border-slate-200/60 bg-white/80 backdrop-blur-sm p-4 hover:border-violet-200 hover:bg-white/90 transition-all duration-300"
-    >
-      <div className="flex items-start gap-3">
-        {/* Custom bullet - matching style but in violet */}
-        <div className="relative flex-shrink-0">
-          <div className="flex h-6 w-6 items-center justify-center">
-            <div className="absolute h-4 w-4 rounded-full bg-violet-100 group-hover:bg-violet-200 transition-colors duration-300" />
-            <div className="absolute h-2 w-2 rounded-full bg-violet-600 group-hover:bg-violet-700 transition-colors duration-300" />
-          </div>
-          {/* Connecting line for visual flow */}
-          {index < 2 && (
-            <div className="absolute left-3 top-6 h-4 w-0.5 bg-violet-100 group-hover:bg-violet-200 transition-colors duration-300" />
-          )}
-        </div>
-
-        <div className="flex-1">
-          <h3 className="mb-1 text-sm font-semibold text-slate-900 group-hover:text-violet-700 transition-colors duration-300">
-            {title}
-          </h3>
-          {children && <div className="text-xs text-slate-600">{children}</div>}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+import { FeatureBlock } from '../../sections/SolutionOverview/BillingModule';
 
 export function PaymentsModule() {
   const [isVisible, setIsVisible] = useState(false);
@@ -70,46 +38,54 @@ export function PaymentsModule() {
 
   const accounts = [
     {
-      currency: "INR",
-      flag: "🇮🇳",
-      balance: "20,47,850.00",
-      iban: "IN74 HDFC 0000 1234 5678 9012",
-      cardNumber: "4532 8392 1045 8920",
-      expiry: "12/27",
-      cvv: "***",
-      holder: "ROUGECODES PVT LTD",
-      bank: "BUSINESS",
-      color: "#8ba888",
-      isCustomColor: true,
-      chipColor: "from-amber-300 via-yellow-200 to-amber-400",
+      country: "United States",
+      currency: "USD",
+      flag: "🇺🇸",
+      accountNumber: "0334178142",
+      bankName: "Community Federal Savings Bank",
+      bankAddress: "810 Seventh Avenue, New York, NY 10019, US",
+      bankCountry: "US",
+      routingCodeType: "ach_routing_number",
+      routingCode: "026073150",
+      balance: "3,412.00",
     },
     {
+      country: "Canada",
+      currency: "CAD",
+      flag: "🇨🇦",
+      accountNumber: "879583369",
+      bankName: "Digital Commerce Bank",
+      bankAddress: "736 Meridian Road N.E, Calgary, Alberta, CA",
+      bankCountry: "CA",
+      routingCodeType: "routing_code",
+      routingCode: "034512345",
+      balance: "8,950.00",
+    },
+    {
+      country: "United Kingdom",
       currency: "GBP",
       flag: "🇬🇧",
-      balance: "192,340.50",
-      iban: "GB29 NWBK 6016 1331 9268 19",
-      cardNumber: "5425 2334 8756 3782",
-      expiry: "09/28",
-      cvv: "***",
-      holder: "ACME CORPORATION LTD",
-      bank: "BUSINESS",
-      color: "from-sky-400 via-blue-400 to-cyan-400",
-      isCustomColor: false,
-      chipColor: "from-amber-300 via-yellow-200 to-amber-400",
+      accountNumber: "53912152",
+      bankName: "The Currency Cloud Limited",
+      bankAddress:
+        "12 Steward Street, The Steward Building, London, E1 6FQ, GB",
+      bankCountry: "GB",
+      routingCodeType: "sort_code",
+      routingCode: "123456",
+      balance: "539,121.52",
     },
     {
+      country: "Eurozone (Euro)",
       currency: "EUR",
       flag: "🇪🇺",
-      balance: "328,920.75",
-      iban: "DE89 3704 0044 0532 0130 00",
-      cardNumber: "4916 7382 5641 5471",
-      expiry: "03/29",
-      cvv: "***",
-      holder: "STELLAR TECH GMBH",
-      bank: "BUSINESS",
-      color: "from-purple-400 via-violet-400 to-fuchsia-400",
-      isCustomColor: false,
-      chipColor: "from-amber-300 via-yellow-200 to-amber-400",
+      accountNumber: "GB01TCCL86063304234590",
+      bankName: "The Currency Cloud Limited",
+      bankAddress:
+        "12 Steward Street, The Steward Building, London, E1 6FQ, GB",
+      bankCountry: "GB",
+      routingCodeType: "bic_swift",
+      routingCode: "TCCLGB31",
+      balance: "1,234,560.00",
     },
   ];
 
@@ -144,22 +120,36 @@ export function PaymentsModule() {
     >
       <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content */}
-        <div className="">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-200/50 bg-white/50 backdrop-blur-sm px-3 py-1">
-            <span className="text-xs font-medium tracking-wide text-violet-700">
-              03 • Payment Infrastructure
+        <div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-[#0F1615]/10 via-white/80 to-blue-50/60 backdrop-blur-sm px-3 py-1 shadow-sm"
+          >
+            <div className="flex h-2 w-2 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]" />
+            <span className="text-xs font-medium tracking-wide text-[#0A2540]">
+              Payment Infrastructure
             </span>
-          </div>
+          </motion.div>
 
-          <h2 className="mb-4 text-3xl font-bold text-slate-900">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mb-4 text-3xl font-bold text-[#0A2540]"
+          >
             Payments and Collections
-          </h2>
+          </motion.h2>
 
-          <p className="mb-8 text-lg leading-relaxed text-slate-600">
-            Flexible payment infrastructure for global businesses. Accept
-            payments worldwide with multi-currency accounts, transparent
-            pricing, and seamless integration across all payment methods.
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="mb-8 text-lg leading-relaxed text-[#425466]"
+          >
+            Flexible payment infrastructure for global businesses. Accept payments worldwide with multi-currency accounts, transparent pricing, and seamless integration across all payment methods.
+          </motion.p>
 
           {/* Feature Blocks with Custom Bullets */}
           <div className="space-y-3">
@@ -185,148 +175,127 @@ export function PaymentsModule() {
                 onClick={handleCardClick}
                 className="relative cursor-pointer"
               >
-                {/* Card Container with perspective */}
                 <div
                   className="group relative"
                   style={{ perspective: "1000px" }}
                 >
                   <div
-                    className={`relative overflow-hidden rounded-2xl p-7 shadow-2xl transition-all duration-300 hover:shadow-3xl ${
-                      !activeCard.isCustomColor
-                        ? `bg-gradient-to-br ${activeCard.color}`
-                        : ""
-                    }`}
+                    className="relative overflow-hidden rounded-2xl p-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
                     style={{
-                      aspectRatio: "1.586/1",
+                      aspectRatio: "1.6/1",
                       boxShadow:
-                        "0 20px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset",
-                      ...(activeCard.isCustomColor
-                        ? {
-                            background: `linear-gradient(135deg, ${activeCard.color} 0%, ${activeCard.color}ee 50%, ${activeCard.color}dd 100%)`,
-                          }
-                        : {}),
+                        "0 8px 32px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)",
+                      background:
+                        "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
                     }}
                   >
-                    {/* Holographic overlay effect */}
-                    <div className="pointer-events-none absolute inset-0 opacity-30">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/10"></div>
-                    </div>
+                    {/* Top accent stripe */}
+                    <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 rounded-t-2xl" />
 
-                    {/* Noise texture overlay */}
-                    <div
-                      className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-                      }}
-                    ></div>
+                    {/* Background overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-transparent to-white/50" />
 
-                    {/* Card Content */}
-                    <div className="relative z-10 flex h-full flex-col justify-between">
-                      {/* Top Section */}
-                      <div className="flex items-start justify-between">
+                    <div className="relative z-10 h-full flex flex-col justify-between">
+                      {/* Top Section: Country and Balance */}
+                      <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-3">
-                          {/* EMV Chip - More realistic */}
-                          <div
-                            className={`relative h-11 w-14 overflow-hidden rounded-md bg-gradient-to-br ${activeCard.chipColor} shadow-inner`}
-                          >
-                            <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 gap-[1px] p-1">
-                              {[...Array(16)].map((_, i) => (
-                                <div
-                                  key={i}
-                                  className="rounded-[1px] bg-gradient-to-br from-amber-600/40 to-yellow-700/40"
-                                ></div>
-                              ))}
+                          <div className="text-2xl">{activeCard.flag}</div>
+                          <div>
+                            <div className="text-xs uppercase tracking-wide text-[#425466] font-semibold">
+                              Country
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent"></div>
+                            <div className="text-lg font-bold text-[#0A2540]">
+                              {activeCard.country}
+                            </div>
                           </div>
-
-                          {/* Contactless Icon */}
-                          <svg
-                            className="h-7 w-7 text-white/60"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
-                            />
-                          </svg>
                         </div>
 
+                        {/* Balance */}
                         <div className="text-right">
-                          <div className="mb-1 flex items-center gap-2 text-xs uppercase tracking-widest text-white/70">
-                            {activeCard.bank}
+                          <div className="text-xs uppercase tracking-wide text-[#425466] font-semibold">
+                            Balance
                           </div>
-                          <div className="mb-2 text-[10px] uppercase tracking-wider text-white/50">
-                            Virtual Account Card
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-3xl">{activeCard.flag}</span>
-                            <span className="rounded-md bg-white/20 px-2 py-1 text-sm tracking-wide text-white backdrop-blur-sm">
-                              {activeCard.currency}
-                            </span>
+                          <div className="text-lg font-bold text-[#0A2540]">
+                            {activeCard.currency} {activeCard.balance}
                           </div>
                         </div>
                       </div>
 
-                      {/* Middle Section - Card Number */}
+                      {/* Account Number Section */}
+                      <div className="mb-4">
+                        <div className="text-xs uppercase tracking-wide text-[#425466] font-semibold mb-1">
+                          Account Number
+                        </div>
+                        <div className="text-sm font-mono font-semibold text-[#0A2540] tracking-wider">
+                          {activeCard.accountNumber}
+                        </div>
+                      </div>
+
+                      {/* Bank Info Section */}
                       <div>
-                        <div className="mb-2 font-mono text-2xl tracking-[0.3em] text-white drop-shadow-lg">
-                          {activeCard.cardNumber}
-                        </div>
-                        <div className="text-xs uppercase tracking-wider text-white/70">
-                          {activeCard.iban}
-                        </div>
-                      </div>
-
-                      {/* Bottom Section */}
-                      <div className="flex items-end justify-between">
-                        <div className="space-y-1">
-                          <div className="text-[10px] uppercase tracking-widest text-white/60">
-                            Cardholder Name
+                        {/* Bank Name */}
+                        <div className="mb-3">
+                          <div className="text-xs uppercase tracking-wide text-[#425466] font-semibold mb-1">
+                            Bank Name
                           </div>
-                          <div className="text-sm uppercase tracking-wide text-white">
-                            {activeCard.holder}
+                          <div className="text-sm text-[#0A2540]">
+                            {activeCard.bankName}
                           </div>
                         </div>
 
-                        <div className="flex items-end gap-6">
-                          <div className="space-y-1 text-right">
-                            <div className="text-[10px] uppercase tracking-widest text-white/60">
-                              Valid Thru
+                        {/* Info Grid */}
+                        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-blue-100">
+                          <div>
+                            <div className="text-[10px] uppercase tracking-wide text-[#425466] font-semibold mb-1">
+                              Bank Country
                             </div>
-                            <div className="font-mono text-sm tracking-wider text-white">
-                              {activeCard.expiry}
+                            <div className="text-sm text-[#0A2540]">
+                              {activeCard.bankCountry}
                             </div>
                           </div>
-
-                          <div className="space-y-1 text-right">
-                            <div className="text-[10px] uppercase tracking-widest text-white/60">
-                              CVV
+                          <div>
+                            <div className="text-[10px] uppercase tracking-wide text-[#425466] font-semibold mb-1">
+                              Currency
                             </div>
-                            <div className="font-mono text-sm tracking-wider text-white">
-                              {activeCard.cvv}
+                            <div className="text-sm text-[#0A2540]">
+                              {activeCard.currency}
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Card Network Logo - Bottom Right */}
-                      <div className="absolute bottom-7 right-7">
-                        <div className="flex items-center gap-[-8px]">
-                          <div className="h-9 w-9 rounded-full bg-red-500/90 shadow-lg"></div>
-                          <div className="-ml-3 h-9 w-9 rounded-full bg-orange-400/90 shadow-lg"></div>
+                        {/* Routing Code Section */}
+                        <div className="grid grid-cols-2 gap-3 mt-3">
+                          <div>
+                            <div className="text-[10px] uppercase tracking-wide text-[#425466] font-semibold mb-1">
+                              {activeCard.routingCodeType?.replace(/_/g, " ") ||
+                                "Code Type"}
+                            </div>
+                            <div className="text-sm text-[#0A2540] font-mono">
+                              {activeCard.routingCode}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-[10px] uppercase tracking-wide text-[#425466] font-semibold mb-1">
+                              Status
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                              <div className="text-sm text-[#0A2540]">
+                                Active
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Shine effect on hover */}
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
+                    {/* Hover effect */}
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <div className="absolute -inset-10 bg-gradient-to-r from-transparent via-blue-400/5 to-transparent -rotate-45"></div>
                     </div>
+
+                    {/* Border */}
+                    <div className="pointer-events-none absolute inset-0 rounded-2xl border border-blue-100"></div>
                   </div>
                 </div>
               </motion.div>

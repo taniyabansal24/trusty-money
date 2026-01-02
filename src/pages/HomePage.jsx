@@ -1,10 +1,9 @@
 import React from "react";
 import { Navbar, Footer } from "../components/layout";
 import { HeroSection } from "../sections";
-import {TransparencySection} from "../sections/TransparencySection.jsx";
-import {SolutionOverview} from "../sections/SolutionOverview.jsx"
+import { TransparencySection } from "../sections/TransparencySection.jsx";
+import { SolutionOverview } from "../sections/SolutionOverview.jsx";
 import ProblemSection from "../sections/ProblemSection";
-
 
 const HomePage = () => {
   return (
@@ -13,6 +12,9 @@ const HomePage = () => {
       <main>
         <HeroSection />
         <ProblemSection />
+
+        {/* ⬆️ End of Transition Wrapper ⬆️ */}
+
         <div className="min-h-screen bg-white">
           <SolutionOverview />
           <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-50 py-12">

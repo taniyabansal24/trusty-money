@@ -55,7 +55,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 gradient-bg overflow-hidden">
+    <section className="relative pt-32 lg:pt-40 lg:pb-32 gradient-bg overflow-hidden">
       
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden">
