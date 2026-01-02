@@ -1023,7 +1023,7 @@ const ProblemSection = () => {
                       <div className="mt-4">
                         <h1
                           ref={titleRef}
-                          className="text-[#0A2540] text-2xl font-semibold tracking-tight mb-2"
+                          className="text-[#0A2540] text-xl font-semibold tracking-tight mb-2"
                         >
                           Cross-Border Operations
                         </h1>
@@ -1061,7 +1061,7 @@ const ProblemSection = () => {
                           <p className="text-xs tracking-wide uppercase text-[#425466]">
                             Payments
                           </p>
-                          <h3 className="text-[#0A2540] text-xl tracking-tight leading-snug">
+                          <h3 className="text-[#0A2540] text-lg tracking-tight leading-snug">
                             Expensive, slow & <br /> opaque
                           </h3>
                         </div>
@@ -1127,19 +1127,19 @@ const ProblemSection = () => {
                               <span className="text-[#425466]">
                                 🇮🇳 India clients
                               </span>
-                              <span className="text-[#0A2540]">45–60 days</span>
+                              <span className="text-sm text-[#0A2540]">45–60 days</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-[#425466]">
                                 🇦🇪 UAE clients
                               </span>
-                              <span className="text-[#0A2540]">30–90 days</span>
+                              <span className="text-sm text-[#0A2540]">30–90 days</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-[#425466]">
                                 🇬🇧 UK clients
                               </span>
-                              <span className="text-[#0A2540]">30–45 days</span>
+                              <span className="text-sm text-[#0A2540]">30–45 days</span>
                             </div>
                           </div>
                         </div>
@@ -1263,7 +1263,7 @@ const ProblemSection = () => {
                           <div className="text-xs text-[#425466] tracking-wide uppercase">
                             Reconciliation
                           </div>
-                          <h3 className="text-[#0A2540] text-xl tracking-tight leading-snug">
+                          <h3 className="text-[#0A2540] text-lg tracking-tight leading-snug">
                             Fragmented systems
                           </h3>
                         </div>
@@ -1328,13 +1328,13 @@ const ProblemSection = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <div className="bg-white/80 rounded-md p-2 text-xs text-[#0A2540]">
+                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540]">
                               🏦 3 different banks
                             </div>
-                            <div className="bg-white/80 rounded-md p-2 text-xs text-[#0A2540]">
+                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540]">
                               💳 5 payment gateways
                             </div>
-                            <div className="bg-white/80 rounded-md p-2 text-xs text-[#0A2540]">
+                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540]">
                               📊 2 ERP systems
                             </div>
                           </div>
@@ -1437,13 +1437,13 @@ const ProblemSection = () => {
                               <span className="text-[#425466]">
                                 Time to reconcile
                               </span>
-                              <span className="text-[#0A2540]">3–5 days</span>
+                              <span className="text-sm text-[#0A2540]">3–5 days</span>
                             </div>
                             <div className="flex justify-between text-xs">
                               <span className="text-[#425466]">
                                 Discrepancies found
                               </span>
-                              <span className="text-[#0A2540]">
+                              <span className="text-sm text-[#0A2540]">
                                 47 this month
                               </span>
                             </div>
@@ -1471,7 +1471,7 @@ const ProblemSection = () => {
                             <div className="text-xs text-[#425466] tracking-wide uppercase">
                               Invoicing
                             </div>
-                            <h3 className="text-[#0A2540] text-xl tracking-tight">
+                            <h3 className="text-[#0A2540] text-lg tracking-tight">
                               Manual processes
                             </h3>
                           </div>
@@ -1506,7 +1506,7 @@ const ProblemSection = () => {
                             <div className="flex items-center justify-between mb-3">
                               <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-lg flex items-center justify-center">
-                                  <span className="text-xs">🏢</span>
+                                  <span className="text-sm">🏢</span>
                                 </div>
                                 <div>
                                   <div className="text-sm text-[#0A2540]">
@@ -1526,19 +1526,19 @@ const ProblemSection = () => {
                             <div className="space-y-2 mb-3">
                               <div className="flex justify-between text-xs">
                                 <span className="text-[#425466]">Amount</span>
-                                <span className="text-[#0A2540]">
+                                <span className="text-sm text-[#0A2540]">
                                   $12,450.00
                                 </span>
                               </div>
                               <div className="flex justify-between text-xs">
                                 <span className="text-[#425466]">Due date</span>
-                                <span className="text-[#0A2540]">
+                                <span className="text-sm text-[#0A2540]">
                                   Jan 10, 2025
                                 </span>
                               </div>
                               <div className="flex justify-between text-xs">
                                 <span className="text-[#425466]">Location</span>
-                                <span className="text-[#0A2540]">
+                                <span className="text-sm text-[#0A2540]">
                                   Mumbai, India 🇮🇳
                                 </span>
                               </div>
@@ -1681,7 +1681,7 @@ const ProblemSection = () => {
                           <div className="text-xs text-[#425466] tracking-wide uppercase">
                             Compliance
                           </div>
-                          <h3 className="text-[#0A2540] text-xl tracking-tight">
+                          <h3 className="text-[#0A2540] text-lg tracking-tight">
                             Regulation tracker
                           </h3>
                         </div>
@@ -1753,7 +1753,7 @@ const ProblemSection = () => {
                                 className="bg-gradient-to-br from-white to-[#f8fafc] rounded-md px-2 py-1 text-xs flex items-center gap-1 border border-[#e5e7eb]"
                               >
                                 <span className="text-[#425466]">{code}</span>
-                                <span className="text-[#0A2540]">{rate}</span>
+                                <span className="text-sm text-[#0A2540]">{rate}</span>
                               </div>
                             ))}
                           </div>
@@ -1775,11 +1775,11 @@ const ProblemSection = () => {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 className="w-4 h-4 text-white"
-                              >
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="m15 9-6 6" />
-                                <path d="m9 9 6 6" />
-                              </svg>
+                                >
+                                  <circle cx="12" cy="12" r="10" />
+                                  <path d="m15 9-6 6" />
+                                  <path d="m9 9 6 6" />
+                                </svg>
                             </div>
 
                             <div className="flex-1">
@@ -1931,7 +1931,7 @@ const ProblemSection = () => {
                                 Outstanding
                               </span>
                             </div>
-                            <div className="text-3xl text-[#0A2540] mb-1">
+                            <div className="text-xl text-[#0A2540] mb-1">
                               $1.2M
                             </div>
                             <div className="text-xs text-[#425466]">
@@ -1965,7 +1965,7 @@ const ProblemSection = () => {
                                 Avg settlement
                               </span>
                             </div>
-                            <div className="text-3xl text-[#0A2540] mb-1">
+                            <div className="text-xl text-[#0A2540] mb-1">
                               14 days
                             </div>
                             <div className="text-xs text-[#425466]">
@@ -1982,19 +1982,19 @@ const ProblemSection = () => {
                           <div className="space-y-3">
                             <div className="flex justify-between text-sm">
                               <span className="text-[#425466]">Overdue</span>
-                              <span className="text-[#0A2540]">$340K</span>
+                              <span className="text-sm text-[#0A2540]">$340K</span>
                             </div>
                             <div className="flex justify-between text-sm">
                               <span className="text-[#425466]">
                                 Due this week
                               </span>
-                              <span className="text-[#0B43A0]">$520K</span>
+                              <span className="text-sm text-[#0B43A0]">$520K</span>
                             </div>
                             <div className="flex justify-between text-sm">
                               <span className="text-[#425466]">
                                 Due next month
                               </span>
-                              <span className="text-[#3b82f6]">$340K</span>
+                              <span className="text-sm text-[#3b82f6]">$340K</span>
                             </div>
                           </div>
                         </div>
