@@ -21,18 +21,20 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 font-sans transition-all duration-300 ${
+        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
       }`}
     >
       <Container>
         <div className="relative flex items-center h-16 lg:h-20">
+
           {/* Logo */}
-          <div className="flex items-center">
-            <img src={logo} alt="Company Logo" className="h-8 w-8 mr-2"/>
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="Company Logo" className="h-8 w-8" />
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold gradient-text cursor-pointer"
+              className="text-2xl font-bold cursor-pointer"
+              style={{ color: '#073f9e' }}
             >
               {COMPANY_NAME}
             </motion.div>
@@ -44,17 +46,22 @@ const Navbar = () => {
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link.href)}
-                className="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+                className="text-sm font-medium transition-colors duration-200"
+                style={{ color: '#425466' }}
+                onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
+                onMouseLeave={(e) => (e.target.style.color = '#425466')}
               >
                 {link.name}
               </button>
             ))}
           </div>
-          <div className="hidden lg:flex items-center space-x-3 ml-auto ">
-            <Button variant="primary" size="sm">
+
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center gap-3 ml-auto">
+            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }}>
               Get Demo
             </Button>
-            <Button variant="primary" size="sm">
+            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }}>
               Sign Up
             </Button>
           </div>
@@ -62,16 +69,15 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
+            className="lg:hidden ml-auto p-2 rounded-md transition-colors"
+            style={{ color: '#0A2540' }}
           >
             <svg
               className="w-6 h-6"
               fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              stroke="currentColor"
               strokeWidth="2"
               viewBox="0 0 24 24"
-              stroke="currentColor"
             >
               {isOpen ? (
                 <path d="M6 18L18 6M6 6l12 12" />
@@ -88,24 +94,49 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden py-4 space-y-4 bg-white"
+            className="lg:hidden mt-2 rounded-lg bg-white shadow-md py-4 space-y-3"
           >
             {NAVIGATION_LINKS.map((link) => (
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link.href)}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                className="block w-full text-left px-4 py-2 text-sm font-medium rounded-md transition-all duration-150 active:scale-[0.98]"
+                style={{ color: '#425466' }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.backgroundColor = '#EFF4FF';
+                  e.currentTarget.style.color = '#0B43A0';
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#425466';
+                }}
               >
                 {link.name}
               </button>
             ))}
-            <div className="px-4 space-y-2">
-              <Button variant="primary" size="sm" className="w-full">
-                Get Demo
-              </Button>
-              <Button variant="primary" size="sm" className="w-full">
-                Sign Up
-              </Button>
+
+            <div className="px-4 space-y-2 pt-2">
+              <motion.div whileTap={{ scale: 0.97 }}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="w-full"
+                  style={{ backgroundColor: '#0B43A0' }}
+                >
+                  Get Demo
+                </Button>
+              </motion.div>
+
+              <motion.div whileTap={{ scale: 0.97 }}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="w-full"
+                  style={{ backgroundColor: '#0B43A0' }}
+                >
+                  Sign Up
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         )}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Icon } from '../ui';
-import { COMPANY_NAME, NAVIGATION_LINKS } from '../../constants';
+import { Container } from '../ui';
+import { COMPANY_NAME } from '../../constants';
 import { FaTwitter, FaLinkedin, FaGithub, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
@@ -41,16 +41,27 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-white">
       <Container className="py-12 lg:py-16">
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">
+
           {/* Brand */}
           <div className="col-span-2">
-            <h3 className="text-2xl font-bold text-white mb-4">{COMPANY_NAME}</h3>
-            <p className="text-gray-400 mb-4 max-w-sm">
+            <h3
+              className="text-2xl font-bold mb-4"
+              style={{ color: '#0B43A0' }}
+            >
+              {COMPANY_NAME}
+            </h3>
+
+            <p
+              className="mb-4 max-w-sm"
+              style={{ color: '#425466' }}
+            >
               One platform for global payments, zero FX markup, GST invoicing & instant settlements. Built for SMEs.
             </p>
+
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
                 <a
@@ -58,8 +69,8 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-200"
                   aria-label={social.label}
+                  style={{ color: '#425466' }}
                 >
                   <social.icon size={20} />
                 </a>
@@ -70,13 +81,19 @@ const Footer = () => {
           {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-white font-semibold mb-4">{category}</h4>
+              <h4
+                className="font-semibold mb-4"
+                style={{ color: '#0B43A0' }}
+              >
+                {category}
+              </h4>
+
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors duration-200"
+                      style={{ color: '#425466' }}
                     >
                       {link.name}
                     </a>
@@ -88,15 +105,24 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
+        <div
+          className="pt-8 flex flex-col md:flex-row justify-between items-center"
+          style={{ borderTop: '1px solid #e5e7eb' }}
+        >
+          <p
+            className="text-sm mb-4 md:mb-0"
+            style={{ color: '#425466' }}
+          >
             Copyright © {currentYear} Tushti Technologies Pvt. Ltd.
           </p>
-          <div className="flex items-center space-x-4 text-sm">
-            <a href="mailto:support@trustymoney.in" className="text-gray-400 hover:text-white transition-colors">
-              support@trustymoney.in
-            </a>
-          </div>
+
+          <a
+            href="mailto:support@trustymoney.in"
+            className="text-sm"
+            style={{ color: '#0B43A0' }}
+          >
+            support@trustymoney.in
+          </a>
         </div>
       </Container>
     </footer>
