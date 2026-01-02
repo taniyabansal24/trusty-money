@@ -28,7 +28,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['DM Sans', 'sans-serif'], // This makes DM Sans the default font
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',
