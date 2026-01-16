@@ -56,3 +56,54 @@ export function TransparencySection() {
     </Container>
   );
 }
+
+{false && (
+        <>
+          {/* LEFT — Sequence Logo */}
+          <div className="absolute left-[20%] top-1/2 -translate-y-1/2">
+            <div className="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center">
+              <Logo />
+            </div>
+          </div>
+
+          {/* ANIMATED DOTTED LINE - More visible */}
+          <div
+            style={{
+              mask: "linear-gradient(to right, transparent 15%, black 50%, transparent 85%)",
+            }}
+            className="absolute left-[30%] right-[45%] top-1/2 -translate-y-1/2"
+          >
+            {/* More visible dotted line */}
+            <svg
+              width="100%"
+              viewBox="0 0 220 2"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1H218"
+                stroke="black"
+                strokeOpacity="0.3"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeDasharray="2 4"
+              />
+            </svg>
+
+            {/* More visible gradient overlay */}
+            <span
+              ref={gradientRef}
+              id="sync-gradient"
+              className="absolute left-1/2 top-0 block h-full w-[60%] -translate-x-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+              style={{
+                opacity: 0, // Start with 0 opacity to prevent flash
+                boxShadow: "0 0 8px rgba(59, 130, 246, 0.5)",
+                willChange: "transform, opacity", // Optimize rendering
+              }}
+            />
+
+            {/* Additional glow effect */}
+            <span className="absolute left-1/2 top-0 block h-[3px] w-[65%] -translate-x-1/2 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-30 blur-[2px]" />
+          </div>
+        </>
+      )}

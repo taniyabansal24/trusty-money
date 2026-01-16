@@ -4,6 +4,7 @@ import { HeroSection } from "../sections";
 import { TransparencySection } from "../sections/TransparencySection.jsx";
 import { SolutionOverview } from "../sections/SolutionOverview.jsx";
 import ProblemSection from "../sections/ProblemSection";
+import InvoiceDashboard from "../sections/HeroSection/InvoiceDashboard.jsx";
 
 const HomePage = () => {
   return (
