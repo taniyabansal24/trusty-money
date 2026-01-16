@@ -76,8 +76,12 @@ export function TreasuryModule() {
   return (
     <div 
       ref={sectionRef} 
-      className="border-t border-blue-100 bg-gradient-to-br from-blue-50/30 via-white to-sky-50/20 py-20 md:py-24"
+      className="relative border-t border-blue-100 bg-gradient-to-br from-blue-50/30 via-white to-sky-50/20 py-20 md:py-24 overflow-hidden isolate"
     >
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none hero-grid opacity-30"
+        aria-hidden="true"
+      />
       <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content */}
         <div className="order-1 lg:order-2">

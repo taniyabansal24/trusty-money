@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button, Container } from "../components/ui";
 import { staggerContainer, staggerItem } from "../utils/animations";
 import logo from "../assets/logo.png";
-import IconSequenceAnimation from "./HeroSection/IconSequenceAnimation";
+import IconSequenceAnimation from "../sections/HeroSection/IconSequenceAnimation"
 
 // CountUp component for animated numbers
 const CountUp = ({

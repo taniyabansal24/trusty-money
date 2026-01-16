@@ -1,7 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Container } from '../../components/ui';
-import { ParticleBackground } from '../../sections/SolutionOverview/BillingModule';
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import { Container } from "../../components/ui";
 import { FeatureBlock } from "../../sections/SolutionOverview/BillingModule";
 
 export function ComplianceModule() {
@@ -18,14 +22,16 @@ export function ComplianceModule() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
       { threshold: 0.2 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -34,38 +40,120 @@ export function ComplianceModule() {
 
   const regionsSets = [
     [
-      { code: 'US', name: 'United States', tax: 'Sales Tax', rate: 'State-based', transactions: '2,847', compliance: 100 },
-      { code: 'GB', name: 'United Kingdom', tax: 'VAT', rate: '20%', transactions: '1,923', compliance: 100 },
-      { code: 'EU', name: 'European Union', tax: 'VAT', rate: '19-27%', transactions: '4,152', compliance: 100 },
-      { code: 'CA', name: 'Canada', tax: 'GST/HST', rate: '5-15%', transactions: '892', compliance: 100 },
+      {
+        code: "US",
+        name: "United States",
+        tax: "Sales Tax",
+        rate: "State-based",
+        transactions: "2,847",
+        compliance: 100,
+      },
+      {
+        code: "GB",
+        name: "United Kingdom",
+        tax: "VAT",
+        rate: "20%",
+        transactions: "1,923",
+        compliance: 100,
+      },
+      {
+        code: "EU",
+        name: "European Union",
+        tax: "VAT",
+        rate: "19-27%",
+        transactions: "4,152",
+        compliance: 100,
+      },
+      {
+        code: "CA",
+        name: "Canada",
+        tax: "GST/HST",
+        rate: "5-15%",
+        transactions: "892",
+        compliance: 100,
+      },
     ],
     [
-      { code: 'US', name: 'United States', tax: 'Sales Tax', rate: 'State-based', transactions: '3,102', compliance: 100 },
-      { code: 'GB', name: 'United Kingdom', tax: 'VAT', rate: '20%', transactions: '2,145', compliance: 100 },
-      { code: 'EU', name: 'European Union', tax: 'VAT', rate: '19-27%', transactions: '4,680', compliance: 100 },
-      { code: 'CA', name: 'Canada', tax: 'GST/HST', rate: '5-15%', transactions: '954', compliance: 100 },
-    ]
+      {
+        code: "US",
+        name: "United States",
+        tax: "Sales Tax",
+        rate: "State-based",
+        transactions: "3,102",
+        compliance: 100,
+      },
+      {
+        code: "GB",
+        name: "United Kingdom",
+        tax: "VAT",
+        rate: "20%",
+        transactions: "2,145",
+        compliance: 100,
+      },
+      {
+        code: "EU",
+        name: "European Union",
+        tax: "VAT",
+        rate: "19-27%",
+        transactions: "4,680",
+        compliance: 100,
+      },
+      {
+        code: "CA",
+        name: "Canada",
+        tax: "GST/HST",
+        rate: "5-15%",
+        transactions: "954",
+        compliance: 100,
+      },
+    ],
   ];
 
   const regions = regionsSets[dataIndex];
   const checks = [
-    { name: 'AML Screening', status: 'Pass', time: 'Real-time' },
-    { name: 'Sanctions Check', status: 'Pass', time: 'Real-time' },
-    { name: 'KYC Verification', status: 'Pass', time: 'Updated 2h ago' },
+    { name: "AML Screening", status: "Pass", time: "Real-time" },
+    { name: "Sanctions Check", status: "Pass", time: "Real-time" },
+    { name: "KYC Verification", status: "Pass", time: "Updated 2h ago" },
   ];
 
-  const features = [   
-    { title: "Intelligent Tax Logic", description: "Automatically apply correct tax rates for 180+ jurisdictions with real-time updates." },
-    { title: "Compliance Documentation", description: "Generate audit-ready documentation with tax certificates and complete audit trails." },
-    { title: "Security & Screening", description: "Real-time AML monitoring, sanctions screening, and KYC verification for all transactions." }
+  const features = [
+    {
+      title: "Intelligent Tax Logic",
+      description:
+        "Automatically apply correct tax rates for 180+ jurisdictions with real-time updates.",
+    },
+    {
+      title: "Compliance Documentation",
+      description:
+        "Generate audit-ready documentation with tax certificates and complete audit trails.",
+    },
+    {
+      title: "Security & Screening",
+      description:
+        "Real-time AML monitoring, sanctions screening, and KYC verification for all transactions.",
+    },
   ];
 
   return (
-    <div ref={sectionRef} className="border-t border-emerald-100 bg-gradient-to-br from-emerald-50/30 via-white to-green-50/20 py-20 md:py-24">
-      <div className="absolute inset-0 pointer-events-none">
-        <ParticleBackground />
+    <div
+      ref={sectionRef}
+      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden isolate gradient-bg"
+    >
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute inset-0 hero-grid opacity-50"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 hero-ambient opacity-70"
+          aria-hidden="true"
+        />
       </div>
-      
       <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content Side - Unified Emerald Styling */}
         {/* Content */}
@@ -97,17 +185,15 @@ export function ComplianceModule() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-8 text-lg leading-relaxed text-[#425466]"
           >
-            Global compliance handled automatically. Stay compliant across every jurisdiction with real-time tax calculations, regulatory monitoring, and built-in security protocols.
+            Global compliance handled automatically. Stay compliant across every
+            jurisdiction with real-time tax calculations, regulatory monitoring,
+            and built-in security protocols.
           </motion.p>
 
           {/* Feature Blocks with Custom Bullets */}
           <div className="space-y-3">
             {features.map((feature, index) => (
-              <FeatureBlock 
-                key={index} 
-                title={feature.title}
-                index={index}
-              >
+              <FeatureBlock key={index} title={feature.title} index={index}>
                 {feature.description}
               </FeatureBlock>
             ))}
@@ -116,20 +202,28 @@ export function ComplianceModule() {
 
         {/* Visual Side - Dashboard */}
         <motion.div style={{ y }} className="relative order-2 lg:order-1">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={isVisible ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+          >
             <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white p-6">
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  
                   <div>
-                    <div className="text-xs uppercase tracking-wider text-slate-500">Compliance Monitor</div>
-                    <div className="text-xl text-slate-900">Global Tax & Regulations</div>
+                    <div className="text-xs uppercase tracking-wider text-slate-500">
+                      Compliance Monitor
+                    </div>
+                    <div className="text-xl text-slate-900">
+                      Global Tax & Regulations
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 text-xs text-[#0B43A0]">
-                    <div className="h-2 w-2 animate-pulse rounded-full bg-[#3b82f6]"></div>
-                    Live Monitoring
-                  </div>
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-[#3b82f6]"></div>
+                  Live Monitoring
+                </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
@@ -137,14 +231,22 @@ export function ComplianceModule() {
                   <div className="mb-1 text-xs text-slate-500">Regions</div>
                   <div className="relative h-8 overflow-hidden">
                     <AnimatePresence mode="wait">
-                      <motion.div key={dataIndex} initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -15, opacity: 0 }} className="text-2xl text-slate-900">
+                      <motion.div
+                        key={dataIndex}
+                        initial={{ y: 15, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -15, opacity: 0 }}
+                        className="text-2xl text-slate-900"
+                      >
                         {dataIndex === 0 ? "180+" : "184"}
                       </motion.div>
                     </AnimatePresence>
                   </div>
                 </div>
                 <div className="rounded-lg border border-slate-100 bg-white p-3">
-                  <div className="mb-1 text-xs text-slate-500">Compliance Rate</div>
+                  <div className="mb-1 text-xs text-slate-500">
+                    Compliance Rate
+                  </div>
                   <div className="text-2xl text-[#0B43A0]">100%</div>
                 </div>
                 <div className="rounded-lg border border-slate-100 bg-white p-3">
@@ -156,36 +258,58 @@ export function ComplianceModule() {
 
             <div className="p-6">
               <div className="mb-4 flex items-center justify-between">
-                <div className="text-sm text-slate-900">Active Tax Jurisdictions</div>
-                <div className="text-xs text-slate-500">{regions.length} regions</div>
+                <div className="text-sm text-slate-900">
+                  Active Tax Jurisdictions
+                </div>
+                <div className="text-xs text-slate-500">
+                  {regions.length} regions
+                </div>
               </div>
-              
+
               <div className="space-y-2">
                 {regions.map((region, idx) => (
-                  <motion.div key={region.code} className="group relative overflow-hidden rounded-lg border border-slate-100 bg-slate-50 p-4 hover:bg-white hover:shadow-sm">
+                  <motion.div
+                    key={region.code}
+                    className="group relative overflow-hidden rounded-lg border border-slate-100 bg-slate-50 p-4 hover:bg-white hover:shadow-sm"
+                  >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-lg shadow-sm">
-                          {region.code === 'US' && '🇺🇸'}{region.code === 'GB' && '🇬🇧'}{region.code === 'EU' && '🇪🇺'}{region.code === 'CA' && '🇨🇦'}
+                          {region.code === "US" && "🇺🇸"}
+                          {region.code === "GB" && "🇬🇧"}
+                          {region.code === "EU" && "🇪🇺"}
+                          {region.code === "CA" && "🇨🇦"}
                         </div>
                         <div>
-                          <div className="mb-1 text-sm text-slate-900">{region.name}</div>
-                          <div className="text-xs text-slate-600">{region.tax} • {region.rate}</div>
+                          <div className="mb-1 text-sm text-slate-900">
+                            {region.name}
+                          </div>
+                          <div className="text-xs text-slate-600">
+                            {region.tax} • {region.rate}
+                          </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="mb-1 text-xs text-slate-500">Transactions</div>
+                        <div className="mb-1 text-xs text-slate-500">
+                          Transactions
+                        </div>
                         <div className="relative h-5 overflow-hidden">
                           <AnimatePresence mode="wait">
-                            <motion.div key={dataIndex} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} className="text-sm text-slate-900">
+                            <motion.div
+                              key={dataIndex}
+                              initial={{ y: 10, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              exit={{ y: -10, opacity: 0 }}
+                              className="text-sm text-slate-900"
+                            >
                               {region.transactions}
                             </motion.div>
                           </AnimatePresence>
                         </div>
                         <div className="mt-1 flex items-center justify-end gap-1 text-xs text-[#0B43A0]">
-                            <div className="h-1 w-1 rounded-full bg-[#3b82f6]"></div>
-                            {region.compliance}% compliant
-                          </div>
+                          <div className="h-1 w-1 rounded-full bg-[#3b82f6]"></div>
+                          {region.compliance}% compliant
+                        </div>
                       </div>
                     </div>
                   </motion.div>

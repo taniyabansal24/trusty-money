@@ -9,18 +9,30 @@ import { staggerContainer, staggerItem } from "../utils/animations";
 
 export function SolutionOverview() {
   return (
-    <section className="relative w-full overflow-visible bg-white">
+    <section className="relative w-full overflow-hidden gradient-bg">
       {/* Hero Section */}
-      <div className="relative w-full min-h-[90vh] lg:min-h-screen overflow-visible">
-        {/* Background gradients - simplified */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/70 to-white/20" />
-          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white via-white/80 to-transparent" />
+      <div className="relative w-full min-h-screen overflow-hidden gradient-bg">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+          <div
+            className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div className="absolute inset-0 hero-grid opacity-50" aria-hidden="true" />
+          <div className="absolute inset-0 hero-ambient opacity-70" aria-hidden="true" />
         </div>
 
+        <div
+          className="pointer-events-none absolute left-0 right-0 -top-8 h-24 z-10"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(245,248,255,0.55) 50%, rgba(245,248,255,1) 100%)",
+            filter: "blur(8px)",
+          }}
+        />
+
         {/* CONTENT + GLOBE LAYOUT */}
-        <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 lg:pt-24 overflow-visible">
-          
+        <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 lg:pt-28 pb-16 lg:pb-24 overflow-visible">
           {/* Global Solution Heading - Centered above both columns */}
           <div className="flex justify-center mb-8 lg:mb-12">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/90 backdrop-blur-sm px-4 py-2 shadow-sm">
@@ -33,11 +45,11 @@ export function SolutionOverview() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center overflow-visible">
             {/* LEFT — TEXT CONTENT */}
-            <div className="">
+            <div className="lg:-ml-6 xl:-ml-10">
               <div>
                 <motion.h1
                   variants={staggerItem}
-                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-[3.5rem] 2xl:text-7xl font-bold tracking-tight text-gray-900"
+                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-[3.1rem] 2xl:text-7xl font-bold tracking-tight text-gray-900"
                 >
                   Rebuilding Financial Infrastructure for{" "}
                   <span className="gradient-text relative">
@@ -55,6 +67,24 @@ export function SolutionOverview() {
                   for cross-border commerce, supporting billing, compliance,
                   payments, and settlement across connected markets.
                 </p>
+
+                <p className="mt-4 text-base text-[#425466] leading-relaxed lg:text-lg lg:leading-relaxed">
+                  Unify your entire money stack in one platform—from invoicing
+                  to reconciliation—with consistent controls, real-time
+                  reporting, and predictable settlement timelines.
+                </p>
+              </div>
+
+              <div className="mt-6 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-2">
+                {["Multi-currency accounts", "Automated invoicing", "Built-in compliance", "Treasury visibility"].map((label) => (
+                  <div
+                    key={label}
+                    className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/85 px-4 py-3 shadow-sm backdrop-blur-sm"
+                  >
+                    <div className="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]" />
+                    <span className="text-sm font-medium text-[#0A2540]">{label}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Stats badges */}
@@ -71,51 +101,30 @@ export function SolutionOverview() {
             {/* RIGHT — GLOBE VISUALIZATION */}
             <div className="relative overflow-visible">
               {/* Container for proper positioning */}
-              <div className="relative w-[110%] h-[500px] lg:h-[600px] xl:h-[650px] overflow-visible">
-                {/* Concentric rings that properly wrap the globe */}
-                <div className="absolute inset-0 z-0 flex items-center justify-center">
-                  <div className="relative w-full max-w-[500px] h-full max-h-[500px] lg:max-w-[600px] lg:max-h-[600px] xl:max-w-[700px] xl:max-h-[700px]">
-                    {/* Outer ring - largest */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[105%] h-[105%] rounded-full border border-blue-200/20" />
-
-                    {/* Middle ring */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[102%] h-[102%] rounded-full border border-blue-300/30" />
-
-                    {/* Inner ring - closest to globe */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100.5%] h-[100.5%] rounded-full border border-cyan-300/40 animate-pulse" />
-
-                    {/* Animated connection dots */}
-                    {[...Array(8)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-blue-400 rounded-full animate-ping"
-                        style={{
-                          top: `${50 + 45 * Math.sin((i * Math.PI) / 4)}%`,
-                          left: `${50 + 45 * Math.cos((i * Math.PI) / 4)}%`,
-                          animationDelay: `${i * 0.3}s`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {/* Globe Container - Your exact code */}
+              <div className="relative w-full h-[360px] sm:h-[440px] md:h-[520px] lg:h-[700px] xl:h-[760px] overflow-visible">
+                {/* Globe Container */}
                 <div className="absolute inset-0 z-10 flex items-center justify-center">
-                  <div className="flex flex-col w-full overflow-visible">
-                    <div className="relative w-full h-[73vh] overflow-visible">
-                      <div className="flex absolute w-[100%] h-[135%] top-[-18%] inset-x-0 -bottom-10/12 justify-center mask-globe">
-                        <RandomGlobe />
-                      </div>
-                    </div>
+                  <div className="w-full max-w-[360px] h-[360px] sm:max-w-[440px] sm:h-[440px] md:max-w-[520px] md:h-[520px] lg:max-w-none lg:w-[700px] lg:h-[700px] xl:w-[760px] xl:h-[760px]">
+                    <RandomGlobe />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div
+          className="pointer-events-none absolute left-0 right-0 bottom-0 h-28 z-10"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(245,248,255,0.98) 0%, rgba(245,248,255,0.55) 45%, rgba(245,248,255,0) 100%)",
+            filter: "blur(10px)",
+          }}
+        />
       </div>
-      {/* Product Modules (untouched) */}
-      <div className="relative z-10 bg-white">
+
+      {/* Product Modules */}
+      <div className="relative z-10 -mt-12 lg:-mt-16 pt-0">
         <BillingModule />
         <ComplianceModule />
         <PaymentsModule />

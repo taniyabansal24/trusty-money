@@ -9,25 +9,33 @@ import InvoiceDashboard from "./InvoiceDashboard";
 import BillingInvoice from "./BillingInvoice";
 import CapitalDashboard from "./CapitalDashboard";
 import CountryTaxCard from "./CountryTaxCard";
+import Virtual from "./Virtual";
 
 // Store screen components separately
 const SCREENS = [
-  BillingInvoice, // index 0
-  InvoiceDashboard, // index 1
-  CountryTaxCard, // index 2
-  CapitalDashboard, // index 3
+  Virtual,
+  BillingInvoice,     // 0
+  InvoiceDashboard,   // 1
+  CountryTaxCard,     // 2
+  CapitalDashboard,   // 3
+  Virtual,            // 4
+  Virtual,            // 5
+  Virtual,            // 6
+  Virtual,            // 7
 ];
 
 const ICONS = [
-  { id: 0, Icon: Billing, screenIndex: 0 },
-  { id: 1, Icon: Treasury, screenIndex: 1 },
-  { id: 2, Icon: Tax, screenIndex: 2 },
-  { id: 3, Icon: Dashboard, screenIndex: 3 },
-  { id: 4, Icon: Billing, screenIndex: 0 },
-  { id: 5, Icon: Treasury, screenIndex: 1 },
-  { id: 6, Icon: Tax, screenIndex: 2 },
-  { id: 7, Icon: Dashboard, screenIndex: 3 },
+  { id: 0, Icon: Billing, screenIndex: 1 },
+  { id: 1, Icon: Treasury, screenIndex: 2 },
+  { id: 2, Icon: Tax, screenIndex: 3 },
+  { id: 3, Icon: Dashboard, screenIndex: 4 },
+
+  { id: 4, Icon: Billing, screenIndex: 1 },
+  { id: 5, Icon: Treasury, screenIndex: 2 },
+  { id: 6, Icon: Tax, screenIndex: 3 },
+  { id: 7, Icon: Dashboard, screenIndex: 4 },
 ];
+
 
 const TOTAL_ICONS = ICONS.length;
 const RADIUS = 150;
@@ -378,7 +386,7 @@ const getVisualStateFromAngle = (angle) => {
       />
 
       {/* Middle — CIRCULAR SHIFT ANIMATION */}
-      <div className="absolute left-[55%] top-1/2 -translate-y-1/2 left-[3%] top-[46%]">
+      <div className="absolute -translate-y-1/2 left-[3%] top-[46%]">
         <div className="relative w-[300px] h-[400px]">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
             {ICONS.map((iconData, index) => {

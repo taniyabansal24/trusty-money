@@ -82,10 +82,19 @@ export function ReportingModule() {
   ];
 
   return (
-    <div
-      ref={sectionRef}
-      className="border-t border-indigo-100 bg-gradient-to-br from-indigo-50/30 via-white to-violet-50/20 py-20 md:py-24"
-    >
+<div
+  ref={sectionRef}
+  className="relative overflow-hidden border-t border-indigo-100 bg-gradient-to-br from-indigo-50/30 via-white to-violet-50/20 py-20 md:py-24"
+>
+{/* BACKGROUND LAYERS */}
+<div className="pointer-events-none absolute inset-0">
+  {/* Moving grid (boxes) */}
+  <div className="absolute inset-0 hero-grid opacity-30" />
+
+  {/* Soft ambient glow */}
+  <div className="absolute inset-0 hero-ambient opacity-50" />
+</div>
+
       <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content */}
         <div className="">
