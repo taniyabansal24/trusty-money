@@ -105,7 +105,7 @@ export function SolutionOverview() {
                 {/* Globe Container */}
                 <div className="absolute inset-0 z-10 flex items-center justify-center">
                   <div className="w-full max-w-[360px] h-[360px] sm:max-w-[440px] sm:h-[440px] md:max-w-[520px] md:h-[520px] lg:max-w-none lg:w-[700px] lg:h-[700px] xl:w-[760px] xl:h-[760px]">
-                    <RandomGlobe />
+                    {/* <RandomGlobe /> */}
                   </div>
                 </div>
               </div>
@@ -133,7 +133,7 @@ export function SolutionOverview() {
       </div>
 
       {/* Bottom spacing */}
-      <div className="h-20" />
+      {/* <div className="h-20" /> */}
     </section>
   );
 }

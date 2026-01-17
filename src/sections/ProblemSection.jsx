@@ -2,14 +2,175 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Container } from "../components/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import GlobeIcon from "../components/svg/GlobeIcon";
+import DollarIcon from "../components/svg/DollarIcon";
+import AnalyticsIcon from "../components/svg/AnalyticsIcon";
+import SyncIcon from "../components/svg/SyncIcon";
+import DollarCircleIcon from "../components/svg/DollarCircleIcon";
+import DocumentIcon from "../components/svg/DocumentIcon";
+import BuildingIcon from "../components/svg/BuildingIcon";
+import SortVerticalIcon from "../components/svg/SortVerticalIcon";
+import InfoCircleIcon from "../components/svg/InfoCircleIcon";
+import BarChartIcon from "../components/svg/BarChartIcon";
+import ClockHistoryIcon from "../components/svg/ClockHistoryIcon";
+import ArrowUpIcon from "../components/svg/ArrowUpIcon";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+function IconWarning({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 3.5 2.9 20h18.2L12 3.5Z"
+        stroke="#f59e0b"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 9v5"
+        stroke="#f97316"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="12" cy="17" r="1.2" fill="#ef4444" />
+    </svg>
+  );
+}
+
+function IconBank({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3.5 10.5 12 4l8.5 6.5"
+        stroke="#8b5cf6"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5 10.5h14"
+        stroke="#3b82f6"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6.5 10.5V19M10 10.5V19M14 10.5V19M17.5 10.5V19"
+        stroke="#06b6d4"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4.5 19h15"
+        stroke="#0b43a0"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function IconCard({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect
+        x="4"
+        y="6"
+        width="16"
+        height="12"
+        rx="2.5"
+        stroke="#06b6d4"
+        strokeWidth="2"
+      />
+      <path d="M4 10h16" stroke="#3b82f6" strokeWidth="2" />
+      <path
+        d="M7 15h6"
+        stroke="#0b43a0"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="17.3" cy="15.5" r="1.3" fill="#8b5cf6" />
+    </svg>
+  );
+}
+
+function IconClose({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" stroke="#f97316" strokeWidth="2" />
+      <path
+        d="M7 7l10 10M17 7L7 17"
+        stroke="#ef4444"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 const ProblemSection = () => {
   const sectionRef = useRef(null);
   const phoneRef = useRef(null);
+  const bgBlobsRef = useRef([]);
+  const bgGridRef = useRef(null);
+  const bgParticlesRef = useRef([]);
+  const bgAuroraRef = useRef([]);
+  const pixelCanvasRef = useRef(null);
+  const pixelMouseRef = useRef({ x: -9999, y: -9999, active: false });
+
+  const activeTweensRef = useRef([]);
+  const activeTimeoutsRef = useRef([]);
+  const activeTriggersRef = useRef([]);
+  const startedRef = useRef(false);
+  const inViewRef = useRef(false);
+  const isScrollingRef = useRef(false);
+  const scrollEndTimeoutRef = useRef(null);
+
+  const trackTween = (tween) => {
+    if (!tween) return tween;
+    activeTweensRef.current.push(tween);
+    return tween;
+  };
+
+  const pauseAnimations = () => {
+    activeTweensRef.current.forEach((t) => {
+      if (t && t.pause) t.pause();
+    });
+  };
+
+  const resumeAnimations = () => {
+    activeTweensRef.current.forEach((t) => {
+      if (t && t.play) t.play();
+    });
+  };
+
+  const resumeIfAllowed = () => {
+    if (!inViewRef.current) return;
+    if (isScrollingRef.current) return;
+    resumeAnimations();
+  };
+
+  const [reduceEffects, setReduceEffects] = useState(true);
 
   // State to track if animation should start
   const [animationStarted, setAnimationStarted] = useState(false);
@@ -41,6 +202,225 @@ const ProblemSection = () => {
   const sidebarRefs = useRef([]);
   const sidebarCardsRef = useRef([]);
   const sidebarLinesRef = useRef([]);
+
+  useEffect(() => {
+    const canvas = pixelCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const state = {
+      raf: 0,
+      last: 0,
+      w: 0,
+      h: 0,
+      dpr: 1,
+      grid: null,
+      pending: false,
+      inView: true,
+    };
+
+    const baseColor = { r: 7, g: 63, b: 158 };
+
+    const stop = () => {
+      if (state.raf) cancelAnimationFrame(state.raf);
+      state.raf = 0;
+    };
+
+    const shouldAnimate = () => {
+      if (prefersReducedMotion) return false;
+      if (document.hidden) return false;
+      if (!state.inView) return false;
+      return true;
+    };
+
+    const makeGrid = () => {
+      const grid = document.createElement("canvas");
+      grid.width = Math.floor(state.w * state.dpr);
+      grid.height = Math.floor(state.h * state.dpr);
+      const gctx = grid.getContext("2d");
+      if (!gctx) return;
+      gctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+
+      const cell = 5;
+      const gap = 3;
+      const step = cell + gap;
+      const cols = Math.ceil(state.w / step);
+      const rows = Math.ceil(state.h / step);
+
+      gctx.clearRect(0, 0, state.w, state.h);
+      gctx.fillStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, 0.035)`;
+      for (let y = 0; y < rows; y += 1) {
+        for (let x = 0; x < cols; x += 1) {
+          if ((x + y) % 2 !== 0) continue;
+          if (Math.random() < 0.35) continue;
+          const px = x * step + gap;
+          const py = y * step + gap;
+          gctx.fillRect(px, py, cell, cell);
+        }
+      }
+
+      state.grid = grid;
+    };
+
+    const resize = () => {
+      const parent = canvas.parentElement;
+      const rect = parent
+        ? parent.getBoundingClientRect()
+        : canvas.getBoundingClientRect();
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      state.dpr = dpr;
+      state.w = Math.max(1, Math.floor(rect.width));
+      state.h = Math.max(1, Math.floor(rect.height));
+      canvas.width = Math.floor(state.w * dpr);
+      canvas.height = Math.floor(state.h * dpr);
+      canvas.style.width = `${state.w}px`;
+      canvas.style.height = `${state.h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      makeGrid();
+      state.pending = true;
+      render();
+    };
+
+    const render = () => {
+      if (prefersReducedMotion) return;
+      if (document.hidden) return;
+
+      ctx.clearRect(0, 0, state.w, state.h);
+      if (state.grid) {
+        const t = (performance.now() || 0) * 0.001;
+        const ox = Math.sin(t * 0.6) * 1.2;
+        const oy = Math.cos(t * 0.55) * 1.2;
+
+        ctx.save();
+        ctx.globalAlpha = 0.92;
+        ctx.drawImage(state.grid, ox, oy, state.w, state.h);
+        ctx.globalAlpha = 0.5 + 0.08 * (1 + Math.sin(t * 1.25));
+        ctx.globalCompositeOperation = "lighter";
+        ctx.drawImage(state.grid, -ox * 0.6, -oy * 0.6, state.w, state.h);
+        ctx.restore();
+      }
+
+      const mx = pixelMouseRef.current.x;
+      const my = pixelMouseRef.current.y;
+      const active = pixelMouseRef.current.active;
+      if (!active) return;
+
+      const radius = 170;
+      const grad = ctx.createRadialGradient(mx, my, 0, mx, my, radius);
+      grad.addColorStop(0, `rgba(14,165,233,0.14)`);
+      grad.addColorStop(0.45, `rgba(6,182,212,0.07)`);
+      grad.addColorStop(1, `rgba(14,165,233,0)`);
+
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(mx, my, radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
+
+    const tick = (ts) => {
+      if (!shouldAnimate()) {
+        stop();
+        return;
+      }
+
+      const fps = 24;
+      const frameMs = 1000 / fps;
+      if (ts - state.last >= frameMs) {
+        state.last = ts;
+        render();
+      }
+      state.raf = requestAnimationFrame(tick);
+    };
+
+    const onMove = (clientX, clientY) => {
+      const rect = canvas.getBoundingClientRect();
+      pixelMouseRef.current.x = clientX - rect.left;
+      pixelMouseRef.current.y = clientY - rect.top;
+      pixelMouseRef.current.active = true;
+
+      if (!state.pending) {
+        state.pending = true;
+        requestAnimationFrame(() => {
+          state.pending = false;
+          render();
+        });
+      }
+
+      if (!state.raf && shouldAnimate()) {
+        state.last = 0;
+        state.raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const onMouseMove = (e) => onMove(e.clientX, e.clientY);
+    const onTouchMove = (e) => {
+      const t = e.touches && e.touches[0];
+      if (t) onMove(t.clientX, t.clientY);
+    };
+    const onLeave = () => {
+      pixelMouseRef.current.active = false;
+      if (!state.pending) {
+        state.pending = true;
+        requestAnimationFrame(() => {
+          state.pending = false;
+          render();
+        });
+      }
+    };
+
+    const onVisibility = () => {
+      if (!shouldAnimate()) {
+        stop();
+      } else if (!state.raf) {
+        state.last = 0;
+        state.raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        state.inView = !!entry?.isIntersecting;
+        onVisibility();
+      },
+      { threshold: 0.05 },
+    );
+    io.observe(canvas);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("blur", onLeave, { passive: true });
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    render();
+
+    if (shouldAnimate()) {
+      state.last = 0;
+      state.raf = requestAnimationFrame(tick);
+    }
+
+    return () => {
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("blur", onLeave);
+    };
+  }, []);
 
   // Initialize refs after component mounts
   useEffect(() => {
@@ -78,7 +458,7 @@ const ProblemSection = () => {
       {
         opacity: 1,
         scale: 1,
-      }
+      },
     );
 
     // Initialize sidebars refs arrays
@@ -107,9 +487,10 @@ const ProblemSection = () => {
           onEnter: () => {
             setAnimationStarted(true);
             // Delay the full animation sequence slightly
-            setTimeout(() => {
+            const startId = window.setTimeout(() => {
               startFullAnimationSequence();
             }, 800);
+            trackTimeout(startId);
           },
           onEnterBack: () => {
             // Optional: if you want it to animate again when scrolling back up
@@ -118,6 +499,29 @@ const ProblemSection = () => {
           markers: false, // Set to true for debugging
         },
       });
+
+      const visibilityTrigger = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        onEnter: () => {
+          inViewRef.current = true;
+          resumeIfAllowed();
+        },
+        onEnterBack: () => {
+          inViewRef.current = true;
+          resumeIfAllowed();
+        },
+        onLeave: () => {
+          inViewRef.current = false;
+          pauseAnimations();
+        },
+        onLeaveBack: () => {
+          inViewRef.current = false;
+          pauseAnimations();
+        },
+      });
+      activeTriggersRef.current.push(visibilityTrigger);
 
       // ===== PHONE ENTRANCE ANIMATION =====
       entranceTl
@@ -137,7 +541,7 @@ const ProblemSection = () => {
             rotationX: 0,
             duration: 1.2,
             ease: "power3.out",
-          }
+          },
         )
         // Animate phone shadow simultaneously
         .fromTo(
@@ -154,31 +558,76 @@ const ProblemSection = () => {
             duration: 1,
             ease: "power2.out",
           },
-          "<" // Start at same time as phone animation
+          "<", // Start at same time as phone animation
         );
-
-      // Cleanup function
-      return () => ctx.revert();
     });
 
     // Cleanup ScrollTrigger
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ctx.revert();
     };
   }, []); // Empty dependency array - runs once on mount
 
+  useEffect(() => {
+    const onScroll = () => {
+      isScrollingRef.current = true;
+      pauseAnimations();
+      setReduceEffects(true);
+
+      if (scrollEndTimeoutRef.current) {
+        clearTimeout(scrollEndTimeoutRef.current);
+      }
+
+      scrollEndTimeoutRef.current = window.setTimeout(() => {
+        isScrollingRef.current = false;
+        resumeIfAllowed();
+      }, 140);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollEndTimeoutRef.current) {
+        clearTimeout(scrollEndTimeoutRef.current);
+        scrollEndTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
   // Main animation sequence
   const startFullAnimationSequence = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
     const ctx = gsap.context(() => {
+      const phoneHighlight = phoneRef.current?.querySelector(
+        ".problem-phone-highlight",
+      );
+
+      if (phoneHighlight) {
+        gsap.set(phoneHighlight, { opacity: 0.55, xPercent: -30 });
+        trackTween(
+          gsap.to(phoneHighlight, {
+            xPercent: 30,
+            opacity: 0.85,
+            duration: 4.8,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          }),
+        );
+      }
+
       // ========== STEP 1: CONTINUOUS PHONE FLOAT (NO ENTRANCE) ==========
-      gsap.to(phoneRef.current, {
-        y: "+=10",
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: 0.5, // wait after scroll-trigger entrance
-      });
+      trackTween(
+        gsap.to(phoneRef.current, {
+          y: "+=10",
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: 0.5, // wait after scroll-trigger entrance
+        }),
+      );
 
       // ========== STEP 2: ANIMATE FIRST SCREEN ELEMENTS ==========
       const firstScreenTl = gsap.timeline({ delay: 0.5 });
@@ -199,7 +648,7 @@ const ProblemSection = () => {
             duration: 0.8,
             ease: "back.out(1.4)",
             delay: index * 0.15,
-          }
+          },
         );
       });
 
@@ -214,23 +663,23 @@ const ProblemSection = () => {
           duration: 0.7,
           ease: "back.out(1.6)",
           delay: 0.3,
-        }
+        },
       );
 
       // Title & subtitle
       gsap.fromTo(
         titleRef.current,
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, delay: 0.5 }
+        { y: 0, opacity: 1, duration: 0.6, delay: 0.5 },
       );
 
       gsap.fromTo(
         subtitleRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, delay: 0.65 }
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, delay: 0.7 },
       );
 
-      // Dots animation
+      // Dots animation (entrance only, no pulse)
       dotsRef.current.forEach((dot, index) => {
         gsap.fromTo(
           dot,
@@ -240,7 +689,7 @@ const ProblemSection = () => {
             opacity: 0.6,
             duration: 0.3,
             delay: 1 + index * 0.1,
-          }
+          },
         );
       });
 
@@ -251,44 +700,131 @@ const ProblemSection = () => {
         gsap.fromTo(
           el,
           { opacity: 0 },
-          { opacity: 1, duration: 0.5, delay: 1.2 + i * 0.2 }
+          { opacity: 1, duration: 0.5, delay: 1.2 + i * 0.2 },
         );
 
-        gsap.to(el, {
-          y: "+=8",
-          duration: 2.2 + i * 0.4,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: 1.7 + i * 0.25,
-        });
+        trackTween(
+          gsap.to(el, {
+            y: "+=8",
+            duration: 2.2 + i * 0.4,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: 1.7 + i * 0.25,
+          }),
+        );
       });
 
-      // Dots pulse loop
-      const dots = dotsRef.current.filter(Boolean);
-      if (dots.length > 0) {
-        const pulseTl = gsap.timeline({ repeat: -1, delay: 2.5 });
-
-        dots.forEach((dot) => {
-          pulseTl
-            .to(dot, { scale: 1.5, opacity: 1, duration: 0.4 })
-            .to(dot, { scale: 1, opacity: 0.6, duration: 0.3 }, "-=0.2");
+      // Background blobs animation
+      const blobs = bgBlobsRef.current.filter(Boolean);
+      if (blobs.length > 0) {
+        blobs.forEach((blob, i) => {
+          trackTween(
+            gsap.to(blob, {
+              x: (i % 2 === 0 ? 1 : -1) * (18 + i * 6),
+              y: (i % 2 === 0 ? -1 : 1) * (14 + i * 5),
+              scale: 1.06,
+              rotate: i % 2 === 0 ? 6 : -6,
+              duration: 10 + i * 3,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            }),
+          );
         });
+      }
 
-        pulseTl.to({}, { duration: 0.5 });
+      if (bgGridRef.current) {
+        gsap.set(bgGridRef.current, { backgroundPosition: "0px 0px" });
+        trackTween(
+          gsap.to(bgGridRef.current, {
+            backgroundPosition: "120px 120px",
+            duration: 18,
+            ease: "none",
+            repeat: -1,
+          }),
+        );
+      }
+
+      const particles = bgParticlesRef.current.filter(Boolean);
+      if (particles.length > 0) {
+        particles.forEach((p, i) => {
+          trackTween(
+            gsap.to(p, {
+              y: (i % 2 === 0 ? -1 : 1) * (18 + i * 3),
+              x: (i % 3 === 0 ? 1 : -1) * (10 + i * 2),
+              opacity: 0.85,
+              duration: 6.5 + i * 0.7,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            }),
+          );
+        });
+      }
+
+      const auroras = bgAuroraRef.current.filter(Boolean);
+      if (auroras.length > 0) {
+        auroras.forEach((a, i) => {
+          gsap.set(a, { rotate: i * 18, transformOrigin: "50% 50%" });
+          trackTween(
+            gsap.to(a, {
+              rotate: i % 2 === 0 ? "+=26" : "-=26",
+              scale: i % 2 === 0 ? 1.08 : 1.12,
+              x: i % 2 === 0 ? 20 : -20,
+              y: i % 2 === 0 ? -14 : 14,
+              duration: 14 + i * 4,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            }),
+          );
+
+          trackTween(
+            gsap.to(a, {
+              opacity: i === 0 ? 0.75 : 0.55,
+              duration: 6 + i * 2,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            }),
+          );
+        });
       }
 
       // ========== STEP 3: START AUTOMATIC TRANSITIONS ==========
-      const transitionTimeout = setTimeout(() => {
+      const transitionTimeout = window.setTimeout(() => {
         startAutomaticTransitions();
       }, 4000);
+      trackTimeout(transitionTimeout);
 
       return () => {
         clearTimeout(transitionTimeout);
-        ctx.revert();
       };
     });
   };
+
+  useEffect(() => {
+    return () => {
+      activeTimeoutsRef.current.forEach((id) => clearTimeout(id));
+      activeTimeoutsRef.current = [];
+
+      if (scrollEndTimeoutRef.current) {
+        clearTimeout(scrollEndTimeoutRef.current);
+        scrollEndTimeoutRef.current = null;
+      }
+
+      activeTweensRef.current.forEach((t) => {
+        if (t && t.kill) t.kill();
+      });
+      activeTweensRef.current = [];
+
+      activeTriggersRef.current.forEach((tr) => {
+        if (tr && tr.kill) tr.kill();
+      });
+      activeTriggersRef.current = [];
+    };
+  }, []);
 
   // Automatic screen transitions with sidebar animations
   const startAutomaticTransitions = () => {
@@ -308,35 +844,36 @@ const ProblemSection = () => {
         defaults: { ease: "power2.out" },
       });
 
-      // ========== FLASHLESS SIDEBAR ANIMATION ==========
-
-      // Helper function for flawless sidebar animation
+      // Helper function for flawless sidebar animation (dotted, static lines)
+      // Enhanced professional animateSidebar function with subtle border hit effect
       const animateSidebar = (lineIndex, cardIndex, isLeftSide = false) => {
-        if (
-          !sidebarLinesRef.current[lineIndex] ||
-          !sidebarCardsRef.current[cardIndex]
-        )
-          return;
-
         const line = sidebarLinesRef.current[lineIndex];
         const card = sidebarCardsRef.current[cardIndex];
+        if (!line || !card) return;
 
-        // CRITICAL: Set initial states BEFORE showing the element
+        if (line._flowTween) {
+          line._flowTween.kill();
+          line._flowTween = null;
+        }
+
+        // Simple line style (unchanged)
         gsap.set(line, {
           scaleX: 0,
           transformOrigin: isLeftSide ? "right center" : "left center",
           opacity: 1,
         });
 
-        // CRITICAL: Set card to invisible and scaled down BEFORE animation
+        // Set card with initial state
         gsap.set(card, {
           opacity: 0,
-          scale: 0.8,
-          x: isLeftSide ? -20 : 20,
-          y: 10,
+          scale: 0.95,
+          x: isLeftSide ? -15 : 15,
+          y: 8,
+          borderColor: "rgba(226, 232, 240, 0)", // Start with transparent border
+          borderWidth: "1px",
+          borderStyle: "solid",
         });
 
-        // Create a timeline for this sidebar
         const sidebarTl = gsap.timeline();
 
         // 1. Draw the line from phone to card position (0.9s)
@@ -344,13 +881,13 @@ const ProblemSection = () => {
           line,
           {
             scaleX: 1,
-            duration: 0.9,
+            duration: 0.85,
             ease: "power3.out",
           },
-          0
+          0,
         );
 
-        // 2. At 70% of line animation (0.63s), start card animation
+        // 2. Animate card appearing (starts at 70% of line animation)
         sidebarTl.to(
           card,
           {
@@ -358,24 +895,105 @@ const ProblemSection = () => {
             scale: 1,
             x: 0,
             y: 0,
-            duration: 0.7,
-            ease: "back.out(1.5)",
+            duration: 0.6,
+            ease: "power2.out",
           },
-          0.63
+          0.6,
         );
 
-        // 3. Add subtle glow effect after card appears
+        // 3. PROFESSIONAL BORDER HIT EFFECT - With extended flash
+        // When line reaches the card (0.85s), trigger border animation
+        sidebarTl
+          .to(
+            card,
+            {
+              // First: Extended flash of blue border (increased from 0.15s to 0.3s)
+              borderColor: "rgba(59, 130, 246, 0.7)", // Increased opacity for better visibility
+              borderWidth: "1.8px", // Slightly thicker for more impact
+              duration: 0.3, // Increased from 0.15s
+              ease: "power2.out",
+            },
+            0.85,
+          )
+          // Then: Longer pulse with gradient
+          .to(
+            card,
+            {
+              borderColor: "rgba(59, 130, 246, 0.4)", // Higher opacity
+              borderWidth: "2.2px", // Slightly thicker
+              boxShadow:
+                "0 0 0 3px rgba(59, 130, 246, 0.15), 0 20px 40px rgba(11, 67, 160, 0.15)", // Enhanced shadow
+              duration: 0.35, // Increased from 0.2s
+              ease: "power2.inOut",
+            },
+            0.95, // Adjusted timing to account for longer first phase
+          )
+          // Then: Intermediate step for smoother transition
+          .to(
+            card,
+            {
+              borderColor: "rgba(59, 130, 246, 0.25)",
+              borderWidth: "1.5px",
+              boxShadow:
+                "0 0 0 1px rgba(59, 130, 246, 0.1), 0 20px 40px rgba(11, 67, 160, 0.12)",
+              duration: 0.25,
+              ease: "power2.out",
+            },
+            1.1,
+          )
+          // Final: Settle to elegant border with soft glow
+          .to(
+            card,
+            {
+              borderColor: "rgba(59, 130, 246, 0.15)",
+              borderWidth: "1px",
+              boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+              duration: 0.4,
+              ease: "power2.out",
+            },
+            1.25,
+          );
+
+        // 4. Optional: Very subtle shadow enhancement
         sidebarTl.to(
           card,
           {
-            boxShadow: "0 20px 40px rgba(11, 67, 160, 0.15)",
+            boxShadow: "0 25px 50px rgba(11, 67, 160, 0.15)",
             duration: 0.4,
             ease: "power2.out",
           },
-          0.9
+          1.1,
         );
 
         return sidebarTl;
+      };
+
+      // Helper function for screen header animations
+      const animateScreenHeader = (screenIndex) => {
+        const screen = screensRef.current[screenIndex];
+        if (!screen) return;
+
+        const header = screen.querySelector(".problem-screen-header");
+        if (!header) return;
+
+        const headerBits = Array.from(
+          header.querySelectorAll("p, h3, div"),
+        ).filter((el) => el && el.textContent && el.textContent.trim().length);
+
+        if (headerBits.length === 0) return;
+
+        gsap.fromTo(
+          headerBits,
+          { y: 10, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: "power2.out",
+            stagger: 0.05,
+            overwrite: "auto",
+          },
+        );
       };
 
       // Screen 1 → Screen 2 (Payments) - SHOW SIDEBAR 1 (RIGHT SIDE)
@@ -394,7 +1012,14 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<"
+          "<",
+        )
+        .call(
+          () => {
+            animateScreenHeader(1);
+          },
+          null,
+          "<+=0.05",
         )
         .call(() => {
           // Show sidebar 1 BUT keep it invisible initially
@@ -428,7 +1053,7 @@ const ProblemSection = () => {
             duration: 0.8,
             ease: "power3.out",
           },
-          "<"
+          "<",
         )
         .to({}, { duration: 2.8 });
 
@@ -448,7 +1073,14 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<"
+          "<",
+        )
+        .call(
+          () => {
+            animateScreenHeader(2);
+          },
+          null,
+          "<+=0.05",
         )
         .call(() => {
           setVisibleSidebars([true, true, false, false]);
@@ -480,7 +1112,7 @@ const ProblemSection = () => {
             duration: 0.7,
             ease: "power3.out",
           },
-          "<"
+          "<",
         )
         .to({}, { duration: 2.8 });
 
@@ -500,7 +1132,14 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<"
+          "<",
+        )
+        .call(
+          () => {
+            animateScreenHeader(3);
+          },
+          null,
+          "<+=0.05",
         )
         .call(() => {
           setVisibleSidebars([true, true, true, false]);
@@ -532,7 +1171,7 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power3.out",
           },
-          "<"
+          "<",
         )
         .to({}, { duration: 2.8 });
 
@@ -552,7 +1191,14 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<"
+          "<",
+        )
+        .call(
+          () => {
+            animateScreenHeader(4);
+          },
+          null,
+          "<+=0.05",
         )
         .call(() => {
           setVisibleSidebars([true, true, true, true]);
@@ -584,7 +1230,7 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power3.out",
           },
-          "<"
+          "<",
         )
         .to({}, { duration: 3.8 });
 
@@ -599,6 +1245,10 @@ const ProblemSection = () => {
           // First, shrink lines back to phone
           sidebarLinesRef.current.forEach((line, index) => {
             if (line) {
+              if (line._flowTween) {
+                line._flowTween.kill();
+                line._flowTween = null;
+              }
               fadeOutTl.to(
                 line,
                 {
@@ -607,25 +1257,27 @@ const ProblemSection = () => {
                   duration: 0.5,
                   ease: "power2.in",
                 },
-                index * 0.08
+                index * 0.08,
               );
             }
           });
 
           // Then fade out cards
+          // In the fadeOutTl section of startAutomaticTransitions:
           sidebarCardsRef.current.forEach((card, index) => {
             if (card) {
               fadeOutTl.to(
                 card,
                 {
                   opacity: 0,
-                  scale: 0.9,
-                  x: index % 2 === 0 ? 15 : -15,
-                  y: 15,
-                  duration: 0.5,
+                  scale: 0.92,
+                  x: index % 2 === 0 ? 12 : -12,
+                  y: 12,
+                  borderColor: "rgba(226, 232, 240, 0)", // Fade border out
+                  duration: 0.45,
                   ease: "power2.in",
                 },
-                index * 0.08 + 0.1
+                index * 0.08 + 0.1,
               );
             }
           });
@@ -636,7 +1288,7 @@ const ProblemSection = () => {
               setVisibleSidebars([false, false, false, false]);
             },
             null,
-            "+=0.2"
+            "+=0.2",
           );
         })
         .to(
@@ -647,7 +1299,7 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.in",
           },
-          "<"
+          "<",
         )
         .to(
           screensRef.current[5],
@@ -657,7 +1309,14 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.out",
           },
-          "<"
+          "<",
+        )
+        .call(
+          () => {
+            animateScreenHeader(5);
+          },
+          null,
+          "<+=0.08",
         )
         .from(
           screen6CardsRef.current.filter(Boolean),
@@ -669,7 +1328,7 @@ const ProblemSection = () => {
             duration: 0.7,
             ease: "back.out(1.2)",
           },
-          "<+=0.3"
+          "<+=0.3",
         )
         .to({}, { duration: 4 });
 
@@ -684,7 +1343,7 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<" // 👈 overlap with screen 6 still visible
+          "<", // 👈 overlap with screen 6 still visible
         )
         .to(
           screensRef.current[5],
@@ -694,7 +1353,7 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<"
+          "<",
         )
         .set(screensRef.current.slice(1), {
           opacity: 0,
@@ -703,8 +1362,6 @@ const ProblemSection = () => {
         .call(() => {
           masterTl.restart();
         });
-
-      return () => ctx.revert();
     });
   };
 
@@ -720,13 +1377,6 @@ const ProblemSection = () => {
       pointerEvents: "none",
     });
 
-    // Show first screen with content
-    gsap.set(screensRef.current[0], {
-      backgroundColor: "#EDF2FE",
-      opacity: 1,
-      pointerEvents: "auto",
-    });
-
     // Show all first screen content
     gsap.set(
       [
@@ -740,7 +1390,7 @@ const ProblemSection = () => {
       {
         opacity: 1,
         scale: 1,
-      }
+      },
     );
   };
 
@@ -750,6 +1400,7 @@ const ProblemSection = () => {
         ref={sectionRef}
         className="relative min-h-screen overflow-hidden isolate bg-white"
       >
+        {/* Sidebar Components */}
         {/* Sidebar Components */}
         <div className="absolute inset-0 overflow-visible pointer-events-none z-40">
           {/* Sidebar 1 (for Screen 2: Payments) - RIGHT SIDE */}
@@ -771,16 +1422,14 @@ const ProblemSection = () => {
                 />
 
                 {/* Sidebar card */}
+                {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[0] = el)}
-                  className="absolute left-[200px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
+                  className="absolute left-[200px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl w-[280px] pointer-events-auto border border-gray-200/50"
                   style={{
-                    boxShadow: "0 20px 40px rgba(79, 122, 255, 0.15)",
+                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="text-[10px] font-semibold tracking-wider text-[#0B43A0] mb-3 uppercase">
-                    Problem
-                  </div>
                   <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
                     Expensive &amp; slow collections
                   </h3>
@@ -797,7 +1446,7 @@ const ProblemSection = () => {
           {/* Sidebar 2 (for Screen 3: Reconciliation) - LEFT SIDE */}
           {visibleSidebars[1] && (
             <div
-              className="absolute left-1/2 top-[35%] -translate-y-1/2 z-50"
+              className="absolute left-1/2 top-1/4 -translate-y-1/2 z-50"
               style={{ marginLeft: "-175px" }}
             >
               <div className="relative">
@@ -817,12 +1466,9 @@ const ProblemSection = () => {
                   ref={(el) => (sidebarCardsRef.current[1] = el)}
                   className="absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
                   style={{
-                    boxShadow: "0 20px 40px rgba(79, 122, 255, 0.15)",
+                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="text-[10px] font-semibold tracking-wider text-[#0B43A0] mb-3 uppercase">
-                    Problem
-                  </div>
                   <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
                     Fragmented reconciliation
                   </h3>
@@ -858,12 +1504,9 @@ const ProblemSection = () => {
                   ref={(el) => (sidebarCardsRef.current[2] = el)}
                   className="absolute left-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
                   style={{
-                    boxShadow: "0 20px 40px rgba(79, 122, 255, 0.15)",
+                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="text-[10px] font-semibold tracking-wider text-[#0B43A0] mb-3 uppercase">
-                    Problem
-                  </div>
                   <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
                     Manual invoicing
                   </h3>
@@ -880,7 +1523,7 @@ const ProblemSection = () => {
           {/* Sidebar 4 (for Screen 5: Compliance) - LEFT SIDE */}
           {visibleSidebars[3] && (
             <div
-              className="absolute left-1/2 top-3/4 -translate-y-1/2 z-50"
+              className="absolute left-1/2 top-[65%] -translate-y-1/2 z-50"
               style={{ marginLeft: "-175px" }}
             >
               <div className="relative">
@@ -900,12 +1543,9 @@ const ProblemSection = () => {
                   ref={(el) => (sidebarCardsRef.current[3] = el)}
                   className="absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
                   style={{
-                    boxShadow: "0 20px 40px rgba(79, 122, 255, 0.15)",
+                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="text-[10px] font-semibold tracking-wider text-[#0B43A0] mb-3 uppercase">
-                    Problem
-                  </div>
                   <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
                     Fragmented compliance
                   </h3>
@@ -921,20 +1561,30 @@ const ProblemSection = () => {
 
         {/* Main container */}
         <Container className="relative z-0">
-          <div className="h-screen flex items-center justify-center overflow-hidden pb-20">
+          <div className="min-h-[100svh] lg:h-screen flex items-center justify-center overflow-hidden pb-16 lg:pb-20">
             {/* Phone mockup */}
             <div
               ref={phoneRef}
-              className="relative w-[343px] h-[680px] z-20 transform-gpu"
+              className="relative w-[300px] h-[610px] sm:w-[343px] sm:h-[680px] z-20 transform-gpu translate-y-12 sm:translate-y-16 md:translate-y-28"
             >
               {/* Glow effect */}
-              <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-3xl rounded-[70px]" />
+              <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-2xl rounded-[70px]" />
+
+              <div
+                className="problem-phone-highlight absolute inset-[-10px] rounded-[64px] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0) 60%)",
+                  filter: "blur(2px)",
+                  transform: "skewX(-12deg)",
+                }}
+              />
 
               {/* Drop shadow for depth */}
               <div className="phone-shadow absolute -bottom-6 left-1/2 -translate-x-1/2 w-[320px] h-12 bg-gradient-to-t from-black/40 via-transparent to-transparent blur-xl rounded-full" />
 
               {/* Outer phone frame with softer shadows */}
-<div className="relative w-full h-full bg-black rounded-[37px] border-[2px] border-black shadow-[0_15px_30px_-8px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden">
+              <div className="relative w-full h-full bg-black rounded-[37px] border-[2px] border-black shadow-[0_15px_30px_-8px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.05)_inset] overflow-hidden">
                 {/* Screen notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20 shadow-sm" />
 
@@ -975,20 +1625,7 @@ const ProblemSection = () => {
                               ref={globeRef}
                               className="w-16 h-16 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-2xl flex items-center justify-center shadow-lg"
                             >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-9 h-9 text-white"
-                              >
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                                <path d="M2 12h20" />
-                              </svg>
+                              <GlobeIcon className="w-10 h-10 text-white" />
                             </div>
                           </div>
 
@@ -1001,19 +1638,7 @@ const ProblemSection = () => {
                               style={{ zIndex: 10 - i }}
                             >
                               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  className="w-5 h-5 text-[#0B43A0]"
-                                >
-                                  <line x1="12" x2="12" y1="2" y2="22" />
-                                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                </svg>
+                                <DollarIcon className="w-5 h-5 text-[#4f7aff]" />
                               </div>
                             </div>
                           ))}
@@ -1056,7 +1681,7 @@ const ProblemSection = () => {
                   >
                     <div className="w-full h-full bg-white flex flex-col px-5 py-8">
                       {/* ===== HEADER ===== */}
-                      <div className="flex items-center justify-between mb-5">
+                      <div className="problem-screen-header flex items-center justify-between mb-5">
                         <div>
                           <p className="text-xs tracking-wide uppercase text-[#425466]">
                             Payments
@@ -1067,19 +1692,7 @@ const ProblemSection = () => {
                         </div>
 
                         <div className="w-9 h-9 bg-[#3b82f6]/10 rounded-xl flex items-center justify-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4 text-[#3b82f6]"
-                          >
-                            <path d="M16 17h6v-6" />
-                            <path d="m22 17-8.5-8.5-5 5L2 7" />
-                          </svg>
+                          <AnalyticsIcon size={48} />
                         </div>
                       </div>
 
@@ -1088,7 +1701,7 @@ const ProblemSection = () => {
                         {/* ===== CARD 1 : PAYMENT CYCLES ===== */}
                         <div
                           ref={(el) => (screen2CardsRef.current[0] = el)}
-                          className="bg-gradient-to-br from-[#f0f7ff] to-[#e6f0ff] rounded-xl p-4 border border-blue-100"
+                          className="bg-gradient-to-br from-[#f0f7ff] to-[#e6f0ff] rounded-xl p-4 border border-[#dbeafe]"
                           style={{
                             background:
                               "linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%)",
@@ -1096,20 +1709,8 @@ const ProblemSection = () => {
                           }}
                         >
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-8 h-8 bg-[#3b82f6] rounded-lg flex items-center justify-center">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-white"
-                              >
-                                <path d="M12 6v6l4 2" />
-                                <circle cx="12" cy="12" r="10" />
-                              </svg>
+                            <div className="w-8 h-8 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <SyncIcon size={56} />
                             </div>
 
                             <div className="flex-1">
@@ -1127,19 +1728,25 @@ const ProblemSection = () => {
                               <span className="text-[#425466]">
                                 🇮🇳 India clients
                               </span>
-                              <span className="text-sm text-[#0A2540]">45–60 days</span>
+                              <span className="text-sm text-[#0A2540]">
+                                45–60 days
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-[#425466]">
                                 🇦🇪 UAE clients
                               </span>
-                              <span className="text-sm text-[#0A2540]">30–90 days</span>
+                              <span className="text-sm text-[#0A2540]">
+                                30–90 days
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-[#425466]">
                                 🇬🇧 UK clients
                               </span>
-                              <span className="text-sm text-[#0A2540]">30–45 days</span>
+                              <span className="text-sm text-[#0A2540]">
+                                30–45 days
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -1147,7 +1754,7 @@ const ProblemSection = () => {
                         {/* ===== CARD 2 : FX MARGINS ===== */}
                         <div
                           ref={(el) => (screen2CardsRef.current[1] = el)}
-                          className="bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] rounded-xl p-4 border border-blue-100"
+                          className="bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] rounded-xl p-4 border border-[#dbeafe]"
                           style={{
                             background:
                               "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
@@ -1155,20 +1762,8 @@ const ProblemSection = () => {
                           }}
                         >
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-8 h-8 bg-[#073f9e] rounded-lg flex items-center justify-center">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-white"
-                              >
-                                <line x1="12" x2="12" y1="2" y2="22" />
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                              </svg>
+                            <div className="w-8 h-8 bg-[#073f9e] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <DollarCircleIcon size={56} />
                             </div>
 
                             <div className="flex-1">
@@ -1200,7 +1795,7 @@ const ProblemSection = () => {
                         {/* ===== CARD 3 : SLOW SETTLEMENTS ===== */}
                         <div
                           ref={(el) => (screen2CardsRef.current[2] = el)}
-                          className="bg-gradient-to-br from-white to-[#f8fafc] rounded-xl p-4 shadow-sm border border-gray-200"
+                          className="bg-gradient-to-br from-white to-[#f8fafc] rounded-xl p-4 shadow-sm border border-[#e5e7eb]"
                           style={{
                             background:
                               "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
@@ -1209,20 +1804,7 @@ const ProblemSection = () => {
                         >
                           <div className="mb-3">
                             <div className="flex items-center gap-2 mb-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-[#3b82f6]"
-                              >
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="12" x2="12" y1="8" y2="12" />
-                                <line x1="12" x2="12.01" y1="16" y2="16" />
-                              </svg>
+                              <IconWarning className="w-4 h-4" />
                               <span className="text-sm text-[#0A2540]">
                                 Slow settlements
                               </span>
@@ -1258,7 +1840,7 @@ const ProblemSection = () => {
                   >
                     <div className="w-full h-full bg-white flex flex-col px-5 py-8">
                       {/* HEADER */}
-                      <div className="flex items-center justify-between mb-5">
+                      <div className="problem-screen-header flex items-center justify-between mb-5">
                         <div>
                           <div className="text-xs text-[#425466] tracking-wide uppercase">
                             Reconciliation
@@ -1269,20 +1851,7 @@ const ProblemSection = () => {
                         </div>
 
                         <div className="w-9 h-9 bg-[#3b82f6]/10 rounded-xl flex items-center justify-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4 text-[#3b82f6]"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="12" x2="12" y1="8" y2="12" />
-                            <line x1="12" x2="12.01" y1="16" y2="16" />
-                          </svg>
+                          <AnalyticsIcon size={48} />
                         </div>
                       </div>
 
@@ -1299,21 +1868,8 @@ const ProblemSection = () => {
                           }}
                         >
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-8 h-8 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-white"
-                              >
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="m15 9-6 6" />
-                                <path d="m9 9 6 6" />
-                              </svg>
+                            <div className="w-8 h-8 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <IconClose className="w-4 h-4" />
                             </div>
 
                             <div className="flex-1">
@@ -1328,14 +1884,17 @@ const ProblemSection = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540]">
-                              🏦 3 different banks
+                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540] flex items-center gap-2">
+                              <IconBank className="w-4 h-4" />
+                              <span>3 different banks</span>
                             </div>
-                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540]">
-                              💳 5 payment gateways
+                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540] flex items-center gap-2">
+                              <IconCard className="w-4 h-4" />
+                              <span>5 payment gateways</span>
                             </div>
-                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540]">
-                              📊 2 ERP systems
+                            <div className="bg-white/80 rounded-md p-2 text-sm text-[#0A2540] flex items-center gap-2">
+                              <AnalyticsIcon size={34} />
+                              <span>2 ERP systems</span>
                             </div>
                           </div>
                         </div>
@@ -1351,20 +1910,8 @@ const ProblemSection = () => {
                           }}
                         >
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-8 h-8 bg-[#073f9e] rounded-lg flex items-center justify-center flex-shrink-0">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-white"
-                              >
-                                <path d="M12 6v6l4 2" />
-                                <circle cx="12" cy="12" r="10" />
-                              </svg>
+                            <div className="w-8 h-8 bg-[#073f9e] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <SyncIcon size={34} />
                             </div>
 
                             <div className="flex-1">
@@ -1409,19 +1956,7 @@ const ProblemSection = () => {
                         >
                           <div className="mb-3">
                             <div className="flex items-center gap-2 mb-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-[#3b82f6]"
-                              >
-                                <path d="M16 17h6v-6" />
-                                <path d="m22 17-8.5-8.5-5 5L2 7" />
-                              </svg>
+                              <AnalyticsIcon size={34} />
                               <span className="text-sm text-[#0A2540]">
                                 Delayed financial insights
                               </span>
@@ -1437,7 +1972,9 @@ const ProblemSection = () => {
                               <span className="text-[#425466]">
                                 Time to reconcile
                               </span>
-                              <span className="text-sm text-[#0A2540]">3–5 days</span>
+                              <span className="text-sm text-[#0A2540]">
+                                3–5 days
+                              </span>
                             </div>
                             <div className="flex justify-between text-xs">
                               <span className="text-[#425466]">
@@ -1466,7 +2003,7 @@ const ProblemSection = () => {
                     <div className="relative w-full h-full bg-white rounded-[44px] overflow-hidden shadow-inner">
                       <div className="w-full h-full bg-white flex flex-col px-5 py-8">
                         {/* HEADER */}
-                        <div className="flex items-center justify-between mb-5">
+                        <div className="problem-screen-header flex items-center justify-between mb-5">
                           <div>
                             <div className="text-xs text-[#425466] tracking-wide uppercase">
                               Invoicing
@@ -1477,22 +2014,7 @@ const ProblemSection = () => {
                           </div>
 
                           <div className="w-9 h-9 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-xl flex items-center justify-center">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="w-4 h-4 text-[#0B43A0]"
-                            >
-                              <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
-                              <path d="M14 2v5a1 1 0 0 0 1 1h5" />
-                              <path d="M10 9H8" />
-                              <path d="M16 13H8" />
-                              <path d="M16 17H8" />
-                            </svg>
+                            <DocumentIcon className="w-5 h-5" />
                           </div>
                         </div>
 
@@ -1504,10 +2026,11 @@ const ProblemSection = () => {
                             className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-4 shadow-sm border border-[#dbeafe]"
                           >
                             <div className="flex items-center justify-between mb-3">
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-start gap-2">
                                 <div className="w-8 h-8 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-lg flex items-center justify-center">
-                                  <span className="text-sm">🏢</span>
+                                  <BuildingIcon size={56} />
                                 </div>
+
                                 <div>
                                   <div className="text-sm text-[#0A2540]">
                                     Acme Corp Ltd.
@@ -1518,8 +2041,10 @@ const ProblemSection = () => {
                                 </div>
                               </div>
 
-                              <div className="px-2.5 py-1 bg-gradient-to-br from-[#eff6ff] to-[#dbeafe] text-[#0B43A0] text-xs rounded-md border border-[#bfdbfe]">
-                                Awaiting review
+                              <div className="flex items-center justify-between px-1 py-1 bg-gradient-to-br from-[#eff6ff] to-[#dbeafe] text-[#0B43A0] text-xs w-24 rounded-md border border-[#bfdbfe]">
+                                <span className="">Awaiting review</span>
+
+                                <SortVerticalIcon className="w-7 h-7 text-[#1E3A8A]" />
                               </div>
                             </div>
 
@@ -1546,45 +2071,20 @@ const ProblemSection = () => {
 
                             <div className="pt-3 border-t border-[#dbeafe]">
                               <div className="flex items-center gap-2 text-xs text-[#425466]">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  className="w-3.5 h-3.5 text-[#0B43A0]"
-                                >
-                                  <path d="M12 6v6l4 2" />
-                                  <circle cx="12" cy="12" r="10" />
-                                </svg>
+                                <SyncIcon size={34} />
                                 <span>Manual entry: 2.5 hours</span>
                               </div>
                             </div>
                           </div>
 
-                          {/* TAX CONFLICT - Updated to use palette colors */}
+                          {/* TAX CONFLICT */}
                           <div
                             ref={(el) => (screen4CardsRef.current[1] = el)}
                             className="bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-xl p-4 border border-[#bfdbfe]"
                           >
                             <div className="flex items-start gap-3 mb-3">
-                              <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  className="w-4 h-4 text-white"
-                                >
-                                  <circle cx="12" cy="12" r="10" />
-                                  <line x1="12" x2="12" y1="8" y2="12" />
-                                  <line x1="12" x2="12.01" y1="16" y2="16" />
-                                </svg>
+                              <div className="w-8 h-8 bg-gradient-to-br from-[#8b5cf6] to-[#3b82f6] rounded-lg flex items-center justify-center shadow-sm">
+                                <InfoCircleIcon size={56} />
                               </div>
 
                               <div className="flex-1">
@@ -1605,14 +2105,14 @@ const ProblemSection = () => {
                               ].map((item) => (
                                 <div
                                   key={item.label}
-                                  className="bg-gradient-to-br from-white to-[#f8fafc] rounded-lg p-2.5 text-center border border-[#e5e7eb]"
+                                  className="bg-gradient-to-br from-white to-[#f8fafc] rounded-md px-2 py-1 text-xs flex items-center gap-1 border border-[#e5e7eb]"
                                 >
-                                  <div className="text-[10px] text-[#425466] mb-1">
+                                  <span className="text-[#425466]">
                                     {item.label}
-                                  </div>
-                                  <div className="text-sm text-[#0A2540]">
+                                  </span>
+                                  <span className="text-sm text-[#0A2540]">
                                     {item.value}
-                                  </div>
+                                  </span>
                                 </div>
                               ))}
                             </div>
@@ -1676,7 +2176,7 @@ const ProblemSection = () => {
                   >
                     <div className="w-full h-full bg-[#f8fafc] flex flex-col px-5 py-8">
                       {/* HEADER */}
-                      <div className="flex items-center justify-between mb-5">
+                      <div className="problem-screen-header flex items-center justify-between mb-5">
                         <div>
                           <div className="text-xs text-[#425466] tracking-wide uppercase">
                             Compliance
@@ -1686,21 +2186,8 @@ const ProblemSection = () => {
                           </h3>
                         </div>
 
-                        <div className="w-9 h-9 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-xl flex items-center justify-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4 text-[#0B43A0]"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="12" x2="12" y1="8" y2="12" />
-                            <line x1="12" x2="12.01" y1="16" y2="16" />
-                          </svg>
+                        <div className="w-9 h-9 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-xl flex items-center justify-center overflow-hidden">
+                          <InfoCircleIcon size={56}/>
                         </div>
                       </div>
 
@@ -1712,22 +2199,10 @@ const ProblemSection = () => {
                           className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-4 border border-[#dbeafe]"
                         >
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-white"
-                              >
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 2a14.5 14.5 0 0 0 0 20" />
-                                <path d="M2 12h20" />
-                              </svg>
-                            </div>
+                            <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center shadow-sm">
+  <GlobeIcon className="w-5 h-5 text-white" />
+</div>
+
 
                             <div className="flex-1">
                               <div className="text-sm text-[#0A2540] mb-1">
@@ -1753,7 +2228,9 @@ const ProblemSection = () => {
                                 className="bg-gradient-to-br from-white to-[#f8fafc] rounded-md px-2 py-1 text-xs flex items-center gap-1 border border-[#e5e7eb]"
                               >
                                 <span className="text-[#425466]">{code}</span>
-                                <span className="text-sm text-[#0A2540]">{rate}</span>
+                                <span className="text-sm text-[#0A2540]">
+                                  {rate}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -1765,21 +2242,8 @@ const ProblemSection = () => {
                           className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-4 border border-[#dbeafe]"
                         >
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-4 h-4 text-white"
-                                >
-                                  <circle cx="12" cy="12" r="10" />
-                                  <path d="m15 9-6 6" />
-                                  <path d="m9 9 6 6" />
-                                </svg>
+                            <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center shadow-sm">
+                              <IconClose className="w-4 h-4" />
                             </div>
 
                             <div className="flex-1">
@@ -1875,7 +2339,7 @@ const ProblemSection = () => {
                   >
                     <div className="w-full h-full bg-white flex flex-col px-6 py-12">
                       {/* HEADER */}
-                      <div className="flex items-center justify-between mb-6">
+                      <div className="problem-screen-header flex items-center justify-between mb-6">
                         <div>
                           <div className="text-xs text-[#425466]">
                             Cash Flow
@@ -1885,22 +2349,8 @@ const ProblemSection = () => {
                           </h3>
                         </div>
 
-                        <div className="w-8 h-8 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-full flex items-center justify-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4 text-[#0B43A0]"
-                          >
-                            <path d="M3 3v16a2 2 0 0 0 2 2h16" />
-                            <path d="M18 17V9" />
-                            <path d="M13 17V5" />
-                            <path d="M8 17v-3" />
-                          </svg>
+                        <div className="w-8 h-8 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-full flex items-center justify-center overflow-hidden">
+                          <BarChartIcon className="w-5 h-5" />
                         </div>
                       </div>
 
@@ -1914,19 +2364,7 @@ const ProblemSection = () => {
                           <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-full -mr-8 -mt-8" />
                           <div className="relative">
                             <div className="flex items-center gap-2 mb-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-5 h-5 text-[#0B43A0]"
-                              >
-                                <path d="M7 7h10v10" />
-                                <path d="M7 17 17 7" />
-                              </svg>
+                              <ArrowUpIcon className="w-7 h-7" />
                               <span className="text-xs text-[#425466]">
                                 Outstanding
                               </span>
@@ -1948,19 +2386,7 @@ const ProblemSection = () => {
                           <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-full -mr-8 -mt-8" />
                           <div className="relative">
                             <div className="flex items-center gap-2 mb-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-5 h-5 text-[#0B43A0]"
-                              >
-                                <path d="M12 6v6l4 2" />
-                                <circle cx="12" cy="12" r="10" />
-                              </svg>
+                              <ClockHistoryIcon size={34} />
                               <span className="text-xs text-[#425466]">
                                 Avg settlement
                               </span>
@@ -1982,19 +2408,25 @@ const ProblemSection = () => {
                           <div className="space-y-3">
                             <div className="flex justify-between text-sm">
                               <span className="text-[#425466]">Overdue</span>
-                              <span className="text-sm text-[#0A2540]">$340K</span>
+                              <span className="text-sm text-[#0A2540]">
+                                $340K
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
                               <span className="text-[#425466]">
                                 Due this week
                               </span>
-                              <span className="text-sm text-[#0B43A0]">$520K</span>
+                              <span className="text-sm text-[#0B43A0]">
+                                $520K
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
                               <span className="text-[#425466]">
                                 Due next month
                               </span>
-                              <span className="text-sm text-[#3b82f6]">$340K</span>
+                              <span className="text-sm text-[#3b82f6]">
+                                $340K
+                              </span>
                             </div>
                           </div>
                         </div>

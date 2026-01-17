@@ -9,7 +9,6 @@ const Footer = () => {
   const footerLinks = {
     Company: [
       { name: 'Why Trusty', href: '#' },
-      { name: 'Products', href: '#products' },
     ],
     Products: [
       { name: 'Live FX Conversion', href: '#pricing' },
@@ -22,7 +21,6 @@ const Footer = () => {
     Resources: [
       { name: 'Blog', href: '#' },
       { name: 'FAQ', href: '#faq' },
-      { name: 'Careers', href: '#' },
       { name: 'Customer stories', href: '#' },
     ],
     Legal: [
@@ -41,7 +39,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-white">
+    <footer className="bg-gradient-to-b from-slate-50 via-blue-50/40 to-indigo-100/60 border-t border-slate-200/60">
       <Container className="py-12 lg:py-16">
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">

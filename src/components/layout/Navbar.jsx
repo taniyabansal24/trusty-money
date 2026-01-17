@@ -1,15 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button, Container } from '../ui';
 import { NAVIGATION_LINKS, COMPANY_NAME } from '../../constants';
-import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { scrollToSection } from '../../utils/helpers';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo2.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const scrollPosition = useScrollPosition();
-  const isScrolled = scrollPosition > 20;
+  const [isScrolled, setIsScrolled] = useState(false);
+  const rafRef = useRef(null);
+  const lastValueRef = useRef(false);
+
+  useEffect(() => {
+    const threshold = 20;
+
+    const read = () => {
+      rafRef.current = null;
+      const next = (window.pageYOffset || 0) > threshold;
+      if (next !== lastValueRef.current) {
+        lastValueRef.current = next;
+        setIsScrolled(next);
+      }
+    };
+
+    const onScroll = () => {
+      if (rafRef.current) return;
+      rafRef.current = window.requestAnimationFrame(read);
+    };
+
+    read();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   const handleNavClick = (href) => {
     const sectionId = href.replace('#', '');
@@ -17,12 +42,18 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  const visibleLinks = NAVIGATION_LINKS.filter(
+    (link) => link.name !== 'Careers' && link.name !== 'Career'
+  );
+
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 font-sans transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+        isScrolled
+          ? 'bg-transparent backdrop-blur-md shadow-md border-b border-slate-200/40'
+          : 'bg-transparent'
       }`}
     >
       <Container>
@@ -30,19 +61,13 @@ const Navbar = () => {
 
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <img src={logo} alt="Company Logo" className="h-8 w-8" />
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold cursor-pointer"
-              style={{ color: '#073f9e' }}
-            >
-              {COMPANY_NAME}
-            </motion.div>
+            <img src={logo} alt="Company Logo" className="h-[3rem] w-[12.5rem]" />
+            
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
-            {NAVIGATION_LINKS.map((link) => (
+            {visibleLinks.map((link) => (
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link.href)}
@@ -96,7 +121,7 @@ const Navbar = () => {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden mt-2 rounded-lg bg-white shadow-md py-4 space-y-3"
           >
-            {NAVIGATION_LINKS.map((link) => (
+            {visibleLinks.map((link) => (
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link.href)}

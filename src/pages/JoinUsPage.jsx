@@ -150,54 +150,6 @@ const JoinUsPage = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl font-bold mb-2" style={{ color: '#0A2540' }}>
-                  {stat.value}
-                </div>
-                <div className="text-gray-600">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Join Us Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4" style={{ color: '#0A2540' }}>
-              Why You'll Love Working Here
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: '#425466' }}>
-              We're building more than just products – we're building a culture where everyone can thrive.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <div 
-                key={index}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
-              >
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-6"
-                  style={{ backgroundColor: '#0B43A0', color: 'white' }}>
-                  {benefit.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>
-                  {benefit.title}
-                </h3>
-                <p style={{ color: '#425466' }}>{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Job Openings Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

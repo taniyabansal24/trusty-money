@@ -5,7 +5,7 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import { WireframeInvoiceCard } from "./WireframeInvoiceCard";
+import { WireframeInvoiceCard } from "./Wireframe/WireframeInvoiceCard";
 
 import { Container } from "../../components/ui";
 

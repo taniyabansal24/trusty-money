@@ -18,9 +18,9 @@ const HomePage = () => {
 
         <div className="min-h-screen bg-white">
           <SolutionOverview />
-          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-50 py-12">
+          {/* <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-50 py-12">
             <TransparencySection />
-          </div>
+          </div> */}
         </div>
       </main>
       <Footer />
