@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import US from "country-flag-icons/react/3x2/US";
+import GB from "country-flag-icons/react/3x2/GB";
+import EU from "country-flag-icons/react/3x2/EU"; // For European Union
+import CA from "country-flag-icons/react/3x2/CA";
 
 export function WireframeComplianceDashboard({
   data,
@@ -13,12 +17,12 @@ export function WireframeComplianceDashboard({
   useEffect(() => {
     if (isVisible && !shouldAnimate) {
       setShouldAnimate(true);
-      
+
       // Start wireframe animation
       setTimeout(() => {
         setAnimationPhase(1);
       }, 3500);
-      
+
       setTimeout(() => {
         setAnimationPhase(2);
         onAnimationComplete();
@@ -34,211 +38,208 @@ export function WireframeComplianceDashboard({
   // Wireframe paths for compliance dashboard
   const wireframePaths = [
     // Main dashboard outline
-    { 
-      type: 'rect',
-      x: 0, 
-      y: 0, 
-      width: dashboardWidth, 
+    {
+      type: "rect",
+      x: 0,
+      y: 0,
+      width: dashboardWidth,
       height: dashboardHeight,
       rx: borderRadius,
-      stroke: "#3b82f6", 
-      strokeWidth: 2, 
-      delay: 0, 
-      duration: 1.5 
+      stroke: "#3b82f6",
+      strokeWidth: 2,
+      delay: 0,
+      duration: 1.5,
     },
-    
+
     // Header section outline (where "Compliance Monitor" is)
-    { 
-      type: 'rect',
-      x: 20, 
-      y: 20, 
-      width: dashboardWidth - 40, 
+    {
+      type: "rect",
+      x: 20,
+      y: 20,
+      width: dashboardWidth - 40,
       height: 140,
       rx: 8,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 0.5, 
-      duration: 1 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 0.5,
+      duration: 1,
     },
-    
+
     // Live Monitoring badge area
-    { 
-      type: 'rect',
-      x: dashboardWidth - 140, 
-      y: 30, 
-      width: 110, 
+    {
+      type: "rect",
+      x: dashboardWidth - 140,
+      y: 30,
+      width: 110,
       height: 30,
       rx: 15, // pill shape
-      stroke: "#60a5fa", 
-      strokeWidth: 1.5, 
-      delay: 0.8, 
-      duration: 0.8 
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 0.8,
+      duration: 0.8,
     },
-    
+
     // Metrics grid (3 boxes)
-    { 
-      type: 'rect',
-      x: 30, 
-      y: 90, 
-      width: (dashboardWidth - 100) / 3, 
+    {
+      type: "rect",
+      x: 30,
+      y: 90,
+      width: (dashboardWidth - 100) / 3,
       height: 60,
       rx: 6,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 1.2, 
-      duration: 0.6 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 1.2,
+      duration: 0.6,
     },
-    { 
-      type: 'rect',
-      x: 30 + ((dashboardWidth - 100) / 3) + 20, 
-      y: 90, 
-      width: (dashboardWidth - 100) / 3, 
+    {
+      type: "rect",
+      x: 30 + (dashboardWidth - 100) / 3 + 20,
+      y: 90,
+      width: (dashboardWidth - 100) / 3,
       height: 60,
       rx: 6,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 1.4, 
-      duration: 0.6 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 1.4,
+      duration: 0.6,
     },
-    { 
-      type: 'rect',
-      x: 30 + (2 * ((dashboardWidth - 100) / 3)) + 40, 
-      y: 90, 
-      width: (dashboardWidth - 100) / 3, 
+    {
+      type: "rect",
+      x: 30 + 2 * ((dashboardWidth - 100) / 3) + 40,
+      y: 90,
+      width: (dashboardWidth - 100) / 3,
       height: 60,
       rx: 6,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 1.6, 
-      duration: 0.6 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 1.6,
+      duration: 0.6,
     },
-    
+
     // Main content area (Active Tax Jurisdictions)
-    { 
-      type: 'rect',
-      x: 20, 
-      y: 180, 
-      width: dashboardWidth - 40, 
+    {
+      type: "rect",
+      x: 20,
+      y: 180,
+      width: dashboardWidth - 40,
       height: dashboardHeight - 220,
       rx: 8,
-      stroke: "#3b82f6", 
-      strokeWidth: 2, 
-      delay: 2.0, 
-      duration: 1 
+      stroke: "#3b82f6",
+      strokeWidth: 2,
+      delay: 2.0,
+      duration: 1,
     },
-    
+
     // Section header (Active Tax Jurisdictions)
-    { 
-      type: 'rect',
-      x: 30, 
-      y: 190, 
-      width: 200, 
+    {
+      type: "rect",
+      x: 30,
+      y: 190,
+      width: 200,
       height: 25,
       rx: 4,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 2.3, 
-      duration: 0.6 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 2.3,
+      duration: 0.6,
     },
-    
+
     // Region cards (4 cards)
-    { 
-      type: 'rect',
-      x: 30, 
-      y: 230, 
-      width: dashboardWidth - 60, 
+    {
+      type: "rect",
+      x: 30,
+      y: 230,
+      width: dashboardWidth - 60,
       height: 80,
       rx: 8,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 2.6, 
-      duration: 0.7 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 2.6,
+      duration: 0.7,
     },
-    { 
-      type: 'rect',
-      x: 30, 
-      y: 325, 
-      width: dashboardWidth - 60, 
+    {
+      type: "rect",
+      x: 30,
+      y: 325,
+      width: dashboardWidth - 60,
       height: 80,
       rx: 8,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 2.8, 
-      duration: 0.7 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 2.8,
+      duration: 0.7,
     },
-    { 
-      type: 'rect',
-      x: 30, 
-      y: 420, 
-      width: dashboardWidth - 60, 
+    {
+      type: "rect",
+      x: 30,
+      y: 420,
+      width: dashboardWidth - 60,
       height: 80,
       rx: 8,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 3.0, 
-      duration: 0.7 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 3.0,
+      duration: 0.7,
     },
-    { 
-      type: 'rect',
-      x: 30, 
-      y: 515, 
-      width: dashboardWidth - 60, 
+    {
+      type: "rect",
+      x: 30,
+      y: 515,
+      width: dashboardWidth - 60,
       height: 80,
       rx: 8,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 3.2, 
-      duration: 0.7 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 3.2,
+      duration: 0.7,
     },
-    
+
     // Region flags (circles in each card)
-    { 
-      type: 'circle',
-      cx: 60, 
-      cy: 270, 
+    {
+      type: "circle",
+      cx: 60,
+      cy: 270,
       r: 20,
-      stroke: "#60a5fa", 
-      strokeWidth: 1.5, 
-      delay: 2.7, 
-      duration: 0.5 
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 2.7,
+      duration: 0.5,
     },
-    { 
-      type: 'circle',
-      cx: 60, 
-      cy: 365, 
+    {
+      type: "circle",
+      cx: 60,
+      cy: 365,
       r: 20,
-      stroke: "#60a5fa", 
-      strokeWidth: 1.5, 
-      delay: 2.9, 
-      duration: 0.5 
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 2.9,
+      duration: 0.5,
     },
-    { 
-      type: 'circle',
-      cx: 60, 
-      cy: 460, 
+    {
+      type: "circle",
+      cx: 60,
+      cy: 460,
       r: 20,
-      stroke: "#60a5fa", 
-      strokeWidth: 1.5, 
-      delay: 3.1, 
-      duration: 0.5 
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 3.1,
+      duration: 0.5,
     },
-    { 
-      type: 'circle',
-      cx: 60, 
-      cy: 555, 
+    {
+      type: "circle",
+      cx: 60,
+      cy: 555,
       r: 20,
-      stroke: "#60a5fa", 
-      strokeWidth: 1.5, 
-      delay: 3.3, 
-      duration: 0.5 
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 3.3,
+      duration: 0.5,
     },
   ];
 
   return (
-    <motion.div
-      style={{ y }}
-      className="relative"
-    >
+    <motion.div style={{ y }} className="relative">
       {/* Wireframe Overlay */}
       <AnimatePresence>
         {shouldAnimate && animationPhase === 0 && (
@@ -247,20 +248,20 @@ export function WireframeComplianceDashboard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-30 overflow-hidden"
-            style={{ 
+            style={{
               borderRadius: `${borderRadius}px`,
-              backgroundColor: 'transparent'
+              backgroundColor: "transparent",
             }}
           >
             {/* Wireframe Drawing */}
-            <svg 
-              className="absolute inset-0 w-full h-full" 
+            <svg
+              className="absolute inset-0 w-full h-full"
               viewBox={`0 0 ${dashboardWidth} ${dashboardHeight}`}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
               {wireframePaths.map((path, index) => {
-                if (path.type === 'rect') {
+                if (path.type === "rect") {
                   return (
                     <motion.rect
                       key={index}
@@ -284,7 +285,7 @@ export function WireframeComplianceDashboard({
                       fill="none"
                     />
                   );
-                } else if (path.type === 'circle') {
+                } else if (path.type === "circle") {
                   return (
                     <motion.circle
                       key={index}
@@ -308,7 +309,6 @@ export function WireframeComplianceDashboard({
                 }
                 return null;
               })}
-              
             </svg>
           </motion.div>
         )}
@@ -317,7 +317,9 @@ export function WireframeComplianceDashboard({
       {/* Main Compliance Dashboard - Your actual content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={isVisible ? { opacity: animationPhase >= 1 ? 1 : 0, y: 0 } : {}}
+        animate={
+          isVisible ? { opacity: animationPhase >= 1 ? 1 : 0, y: 0 } : {}
+        }
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
       >
@@ -377,7 +379,7 @@ export function WireframeComplianceDashboard({
                 </AnimatePresence>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={animationPhase >= 1 ? { opacity: 1 } : {}}
@@ -387,7 +389,7 @@ export function WireframeComplianceDashboard({
               <div className="mb-1 text-xs text-slate-500">Compliance Rate</div>
               <div className="text-2xl text-[#0B43A0]">100%</div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={animationPhase >= 1 ? { opacity: 1 } : {}}
@@ -408,8 +410,12 @@ export function WireframeComplianceDashboard({
             transition={{ delay: animationPhase === 1 ? 0.8 : 0.7 }}
             className="mb-4 flex items-center justify-between"
           >
-            <div className="text-sm text-slate-900">Active Tax Jurisdictions</div>
-            <div className="text-xs text-slate-500">{data.regions?.length || 4} regions</div>
+            <div className="text-sm text-slate-900">
+              Active Tax Jurisdictions
+            </div>
+            <div className="text-xs text-slate-500">
+              {data.regions?.length || 4} regions
+            </div>
           </motion.div>
 
           <div className="space-y-2">
@@ -418,19 +424,27 @@ export function WireframeComplianceDashboard({
                 key={region.code}
                 initial={{ opacity: 0, y: 10 }}
                 animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
-                transition={{ 
-                  delay: animationPhase === 1 ? 0.9 + (idx * 0.1) : idx * 0.1,
-                  duration: 0.4 
+                transition={{
+                  delay: animationPhase === 1 ? 0.9 + idx * 0.1 : idx * 0.1,
+                  duration: 0.4,
                 }}
                 className="group relative overflow-hidden rounded-lg border border-slate-100 bg-slate-50 p-4 hover:bg-white hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-lg shadow-sm">
-                      {region.code === "US" && "🇺🇸"}
-                      {region.code === "GB" && "🇬🇧"}
-                      {region.code === "EU" && "🇪🇺"}
-                      {region.code === "CA" && "🇨🇦"}
+                    <div className="flex h-10 w-10 items-center justify-center text-lg shadow-sm overflow-hidden">
+                      {region.code === "US" && (
+                        <US title="United States" className="h-6 w-auto" />
+                      )}
+                      {region.code === "GB" && (
+                        <GB title="United Kingdom" className="h-6 w-auto" />
+                      )}
+                      {region.code === "EU" && (
+                        <EU title="European Union" className="h-6 w-auto" />
+                      )}
+                      {region.code === "CA" && (
+                        <CA title="Canada" className="h-6 w-auto" />
+                      )}
                     </div>
                     <div>
                       <div className="mb-1 text-sm text-slate-900">

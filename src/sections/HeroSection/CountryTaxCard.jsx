@@ -1,12 +1,44 @@
 import React from 'react';
+import GB from 'country-flag-icons/react/3x2/GB';
+import US from 'country-flag-icons/react/3x2/US';
+import AE from 'country-flag-icons/react/3x2/AE';
+import AU from 'country-flag-icons/react/3x2/AU';
 
 const CountryTaxCard = () => {
-  const countryData = [
-    { country: "United Kingdom", currency: "GBP", flag: "🇬🇧", netAmount: "6750.00", tax: "3250.00", totalAmount: "3250.00" },
-    { country: "United States", currency: "USD", flag: "🇺🇸", netAmount: "6750.00", tax: "3250.00", totalAmount: "3250.00" },
-    { country: "UAE", currency: "AED", flag: "🇦🇪", netAmount: "6750.00", tax: "3250.00", totalAmount: "3250.00" },
-    { country: "Australia", currency: "AUD", flag: "🇦🇺", netAmount: "6750.00", tax: "3250.00", totalAmount: "3250.00" }
-  ];
+const countryData = [
+  { 
+    country: "United Kingdom", 
+    currency: "GBP", 
+    flag: <GB title="United Kingdom" style={{ width: '24px', height: '16px' }} />, 
+    netAmount: "6750.00", 
+    tax: "3250.00", 
+    totalAmount: "3250.00" 
+  },
+  { 
+    country: "United States", 
+    currency: "USD", 
+    flag: <US title="United States" style={{ width: '24px', height: '16px' }} />, 
+    netAmount: "6750.00", 
+    tax: "3250.00", 
+    totalAmount: "3250.00" 
+  },
+  { 
+    country: "UAE", 
+    currency: "AED", 
+    flag: <AE title="United Arab Emirates" style={{ width: '24px', height: '16px' }} />, 
+    netAmount: "6750.00", 
+    tax: "3250.00", 
+    totalAmount: "3250.00" 
+  },
+  { 
+    country: "Australia", 
+    currency: "AUD", 
+    flag: <AU title="Australia" style={{ width: '24px', height: '16px' }} />, 
+    netAmount: "6750.00", 
+    tax: "3250.00", 
+    totalAmount: "3250.00" 
+  }
+];
 
   return (
     <div className="w-full h-full relative">
