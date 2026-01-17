@@ -22,12 +22,12 @@ export function FeatureBlock({ title, children, index }) {
         {/* Custom bullet - simplified but still stylish */}
         <div className="relative flex-shrink-0">
           <div className="flex h-6 w-6 items-center justify-center">
-            <div className="h-4 w-4 rounded-full bg-gradient-to-br from-blue-50 to-blue-100" />
+            <div className="h-4 w-4 rounded-full " />
             <div className="absolute h-2 w-2 rounded-full bg-[#0B43A0]" />
           </div>
           {/* Connecting line - subtle visual flow */}
           {index < 2 && (
-            <div className="absolute left-3 top-6 h-4 w-0.5 bg-gradient-to-b from-blue-100 to-transparent" />
+            <div className="absolute left-3 top-6 h-4 w-0.5 " />
           )}
         </div>
 
@@ -251,12 +251,12 @@ export function BillingModule() {
   return (
     <section
       ref={sectionRef}
-      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden isolate gradient-bg"
+      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden isolate "
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 filter opacity-30 animate-float"></div>
         <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"
+          className="absolute -bottom-40 -left-40 w-80 h-80  rounded-full  filter  opacity-30 animate-float"
           style={{ animationDelay: "1s" }}
         ></div>
         <div
@@ -264,7 +264,7 @@ export function BillingModule() {
           aria-hidden="true"
         />
         <div
-          className="absolute inset-0 hero-ambient opacity-70"
+          className="absolute inset-0 opacity-70"
           aria-hidden="true"
         />
       </div>
@@ -280,7 +280,7 @@ export function BillingModule() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="h-64 w-64 rounded-full bg-gradient-to-r from-blue-200/20 to-sky-200/20 blur-3xl"
+          className="h-64 w-64 rounded-full"
         />
       </div>
 
@@ -317,7 +317,7 @@ export function BillingModule() {
           ))}
         </motion.div>
       </div>
-      <Container className="relative z-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <Container className="relative z-10 grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content */}
         <div>
           <motion.div

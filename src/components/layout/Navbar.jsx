@@ -37,8 +37,12 @@ const Navbar = () => {
   }, []);
 
   const handleNavClick = (href) => {
-    const sectionId = href.replace('#', '');
-    scrollToSection(sectionId);
+    // If it's an external link (starts with /), don't prevent default
+    if (!href.startsWith('/')) {
+      // Only handle hash links for scrolling
+      const sectionId = href.replace('#', '');
+      scrollToSection(sectionId);
+    }
     setIsOpen(false);
   };
 
@@ -61,23 +65,37 @@ const Navbar = () => {
 
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <img src={logo} alt="Company Logo" className="h-[3rem] w-[12.5rem]" />
-            
+            <a href="/">
+              <img src={logo} alt="Company Logo" className="h-[3rem] w-[13rem]" />
+            </a>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
             {visibleLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link.href)}
-                className="text-sm font-medium transition-colors duration-200"
-                style={{ color: '#425466' }}
-                onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
-                onMouseLeave={(e) => (e.target.style.color = '#425466')}
-              >
-                {link.name}
-              </button>
+              link.href === '/about-us' ? (
+                <a
+                  key={link.name}
+                  href="/about-us"
+                  className="text-sm font-medium transition-colors duration-200"
+                  style={{ color: '#425466' }}
+                  onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
+                  onMouseLeave={(e) => (e.target.style.color = '#425466')}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.href)}
+                  className="text-sm font-medium transition-colors duration-200"
+                  style={{ color: '#425466' }}
+                  onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
+                  onMouseLeave={(e) => (e.target.style.color = '#425466')}
+                >
+                  {link.name}
+                </button>
+              )
             ))}
           </div>
 
@@ -87,7 +105,7 @@ const Navbar = () => {
               Get Demo
             </Button>
             <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }}>
-              Sign Up
+              <a href='/sign-up'>Sign Up</a>
             </Button>
           </div>
 
@@ -122,22 +140,42 @@ const Navbar = () => {
             className="lg:hidden mt-2 rounded-lg bg-white shadow-md py-4 space-y-3"
           >
             {visibleLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link.href)}
-                className="block w-full text-left px-4 py-2 text-sm font-medium rounded-md transition-all duration-150 active:scale-[0.98]"
-                style={{ color: '#425466' }}
-                onTouchStart={(e) => {
-                  e.currentTarget.style.backgroundColor = '#EFF4FF';
-                  e.currentTarget.style.color = '#0B43A0';
-                }}
-                onTouchEnd={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#425466';
-                }}
-              >
-                {link.name}
-              </button>
+              link.href === '/about-us' ? (
+                <a
+                  key={link.name}
+                  href="/about-us"
+                  className="block w-full text-left px-4 py-2 text-sm font-medium rounded-md transition-all duration-150 active:scale-[0.98]"
+                  style={{ color: '#425466' }}
+                  onClick={() => setIsOpen(false)}
+                  onTouchStart={(e) => {
+                    e.currentTarget.style.backgroundColor = '#EFF4FF';
+                    e.currentTarget.style.color = '#0B43A0';
+                  }}
+                  onTouchEnd={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#425466';
+                  }}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.href)}
+                  className="block w-full text-left px-4 py-2 text-sm font-medium rounded-md transition-all duration-150 active:scale-[0.98]"
+                  style={{ color: '#425466' }}
+                  onTouchStart={(e) => {
+                    e.currentTarget.style.backgroundColor = '#EFF4FF';
+                    e.currentTarget.style.color = '#0B43A0';
+                  }}
+                  onTouchEnd={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#425466';
+                  }}
+                >
+                  {link.name}
+                </button>
+              )
             ))}
 
             <div className="px-4 space-y-2 pt-2">
@@ -159,7 +197,7 @@ const Navbar = () => {
                   className="w-full"
                   style={{ backgroundColor: '#0B43A0' }}
                 >
-                  Sign Up
+                  <a href='/sign-up' onClick={() => setIsOpen(false)}>Sign Up</a>
                 </Button>
               </motion.div>
             </div>

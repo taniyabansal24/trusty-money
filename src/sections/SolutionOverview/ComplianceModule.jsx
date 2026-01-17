@@ -33,7 +33,7 @@ export function ComplianceModule() {
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -138,12 +138,12 @@ export function ComplianceModule() {
   return (
     <div
       ref={sectionRef}
-      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden isolate gradient-bg"
+      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80  rounded-full filter opacity-30 animate-float"></div>
         <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"
+          className="absolute -bottom-40 -left-40 w-80 h-80  rounded-full filter opacity-30 animate-float"
           style={{ animationDelay: "1s" }}
         ></div>
         <div
@@ -155,7 +155,7 @@ export function ComplianceModule() {
           aria-hidden="true"
         />
       </div>
-      <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <Container className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content Side - Unified Emerald Styling */}
         {/* Content */}
         <div className="order-1 lg:order-2">

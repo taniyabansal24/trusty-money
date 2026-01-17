@@ -165,14 +165,14 @@ export function PaymentsModule() {
   return (
     <div
       ref={sectionRef}
-      className="relative border-t border-violet-100 bg-gradient-to-br from-violet-50/30 via-white to-purple-50/20 py-20 md:py-24 overflow-hidden isolate"
+      className="relative border-t border-violet-100  py-20 md:py-24 overflow-hidden isolate"
     >
       <div
         className="absolute inset-0 z-[1] pointer-events-none hero-grid opacity-30"
         aria-hidden="true"
       />
 
-      <Container className="relative z-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <Container className="relative z-10 grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content */}
         <div>
           <motion.div

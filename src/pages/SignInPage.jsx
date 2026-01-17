@@ -4,6 +4,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Navbar } from "../components/layout";
+import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
 
 // Helper function to merge class names
 const cn = (...classes) => {
@@ -429,8 +431,21 @@ const SignInCard = () => {
 
 const SignInPage = () => {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <SignInCard />
+    <div className="min-h-screen flex flex-col bg-gradient-to-br  to-indigo-100">
+      {/* Navbar at top */}
+      <div className="w-full">
+        <Navbar />
+      </div>
+      
+      {/* Main content - grows to take available space */}
+      <main className="flex-grow flex items-center justify-center py-28">
+        <SignInCard />
+      </main>
+      
+      {/* MapBackgroundWrapper at bottom */}
+      <div className="w-full mt-auto">
+        <MapBackgroundWrapper />
+      </div>
     </div>
   );
 };

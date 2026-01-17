@@ -14,6 +14,7 @@ import InfoCircleIcon from "../components/svg/InfoCircleIcon";
 import BarChartIcon from "../components/svg/BarChartIcon";
 import ClockHistoryIcon from "../components/svg/ClockHistoryIcon";
 import ArrowUpIcon from "../components/svg/ArrowUpIcon";
+import DatabaseIcon from "../components/svg/DatabaseIcon";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -105,25 +106,6 @@ function IconCard({ className }) {
         strokeLinecap="round"
       />
       <circle cx="17.3" cy="15.5" r="1.3" fill="#8b5cf6" />
-    </svg>
-  );
-}
-
-function IconClose({ className }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="9" stroke="#f97316" strokeWidth="2" />
-      <path
-        d="M7 7l10 10M17 7L7 17"
-        stroke="#ef4444"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
@@ -1869,7 +1851,7 @@ const ProblemSection = () => {
                         >
                           <div className="flex items-start gap-3 mb-3">
                             <div className="w-8 h-8 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-                              <IconClose className="w-4 h-4" />
+                              <DatabaseIcon className="w-10 h-10" />
                             </div>
 
                             <div className="flex-1">
@@ -2243,7 +2225,7 @@ const ProblemSection = () => {
                         >
                           <div className="flex items-start gap-3 mb-3">
                             <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center shadow-sm">
-                              <IconClose className="w-4 h-4" />
+                              <DatabaseIcon className="w-10 h-10" />
                             </div>
 
                             <div className="flex-1">

@@ -3,7 +3,7 @@
 export const COMPANY_NAME = 'Trusty Money';
 
 export const NAVIGATION_LINKS = [
-  { name: 'About', href: '#about' },
+  { name: 'About', href: '/about-us' },
   { name: 'Products', href: '#products' },
   { name: 'Resources', href: '#resources' },
   { name: 'Career', href: '#Career' },

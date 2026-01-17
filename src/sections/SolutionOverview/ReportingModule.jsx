@@ -64,13 +64,13 @@ export function ReportingModule() {
   return (
     <div
       ref={sectionRef}
-      className="relative border-t border-indigo-100 bg-gradient-to-br from-indigo-50/30 via-white to-violet-50/20 py-20 md:py-24 overflow-hidden isolate"
+      className="relative border-t border-indigo-100 py-20 md:py-24 overflow-hidden isolate"
     >
       <div
         className="absolute inset-0 z-[1] pointer-events-none hero-grid opacity-30"
         aria-hidden="true"
       />
-      <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <Container className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Content */}
         <div className="">
           <motion.div

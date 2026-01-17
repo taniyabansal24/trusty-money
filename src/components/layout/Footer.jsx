@@ -15,8 +15,6 @@ const Footer = () => {
       { name: 'Invoice', href: '#' },
       { name: 'Dashboard', href: '#analytics' },
       { name: 'Payment Gateway', href: '#' },
-      { name: 'Subscription', href: '#' },
-      { name: 'Insights', href: '#' },
     ],
     Resources: [
       { name: 'Blog', href: '#' },
@@ -39,24 +37,19 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-b from-slate-50 via-blue-50/40 to-indigo-100/60 border-t border-slate-200/60">
+    // Remove the gradient background class
+    <footer>
       <Container className="py-12 lg:py-16">
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">
 
           {/* Brand */}
           <div className="col-span-2">
-            <h3
-              className="text-2xl font-bold mb-4"
-              style={{ color: '#0B43A0' }}
-            >
+            <h3 className="text-2xl font-bold mb-4 text-[#0B43A0]">
               {COMPANY_NAME}
             </h3>
 
-            <p
-              className="mb-4 max-w-sm"
-              style={{ color: '#425466' }}
-            >
+            <p className="mb-4 max-w-sm text-[#425466]">
               One platform for global payments, zero FX markup, GST invoicing & instant settlements. Built for SMEs.
             </p>
 
@@ -68,7 +61,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  style={{ color: '#425466' }}
+                  className="text-[#425466] hover:text-[#0B43A0] transition-colors"
                 >
                   <social.icon size={20} />
                 </a>
@@ -79,10 +72,7 @@ const Footer = () => {
           {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4
-                className="font-semibold mb-4"
-                style={{ color: '#0B43A0' }}
-              >
+              <h4 className="font-semibold mb-4 text-[#0B43A0]">
                 {category}
               </h4>
 
@@ -91,7 +81,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      style={{ color: '#425466' }}
+                      className="text-[#425466] hover:text-[#0B43A0] transition-colors"
                     >
                       {link.name}
                     </a>
@@ -103,21 +93,14 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div
-          className="pt-8 flex flex-col md:flex-row justify-between items-center"
-          style={{ borderTop: '1px solid #e5e7eb' }}
-        >
-          <p
-            className="text-sm mb-4 md:mb-0"
-            style={{ color: '#425466' }}
-          >
+        <div className="pt-8 flex flex-col md:flex-row justify-between items-center border-t border-gray-200">
+          <p className="text-sm mb-4 md:mb-0 text-[#425466]">
             Copyright © {currentYear} Tushti Technologies Pvt. Ltd.
           </p>
 
           <a
             href="mailto:support@trustymoney.in"
-            className="text-sm"
-            style={{ color: '#0B43A0' }}
+            className="text-sm text-[#0B43A0] hover:underline"
           >
             support@trustymoney.in
           </a>
@@ -128,3 +111,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+

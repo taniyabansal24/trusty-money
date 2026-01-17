@@ -80,9 +80,9 @@ html {
   }
 
   /* Soft section background */
-  .gradient-bg {
+  /* .gradient-bg {
     background: linear-gradient(180deg, #ffffff, #f5f8ff);
-  }
+  } */
 
   .card-shadow {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
@@ -103,12 +103,12 @@ html {
     animation: gridShift 18s linear infinite;
   }
 
-  .hero-ambient {
+  /* .hero-ambient {
     background: radial-gradient(60% 60% at 20% 20%, rgba(14, 165, 233, 0.08), transparent),
                 radial-gradient(50% 50% at 80% 10%, rgba(118, 75, 162, 0.08), transparent),
                 radial-gradient(45% 45% at 70% 80%, rgba(7, 63, 158, 0.05), transparent);
     animation: ambientDrift 24s ease-in-out infinite alternate;
-  }
+  } */
 
   .hero-pixels {
     background-image:

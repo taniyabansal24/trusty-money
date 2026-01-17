@@ -9,13 +9,13 @@ import { staggerContainer, staggerItem } from "../utils/animations";
 
 export function SolutionOverview() {
   return (
-    <section className="relative w-full overflow-hidden gradient-bg">
+    <section className="relative w-full overflow-hidden">
       {/* Hero Section */}
-      <div className="relative w-full min-h-screen overflow-hidden gradient-bg">
+      <div className="relative w-full min-h-screen overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-xl opacity-30 animate-float"></div>
           <div
-            className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"
+            className="absolute -bottom-40 -left-40 w-80 h-80  rounded-full blur-xl opacity-30 animate-float"
             style={{ animationDelay: "1s" }}
           ></div>
           <div className="absolute inset-0 hero-grid opacity-50" aria-hidden="true" />
@@ -25,8 +25,6 @@ export function SolutionOverview() {
         <div
           className="pointer-events-none absolute left-0 right-0 -top-8 h-24 z-10"
           style={{
-            background:
-              "linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(245,248,255,0.55) 50%, rgba(245,248,255,1) 100%)",
             filter: "blur(8px)",
           }}
         />
@@ -99,25 +97,23 @@ export function SolutionOverview() {
             </div>
 
             {/* RIGHT — GLOBE VISUALIZATION */}
-            <div className="relative overflow-visible">
-              {/* Container for proper positioning */}
-              <div className="relative w-full h-[360px] sm:h-[440px] md:h-[520px] lg:h-[700px] xl:h-[760px] overflow-visible">
-                {/* Globe Container */}
-                <div className="absolute inset-0 z-10 flex items-center justify-center">
-                  <div className="w-full max-w-[360px] h-[360px] sm:max-w-[440px] sm:h-[440px] md:max-w-[520px] md:h-[520px] lg:max-w-none lg:w-[700px] lg:h-[700px] xl:w-[760px] xl:h-[760px]">
-                    {/* <RandomGlobe /> */}
+                            <div className="absolute inset-0 z-10 flex items-center justify-center">
+                  <div className="flex flex-col w-full overflow-visible">
+                    <div className="relative w-full h-[73vh] overflow-visible">
+                      <div className="flex absolute w-[100%] h-[130%] top-[-12%] left-[28%] inset-x-0 -bottom-10/12 justify-center mask-globe">
+                        <RandomGlobe />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+
           </div>
         </div>
 
         <div
           className="pointer-events-none absolute left-0 right-0 bottom-0 h-28 z-10"
           style={{
-            background:
-              "linear-gradient(to bottom, rgba(245,248,255,0.98) 0%, rgba(245,248,255,0.55) 45%, rgba(245,248,255,0) 100%)",
+            
             filter: "blur(10px)",
           }}
         />

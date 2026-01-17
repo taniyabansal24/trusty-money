@@ -118,37 +118,8 @@ const JoinUsPage = () => {
 
   return (
     <>
-    
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
     <Navbar/>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden space-y-6">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 opacity-50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: '#0A2540' }}>
-              Build Your Career With Us
-            </h1>
-            <p className="text-xl mb-10 max-w-2xl mx-auto" style={{ color: '#425466' }}>
-              Join a team of innovators working on cutting-edge solutions that transform industries. 
-              We're looking for passionate individuals to help shape the future.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                className="px-8 py-4 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: '#0B43A0' }}
-              >
-                View Open Positions
-                <ArrowRight className="inline ml-2 w-5 h-5" />
-              </button>
-              <button className="px-8 py-4 rounded-lg font-semibold border-2 hover:bg-gray-50 transition-colors"
-                style={{ borderColor: '#0A2540', color: '#0A2540' }}>
-                Learn About Our Culture
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen mt-20 bg-gradient-to-b from-gray-50 to-white">
 
       {/* Job Openings Section */}
       <section className="py-20">
@@ -234,7 +205,7 @@ const JoinUsPage = () => {
           </div>
 
           {/* Comparison Box */}
-          <div className="mt-20 p-8 rounded-2xl text-center relative overflow-hidden"
+          {/* <div className="mt-20 p-8 rounded-2xl text-center relative overflow-hidden"
             style={{ backgroundColor: '#3b82f6' }}>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90"></div>
             <div className="relative z-10 text-white max-w-3xl mx-auto">
@@ -249,31 +220,7 @@ const JoinUsPage = () => {
                 Submit General Application
               </button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-gray-50 to-blue-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6" style={{ color: '#0A2540' }}>
-            Ready to Join Our Team?
-          </h2>
-          <p className="text-xl mb-10 max-w-2xl mx-auto" style={{ color: '#425466' }}>
-            Take the next step in your career journey. Apply today and help us build something amazing.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              className="px-8 py-4 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: '#0B43A0' }}
-            >
-              View All Positions
-            </button>
-            <button className="px-8 py-4 rounded-lg font-semibold border-2 hover:bg-white transition-colors"
-              style={{ borderColor: '#0A2540', color: '#0A2540' }}>
-              Contact Recruiting
-            </button>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>
