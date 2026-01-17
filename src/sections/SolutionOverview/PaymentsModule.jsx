@@ -14,6 +14,7 @@ import LocationIcon from "../../components/svg/LocationIcon";
 import BankIcon from "../../components/svg/BankIcon";
 import CardIcon from "../../components/svg/CardIcon";
 import DuplicateIcon from "../../components/svg/DuplicateIcon";
+import FilterIcon from "../../components/svg/FilterIcon";
 
 export function PaymentsModule() {
   const [isVisible, setIsVisible] = useState(false);
@@ -325,12 +326,8 @@ export function PaymentsModule() {
               <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1">
                   {/* ACH Icon */}
-                  <div className="w-3.5 h-3.5 relative">
-                    <div className="absolute left-1/6 right-1/6 top-[37.5%] bottom-[62.5%] border border-[#073F9E] border-[1px]" />
-                    <div className="absolute left-1/6 right-1/6 top-[62.5%] bottom-[37.5%] border border-[#073F9E] border-[1px]" />
-                    <div className="absolute left-1/3 right-[58.33%] top-[12.5%] bottom-[12.5%] border border-[#073F9E] border-[1px]" />
-                    <div className="absolute left-[58.34%] right-1/3 top-[12.5%] bottom-[12.5%] border border-[#073F9E] border-[1px]" />
-                  </div>
+                  <FilterIcon className="w-4 h-4 text-[#073F9E]" />
+
                   <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
                     {activeCard.routingCodeType}
                   </div>
