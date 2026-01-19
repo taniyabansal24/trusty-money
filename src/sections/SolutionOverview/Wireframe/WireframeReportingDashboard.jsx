@@ -1,6 +1,7 @@
 // WireframeReportingDashboard.jsx
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import BarChartIcon from "../../../components/svg/BarChartIcon";
 
 export function WireframeReportingDashboard({
   data,
@@ -485,19 +486,7 @@ export function WireframeReportingDashboard({
                 transition={{ delay: animationPhase === 1 ? 0.2 : 0.1 }}
                 className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-100 to-violet-200"
               >
-                <svg
-                  className="h-5 w-5 text-indigo-700"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
+                <BarChartIcon className="w-12 h-12" />
               </motion.div>
               <div>
                 <motion.div
@@ -558,7 +547,7 @@ export function WireframeReportingDashboard({
               transition={{ delay: animationPhase === 1 ? 0.7 : 0.6 }}
             >
               <div className="text-xs text-slate-500">Reconciled</div>
-              <div className="text-xl text-emerald-600">99.8%</div>
+              <div className="text-xl text-[#436AB4]">99.8%</div>
             </motion.div>
             
             <motion.div
@@ -590,7 +579,7 @@ export function WireframeReportingDashboard({
             initial={{ opacity: 0 }}
             animate={animationPhase >= 1 ? { opacity: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.9 : 0.8 }}
-            className="mb-4 text-sm text-slate-900"
+            className="mb-4 text-sm text-slate-900 font-bold"
           >
             Recent Transactions
           </motion.div>
@@ -690,10 +679,10 @@ export function WireframeReportingDashboard({
               initial={{ opacity: 0, x: 10 }}
               animate={animationPhase >= 1 ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 1.4 : 0.4 }}
-              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-sm text-white transition-all hover:bg-slate-800"
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#F0F6FF] px-4 py-2.5 text-sm text-[#364153] transition-all"
             >
               <svg
-                className="h-4 w-4"
+                className="h-4 w-4 text-[#073F9E]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
