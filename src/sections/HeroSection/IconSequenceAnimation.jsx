@@ -10,6 +10,8 @@ import BillingInvoice from "./BillingInvoice";
 import CapitalDashboard from "./CapitalDashboard";
 import CountryTaxCard from "./CountryTaxCard";
 import Virtual from "./Virtual";
+import Ewallet from "./Ewallet";
+import EwalletIcon from "../../components/svg/EwalletIcon";
 
 // Store screen components separately
 const SCREENS = [
@@ -17,7 +19,7 @@ const SCREENS = [
   BillingInvoice,     // 0
   InvoiceDashboard,   // 1
   CountryTaxCard,     // 2
-  CapitalDashboard,   // 3
+  Ewallet,            // 3
   Virtual,            // 4
   Virtual,            // 5
   Virtual,            // 6
@@ -28,23 +30,24 @@ const ICONS = [
   { id: 0, Icon: Billing, screenIndex: 1 },
   { id: 1, Icon: Treasury, screenIndex: 2 },
   { id: 2, Icon: Tax, screenIndex: 3 },
-  { id: 3, Icon: Dashboard, screenIndex: 4 },
+  { id: 3, Icon: EwalletIcon, screenIndex: 4 },
 
   { id: 4, Icon: Billing, screenIndex: 1 },
   { id: 5, Icon: Treasury, screenIndex: 2 },
   { id: 6, Icon: Tax, screenIndex: 3 },
-  { id: 7, Icon: Dashboard, screenIndex: 4 },
+  { id: 7, Icon: EwalletIcon, screenIndex: 4 },
 ];
-
 
 const TOTAL_ICONS = ICONS.length;
 const RADIUS = 150;
+const INITIAL_DELAY = 3000; // 3 seconds delay before starting animations
 
 export default function CircularShiftAnimation() {
   const iconsRef = useRef([]);
   const timerRef = useRef(null);
   const gradientRef = useRef(null);
   const screenContainerRef = useRef(null);
+  const initializationRef = useRef(null);
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
   const [isAnimatingScreen, setIsAnimatingScreen] = useState(false);
@@ -93,23 +96,22 @@ export default function CircularShiftAnimation() {
   };
 
   // Function to determine visual state based on angle
-const getVisualStateFromAngle = (angle) => {
-  const facingLeftness = Math.cos(angle);
+  const getVisualStateFromAngle = (angle) => {
+    const facingLeftness = Math.cos(angle);
 
-  // FRONT (highlight)
-  if (facingLeftness < -0.85) {
-    return { opacity: 1, blur: 0, scale: 1.1, isHighlighted: true };
-  }
+    // FRONT (highlight)
+    if (facingLeftness < -0.85) {
+      return { opacity: 1, blur: 0, scale: 1.1, isHighlighted: true };
+    }
 
-  // BACK (hidden)
-  if (facingLeftness > -0.2) {
-    return { opacity: 0.1, blur: 2, scale: 0.8, isHighlighted: false };
-  }
+    // BACK (hidden)
+    if (facingLeftness > -0.2) {
+      return { opacity: 0.1, blur: 2, scale: 0.8, isHighlighted: false };
+    }
 
-  // MIDDLE
-  return { opacity: 0.35, blur: 1, scale: 0.95, isHighlighted: false };
-};
-
+    // MIDDLE
+    return { opacity: 0.35, blur: 1, scale: 0.95, isHighlighted: false };
+  };
 
   // Function to animate the gradient
   const animateGradient = () => {
@@ -242,9 +244,8 @@ const getVisualStateFromAngle = (angle) => {
     }, 4000);
   };
 
-  // Initialize everything on component mount
-  useEffect(() => {
-    // Set initial positions and find initial highlighted icon
+  // Set initial positions STATICALLY - no animation
+  const setInitialPositions = () => {
     let initialHighlightedScreenIndex = -1;
 
     ICONS.forEach((iconData, iconIndex) => {
@@ -260,12 +261,14 @@ const getVisualStateFromAngle = (angle) => {
       const { opacity, blur, scale, isHighlighted } =
         getVisualStateFromAngle(angle);
 
+      // Set initial position WITHOUT animation
       gsap.set(icon, {
         x: pos.x,
         y: pos.y,
         opacity,
         scale,
         filter: `blur(${blur}px)`,
+        immediateRender: true,
       });
 
       // If this icon is highlighted initially, set the screen
@@ -281,17 +284,31 @@ const getVisualStateFromAngle = (angle) => {
     if (initialHighlightedScreenIndex !== -1) {
       setCurrentScreenIndex(initialHighlightedScreenIndex);
     }
+  };
 
-    // Start gradient animation
-    animateGradient();
+  // Initialize everything on component mount
+  useEffect(() => {
+    // Set initial positions immediately (static/frozen state)
+    setInitialPositions();
 
-    // Start the main animation timer
-    startAnimationTimer();
+    // Set a timeout to START ANIMATIONS after delay
+    initializationRef.current = setTimeout(() => {
+      console.log("Starting animations after 3 second delay");
+      
+      // Start gradient animation
+      animateGradient();
+      
+      // Start the main animation timer
+      startAnimationTimer();
+    }, INITIAL_DELAY);
 
     // Cleanup function
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
+      }
+      if (initializationRef.current) {
+        clearTimeout(initializationRef.current);
       }
       if (gradientRef.current) {
         gsap.killTweensOf(gradientRef.current);
@@ -300,7 +317,7 @@ const getVisualStateFromAngle = (angle) => {
         if (icon) gsap.killTweensOf(icon);
       });
     };
-  }, []);
+  }, []); // Empty dependency array - runs once on mount
 
   // Debug logging
   useEffect(() => {
@@ -410,7 +427,7 @@ const getVisualStateFromAngle = (angle) => {
       </div>
 
       {/* RIGHT — SCREEN DISPLAY */}
-      <div className="w-[34rem] h-[42rem] relative bottom-[22%] right-[-24%]">
+      <div className="w-[34rem] h-[37rem] relative bottom-[9%] right-[-24%]">
         {/* Main container with shadow */}
         <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_50px_100px_-20px_rgba(50,50,93,0.25),0px_30px_60px_-30px_rgba(0,0,0,0.3),inset_0px_-2px_6px_rgba(10,37,64,0.35)]"></div>
 

@@ -1,39 +1,42 @@
-import React from 'react';
-import { Container } from '../ui';
-import { COMPANY_NAME } from '../../constants';
-import { FaTwitter, FaLinkedin, FaGithub, FaYoutube } from 'react-icons/fa';
+import React from "react";
+import { Container } from "../ui";
+import { COMPANY_NAME } from "../../constants";
+import { FaTwitter, FaLinkedin, FaGithub, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    Company: [
-      { name: 'Why Trusty', href: '#' },
+    Navigation: [
+      { name: "About", href: "/about" },
+      { name: "Products", href: "/products" },
+      { name: "Resources", href: "/resources" },
+      { name: "Join Us", href: "/join-us" },
     ],
     Products: [
-      { name: 'Live FX Conversion', href: '#pricing' },
-      { name: 'Invoice', href: '#' },
-      { name: 'Dashboard', href: '#analytics' },
-      { name: 'Payment Gateway', href: '#' },
+      { name: "Live FX Conversion", href: "#pricing" },
+      { name: "Invoice", href: "#" },
+      { name: "Dashboard", href: "#analytics" },
+      { name: "Payment Gateway", href: "#" },
     ],
     Resources: [
-      { name: 'Blog', href: '#' },
-      { name: 'FAQ', href: '#faq' },
-      { name: 'Customer stories', href: '#' },
+      { name: "Blog", href: "#" },
+      { name: "FAQ", href: "#faq" },
+      { name: "Customer stories", href: "#" },
     ],
     Legal: [
-      { name: 'Privacy Policy', href: '#' },
-      { name: 'Terms of Conditions', href: '#' },
-      { name: 'Cookie Policy', href: '#' },
-      { name: 'Contact us', href: '#' },
+      { name: "Privacy Policy", href: "#" },
+      { name: "Terms of Conditions", href: "#" },
+      { name: "Cookie Policy", href: "#" },
+      { name: "Contact us", href: "#" },
     ],
   };
 
   const socialLinks = [
-    { icon: FaTwitter, href: '#', label: 'Twitter' },
-    { icon: FaLinkedin, href: '#', label: 'LinkedIn' },
-    { icon: FaGithub, href: '#', label: 'GitHub' },
-    { icon: FaYoutube, href: '#', label: 'YouTube' },
+    { icon: FaTwitter, href: "#", label: "Twitter" },
+    { icon: FaLinkedin, href: "#", label: "LinkedIn" },
+    { icon: FaGithub, href: "#", label: "GitHub" },
+    { icon: FaYoutube, href: "#", label: "YouTube" },
   ];
 
   return (
@@ -42,15 +45,15 @@ const Footer = () => {
       <Container className="py-12 lg:py-16">
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">
-
           {/* Brand */}
           <div className="col-span-2">
-            <h3 className="text-2xl font-bold mb-4 text-[#0B43A0]">
+            <h3 className="text-xl font-bold mb-4 text-[#0B43A0]">
               {COMPANY_NAME}
             </h3>
 
-            <p className="mb-4 max-w-sm text-[#425466]">
-              One platform for global payments, zero FX markup, GST invoicing & instant settlements. Built for SMEs.
+            <p className="mb-4 max-w-sm text-body">
+              One platform for global payments, zero FX markup, GST invoicing &
+              instant settlements. Built for SMEs.
             </p>
 
             <div className="flex space-x-4">
@@ -72,7 +75,7 @@ const Footer = () => {
           {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="font-semibold mb-4 text-[#0B43A0]">
+              <h4 className="mb-4 text-sm font-semibold text-[#0B43A0] uppercase tracking-wide">
                 {category}
               </h4>
 
@@ -81,7 +84,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-[#425466] hover:text-[#0B43A0] transition-colors"
+                      className="text-sm text-[#425466] hover:text-[#0B43A0] transition-colors"
                     >
                       {link.name}
                     </a>
@@ -94,7 +97,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center border-t border-gray-200">
-          <p className="text-sm mb-4 md:mb-0 text-[#425466]">
+          <p className="text-muted mb-4 md:mb-0 ">
             Copyright © {currentYear} Tushti Technologies Pvt. Ltd.
           </p>
 
@@ -111,5 +114,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-

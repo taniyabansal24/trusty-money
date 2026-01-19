@@ -16,26 +16,30 @@ const HomePage = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <ProblemSection />
-
+      
+          <ProblemSection />
+       
         {/* ⬆️ End of Transition Wrapper ⬆️ */}
 
-        <div className="min-h-screen bg-white">
+        <div className="section">
           <SolutionOverview />
           {/* <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-50 py-12">
             <TransparencySection />
           </div> */}
-          <SecuritySection/>
-          <TestimonialSection/>
-          <FAQ/>
+          <div className="section">
+            <SecuritySection />
+          </div>
+          <div className="section">
+            <TestimonialSection />
+          </div>
+          <div className="section">
+            <FAQ />
+          </div>
         </div>
       </main>
-      <MapBackgroundWrapper/>
+      <MapBackgroundWrapper />
     </div>
   );
 };
 
 export default HomePage;
-
-
-

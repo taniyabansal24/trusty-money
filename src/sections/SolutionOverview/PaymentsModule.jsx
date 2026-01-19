@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "../../components/ui";
-import { FeatureBlock } from '../../sections/SolutionOverview/BillingModule';
+import { FeatureBlock } from "../../sections/SolutionOverview/BillingModule";
 import usFlag from "../../assets/usflag.jpg";
 import ukFlag from "../../assets/ukflag.png";
 import canadaFlag from "../../assets/canadaflag.webp";
@@ -28,7 +25,7 @@ export function PaymentsModule() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) {
@@ -126,7 +123,10 @@ export function PaymentsModule() {
 
   const getFlagAsset = (card) => {
     if (!card) return { src: worldFlag, alt: "Flag" };
-    if (card.currency === "EUR" || String(card.country).toLowerCase().includes("eurozone")) {
+    if (
+      card.currency === "EUR" ||
+      String(card.country).toLowerCase().includes("eurozone")
+    ) {
       return { src: worldFlag, alt: "Eurozone" };
     }
     switch (card.bankCountry) {
@@ -171,7 +171,7 @@ export function PaymentsModule() {
   return (
     <div
       ref={sectionRef}
-      className="relative border-t border-violet-100  py-20 md:py-24 overflow-hidden isolate"
+      className="subsection relative border-t border-violet-100 overflow-hidden isolate"
     >
       <div
         className="absolute inset-0 z-[1] pointer-events-none hero-grid opacity-30"
@@ -185,10 +185,12 @@ export function PaymentsModule() {
             initial={{ opacity: 0, x: -20 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-[#0F1615]/10 via-white/80 to-blue-50/60 backdrop-blur-sm px-3 py-1 shadow-sm"
+            className="mb-8 flex items-center gap-3"
           >
-            <div className="flex h-2 w-2 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]" />
-            <span className="text-xs font-medium tracking-wide text-[#0A2540]">
+            <span
+              className="inline-block px-4 py-2 rounded-full hero-badge"
+              style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+            >
               Payment Infrastructure
             </span>
           </motion.div>
@@ -197,7 +199,7 @@ export function PaymentsModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mb-4 text-3xl font-bold text-[#0A2540]"
+            className="sub-section-heading mb-4 text-[#0A2540]"
           >
             Payments and Collections
           </motion.h2>
@@ -206,9 +208,11 @@ export function PaymentsModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-8 text-lg leading-relaxed text-[#425466]"
+            className="section-subtitle mb-8 text-[#425466]"
           >
-            Flexible payment infrastructure for global businesses. Accept payments worldwide with multi-currency accounts, transparent pricing, and seamless integration across all payment methods.
+            Flexible payment infrastructure for global businesses. Accept
+            payments worldwide with multi-currency accounts, transparent
+            pricing, and seamless integration across all payment methods.
           </motion.p>
 
           {/* Feature Blocks with Custom Bullets */}
@@ -225,159 +229,155 @@ export function PaymentsModule() {
         <motion.div className="relative">
           <div className="relative">
             <motion.div
-  initial={{ opacity: 0, rotateY: -90, scale: 0.8 }}
-  animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-  className="relative"
->
-  <div
-    className="group relative"
-    style={{ perspective: "1000px" }}
-  >
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={`${activeCard.currency}-${activeCard.accountNumber}`}
-        initial={{ rotateY: 90, opacity: 0 }}
-        animate={{ rotateY: 0, opacity: 1 }}
-        exit={{ rotateY: -90, opacity: 0 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        style={{ transformStyle: "preserve-3d" }}
-      >
-        {/* Main container - smaller dimensions */}
-        <div
-          className="relative overflow-hidden rounded-2xl bg-white shadow-xl border border-gray-200"
-          style={{
-            width: "580px",
-            height: "400px",
-          }}
-        >
-          {/* Background blur effects - scaled down - REMOVED GRADIENTS */}
-          <div className="absolute w-[220px] h-[220px] left-[420px] top-[-80px] bg-blue-50 opacity-37 blur-[50px] rounded-full" />
-          <div className="absolute w-[220px] h-[220px] left-[-70px] top-[250px] bg-blue-50 opacity-46 blur-[50px] rounded-full" />
-          
-          {/* Main Content Container */}
-          <div className="relative w-full h-full p-6">
-            {/* Header Container */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <img
-                  src={getFlagAsset(activeCard).src}
-                  alt={getFlagAsset(activeCard).alt}
-                  className="w-7 h-6 rounded-md object-cover border border-slate-200 shadow-sm"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div>
-                  <div className="text-xs text-[#45556C] leading-[18px]">
-                    Bank Account
-                  </div>
-                  <div className="font-bold text-base text-[#0F172B] leading-[24px]">
-                    {activeCard.country}
-                  </div>
-                </div>
+              initial={{ opacity: 0, rotateY: -90, scale: 0.8 }}
+              animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="relative"
+            >
+              <div className="group relative" style={{ perspective: "1000px" }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`${activeCard.currency}-${activeCard.accountNumber}`}
+                    initial={{ rotateY: 90, opacity: 0 }}
+                    animate={{ rotateY: 0, opacity: 1 }}
+                    exit={{ rotateY: -90, opacity: 0 }}
+                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {/* Main container - smaller dimensions */}
+                    <div
+                      className="relative overflow-hidden rounded-2xl bg-white shadow-xl border border-gray-200"
+                      style={{
+                        width: "580px",
+                        height: "400px",
+                      }}
+                    >
+                      {/* Background blur effects - scaled down - REMOVED GRADIENTS */}
+                      <div className="absolute w-[220px] h-[220px] left-[420px] top-[-80px] bg-blue-50 opacity-37 blur-[50px] rounded-full" />
+                      <div className="absolute w-[220px] h-[220px] left-[-70px] top-[250px] bg-blue-50 opacity-46 blur-[50px] rounded-full" />
+
+                      {/* Main Content Container */}
+                      <div className="relative w-full h-full p-6">
+                        {/* Header Container */}
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={getFlagAsset(activeCard).src}
+                              alt={getFlagAsset(activeCard).alt}
+                              className="w-7 h-6 rounded-md object-cover border border-slate-200 shadow-sm"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            <div>
+                              <div className="text-xs text-[#45556C] leading-[18px]">
+                                Bank Account
+                              </div>
+                              <div className="font-bold text-base text-[#0F172B] leading-[24px]">
+                                {activeCard.country}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Active Badge */}
+                          <div className="px-2.5 py-1.5 bg-green-50 border border-green-200 rounded-full">
+                            <span className="text-xs font-normal text-[#009966] leading-[14px]">
+                              Active
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Account Number Section */}
+                        <div className="mb-5">
+                          <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px] mb-2">
+                            Account Number
+                          </div>
+                          <div className="w-full h-14 bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              {/* Credit Card Icon */}
+                              <CardIcon className="w-5 h-4 text-[#073F9E]" />
+
+                              <div className="text-xl font-normal text-[#0F172B] tracking-[1px] leading-[28px]">
+                                {activeCard.accountNumber}
+                              </div>
+                            </div>
+
+                            {/* Copy Button */}
+                            <DuplicateIcon className="w-10 h-10 text-[#073F9E]" />
+                          </div>
+                        </div>
+
+                        {/* Bank Info Grid */}
+                        <div className="grid grid-cols-2 gap-3 mb-5">
+                          {/* Bank Name Card */}
+                          <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                            <div className="flex items-center gap-2 mb-1">
+                              {/* Bank Icon */}
+                              <BankIcon className="w-4 h-4 text-[#073F9E]" />
+                              <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
+                                Bank Name
+                              </div>
+                            </div>
+                            <div className="text-sm font-normal text-[#0F172B] leading-[18px] truncate">
+                              {activeCard.bankName}
+                            </div>
+                          </div>
+
+                          {/* Routing Code Card */}
+                          <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                            <div className="flex items-center gap-2 mb-1">
+                              {/* ACH Icon */}
+                              <FilterIcon className="w-4 h-4 text-[#073F9E]" />
+
+                              <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
+                                {activeCard.routingCodeType}
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between relative -top-1">
+                              <div className="text-sm font-normal text-[#0F172B] leading-[18px]">
+                                {activeCard.routingCode}
+                              </div>
+                              <DuplicateIcon className="w-10 h-10 text-[#073F9E] relative -top-3" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bank Address Card */}
+                        <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3 mb-5">
+                          <div className="flex items-center gap-2 mb-1">
+                            {/* Location Icon */}
+                            <LocationIcon className="w-4 h-4 text-[#073F9E]" />
+
+                            <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
+                              Bank Address
+                            </div>
+                          </div>
+                          <div className="text-sm font-normal text-[#0F172B] leading-[18px] truncate">
+                            {activeCard.bankAddress}
+                          </div>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="absolute bottom-6 left-6 right-6 border-t border-gray-300 pt-3">
+                          <div className="flex items-center justify-between">
+                            {/* Dots - REMOVED GRADIENT */}
+                            <div className="flex gap-3">
+                              <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full" />
+                              <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full opacity-70" />
+                              <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full opacity-40" />
+                            </div>
+
+                            {/* Secured Connection */}
+                            <div className="text-xs font-normal text-[#90A1B9] leading-[14px]">
+                              Secured Connection
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
-
-              {/* Active Badge */}
-              <div className="px-2.5 py-1.5 bg-green-50 border border-green-200 rounded-full">
-                <span className="text-xs font-normal text-[#009966] leading-[14px]">
-                  Active
-                </span>
-              </div>
-            </div>
-
-            {/* Account Number Section */}
-            <div className="mb-5">
-              <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px] mb-2">
-                Account Number
-              </div>
-              <div className="w-full h-14 bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  {/* Credit Card Icon */}
-                  <CardIcon className="w-5 h-4 text-[#073F9E]" />
-
-                  <div className="text-xl font-normal text-[#0F172B] tracking-[1px] leading-[28px]">
-                    {activeCard.accountNumber}
-                  </div>
-                </div>
-                
-                {/* Copy Button */}
-                <DuplicateIcon className="w-10 h-10 text-[#073F9E]" />
-
-              </div>
-            </div>
-
-            {/* Bank Info Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-5">
-              {/* Bank Name Card */}
-              <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  {/* Bank Icon */}
-                  <BankIcon className="w-4 h-4 text-[#073F9E]" />
-                  <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
-                    Bank Name
-                  </div>
-                </div>
-                <div className="text-sm font-normal text-[#0F172B] leading-[18px] truncate">
-                  {activeCard.bankName}
-                </div>
-              </div>
-
-              {/* Routing Code Card */}
-              <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  {/* ACH Icon */}
-                  <FilterIcon className="w-4 h-4 text-[#073F9E]" />
-
-                  <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
-                    {activeCard.routingCodeType}
-                  </div>
-                </div>
-               <div className="flex items-center justify-between relative -top-1">
-  <div className="text-sm font-normal text-[#0F172B] leading-[18px]">
-    {activeCard.routingCode}
-  </div>
-    <DuplicateIcon className="w-10 h-10 text-[#073F9E] relative -top-3" />
-</div>
-              </div>
-            </div>
-
-            {/* Bank Address Card */}
-            <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3 mb-5">
-              <div className="flex items-center gap-2 mb-1">
-                {/* Location Icon */}
-               <LocationIcon className="w-4 h-4 text-[#073F9E]" />
-
-                <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
-                  Bank Address
-                </div>
-              </div>
-              <div className="text-sm font-normal text-[#0F172B] leading-[18px] truncate">
-                {activeCard.bankAddress}
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="absolute bottom-6 left-6 right-6 border-t border-gray-300 pt-3">
-              <div className="flex items-center justify-between">
-                {/* Dots - REMOVED GRADIENT */}
-                <div className="flex gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full" />
-                  <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full opacity-70" />
-                  <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full opacity-40" />
-                </div>
-
-                {/* Secured Connection */}
-                <div className="text-xs font-normal text-[#90A1B9] leading-[14px]">
-                  Secured Connection
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
-  </div>
-</motion.div>
+            </motion.div>
 
             {/* Balance Display Below Card */}
             <motion.div

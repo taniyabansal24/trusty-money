@@ -8,7 +8,7 @@ import { WireframeReportingDashboard } from "./Wireframe/WireframeReportingDashb
 export function ReportingModule() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-  
+
   // Data index for animations
   const [dataIndex, setDataIndex] = useState(0);
 
@@ -33,7 +33,7 @@ export function ReportingModule() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) {
@@ -64,7 +64,7 @@ export function ReportingModule() {
   return (
     <div
       ref={sectionRef}
-      className="relative border-t border-indigo-100 py-20 md:py-24 overflow-hidden isolate"
+      className="subsection relative border-t border-indigo-100 overflow-hidden isolate"
     >
       <div
         className="absolute inset-0 z-[1] pointer-events-none hero-grid opacity-30"
@@ -77,10 +77,12 @@ export function ReportingModule() {
             initial={{ opacity: 0, x: -20 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-[#0F1615]/10 via-white/80 to-blue-50/60 backdrop-blur-sm px-3 py-1 shadow-sm"
+            className="mb-8 flex items-center gap-3"
           >
-            <div className="flex h-2 w-2 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]" />
-            <span className="text-xs font-medium tracking-wide text-[#0A2540]">
+            <span
+              className="inline-block px-4 py-2 rounded-full hero-badge"
+              style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+            >
               Financial Intelligence
             </span>
           </motion.div>
@@ -89,7 +91,7 @@ export function ReportingModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mb-4 text-3xl font-bold text-[#0A2540]"
+            className="sub-section-heading mb-4 text-[#0A2540]"
           >
             Reporting & Reconciliation
           </motion.h2>
@@ -98,7 +100,7 @@ export function ReportingModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-8 text-lg leading-relaxed text-[#425466]"
+            className="section-subtitle mb-8 text-[#425466]"
           >
             Unified visibility across billing, payments, and cash flows.
             Eliminate manual reconciliation with automated matching, real-time

@@ -66,7 +66,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <a href="/">
-              <img src={logo} alt="Company Logo" className="h-[3rem] w-[13rem]" />
+              <img src={logo} alt="Company Logo" className=" w-[13rem]" />
             </a>
           </div>
 
@@ -77,7 +77,7 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href="/about-us"
-                  className="text-sm font-medium transition-colors duration-200"
+                  className="text-body transition-colors duration-200"
                   style={{ color: '#425466' }}
                   onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
                   onMouseLeave={(e) => (e.target.style.color = '#425466')}
@@ -88,7 +88,7 @@ const Navbar = () => {
                 <button
                   key={link.name}
                   onClick={() => handleNavClick(link.href)}
-                  className="text-sm font-medium transition-colors duration-200"
+                  className="text-body transition-colors duration-200"
                   style={{ color: '#425466' }}
                   onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
                   onMouseLeave={(e) => (e.target.style.color = '#425466')}

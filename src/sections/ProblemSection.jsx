@@ -927,8 +927,6 @@ const ProblemSection = () => {
           .to(
             card,
             {
-              borderColor: "rgba(59, 130, 246, 0.15)",
-              borderWidth: "1px",
               boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
               duration: 0.4,
               ease: "power2.out",
@@ -1255,7 +1253,6 @@ const ProblemSection = () => {
                   scale: 0.92,
                   x: index % 2 === 0 ? 12 : -12,
                   y: 12,
-                  borderColor: "rgba(226, 232, 240, 0)", // Fade border out
                   duration: 0.45,
                   ease: "power2.in",
                 },
@@ -1380,7 +1377,7 @@ const ProblemSection = () => {
     <>
       <div
         ref={sectionRef}
-        className="relative min-h-screen overflow-hidden isolate bg-white"
+        className="relative overflow-hidden isolate bg-white"
       >
         {/* Sidebar Components */}
         {/* Sidebar Components */}
@@ -1412,10 +1409,13 @@ const ProblemSection = () => {
                     boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
+                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                    Problem
+                  </div>
+                  <h3 className="text-[#0A2540] feature-title mb-3 ">
                     Expensive &amp; slow collections
                   </h3>
-                  <p className="text-[#425466] text-sm leading-relaxed">
+                  <p className="text-[#425466] text-muted">
                     Cross-border payments are slow, expensive, and opaque.
                     Hidden FX margins and unpredictable settlement times drain
                     resources.
@@ -1451,6 +1451,9 @@ const ProblemSection = () => {
                     boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
+                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                    Problem
+                  </div>
                   <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
                     Fragmented reconciliation
                   </h3>
@@ -1489,10 +1492,13 @@ const ProblemSection = () => {
                     boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
+                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                    Problem
+                  </div>
+                  <h3 className="text-[#0A2540] feature-title mb-3 ">
                     Manual invoicing
                   </h3>
-                  <p className="text-[#425466] text-sm leading-relaxed">
+                  <p className="text-[#425466] text-muted">
                     Invoicing is inconsistent across countries, with different
                     formats, currencies, and tax requirements slowing
                     operations.
@@ -1528,10 +1534,13 @@ const ProblemSection = () => {
                     boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
+                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                    Problem
+                  </div>
+                  <h3 className="feature-title mb-3">
                     Fragmented compliance
                   </h3>
-                  <p className="text-[#425466] text-sm leading-relaxed">
+                  <p className="text-[#425466] text-muted">
                     Compliance requirements constantly change by geography and
                     transaction type, creating ongoing operational burden.
                   </p>
@@ -1542,8 +1551,8 @@ const ProblemSection = () => {
         </div>
 
         {/* Main container */}
-        <Container className="relative z-0">
-          <div className="min-h-[100svh] lg:h-screen flex items-center justify-center overflow-hidden pb-16 lg:pb-20">
+        <Container className="relative z-0 py-20 md:py-24">
+          <div className="min-h-max flex items-center justify-center ">
             {/* Phone mockup */}
             <div
               ref={phoneRef}
@@ -2169,7 +2178,7 @@ const ProblemSection = () => {
                         </div>
 
                         <div className="w-9 h-9 bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-xl flex items-center justify-center overflow-hidden">
-                          <InfoCircleIcon size={56}/>
+                          <InfoCircleIcon size={56} />
                         </div>
                       </div>
 
@@ -2182,9 +2191,8 @@ const ProblemSection = () => {
                         >
                           <div className="flex items-start gap-3 mb-3">
                             <div className="w-8 h-8 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-lg flex items-center justify-center shadow-sm">
-  <GlobeIcon className="w-5 h-5 text-white" />
-</div>
-
+                              <GlobeIcon className="w-5 h-5 text-white" />
+                            </div>
 
                             <div className="flex-1">
                               <div className="text-sm text-[#0A2540] mb-1">

@@ -1,6 +1,8 @@
 import React from "react";
 import { Container } from "../components/ui";
+import { motion } from "framer-motion";
 import Quote from "../components/svg/Quote";
+import { staggerContainer, staggerItem } from "../utils/animations";
 
 const TestimonialSection = () => {
   const testimonials = [
@@ -22,7 +24,7 @@ const TestimonialSection = () => {
       role: "Head of Finance",
       company: "Horizon Ventures",
       quote:
-        "The best cross-border infrastructure we've used. Implementation was straightforward and support is excellent.",
+        "Real-time FX rates and instant settlements have transformed how we manage our international operations.",
       flipQuote:
         "The best cross-border infrastructure we've used. Security and compliance are built-in, not an afterthought.",
       imageColor: "bg-green-100",
@@ -79,13 +81,19 @@ const TestimonialSection = () => {
   ];
 
   return (
-    <Container className="mt-32 pt-8 border-t border-gray-200">
+    <Container className="">
       {/* Header Section */}
       <div className="text-center my-12">
-        <h2 className="text-blue-900 text-lg font-normal mb-4">
-          Trusted by Finance Teams Worldwide
-        </h2>
-        <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+        <motion.h1
+          variants={staggerItem}
+          className="section-hero-heading text-gray-900"
+        >
+          Trusted by{" "}
+          <span className="gradient-text relative">
+            Finance Teams Worldwide
+          </span>
+        </motion.h1>
+        <p className="section-subtitle text-gray-600 max-w-md mx-auto">
           Leading companies rely on Trusty Money for their cross-border payments
         </p>
       </div>
@@ -109,17 +117,16 @@ const TestimonialSection = () => {
                         {testimonial.initials}
                       </span>
                     </div>
-                    {/* Online Indicator */}
-                    <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                   
                   </div>
 
                   {/* User Details */}
                   <div>
-                    <h3 className="text-gray-900 font-normal text-base">
+                    <h3 className="text-body font-medium  text-gray-900 text-base">
                       {testimonial.name}
                     </h3>
-                    <p className="text-gray-500 text-sm">{testimonial.role}</p>
-                    <p className="text-gray-400 text-xs mt-1">
+                    <p className="text-muted">{testimonial.role}</p>
+                    <p className="text-gray-400 text-sm">
                       {testimonial.company}
                     </p>
                   </div>
@@ -129,7 +136,7 @@ const TestimonialSection = () => {
                 {/* Testimonial Content */}
                 <div className="mt-6 flex-grow flex items-center justify-center">
                   {/* Quote */}
-                  <p className="text-gray-600 text-sm leading-relaxed text-center max-w-[300px]">
+                  <p className="feature-description text-gray-600 text-center max-w-[300px]">
                     "{testimonial.quote}"
                   </p>
                 </div>
@@ -143,7 +150,7 @@ const TestimonialSection = () => {
                 </div>
 
                 {/* Full Quote - Exact Figma Styling */}
-                <div className="quote-text">
+                <div className="quote-text feature-description">
                   <p>"{testimonial.flipQuote}"</p>
                 </div>
               </div>
@@ -151,7 +158,6 @@ const TestimonialSection = () => {
           </div>
         ))}
       </div>
-
 
       {/* CSS Styles for Flip Card */}
       <style jsx>{`

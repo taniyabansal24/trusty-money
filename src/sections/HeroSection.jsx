@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button, Container } from "../components/ui";
 import { staggerContainer, staggerItem } from "../utils/animations";
 import logo from "../assets/logo.png";
-import IconSequenceAnimation from "../sections/HeroSection/IconSequenceAnimation"
+import IconSequenceAnimation from "../sections/HeroSection/IconSequenceAnimation";
 
 // CountUp component for animated numbers
 const CountUp = ({
@@ -56,7 +56,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative pt-32 lg:pt-40 lg:pb-32 overflow-hidden h-screen">
+    <section className="relative min-h-screen pt-32 lg:pt-40 pb-24 overflow-hidden">
       {/* Main gradient background */}
       <div
         className="absolute inset-0"
@@ -83,9 +83,10 @@ const HeroSection = () => {
           {/* Left Side - Text Content */}
           <motion.div
             variants={staggerContainer}
-            initial="initial"
+            initial="false"
             animate="animate"
-            className="text-left relative pt-8 lg:pt-0"
+            
+            className="text-left relative"
           >
             {/* Badge */}
             <motion.div
@@ -93,7 +94,7 @@ const HeroSection = () => {
               className="mb-8 flex items-center gap-3"
             >
               <span
-                className="inline-block px-4 py-2 rounded-full text-sm font-semibold"
+                className="inline-block px-4 py-2 rounded-full hero-badge"
                 style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
               >
                 Cross-Border Operating System
@@ -101,10 +102,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Headline */}
-            <motion.h1
-              variants={staggerItem}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight"
-            >
+            <motion.h1 className="hero-heading">
               The Operating System for{" "}
               <span className="gradient-text relative">
                 Cross-Border Business
@@ -113,10 +111,7 @@ const HeroSection = () => {
             </motion.h1>
 
             {/* Subheadline line */}
-            <motion.p
-              variants={staggerItem}
-              className="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed"
-            >
+            <motion.p className="section-subtitle mb-6 max-w-lg">
               Designed for billing, compliance, payments, FX, treasury and
               working capital
             </motion.p>
@@ -129,15 +124,12 @@ const HeroSection = () => {
               <Button variant="primary" size="md">
                 Request a Demo
               </Button>
-              <Button variant="outline" size="md">
-                Talk to Our Team
+              <Button variant="secondary" size="md">
+                Talk to Sales
               </Button>
             </motion.div>
 
-            <motion.div
-              variants={staggerItem}
-              className="text-sm text-gray-600 space-y-2"
-            >
+            <motion.div variants={staggerItem} className="text-muted space-y-2">
               {[].map((item, i) => (
                 <motion.p
                   key={i}
@@ -166,8 +158,8 @@ const HeroSection = () => {
 
           {/* Right Side - Mobile Mockup with Graphs */}
           <div className="relative">
-          <IconSequenceAnimation />
-        </div>
+            <IconSequenceAnimation />
+          </div>
         </div>
       </Container>
     </section>

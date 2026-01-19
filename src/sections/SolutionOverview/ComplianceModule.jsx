@@ -138,7 +138,7 @@ export function ComplianceModule() {
   return (
     <div
       ref={sectionRef}
-      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden"
+      className="subsection relative border-t border-blue-100 overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80  rounded-full filter opacity-30 animate-float"></div>
@@ -163,10 +163,12 @@ export function ComplianceModule() {
             initial={{ opacity: 0, x: -20 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-[#0F1615]/10 via-white/80 to-blue-50/60 backdrop-blur-sm px-3 py-1 shadow-sm"
+            className="mb-8 flex items-center gap-3"
           >
-            <div className="flex h-2 w-2 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]" />
-            <span className="text-xs font-medium tracking-wide text-[#0A2540]">
+            <span
+              className="inline-block px-4 py-2 rounded-full hero-badge"
+              style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+            >
               Compliance Engine
             </span>
           </motion.div>
@@ -175,7 +177,7 @@ export function ComplianceModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mb-4 text-3xl font-bold text-[#0A2540]"
+            className="sub-section-heading mb-4 text-[#0A2540]"
           >
             Global Tax & Compliance Automation
           </motion.h2>
@@ -184,7 +186,7 @@ export function ComplianceModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-8 text-lg leading-relaxed text-[#425466]"
+            className="section-subtitle mb-8 text-[#425466]"
           >
             Global compliance handled automatically. Stay compliant across every
             jurisdiction with real-time tax calculations, regulatory monitoring,

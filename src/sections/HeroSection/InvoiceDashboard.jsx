@@ -98,7 +98,7 @@ const InvoiceDashboard = () => {
       {/* Inner card - scaled down to fit */}
       <div className="absolute left-[3px] top-[4px] w-full h-full bg-gradient-to-b from-[#EDF4FE] to-white border border-opacity-10 border-black rounded-[30px] p-4">
         {/* Header section */}
-        <div className="flex justify-between items-start mb-10">
+        <div className="flex justify-between items-start mb-6">
           <div>
             <h1 className="text-base font-bold text-[#0A0A0A]">
               Recent Invoices
@@ -140,7 +140,7 @@ const InvoiceDashboard = () => {
             {invoices.map((invoice, rowIndex) => (
               <div
                 key={rowIndex}
-                className="w-full h-[60px] flex items-center border-b border-black border-opacity-10"
+                className="w-full h-[50px] flex items-center border-b border-black border-opacity-10"
               >
                 {/* Invoice ID */}
                 <div

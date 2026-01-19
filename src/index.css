@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,7 +12,7 @@
 }
 
 body {
-  font-family: 'DM Sans', sans-serif; /* Change this line */
+  font-family: "DM Sans", sans-serif; /* Change this line */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -85,13 +85,15 @@ html {
   } */
 
   .card-shadow {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
-                0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 2px 4px -1px rgba(0, 0, 0, 0.03);
   }
 
   .card-shadow-hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.08),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 
   /* Hero ambient layers */
@@ -112,57 +114,125 @@ html {
 
   .hero-pixels {
     background-image:
-      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.9) 1px, rgba(255,255,255,0) 1px),
-      radial-gradient(circle at 1px 1px, rgba(59,130,246,0.22) 1px, rgba(255,255,255,0) 1px);
-    background-size: 22px 22px, 34px 34px;
-    background-position: 0 0, 10px 14px;
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(255, 255, 255, 0.9) 1px,
+        rgba(255, 255, 255, 0) 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(59, 130, 246, 0.22) 1px,
+        rgba(255, 255, 255, 0) 1px
+      );
+    background-size:
+      22px 22px,
+      34px 34px;
+    background-position:
+      0 0,
+      10px 14px;
     animation: pixelDrift 16s linear infinite;
-    mask-image: radial-gradient(circle at 50% 35%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0) 82%);
-    -webkit-mask-image: radial-gradient(circle at 50% 35%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0) 82%);
+    mask-image: radial-gradient(
+      circle at 50% 35%,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.45) 55%,
+      rgba(0, 0, 0, 0) 82%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 35%,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.45) 55%,
+      rgba(0, 0, 0, 0) 82%
+    );
   }
 
   .phone-glare {
-    background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0) 60%);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.08) 35%,
+      rgba(255, 255, 255, 0) 60%
+    );
     mix-blend-mode: screen;
     animation: glareSweep 8s ease-in-out infinite;
   }
 
   .scanline {
-    background: linear-gradient(90deg, rgba(7,63,158,0) 0%, rgba(7,63,158,0.35) 50%, rgba(7,63,158,0) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(7, 63, 158, 0) 0%,
+      rgba(7, 63, 158, 0.35) 50%,
+      rgba(7, 63, 158, 0) 100%
+    );
     animation: scanMove 5s linear infinite;
   }
 
   @keyframes gridShift {
-    0% { background-position: 0 0, 0 0; }
-    100% { background-position: 120px 120px, 120px 120px; }
+    0% {
+      background-position:
+        0 0,
+        0 0;
+    }
+    100% {
+      background-position:
+        120px 120px,
+        120px 120px;
+    }
   }
 
   @keyframes ambientDrift {
-    0% { transform: translate3d(0,0,0) scale(1); }
-    100% { transform: translate3d(6px,-10px,0) scale(1.03); }
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    100% {
+      transform: translate3d(6px, -10px, 0) scale(1.03);
+    }
   }
 
   @keyframes pixelDrift {
-    0% { background-position: 0 0, 10px 14px; }
-    100% { background-position: 160px 120px, -180px 220px; }
+    0% {
+      background-position:
+        0 0,
+        10px 14px;
+    }
+    100% {
+      background-position:
+        160px 120px,
+        -180px 220px;
+    }
   }
 
   @keyframes glareSweep {
-    0% { transform: translateX(-60%) rotate(0deg); opacity: 0.4; }
-    45% { transform: translateX(30%) rotate(0deg); opacity: 0.7; }
-    100% { transform: translateX(80%) rotate(0deg); opacity: 0; }
+    0% {
+      transform: translateX(-60%) rotate(0deg);
+      opacity: 0.4;
+    }
+    45% {
+      transform: translateX(30%) rotate(0deg);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateX(80%) rotate(0deg);
+      opacity: 0;
+    }
   }
 
   @keyframes scanMove {
-    0% { transform: translateX(-30%); opacity: 0.45; }
-    50% { opacity: 0.7; }
-    100% { transform: translateX(130%); opacity: 0.45; }
+    0% {
+      transform: translateX(-30%);
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateX(130%);
+      opacity: 0.45;
+    }
   }
 }
 
 /* ================= COMPONENTS ================= */
 @layer components {
-
   /* Primary Button */
   .btn-primary {
     background-color: #0b43a0;
@@ -233,6 +303,61 @@ html {
     background-color: #3b82f6;
     color: #ffffff;
     border-radius: 0.75rem;
+  }
+}
+
+@layer components {
+  /* HERO */
+  .hero-badge {
+    @apply text-sm font-semibold;
+  }
+
+  .hero-heading {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 mb-6;
+  }
+
+  /* SECTION INTRO / SECONDARY HERO */
+  .section-hero-heading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6;
+  }
+
+  .section-subtitle {
+    @apply text-base md:text-lg text-gray-600 leading-relaxed;
+  }
+
+ .sub-section-heading{
+  @apply text-xl md:text-2xl font-semibold
+ }
+
+ .feature-title{
+  @apply text-base md:text-lg text-gray-600 leading-relaxed font-semibold 
+ }
+
+ .feature-description{
+  @apply text-base text-gray-700 leading-relaxed;
+ }
+
+  /* TEXT */
+  .text-body {
+    @apply text-base text-gray-700 leading-relaxed;
+  }
+
+  .text-muted {
+    @apply text-sm text-gray-600;
+  }
+
+  /* MAIN SECTIONS */
+  .section {
+    @apply py-20 md:py-24;
+  }
+
+  .section-tight {
+    @apply py-16 md:py-20;
+  }
+
+  /* SUBSECTIONS (modules inside a section) */
+  .subsection {
+    @apply py-16 md:py-20;
   }
 }
 

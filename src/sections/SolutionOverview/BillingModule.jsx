@@ -9,7 +9,6 @@ import { WireframeInvoiceCard } from "./Wireframe/WireframeInvoiceCard";
 
 import { Container } from "../../components/ui";
 
-// Reusable feature block with custom bullets
 export function FeatureBlock({ title, children, index }) {
   return (
     <motion.div
@@ -22,19 +21,19 @@ export function FeatureBlock({ title, children, index }) {
         {/* Custom bullet - simplified but still stylish */}
         <div className="relative flex-shrink-0">
           <div className="flex h-6 w-6 items-center justify-center">
-            <div className="h-4 w-4 rounded-full " />
+            <div className="h-4 w-4 rounded-full bg-gradient-to-br from-blue-50 to-blue-100" />
             <div className="absolute h-2 w-2 rounded-full bg-[#0B43A0]" />
           </div>
           {/* Connecting line - subtle visual flow */}
           {index < 2 && (
-            <div className="absolute left-3 top-6 h-4 w-0.5 " />
+            <div className="absolute left-3 top-6 h-4 w-0.5 bg-gradient-to-b from-blue-100 to-transparent" />
           )}
         </div>
 
         <div className="flex-1">
-          <h3 className="mb-1 text-sm font-semibold text-[#0A2540]">{title}</h3>
+          <h3 className="feature-title mb-1 text-[#0A2540]">{title}</h3>
           {children && (
-            <div className="text-xs text-[#425466] leading-relaxed">
+            <div className="feature-description text-[#425466] ">
               {children}
             </div>
           )}
@@ -43,7 +42,6 @@ export function FeatureBlock({ title, children, index }) {
     </motion.div>
   );
 }
-
 export function BillingModule() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
@@ -220,7 +218,7 @@ export function BillingModule() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) {
@@ -251,7 +249,7 @@ export function BillingModule() {
   return (
     <section
       ref={sectionRef}
-      className="relative border-t border-blue-100 py-20 md:py-24 overflow-hidden isolate "
+      className="subsection relative border-t border-blue-100 overflow-hidden isolate "
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 filter opacity-30 animate-float"></div>
@@ -263,10 +261,7 @@ export function BillingModule() {
           className="absolute inset-0 hero-grid opacity-50"
           aria-hidden="true"
         />
-        <div
-          className="absolute inset-0 opacity-70"
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 opacity-70" aria-hidden="true" />
       </div>
 
       <div className="pointer-events-none absolute left-1/4 top-1/4">
@@ -324,10 +319,12 @@ export function BillingModule() {
             initial={{ opacity: 0, x: -20 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-[#0F1615]/10 via-white/80 to-blue-50/60 backdrop-blur-sm px-3 py-1 shadow-sm"
+            className="mb-8 flex items-center gap-3"
           >
-            <div className="flex h-2 w-2 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]" />
-            <span className="text-xs font-medium tracking-wide text-[#0A2540]">
+            <span
+              className="inline-block px-4 py-2 rounded-full hero-badge"
+              style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+            >
               Intelligent Billing
             </span>
           </motion.div>
@@ -336,7 +333,7 @@ export function BillingModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mb-4 text-3xl font-bold text-[#0A2540]"
+            className="sub-section-heading mb-4 text-[#0A2540]"
           >
             AI-Powered Billing & Invoicing
           </motion.h2>
@@ -345,7 +342,7 @@ export function BillingModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-8 text-lg leading-relaxed text-[#425466]"
+            className="section-subtitle mb-8 text-[#425466]"
           >
             Smart billing designed for international businesses. Generate
             compliant invoices automatically with built-in tax intelligence for

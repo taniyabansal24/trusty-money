@@ -31,7 +31,7 @@ function App() {
             path="/about-us"
             element={
               <>
-                {/* <AboutUs /> */}
+                <AboutUs />
                 <JoinUsPage />
                 <Footer/>
               </>
