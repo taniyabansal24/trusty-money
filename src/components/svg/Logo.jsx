@@ -1,8 +1,8 @@
-export default function Logo({}) {
+export default function Logo({ width = 52, height = 52 }) { // Default values
   return (
     <svg
-      width="52"
-      height="52"
+      width={width}  // Use prop value
+      height={height} 
       viewBox="0 0 36 33"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

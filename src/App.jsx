@@ -8,9 +8,10 @@ import {
 import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
-import JoinUsPage from "./pages/JoinUsPage";
-import AboutUs from "./pages/AboutUs";
-import { Footer } from "./components/layout";
+import JoinUsPage from "./sections/JoinUsSection";
+import AboutUs from "./sections/AboutUsSection";
+import { Footer, Navbar } from "./components/layout";
+import AboutUsPage from "./pages/AboutUsPage";
 
 function App() {
   return (
@@ -26,17 +27,8 @@ function App() {
           {/* Sign-in route */}
           <Route path="/sign-in" element={<SignInPage />} />
 
-          {/* Join-us route */}
-          <Route
-            path="/about-us"
-            element={
-              <>
-                <AboutUs />
-                <JoinUsPage />
-                <Footer/>
-              </>
-            }
-          />
+          {/* About-us route */}
+          <Route path="/about-us" element={<AboutUsPage/>} />
 
           {/* Redirect any unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
