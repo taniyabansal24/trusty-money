@@ -68,7 +68,7 @@ const AboutUsSection = () => {
 
   return (
     <Container>
-      <div className="w-full min-h-screen bg-white pt-20 md:pt-20">
+      <div className="w-full min-h-screen bg-white pt-10 md:pt-10">
         {/* Main Hero Section */}
         <section>
           {/* Header Section */}
