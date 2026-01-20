@@ -6,6 +6,8 @@ import GlobeIcon from "../components/svg/GlobeIcon";
 import DollarIcon from "../components/svg/DollarIcon";
 import AnalyticsIcon from "../components/svg/AnalyticsIcon";
 import SyncIcon from "../components/svg/SyncIcon";
+import { motion } from "framer-motion";
+import { staggerContainer, staggerItem } from "../utils/animations";
 import DollarCircleIcon from "../components/svg/DollarCircleIcon";
 import DocumentIcon from "../components/svg/DocumentIcon";
 import BuildingIcon from "../components/svg/BuildingIcon";
@@ -1375,6 +1377,21 @@ const ProblemSection = () => {
 
   return (
     <>
+      {/* Header Section */}
+      <div className="text-center mb-12 pt-20 md:pt-24">
+        <motion.h1
+          variants={staggerItem}
+          className="section-hero-heading text-gray-900"
+        >
+          Cross-Border Friction{" "}
+          <span className="gradient-text relative">Exists <br />at Every Layer</span>
+        </motion.h1>
+        <p className="section-subtitle text-gray-600 max-w-lg mx-auto">
+          The Problem Isn’t Payments — It’s Everything Around Them
+
+
+        </p>
+      </div>
       <div
         ref={sectionRef}
         className="relative overflow-hidden isolate bg-white"
@@ -1537,9 +1554,7 @@ const ProblemSection = () => {
                   <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
                     Problem
                   </div>
-                  <h3 className="feature-title mb-3">
-                    Fragmented compliance
-                  </h3>
+                  <h3 className="feature-title mb-3">Fragmented compliance</h3>
                   <p className="text-[#425466] text-muted">
                     Compliance requirements constantly change by geography and
                     transaction type, creating ongoing operational burden.
@@ -1551,7 +1566,7 @@ const ProblemSection = () => {
         </div>
 
         {/* Main container */}
-        <Container className="relative z-0 py-20 md:py-24">
+        <Container className="relative z-0 pb-20 md:pb-24">
           <div className="min-h-max flex items-center justify-center ">
             {/* Phone mockup */}
             <div
