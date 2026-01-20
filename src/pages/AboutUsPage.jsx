@@ -9,7 +9,7 @@ const AboutUsPage = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        <div className="section">
+        <div >
             <AboutUsSection/>
         </div>
         <div className="section">
