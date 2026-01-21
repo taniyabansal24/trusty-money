@@ -706,7 +706,7 @@ export function WireframeReportingDashboard({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
         transition={{ delay: animationPhase === 1 ? 1.5 : 0.5 }}
-        className="mt-4 rounded-lg p-3 bg-[#EEF1F9]"
+        className="mt-4 rounded-lg p-3 bg-[#F2F7FF]"
         style={{
           border: "1px solid #073F9E",
         }}

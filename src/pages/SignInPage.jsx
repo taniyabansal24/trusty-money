@@ -187,9 +187,9 @@ const SignInCard = () => {
         className="w-full max-w-5xl overflow-hidden rounded-2xl flex bg-white shadow-xl"
       >
         {/* Left side - Map */}
-        <div className="hidden md:block w-1/2 h-[740px] relative overflow-hidden border-r border-gray-100">
+        <div className="hidden md:block w-1/2 h-[700px] relative overflow-hidden border-r border-gray-100">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100">
-            <DotMap />
+            {/* <DotMap /> */}
 
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 z-10">
               <motion.h2

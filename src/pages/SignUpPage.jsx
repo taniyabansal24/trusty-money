@@ -203,9 +203,9 @@ const SignUpCard = () => {
         className="w-full max-w-5xl overflow-hidden rounded-2xl flex bg-white shadow-xl"
       >
         {/* Left side - Map */}
-        <div className="hidden md:block w-1/2 h-[740px] relative overflow-hidden border-r border-gray-100">
+        <div className="hidden md:block w-1/2 h-[700px] relative overflow-hidden border-r border-gray-100">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100">
-            <DotMap />
+            {/* <DotMap /> */}
 
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 z-10">
               <motion.h2
@@ -215,9 +215,9 @@ const SignUpCard = () => {
                 className="text-4xl font-bold mb-3 text-center"
                 style={{ color: "#0A2540" }}
               >
-                <div className="w-64 h-full">
+                <div className="w-14 h-14">
                   <img
-                    src="src/assets/logo2.png"
+                    src="src/assets/logo.png"
                     alt=""
                     className="w-full h-full"
                   />
@@ -250,7 +250,7 @@ const SignUpCard = () => {
         </div>
 
         {/* Right side - Sign Up Form */}
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center bg-white">
+        <div className="w-full md:w-1/2 p-6 flex flex-col justify-center bg-white">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -350,7 +350,7 @@ const SignUpCard = () => {
                   htmlFor="companyName"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Company Name (Optional)
+                  Company Name <span className="text-blue-500">*</span>
                 </label>
                 <Input
                   id="companyName"
@@ -504,7 +504,7 @@ const SignUpCard = () => {
                 </motion.div>
               </div>
 
-              <div className="text-center pt-4">
+              <div className="text-center">
                 <p className="text-sm text-gray-600">
                   Already have an account?{" "}
                   <a
@@ -537,7 +537,7 @@ const SignUpPage = () => {
       </main>
       
       {/* MapBackgroundWrapper at bottom */}
-      <div className="w-full mt-auto">
+      <div className="section">
         <MapBackgroundWrapper />
       </div>
     </div>

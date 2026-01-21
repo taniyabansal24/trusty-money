@@ -390,8 +390,8 @@ const AboutUsSection = () => {
             <div className="w-full bg-[#F0F6FE] rounded-[31px] p-10 grid grid-cols-[420px_1fr] gap-14 my-10">
               {/* Left */}
               <div className="flex flex-col items-center">
-                <div className="w-[250px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
-                  Founder & CEO
+                <div className="w-[230px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
+                 <img src="src/assets/homeFounder.svg" alt="" className="w-full h-full object-cover"/>
                 </div>
 
                 <h3 className="mt-6 section-subtitle font-bold text-[#073F9E]">
@@ -449,8 +449,8 @@ const AboutUsSection = () => {
             <div className="w-full bg-[#F0F6FE] rounded-[31px] p-10 grid grid-cols-[420px_1fr] gap-14 mt-10">
               {/* Left */}
               <div className="flex flex-col items-center">
-                <div className="w-[250px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
-                  Engineer Photo
+                <div className="w-[230px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
+                  <img src="src/assets/sunil-simar.webp" alt="" className="pt-36" />
                 </div>
 
                 <h3 className="mt-6 section-subtitle font-bold text-[#073F9E]">

@@ -427,7 +427,7 @@ export default function CircularShiftAnimation() {
       </div>
 
       {/* RIGHT — SCREEN DISPLAY */}
-      <div className="w-[34rem] h-[37rem] relative bottom-[9%] right-[-24%]">
+      <div className="w-[34rem] h-[35rem] relative bottom-[9%] right-[-24%]">
         {/* Main container with shadow */}
         <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_50px_100px_-20px_rgba(50,50,93,0.25),0px_30px_60px_-30px_rgba(0,0,0,0.3),inset_0px_-2px_6px_rgba(10,37,64,0.35)]"></div>
 

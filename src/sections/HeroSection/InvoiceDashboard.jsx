@@ -126,7 +126,7 @@ const InvoiceDashboard = () => {
             ].map((header, index) => (
               <div
                 key={index}
-                className={`${columnWidths[index]} h-[35px] flex items-center ${columnPadding}`}
+                className={`${columnWidths[index]} h-[28px] flex items-center ${columnPadding}`}
               >
                 <span className="text-xs text-[#717182] font-normal">
                   {header}
@@ -140,7 +140,7 @@ const InvoiceDashboard = () => {
             {invoices.map((invoice, rowIndex) => (
               <div
                 key={rowIndex}
-                className="w-full h-[50px] flex items-center border-b border-black border-opacity-10"
+                className="w-full h-[45px] flex items-center border-b border-black border-opacity-10"
               >
                 {/* Invoice ID */}
                 <div

@@ -10,6 +10,7 @@ import {
   DollarSign,
   Heart,
 } from "lucide-react";
+import { Button } from "../components/ui";
 
 const JoinUsSection = () => {
   const jobOpenings = [
@@ -129,7 +130,7 @@ const JoinUsSection = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
             <div>
               <h2
-                className="text-4xl font-bold mb-4"
+                className="sub-section-heading font-bold mb-4"
                 style={{ color: "#0A2540" }}
               >
                 Open Positions
@@ -145,26 +146,25 @@ const JoinUsSection = () => {
             </div>
             <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
               <button
-                className="px-4 py-2 rounded-full font-medium text-white"
-                style={{ backgroundColor: "#101111" }}
+                className="px-4 py-2 rounded-full font-medium bg-[#F2F7FF] text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
               >
                 All Roles
               </button>
               <button
-                className="px-4 py-2 rounded-full font-medium border hover:bg-gray-50"
-                style={{ borderColor: "#0A2540", color: "#0A2540" }}
+                className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
+              
               >
                 Engineering
               </button>
               <button
-                className="px-4 py-2 rounded-full font-medium border hover:bg-gray-50"
-                style={{ borderColor: "#0A2540", color: "#0A2540" }}
+                className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
+              
               >
                 Design
               </button>
               <button
-                className="px-4 py-2 rounded-full font-medium border hover:bg-gray-50"
-                style={{ borderColor: "#0A2540", color: "#0A2540" }}
+                className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
+                
               >
                 Product
               </button>
@@ -181,7 +181,7 @@ const JoinUsSection = () => {
                   <div className="mb-4 md:mb-0">
                     <div className="flex items-center gap-3 mb-2">
                       <h3
-                        className="text-2xl font-bold group-hover:underline"
+                        className="feature-title group-hover:underline"
                         style={{ color: "#0A2540" }}
                       >
                         {job.title}
@@ -217,7 +217,7 @@ const JoinUsSection = () => {
                         </span>
                       </div>
                     </div>
-                    <p className="mt-4 max-w-2xl" style={{ color: "#425466" }}>
+                    <p className="mt-4 max-w-2xl feature-description" style={{ color: "#425466" }}>
                       {job.description}
                     </p>
                   </div>
@@ -225,36 +225,15 @@ const JoinUsSection = () => {
                     <div className="text-sm mb-3" style={{ color: "#425466" }}>
                       Posted {job.posted}
                     </div>
-                    <button
-                      className="px-6 py-3 rounded-lg font-semibold text-white flex items-center gap-2 hover:opacity-90 transition-opacity"
-                      style={{ backgroundColor: "#073f9e" }}
-                    >
+                    <Button variant="primary">
                       Apply Now
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Comparison Box */}
-          {/* <div className="mt-20 p-8 rounded-2xl text-center relative overflow-hidden"
-            style={{ backgroundColor: '#3b82f6' }}>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90"></div>
-            <div className="relative z-10 text-white max-w-3xl mx-auto">
-              <h3 className="text-3xl font-bold mb-4">
-                Not Seeing a Perfect Role?
-              </h3>
-              <p className="text-lg mb-8 opacity-90">
-                We're always looking for talented people. Send us your resume and we'll reach out when we have a matching opportunity.
-              </p>
-              <button className="px-8 py-4 rounded-lg font-semibold bg-white hover:bg-gray-100 transition-colors"
-                style={{ color: '#0A2540' }}>
-                Submit General Application
-              </button>
-            </div>
-          </div> */}
         </div>
       </section>
     </>
