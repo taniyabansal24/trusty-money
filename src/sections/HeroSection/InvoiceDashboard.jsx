@@ -96,7 +96,7 @@ const InvoiceDashboard = () => {
   return (
     <div className="w-full h-full relative">
       {/* Inner card - scaled down to fit */}
-      <div className="absolute left-[3px] top-[4px] w-full h-full bg-gradient-to-b from-[#EDF4FE] to-white border border-opacity-10 border-black rounded-[30px] p-4">
+      <div className="absolute left-[3px] top-[4px] w-full h-full rounded-[30px] p-4 shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
         {/* Header section */}
         <div className="flex justify-between items-start mb-6">
           <div>

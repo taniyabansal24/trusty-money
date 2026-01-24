@@ -70,7 +70,7 @@ export function SolutionOverview() {
               <div className="max-w-xl mt-6">
                 <p className="section-subtitle max-w-xl">
                   Trusty Money is not just a payment gateway. It&apos;s a{" "}
-                  <span className="font-semibold text-[#0B43A0]">
+                  <span className="font-semibold text-[#073F9E]">
                     global financial operating system
                   </span>{" "}
                   for cross-border commerce, supporting billing, compliance,

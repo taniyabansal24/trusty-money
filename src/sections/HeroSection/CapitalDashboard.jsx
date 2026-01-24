@@ -20,7 +20,7 @@ const CapitalDashboard = () => {
   return (
     <div className="w-full h-full relative">
       {/* Main dashboard container */}
-      <div className="absolute left-[3px] top-[4px] w-full h-full bg-white border border-[#E5E7EB] rounded-[34px] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] overflow-hidden">
+      <div className="absolute left-[3px] top-[4px] w-full h-full rounded-[34px] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] overflow-hidden">
         {/* Top gradient section */}
         <div className="absolute top-0 left-0 w-full h-[167px] bg-gradient-to-br from-[#F8FAFC] to-white"></div>
 

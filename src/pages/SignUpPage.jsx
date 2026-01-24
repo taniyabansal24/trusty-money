@@ -4,39 +4,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "../components/ui";
 import { Navbar } from "../components/layout";
 import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
 
 // Helper function to merge class names
 const cn = (...classes) => {
   return classes.filter(Boolean).join(" ");
-};
-
-// Custom Button Component
-const Button = ({
-  children,
-  variant = "default",
-  className = "",
-  ...props
-}) => {
-  const baseStyles =
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
-
-  const variantStyles = {
-    default:
-      "bg-primary bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700",
-    outline:
-      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-  };
-
-  return (
-    <button
-      className={`${baseStyles} ${variantStyles[variant]} ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
 };
 
 // Custom Input Component
@@ -223,23 +197,22 @@ const SignUpCard = () => {
                   />
                 </div>
               </motion.h2>
-              <motion.p
+              <motion.h2
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="text-sm text-center max-w-xs mt-6"
-                style={{ color: "#425466" }}
+                className="section-heading text-center mt-6"
               >
                 The Operating System for <br />
-                <span className="text-[#0B43A0] text-2xl font-semibold mb-2 text-center max-w-md">
+                <span className="gradient-text mt-4 text-center section-heading">
                   Cross-Border Business
                 </span>
-              </motion.p>
+              </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="text-sm text-center max-w-xs"
+                className="section-subtitle text-center max-w-xs"
                 style={{ color: "#425466" }}
               >
                 Designed for billing, compliance, payments, FX, treasury and
@@ -311,7 +284,7 @@ const SignUpCard = () => {
                     htmlFor="firstName"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    First Name <span className="text-blue-500">*</span>
+                    First Name <span className="text-[#0C43A0]">*</span>
                   </label>
                   <Input
                     id="firstName"
@@ -330,7 +303,7 @@ const SignUpCard = () => {
                     htmlFor="lastName"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Last Name <span className="text-blue-500">*</span>
+                    Last Name <span className="text-[#0C43A0]">*</span>
                   </label>
                   <Input
                     id="lastName"
@@ -350,7 +323,7 @@ const SignUpCard = () => {
                   htmlFor="companyName"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Company Name <span className="text-blue-500">*</span>
+                  Company Name <span className="text-[#0C43A0]">*</span>
                 </label>
                 <Input
                   id="companyName"
@@ -368,7 +341,7 @@ const SignUpCard = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Email <span className="text-blue-500">*</span>
+                  Email <span className="text-[#0C43A0]">*</span>
                 </label>
                 <Input
                   id="email"
@@ -388,7 +361,7 @@ const SignUpCard = () => {
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Password <span className="text-blue-500">*</span>
+                    Password <span className="text-[#0C43A0]">*</span>
                   </label>
                   <div className="relative">
                     <Input
@@ -420,7 +393,7 @@ const SignUpCard = () => {
                     htmlFor="confirmPassword"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Confirm Password <span className="text-blue-500">*</span>
+                    Confirm Password <span className="text-[#0C43A0]">*</span>
                   </label>
                   <div className="relative">
                     <Input
@@ -462,18 +435,18 @@ const SignUpCard = () => {
                 />
                 <label htmlFor="agreeTerms" className="text-sm text-gray-600">
                   I agree to the{" "}
-                  <a href="#" className="text-blue-600 hover:text-blue-800">
+                  <a href="#" className="text-[#0C43A0] hover:text-blue-600">
                     Terms of Service
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-blue-600 hover:text-blue-800">
+                  <a href="#" className="text-[#0C43A0] hover:text-blue-600">
                     Privacy Policy
                   </a>{" "}
                   <span className="text-blue-500">*</span>
                 </label>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 flex justify-center">
                 <motion.div
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
@@ -482,24 +455,14 @@ const SignUpCard = () => {
                 >
                   <Button
                     type="submit"
-                    className={cn(
-                      "w-full bg-gradient-to-r relative overflow-hidden from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-3 rounded-lg transition-all duration-300",
-                      isHovered ? "shadow-lg shadow-blue-200" : ""
-                    )}
+                    variant="primary"
+                    shimmer={isHovered}
+                    className="px-36" // optional width control
                   >
                     <span className="flex items-center justify-center">
                       Create Account
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </span>
-                    {isHovered && (
-                      <motion.span
-                        initial={{ left: "-100%" }}
-                        animate={{ left: "100%" }}
-                        transition={{ duration: 1, ease: "easeInOut" }}
-                        className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                        style={{ filter: "blur(8px)" }}
-                      />
-                    )}
                   </Button>
                 </motion.div>
               </div>
@@ -509,7 +472,7 @@ const SignUpCard = () => {
                   Already have an account?{" "}
                   <a
                     href="/sign-in"
-                    className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                    className="text-[#0C43A0] hover:text-blue-600 font-medium transition-colors"
                   >
                     Sign in here
                   </a>
@@ -530,14 +493,14 @@ const SignUpPage = () => {
       <div className="w-full">
         <Navbar />
       </div>
-      
+
       {/* Main content - grows to take available space */}
       <main className="flex-grow flex items-center justify-center py-28">
         <SignUpCard />
       </main>
-      
+
       {/* MapBackgroundWrapper at bottom */}
-      <div className="section">
+      <div className="w-full mt-auto pt-20 md:pt-24">
         <MapBackgroundWrapper />
       </div>
     </div>

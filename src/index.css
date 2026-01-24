@@ -232,79 +232,6 @@ html {
 }
 
 /* ================= COMPONENTS ================= */
-@layer components {
-  /* Primary Button */
-  .btn-primary {
-    background-color: #0b43a0;
-    color: #ffffff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    background-color: #073f9e;
-    box-shadow: 0 10px 20px rgba(11, 67, 160, 0.25);
-    transform: scale(1.04);
-  }
-
-  .btn-primary:active {
-    transform: scale(0.96);
-  }
-
-  /* Secondary Button */
-  .btn-secondary {
-    background-color: #ffffff;
-    color: #0a2540;
-    border: 2px solid #0a2540;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-
-  .btn-secondary:hover {
-    background-color: #f0f5ff;
-    box-shadow: 0 8px 16px rgba(10, 37, 64, 0.15);
-  }
-
-  /* Section Wrapper */
-  .section-container {
-    max-width: 80rem;
-    margin: 0 auto;
-    padding: 4rem 1rem;
-  }
-
-  /* Section Heading */
-  .section-heading {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #0a2540;
-    margin-bottom: 1rem;
-  }
-
-  /* Section Subheading */
-  .section-subheading {
-    font-size: 1.125rem;
-    color: #425466;
-    max-width: 48rem;
-  }
-
-  /* Dark Card */
-  .dark-card {
-    background-color: #0f1615;
-    color: #ffffff;
-    border-radius: 0.75rem;
-  }
-
-  /* Compare Box */
-  .compare-box {
-    background-color: #3b82f6;
-    color: #ffffff;
-    border-radius: 0.75rem;
-  }
-}
 
 @layer components {
   /* HERO */
@@ -322,7 +249,7 @@ html {
   }
 
   .section-subtitle {
-    @apply text-base md:text-lg text-gray-600 leading-relaxed;
+    @apply text-base md:text-lg text-[#1B1B1B] leading-relaxed;
   }
 
  .sub-section-heading{
@@ -330,7 +257,7 @@ html {
  }
 
  .feature-title{
-  @apply text-base md:text-lg text-gray-600 leading-relaxed font-semibold 
+  @apply text-base md:text-lg text-[#1B1B1B] leading-relaxed font-semibold 
  }
 
  .feature-description{
@@ -346,18 +273,21 @@ html {
     @apply text-sm text-gray-600;
   }
 
-  /* MAIN SECTIONS */
+  /* MAIN SECTIONS Spacing */
   .section {
     @apply py-20 md:py-24;
-  }
-
-  .section-tight {
-    @apply py-16 md:py-20;
   }
 
   /* SUBSECTIONS (modules inside a section) */
   .subsection {
     @apply py-16 md:py-20;
   }
+  .txt-blue{
+    @apply text-[#073F9E];
+  }
+  
 }
+
+
+
 

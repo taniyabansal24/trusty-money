@@ -56,112 +56,141 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen pt-32 lg:pt-40 pb-24 overflow-hidden">
-      {/* Main gradient background */}
+    <section className="relative w-auto h-lvh  flex flex-col items-start overflow-hidden">
+      {/* Main Section Container - matching original padding */}
       <div
-        className="absolute inset-0"
+        className="relative w-full h-full flex flex-col items-start"
         style={{
-          background: "linear-gradient(180deg, #FDFEFF 0%, #E9F8FF 100%)",
+          padding: "160px 0px 0px 0px",
+          isolation: "isolate",
+          background: "linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)",
         }}
-      ></div>
+      >
+        {/* Container - Primary gradient background */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(180deg, #E9F8FF 0%, #FDFEFF 100%)",
+            zIndex: "0",
+          }}
+        ></div>
 
-      {/* Gradient+Blur overlay at bottom - EXACT CSS MATCH */}
-      <div
-        className="absolute left-0 right-0"
-        style={{
-          height: "96px",
-          bottom: "-32px",
-          background:
-            "linear-gradient(180deg, rgba(245, 248, 255, 0) 0%, rgba(245, 248, 255, 0.55) 50%, #F8FAFC 100%)",
-          filter: "blur(4px)",
-          zIndex: "1",
-        }}
-      ></div>
+        {/* Background+Blur - Circle on right side */}
+        <div
+          className="absolute"
+          style={{
+            width: "501px",
+            height: "499px",
+            right: "-160px",
+            top: "-160px",
+            background: "#FFFFFF",
+            mixBlendMode: "multiply",
+            opacity: "0.3",
+            filter: "blur(12px)",
+            borderRadius: "9999px",
+            zIndex: "0",
+          }}
+        ></div>
 
-      <Container className="relative z-10 mt-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left Side - Text Content */}
-          <motion.div
-            variants={staggerContainer}
-            initial="false"
-            animate="animate"
-            
-            className="text-left relative"
-          >
-            {/* Badge */}
+        {/* Gradient+Blur - Bottom overlay */}
+        <div
+          className="absolute left-0 right-0"
+          style={{
+            height: "96px",
+            bottom: "-32px",
+            background:
+              "linear-gradient(180deg, rgba(245, 248, 255, 0) 0%, rgba(245, 248, 255, 0.55) 50%, #F8FAFC 100%)",
+            filter: "blur(4px)",
+            zIndex: "1",
+          }}
+        ></div>
+        <Container className="relative z-10 mt-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left Side - Text Content */}
             <motion.div
-              variants={staggerItem}
-              className="mb-8 flex items-center gap-3"
+              variants={staggerContainer}
+              initial="false"
+              animate="animate"
+              className="text-left relative"
             >
-              <span
-                className="inline-block px-4 py-2 rounded-full hero-badge"
-                style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+              {/* Badge */}
+              <motion.div
+                variants={staggerItem}
+                className="mb-8 flex items-center gap-3"
               >
-                Cross-Border Operating System
-              </span>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.h1 className="hero-heading">
-              The Operating System for{" "}
-              <span className="gradient-text relative">
-                Cross-Border Business
-                {/* Animated underline */}
-              </span>
-            </motion.h1>
-
-            {/* Subheadline line */}
-            <motion.p className="section-subtitle mb-6 max-w-lg">
-              Designed for billing, compliance, payments, FX, treasury and
-              working capital
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              variants={staggerItem}
-              className="flex flex-col sm:flex-row gap-4 mb-8"
-            >
-              <Button variant="primary" size="md">
-                Request a Demo
-              </Button>
-              <Button variant="secondary" size="md">
-                Talk to Sales
-              </Button>
-            </motion.div>
-
-            <motion.div variants={staggerItem} className="text-muted space-y-2">
-              {[].map((item, i) => (
-                <motion.p
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 2 + i * 0.1 }}
-                  className="flex items-center gap-2"
+                <span
+                  className="inline-block px-4 py-2 rounded-full hero-badge txt-blue"
+                  style={{ backgroundColor: "#073f9e12" }}
                 >
-                  <motion.span
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{
-                      duration: 2,
-                      delay: 2.5 + i * 0.2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                    }}
-                    className="text-green-600 font-bold"
-                  >
-                    {item.icon}
-                  </motion.span>
-                  {item.text}
-                </motion.p>
-              ))}
-            </motion.div>
-          </motion.div>
+                  Cross-Border Operating System
+                </span>
+              </motion.div>
 
-          {/* Right Side - Mobile Mockup with Graphs */}
-          <div className="relative">
-            <IconSequenceAnimation />
+              {/* Headline */}
+              <motion.h1 className="hero-heading">
+                The Operating System for{" "}
+                <span className="gradient-text relative">
+                  Cross-Border Business
+                  {/* Animated underline */}
+                </span>
+              </motion.h1>
+
+              {/* Subheadline line */}
+              <motion.p className="section-subtitle mb-6 max-w-lg">
+                Designed for billing, compliance, payments, FX, treasury and
+                working capital
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div
+                variants={staggerItem}
+                className="flex flex-col sm:flex-row gap-4 mb-8"
+              >
+                <Button variant="primary" size="md" shimmer>
+                  Request a Demo
+                </Button>
+                <Button variant="secondary" size="md">
+                  Talk to Sales
+                </Button>
+              </motion.div>
+
+              <motion.div
+                variants={staggerItem}
+                className="text-muted space-y-2"
+              >
+                {[].map((item, i) => (
+                  <motion.p
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 2 + i * 0.1 }}
+                    className="flex items-center gap-2"
+                  >
+                    <motion.span
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{
+                        duration: 2,
+                        delay: 2.5 + i * 0.2,
+                        repeat: Infinity,
+                        repeatDelay: 3,
+                      }}
+                      className="text-green-600 font-bold"
+                    >
+                      {item.icon}
+                    </motion.span>
+                    {item.text}
+                  </motion.p>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Right Side - Mobile Mockup with Graphs */}
+            <div className="relative">
+              <IconSequenceAnimation />
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 };

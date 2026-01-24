@@ -26,7 +26,7 @@ const CallToAction = () => {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button variant="primary" size="md">
+          <Button variant="primary" size="md" shimmer>
             Request a Demo
           </Button>
           <Button variant="secondary" size="md">

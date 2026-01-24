@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "../../components/ui";
-import { FeatureBlock } from "../../sections/SolutionOverview/BillingModule";
 import usFlag from "../../assets/usflag.jpg";
 import ukFlag from "../../assets/ukflag.png";
 import canadaFlag from "../../assets/canadaflag.webp";
@@ -12,11 +11,37 @@ import BankIcon from "../../components/svg/BankIcon";
 import CardIcon from "../../components/svg/CardIcon";
 import DuplicateIcon from "../../components/svg/DuplicateIcon";
 import FilterIcon from "../../components/svg/FilterIcon";
+import { FeatureBlock } from "./FeatureBlock";
+import { ProgressLine } from "./FeatureBlock"; // Make sure this import is correct
 
 export function PaymentsModule() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeFeature, setActiveFeature] = useState(0);
   const sectionRef = useRef(null);
+
+  // Refs for progress line functionality
+  const bulletRefs = useRef([]);
+  const featuresContainerRef = useRef(null);
+
+  // Feature cycling effect
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const FEATURE_DURATION = 2000;
+    setActiveFeature(0);
+
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => {
+        if (prev >= features.length - 1) {
+          return 0; // Reset to start for continuous loop
+        }
+        return prev + 1;
+      });
+    }, FEATURE_DURATION);
+
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -215,13 +240,42 @@ export function PaymentsModule() {
             pricing, and seamless integration across all payment methods.
           </motion.p>
 
-          {/* Feature Blocks with Custom Bullets */}
-          <div className="space-y-3">
-            {features.map((feature, index) => (
-              <FeatureBlock key={index} title={feature.title} index={index}>
-                {feature.description}
-              </FeatureBlock>
-            ))}
+          {/* Feature Blocks with Progress Line */}
+          <div ref={featuresContainerRef} className="relative">
+            <div className="relative pl-8">
+              {/* Progress Line */}
+              <ProgressLine
+                bulletRefs={bulletRefs}
+                activeFeature={activeFeature}
+                featuresLength={features.length}
+                containerRef={featuresContainerRef}
+                isVisible={isVisible}
+                // Custom positioning - adjust these values as needed
+                left="left-[59px]"
+                top="top-7"
+                width="w-[2px]"
+                // Animation
+                animationType="spring"
+                stiffness={120}
+                damping={15}
+              />
+
+              <div className="space-y-2">
+                {features.map((feature, index) => (
+                  <FeatureBlock
+                    key={index}
+                    title={feature.title}
+                    index={index}
+                    isActive={index <= activeFeature}
+                    bulletRef={(el) => {
+                      bulletRefs.current[index] = el;
+                    }}
+                  >
+                    {feature.description}
+                  </FeatureBlock>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -412,21 +466,6 @@ export function PaymentsModule() {
                 </motion.div>
               </AnimatePresence>
             </motion.div>
-
-            {/* Click Hint */}
-            {/* <motion.div
-                initial={{ opacity: 0 }}
-                animate={isVisible ? { opacity: 1 } : {}}
-                transition={{ delay: 1, duration: 0.4 }}
-                className="mt-4 text-center"
-              >
-                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-500 shadow-sm">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                  </svg>
-                  Click card to switch currency
-                </div>
-              </motion.div> */}
           </div>
         </motion.div>
       </Container>

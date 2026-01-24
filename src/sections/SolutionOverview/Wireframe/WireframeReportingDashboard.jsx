@@ -395,7 +395,7 @@ export function WireframeReportingDashboard({
   ];
 
   return (
-    <motion.div style={{ y }} className="relative">
+    <div className="relative">
       {/* Wireframe Overlay */}
       <AnimatePresence>
         {shouldAnimate && animationPhase === 0 && (
@@ -741,7 +741,7 @@ export function WireframeReportingDashboard({
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 

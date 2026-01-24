@@ -429,15 +429,17 @@ export default function CircularShiftAnimation() {
       {/* RIGHT — SCREEN DISPLAY */}
       <div className="w-[34rem] h-[35rem] relative bottom-[9%] right-[-24%]">
         {/* Main container with shadow */}
-        <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_50px_100px_-20px_rgba(50,50,93,0.25),0px_30px_60px_-30px_rgba(0,0,0,0.3),inset_0px_-2px_6px_rgba(10,37,64,0.35)]"></div>
+        <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_0px_100px_-20px_rgba(50,50,93,0.25),0px_0px_60px_-30px_rgba(0,0,0,0.15),inset_0px_0px_6px_rgba(10,37,64,0.2)]"></div>
 
         {/* Dynamic Screen Container */}
         <div
           ref={screenContainerRef}
-          className="absolute left-[1px] top-[1px] w-[calc(100%-10px)] h-[calc(100%-10px)] rounded-[36px] overflow-hidden bg-white"
+          className="absolute left-[1px] top-[1px] w-[calc(100%-10px)] h-[calc(100%-10px)] rounded-[36px] overflow-hidden"
           style={{ opacity: 1 }}
         >
           <CurrentScreen />
+          {/* <BillingInvoice/> */}
+         
         </div>
       </div>
     </div>

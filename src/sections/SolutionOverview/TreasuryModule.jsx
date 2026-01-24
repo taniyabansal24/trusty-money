@@ -6,15 +6,40 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Container } from "../../components/ui";
-import { FeatureBlock } from "../../sections/SolutionOverview/BillingModule";
 import { WireframeTreasuryDashboard } from "./Wireframe/WireframeTreasuryDashboard";
+import { FeatureBlock } from "./FeatureBlock";
+import { ProgressLine } from "./FeatureBlock";
 
 export function TreasuryModule() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(0);
   const sectionRef = useRef(null);
+
+  // Refs for progress line functionality
+  const bulletRefs = useRef([]);
+  const featuresContainerRef = useRef(null);
 
   // Added Logic: Data Index Toggling
   const [dataIndex, setDataIndex] = useState(0);
+
+  // Feature cycling effect
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const FEATURE_DURATION = 2000;
+    setActiveFeature(0);
+
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => {
+        if (prev >= features.length - 1) {
+          return 0; // Reset to start for continuous loop
+        }
+        return prev + 1;
+      });
+    }, FEATURE_DURATION);
+
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -113,7 +138,6 @@ export function TreasuryModule() {
               Treasury Operations
             </span>
           </motion.div>
-          
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -135,13 +159,42 @@ export function TreasuryModule() {
             timing, and accelerate collections through intelligent automation.
           </motion.p>
 
-          {/* Feature Blocks with Custom Bullets */}
-          <div className="space-y-3">
-            {features.map((feature, index) => (
-              <FeatureBlock key={index} title={feature.title} index={index}>
-                {feature.description}
-              </FeatureBlock>
-            ))}
+          {/* Feature Blocks with Progress Line */}
+          <div ref={featuresContainerRef} className="relative">
+            <div className="relative pl-8">
+              {/* Progress Line */}
+              <ProgressLine
+                bulletRefs={bulletRefs}
+                activeFeature={activeFeature}
+                featuresLength={features.length}
+                containerRef={featuresContainerRef}
+                isVisible={isVisible}
+                // Custom positioning for treasury theme
+                left="left-[59px]"
+                top="top-7"
+                width="w-[2px]"
+                // Animation
+                animationType="spring"
+                stiffness={120}
+                damping={15}
+              />
+
+              <div className="space-y-2">
+                {features.map((feature, index) => (
+                  <FeatureBlock
+                    key={index}
+                    title={feature.title}
+                    index={index}
+                    isActive={index <= activeFeature}
+                    bulletRef={(el) => {
+                      bulletRefs.current[index] = el;
+                    }}
+                  >
+                    {feature.description}
+                  </FeatureBlock>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 

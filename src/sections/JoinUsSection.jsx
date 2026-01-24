@@ -130,12 +130,12 @@ const JoinUsSection = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
             <div>
               <h2
-                className="sub-section-heading font-bold mb-4"
+                className="section-heading font-bold"
                 style={{ color: "#0A2540" }}
               >
                 Open Positions
               </h2>
-              <p className="text-lg" style={{ color: "#425466" }}>
+              <p className="subsection-subtitle" style={{ color: "#425466" }}>
                 {jobOpenings.length} roles across{" "}
                 {
                   Array.from(new Set(jobOpenings.map((job) => job.department)))
@@ -186,7 +186,7 @@ const JoinUsSection = () => {
                       >
                         {job.title}
                       </h3>
-                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                      <span className="px-3 py-1 rounded-full hero-badge bg-blue-100 text-blue-800">
                         {job.type}
                       </span>
                     </div>
@@ -196,7 +196,7 @@ const JoinUsSection = () => {
                           className="w-4 h-4"
                           style={{ color: "#425466" }}
                         />
-                        <span style={{ color: "#425466" }}>
+                        <span className="text-muted">
                           {job.department}
                         </span>
                       </div>
@@ -205,14 +205,14 @@ const JoinUsSection = () => {
                           className="w-4 h-4"
                           style={{ color: "#425466" }}
                         />
-                        <span style={{ color: "#425466" }}>{job.location}</span>
+                        <span className="text-muted">{job.location}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <TrendingUp
                           className="w-4 h-4"
                           style={{ color: "#425466" }}
                         />
-                        <span style={{ color: "#425466" }}>
+                        <span className="text-muted">
                           {job.experience}
                         </span>
                       </div>
@@ -225,7 +225,7 @@ const JoinUsSection = () => {
                     <div className="text-sm mb-3" style={{ color: "#425466" }}>
                       Posted {job.posted}
                     </div>
-                    <Button variant="primary">
+                    <Button variant="primary" shimmer size="md">
                       Apply Now
                       <ArrowRight className="w-4 h-4" />
                     </Button>

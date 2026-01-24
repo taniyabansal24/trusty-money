@@ -45,7 +45,7 @@ const CountryTaxCard = () => {
   return (
     <div className="w-full h-full relative">
       {/* Main invoice container */}
-      <div className="absolute left-[3px] top-[4px] w-full h-full bg-white border border-[#E5E7EB] rounded-[28px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] overflow-hidden">
+      <div className="absolute left-[3px] top-[4px] w-full h-full rounded-[28px] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] overflow-hidden">
         {/* Main content */}
         <div className="p-4 h-full flex flex-col">
           {/* Header section */}

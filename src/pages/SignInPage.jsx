@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Navbar } from "../components/layout";
+import { Button } from "../components/ui";
 import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
 
 // Helper function to merge class names
@@ -12,32 +13,6 @@ const cn = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
 
-// Custom Button Component
-const Button = ({
-  children,
-  variant = "default",
-  className = "",
-  ...props
-}) => {
-  const baseStyles =
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
-
-  const variantStyles = {
-    default:
-      "bg-primary bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700",
-    outline:
-      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-  };
-
-  return (
-    <button
-      className={`${baseStyles} ${variantStyles[variant]} ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
 
 // Custom Input Component
 const Input = ({ className = "", ...props }) => {
@@ -292,7 +267,7 @@ const SignInCard = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  Email Address <span className="text-blue-500">*</span>
+                  Email Address <span className="text-[#0C43A0]">*</span>
                 </label>
                 <Input
                   id="email"
@@ -311,11 +286,11 @@ const SignInCard = () => {
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Password <span className="text-blue-500">*</span>
+                    Password <span className="text-[#0C43A0]">*</span>
                   </label>
                   <a
                     href="#"
-                    className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                    className="text-sm text-[#0C43A0] hover:text-blue-600 transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
                       console.log("Forgot password clicked");
@@ -349,60 +324,33 @@ const SignInCard = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="rememberMe"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="rememberMe"
-                    className="text-sm text-gray-600 cursor-pointer select-none"
-                  >
-                    Remember me for 30 days
-                  </label>
-                </div>
-              </div>
-
-              <motion.div
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
-                className="pt-2"
-              >
-                <Button
-                  type="submit"
-                  className={cn(
-                    "w-full bg-gradient-to-r relative overflow-hidden from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-3 rounded-lg transition-all duration-300",
-                    isHovered ? "shadow-lg shadow-blue-200" : ""
-                  )}
+              <div className="pt-2 flex justify-center">
+                <motion.div
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  onHoverStart={() => setIsHovered(true)}
+                  onHoverEnd={() => setIsHovered(false)}
                 >
-                  <span className="flex items-center justify-center">
-                    Sign in
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </span>
-                  {isHovered && (
-                    <motion.span
-                      initial={{ left: "-100%" }}
-                      animate={{ left: "100%" }}
-                      transition={{ duration: 1, ease: "easeInOut" }}
-                      className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                      style={{ filter: "blur(8px)" }}
-                    />
-                  )}
-                </Button>
-              </motion.div>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    shimmer={isHovered}
+                    className="px-44" // optional width control
+                  >
+                    <span className="flex items-center justify-center">
+                      Sign in
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </span>
+                  </Button>
+                </motion.div>
+              </div>
 
               <div className="text-center pt-4">
                 <p className="text-sm text-gray-600">
                   Don't have an account?{" "}
                   <a
                     href="/sign-up"
-                    className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                    className="text-[#0C43A0] hover:text-blue-600 font-medium transition-colors"
                   >
                     Sign up here
                   </a>
@@ -413,11 +361,11 @@ const SignInCard = () => {
             <div className="mt-8 pt-6 border-t border-gray-100">
               <p className="text-xs text-gray-500 text-center">
                 By signing in, you agree to our{" "}
-                <a href="#" className="text-blue-600 hover:text-blue-800">
+                <a href="#" className="text-[#0C43A0] hover:text-blue-600">
                   Terms of Service
                 </a>{" "}
                 and{" "}
-                <a href="#" className="text-blue-600 hover:text-blue-800">
+                <a href="#" className="text-[#0C43A0] hover:text-blue-600">
                   Privacy Policy
                 </a>
               </p>
@@ -443,7 +391,7 @@ const SignInPage = () => {
       </main>
       
       {/* MapBackgroundWrapper at bottom */}
-      <div className="w-full mt-auto">
+      <div className="w-full mt-auto pt-20 md:pt-24">
         <MapBackgroundWrapper />
       </div>
     </div>

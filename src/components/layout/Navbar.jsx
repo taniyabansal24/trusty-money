@@ -66,7 +66,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <a href="/">
-              <img src={logo} alt="Company Logo" className=" w-[13rem]" />
+              <img src={logo} alt="Company Logo" className=" w-[170px] h-[32px]" />
             </a>
           </div>
 
@@ -78,9 +78,9 @@ const Navbar = () => {
                   key={link.name}
                   href="/about-us"
                   className="text-body transition-colors duration-200"
-                  style={{ color: '#425466' }}
-                  onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
-                  onMouseLeave={(e) => (e.target.style.color = '#425466')}
+                  style={{ color: '#1B1B1B' }}
+                  onMouseEnter={(e) => (e.target.style.color = '#073f9e')}
+                  onMouseLeave={(e) => (e.target.style.color = '#1B1B1B')}
                 >
                   {link.name}
                 </a>
@@ -89,9 +89,9 @@ const Navbar = () => {
                   key={link.name}
                   onClick={() => handleNavClick(link.href)}
                   className="text-body transition-colors duration-200"
-                  style={{ color: '#425466' }}
-                  onMouseEnter={(e) => (e.target.style.color = '#0B43A0')}
-                  onMouseLeave={(e) => (e.target.style.color = '#425466')}
+                  style={{ color: '#1B1B1B' }}
+                  onMouseEnter={(e) => (e.target.style.color = '#073f9e')}
+                  onMouseLeave={(e) => (e.target.style.color = '#1B1B1B')}
                 >
                   {link.name}
                 </button>
@@ -101,10 +101,10 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3 ml-auto">
-            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }}>
+            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }} shimmer>
               Get Demo
             </Button>
-            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }}>
+            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }} shimmer>
               <a href='/sign-up'>Sign Up</a>
             </Button>
           </div>

@@ -1386,17 +1386,14 @@ const ProblemSection = () => {
           Cross-Border Friction{" "}
           <span className="gradient-text relative">Exists <br />at Every Layer</span>
         </motion.h1>
-        <p className="section-subtitle text-gray-600 max-w-lg mx-auto">
+        <p className="section-subtitle max-w-lg mx-auto">
           The Problem Isn’t Payments — It’s Everything Around Them
-
-
         </p>
       </div>
       <div
         ref={sectionRef}
         className="relative overflow-hidden isolate bg-white"
       >
-        {/* Sidebar Components */}
         {/* Sidebar Components */}
         <div className="absolute inset-0 overflow-visible pointer-events-none z-40">
           {/* Sidebar 1 (for Screen 2: Payments) - RIGHT SIDE */}
@@ -1417,7 +1414,6 @@ const ProblemSection = () => {
                   }}
                 />
 
-                {/* Sidebar card */}
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[0] = el)}

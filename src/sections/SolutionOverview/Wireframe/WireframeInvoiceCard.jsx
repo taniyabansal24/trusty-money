@@ -150,8 +150,7 @@ export function WireframeInvoiceCard({
   ];
 
   return (
-    <motion.div
-      style={{ y, rotateX }}
+    <div
       className="relative perspective-1000"
     >
       {/* Wireframe Overlay - NO BACKGROUND, EXACT CONTAINER DIMENSIONS */}
@@ -537,7 +536,7 @@ export function WireframeInvoiceCard({
           </div>
         </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 
