@@ -38,6 +38,9 @@ const ProblemSection = () => {
   const inViewRef = useRef(false);
   const isScrollingRef = useRef(false);
   const scrollEndTimeoutRef = useRef(null);
+  // Add this with your other state declarations
+  const [activeSidebar, setActiveSidebar] = useState(-1); // -1 means none active
+  const activeSidebarRef = useRef(-1);
 
   const trackTween = (tween) => {
     if (!tween) return tween;
@@ -737,7 +740,6 @@ const ProblemSection = () => {
         defaults: { ease: "power2.out" },
       });
 
-      // Helper function for flawless sidebar animation (dotted, static lines)
       // Enhanced professional animateSidebar function with subtle border hit effect
       const animateSidebar = (lineIndex, cardIndex, isLeftSide = false) => {
         const line = sidebarLinesRef.current[lineIndex];
@@ -749,6 +751,29 @@ const ProblemSection = () => {
           line._flowTween = null;
         }
 
+        // FIRST: Reset previous active sidebar border to normal if it exists
+        // Use the ref which has the current value immediately
+        const previousActiveIndex = activeSidebarRef.current;
+        if (
+          previousActiveIndex !== -1 &&
+          sidebarCardsRef.current[previousActiveIndex]
+        ) {
+          const previousCard = sidebarCardsRef.current[previousActiveIndex];
+
+          // Animate previous card border back to normal
+          gsap.to(previousCard, {
+            borderColor: "rgba(226, 232, 240, 0.8)", // Light border
+            borderWidth: "1px",
+            boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+
+        // Update both ref and state for the new active sidebar
+        activeSidebarRef.current = cardIndex;
+        setActiveSidebar(cardIndex);
+
         // Simple line style (unchanged)
         gsap.set(line, {
           scaleX: 0,
@@ -756,20 +781,21 @@ const ProblemSection = () => {
           opacity: 1,
         });
 
-        // Set card with initial state
+        // Set card with initial state - start with active border
         gsap.set(card, {
           opacity: 0,
           scale: 0.95,
           x: isLeftSide ? -15 : 15,
           y: 8,
-          borderColor: "rgba(226, 232, 240, 0)", // Start with transparent border
-          borderWidth: "1px",
+          borderColor: "rgba(59, 130, 246, 0)", // Start transparent
+          borderWidth: "2px",
           borderStyle: "solid",
+          boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
         });
 
         const sidebarTl = gsap.timeline();
 
-        // 1. Draw the line from phone to card position (0.9s)
+        // 1. Draw the line from phone to card position
         sidebarTl.to(
           line,
           {
@@ -780,7 +806,7 @@ const ProblemSection = () => {
           0,
         );
 
-        // 2. Animate card appearing (starts at 70% of line animation)
+        // 2. Animate card appearing
         sidebarTl.to(
           card,
           {
@@ -794,67 +820,31 @@ const ProblemSection = () => {
           0.6,
         );
 
-        // 3. PROFESSIONAL BORDER HIT EFFECT - With extended flash
-        // When line reaches the card (0.85s), trigger border animation
+        // 3. Border hit effect - NOW STAYS ACTIVE
         sidebarTl
           .to(
             card,
             {
-              // First: Extended flash of blue border (increased from 0.15s to 0.3s)
-              borderColor: "rgba(59, 130, 246, 0.7)", // Increased opacity for better visibility
-              borderWidth: "1.8px", // Slightly thicker for more impact
-              duration: 0.3, // Increased from 0.15s
+              // Flash effect
+              borderColor: "rgba(59, 130, 246, 0.9)",
+              borderWidth: "2.5px",
+              duration: 0.3,
               ease: "power2.out",
             },
             0.85,
           )
-          // Then: Longer pulse with gradient
+          // Then settle to persistent active state
           .to(
             card,
             {
-              borderColor: "rgba(59, 130, 246, 0.4)", // Higher opacity
-              borderWidth: "2.2px", // Slightly thicker
-              boxShadow:
-                "0 0 0 3px rgba(59, 130, 246, 0.15), 0 20px 40px rgba(11, 67, 160, 0.15)", // Enhanced shadow
-              duration: 0.35, // Increased from 0.2s
-              ease: "power2.inOut",
-            },
-            0.95, // Adjusted timing to account for longer first phase
-          )
-          // Then: Intermediate step for smoother transition
-          .to(
-            card,
-            {
-              borderColor: "rgba(59, 130, 246, 0.25)",
-              borderWidth: "1.5px",
-              boxShadow:
-                "0 0 0 1px rgba(59, 130, 246, 0.1), 0 20px 40px rgba(11, 67, 160, 0.12)",
-              duration: 0.25,
+              borderColor: "rgba(59, 130, 246, 0.7)", // Keep active border
+              borderWidth: "2px",
+              boxShadow: "0 25px 50px rgba(11, 67, 160, 0.15)",
+              duration: 0.3,
               ease: "power2.out",
             },
-            1.1,
-          )
-          // Final: Settle to elegant border with soft glow
-          .to(
-            card,
-            {
-              boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
-              duration: 0.4,
-              ease: "power2.out",
-            },
-            1.25,
+            1.05,
           );
-
-        // 4. Optional: Very subtle shadow enhancement
-        sidebarTl.to(
-          card,
-          {
-            boxShadow: "0 25px 50px rgba(11, 67, 160, 0.15)",
-            duration: 0.4,
-            ease: "power2.out",
-          },
-          1.1,
-        );
 
         return sidebarTl;
       };
@@ -904,13 +894,6 @@ const ProblemSection = () => {
             ease: "power2.inOut",
           },
           "<",
-        )
-        .call(
-          () => {
-            animateScreenHeader(1);
-          },
-          null,
-          "<+=0.05",
         )
         .call(() => {
           // Show sidebar 1 BUT keep it invisible initially
@@ -966,13 +949,6 @@ const ProblemSection = () => {
           },
           "<",
         )
-        .call(
-          () => {
-            animateScreenHeader(2);
-          },
-          null,
-          "<+=0.05",
-        )
         .call(() => {
           setVisibleSidebars([true, true, false, false]);
         })
@@ -1024,13 +1000,6 @@ const ProblemSection = () => {
             ease: "power2.inOut",
           },
           "<",
-        )
-        .call(
-          () => {
-            animateScreenHeader(3);
-          },
-          null,
-          "<+=0.05",
         )
         .call(() => {
           setVisibleSidebars([true, true, true, false]);
@@ -1084,13 +1053,6 @@ const ProblemSection = () => {
           },
           "<",
         )
-        .call(
-          () => {
-            animateScreenHeader(4);
-          },
-          null,
-          "<+=0.05",
-        )
         .call(() => {
           setVisibleSidebars([true, true, true, true]);
         })
@@ -1133,7 +1095,24 @@ const ProblemSection = () => {
             defaults: { ease: "power2.inOut" },
           });
 
-          // First, shrink lines back to phone
+          // First, reset all sidebar borders to normal
+          sidebarCardsRef.current.forEach((card, index) => {
+            if (card) {
+              fadeOutTl.to(
+                card,
+                {
+                  borderColor: "rgba(226, 232, 240, 0.8)", // Normal border
+                  borderWidth: "1px",
+                  boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+                  duration: 0.3,
+                  ease: "power2.out",
+                },
+                0, // All reset simultaneously
+              );
+            }
+          });
+
+          // Then, shrink lines back to phone
           sidebarLinesRef.current.forEach((line, index) => {
             if (line) {
               if (line._flowTween) {
@@ -1148,13 +1127,12 @@ const ProblemSection = () => {
                   duration: 0.5,
                   ease: "power2.in",
                 },
-                index * 0.08,
+                index * 0.08 + 0.2, // Delay after border reset
               );
             }
           });
 
           // Then fade out cards
-          // In the fadeOutTl section of startAutomaticTransitions:
           sidebarCardsRef.current.forEach((card, index) => {
             if (card) {
               fadeOutTl.to(
@@ -1167,7 +1145,7 @@ const ProblemSection = () => {
                   duration: 0.45,
                   ease: "power2.in",
                 },
-                index * 0.08 + 0.1,
+                index * 0.08 + 0.3, // Delay after line shrink
               );
             }
           });
@@ -1176,11 +1154,13 @@ const ProblemSection = () => {
           fadeOutTl.call(
             () => {
               setVisibleSidebars([false, false, false, false]);
+              setActiveSidebar(-1); // Reset active sidebar at the end
             },
             null,
             "+=0.2",
           );
         })
+
         .to(
           screensRef.current[4],
           {
@@ -1329,9 +1309,16 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[0] = el)}
-                  className="absolute left-[200px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl w-[280px] pointer-events-auto border border-gray-200/50"
+                  className={`absolute left-[200px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl w-[280px] pointer-events-auto border-2 ${
+                    activeSidebar === 0
+                      ? "border-blue-500 shadow-blue-500/20"
+                      : "border-gray-200/50"
+                  }`}
                   style={{
-                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+                    boxShadow:
+                      activeSidebar === 0
+                        ? "0 25px 50px rgba(59, 130, 246, 0.15)"
+                        : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
                   <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
@@ -1371,9 +1358,16 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[1] = el)}
-                  className="absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
+                  className={`absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border-2 w-[280px] pointer-events-auto ${
+                    activeSidebar === 1
+                      ? "border-blue-500 shadow-blue-500/20"
+                      : "border-gray-100"
+                  }`}
                   style={{
-                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+                    boxShadow:
+                      activeSidebar === 1
+                        ? "0 25px 50px rgba(59, 130, 246, 0.15)"
+                        : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
                   <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
@@ -1412,9 +1406,16 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[2] = el)}
-                  className="absolute left-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
+                  className={`absolute left-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border-2 w-[280px] pointer-events-auto ${
+                    activeSidebar === 2
+                      ? "border-blue-500 shadow-blue-500/20"
+                      : "border-gray-100"
+                  }`}
                   style={{
-                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+                    boxShadow:
+                      activeSidebar === 2
+                        ? "0 25px 50px rgba(59, 130, 246, 0.15)"
+                        : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
                   <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
@@ -1454,9 +1455,16 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[3] = el)}
-                  className="absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 w-[280px] pointer-events-auto"
+                  className={`absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border-2 w-[280px] pointer-events-auto ${
+                    activeSidebar === 3
+                      ? "border-blue-500 shadow-blue-500/20"
+                      : "border-gray-100"
+                  }`}
                   style={{
-                    boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
+                    boxShadow:
+                      activeSidebar === 3
+                        ? "0 25px 50px rgba(59, 130, 246, 0.15)"
+                        : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
                   <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
