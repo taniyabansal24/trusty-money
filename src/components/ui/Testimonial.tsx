@@ -237,7 +237,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({
               onClick={() => setCurrentSlide(index)}
               className={`transition-all duration-300 rounded-full ${
                 index === currentSlide 
-                  ? 'w-8 h-1.5 bg-blue-500' 
+                  ? 'w-8 h-1.5 bg-[#073F9E]' 
                   : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
               }`}
               aria-label={`Go to slide ${index + 1}`}
