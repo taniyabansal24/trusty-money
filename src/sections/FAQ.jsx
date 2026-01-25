@@ -45,7 +45,7 @@ const FAQ = () => {
           <span className="gradient-text relative">Asked Questions</span>
         </motion.h1>
 
-        <p className="section-subtitle text-gray-600 ">
+        <p className="section-subtitle">
           Everything you need to know about Trusty Money
         </p>
       </div>

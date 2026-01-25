@@ -18,7 +18,7 @@ const CallToAction = () => {
               - One Layer at a Time
             </span>
           </motion.h1>
-          <p className="section-subtitle text-gray-700 max-w-2xl mx-auto ">
+          <p className="section-subtitle max-w-2xl mx-auto ">
             Start with the infrastructure you need today. Scale with confidence
             as your business grows globally.
           </p>

@@ -200,7 +200,7 @@ export function BillingModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="section-subtitle mb-8 text-[#425466]"
+            className="section-subtitle mb-8"
           >
             Smart billing designed for international businesses. Generate
             compliant invoices automatically with built-in tax intelligence for

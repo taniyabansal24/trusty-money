@@ -56,12 +56,12 @@ const Navbar = () => {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 font-sans transition-all duration-300 ${
         isScrolled
-          ? 'bg-transparent backdrop-blur-md shadow-md border-b border-slate-200/40'
+          ? 'bg-white shadow-md border-b border-slate-200'
           : 'bg-transparent'
       }`}
     >
       <Container>
-        <div className="relative flex items-center h-16 lg:h-20">
+        <div className="relative flex items-center h-14 lg:h-20">
 
           {/* Logo */}
           <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href="/about-us"
-                  className="text-body transition-colors duration-200"
+                  className="text-body transition-colors duration-200 text-[#1B1B1B]"
                   style={{ color: '#1B1B1B' }}
                   onMouseEnter={(e) => (e.target.style.color = '#073f9e')}
                   onMouseLeave={(e) => (e.target.style.color = '#1B1B1B')}
@@ -101,10 +101,26 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3 ml-auto">
-            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }} shimmer>
+            <Button 
+              variant="primary" 
+              size="sm" 
+              style={{ 
+                backgroundColor: '#0B43A0',
+                color: '#FFFFFF'
+              }} 
+              shimmer
+            >
               Get Demo
             </Button>
-            <Button variant="primary" size="sm" style={{ backgroundColor: '#0B43A0' }} shimmer>
+            <Button 
+              variant="primary" 
+              size="sm" 
+              style={{ 
+                backgroundColor: '#0B43A0',
+                color: '#FFFFFF'
+              }} 
+              shimmer
+            >
               <a href='/sign-up'>Sign Up</a>
             </Button>
           </div>
@@ -113,7 +129,7 @@ const Navbar = () => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden ml-auto p-2 rounded-md transition-colors"
-            style={{ color: '#0A2540' }}
+            style={{ color: isScrolled ? '#0A2540' : '#FFFFFF' }}
           >
             <svg
               className="w-6 h-6"
@@ -137,7 +153,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden mt-2 rounded-lg bg-white shadow-md py-4 space-y-3"
+            className="lg:hidden mt-2 rounded-lg bg-white shadow-lg py-4 space-y-3"
           >
             {visibleLinks.map((link) => (
               link.href === '/about-us' ? (

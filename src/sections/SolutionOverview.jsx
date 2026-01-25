@@ -77,7 +77,7 @@ export function SolutionOverview() {
                   payments, and settlement across connected markets.
                 </p>
 
-                <p className="mt-4 text-[#425466] section-subtitle">
+                <p className="mt-4 section-subtitle">
                   Unify your entire money stack in one platform—from invoicing
                   to reconciliation—with consistent controls, real-time
                   reporting, and predictable settlement timelines.

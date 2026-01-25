@@ -125,7 +125,7 @@ export function ReportingModule() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="section-subtitle mb-8 text-[#425466]"
+            className="section-subtitle mb-8"
           >
             Unified visibility across billing, payments, and cash flows.
             Eliminate manual reconciliation with automated matching, real-time

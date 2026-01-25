@@ -3,6 +3,7 @@ import { Container } from "../components/ui";
 import { motion } from "framer-motion";
 import Quote from "../components/svg/Quote";
 import { staggerContainer, staggerItem } from "../utils/animations";
+import TestimonialSlider from "../components/ui/Testimonial";
 
 const TestimonialSection = () => {
   const testimonials = [
@@ -93,71 +94,18 @@ const TestimonialSection = () => {
             Finance Teams Worldwide
           </span>
         </motion.h1>
-        <p className="section-subtitle text-gray-600 max-w-md mx-auto">
+        <p className="section-subtitle max-w-md mx-auto">
           Leading companies rely on Trusty Money for their cross-border payments
         </p>
       </div>
 
       {/* Testimonials Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {testimonials.map((testimonial) => (
-          <div key={testimonial.id} className="flip-card-container h-[220px]">
-            {/* Flip Card Container */}
-            <div className="flip-card-inner">
-              {/* Front Side - Regular Testimonial Card */}
-              <div className="flip-card-front">
-                {/* User Info */}
-                <div className="flex items-center gap-4 text-justify ">
-                  {/* Avatar */}
-                  <div className="relative">
-                    <div
-                      className={`w-16 h-16 rounded-full ${testimonial.imageColor} flex items-center justify-center`}
-                    >
-                      <span className="text-gray-700 font-semibold text-lg">
-                        {testimonial.initials}
-                      </span>
-                    </div>
-                   
-                  </div>
-
-                  {/* User Details */}
-                  <div>
-                    <h3 className="text-body font-medium  text-gray-900 text-base">
-                      {testimonial.name}
-                    </h3>
-                    <p className="text-muted">{testimonial.role}</p>
-                    <p className="text-gray-400 text-sm">
-                      {testimonial.company}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Testimonial Content */}
-                {/* Testimonial Content */}
-                <div className="mt-6 flex-grow flex items-center justify-center">
-                  {/* Quote */}
-                  <p className="feature-description text-gray-600 text-center max-w-[300px]">
-                    "{testimonial.quote}"
-                  </p>
-                </div>
-              </div>
-
-              {/* Back Side - Blue Quote Card (Exact Figma Design) */}
-              <div className="flip-card-back">
-                {/* Quote Icon */}
-                <div className="mb-2">
-                  <Quote className="w-10 h-10 text-white" />
-                </div>
-
-                {/* Full Quote - Exact Figma Styling */}
-                <div className="quote-text feature-description">
-                  <p>"{testimonial.flipQuote}"</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <TestimonialSlider
+          testimonials={testimonials}
+          autoSlideInterval={5000}
+          showControls={true}
+          showPagination={true}
+        />
 
       {/* CSS Styles for Flip Card */}
       <style jsx>{`

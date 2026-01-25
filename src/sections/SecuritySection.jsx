@@ -59,7 +59,7 @@ const SecuritySection = () => {
             Trust, Security & Compliance
           </span>
         </motion.h1>
-        <p className="section-subtitle text-gray-600 max-w-lg mx-auto">
+        <p className="section-subtitle max-w-lg mx-auto">
           Enterprise-ready infrastructure designed with security and regulatory
           compliance at its core
         </p>
@@ -223,7 +223,7 @@ const SecuritySection = () => {
       {/* Certifications Footer */}
       <div className="mt-16">
         <div className="text-center mb-8">
-          <h3 className="feature-title text-blue-900 ">
+          <h3 className="feature-title txt-blue ">
             Certified & Compliant
           </h3>
         </div>
@@ -235,11 +235,11 @@ const SecuritySection = () => {
             >
               {/* Certification icon */}
               
-                <VerifiedIcon className="w-4 h-4 text-[#073F9E]" />
+                <VerifiedIcon className="w-4 h-4 txt-blue" />
         
 
               {/* Certification text */}
-              <span className="text-[14px] leading-[20px] font-normal text-[#364153] ml-2">
+              <span className="text-[14px] leading-[20px] font-normal text-[#1B1B1B] ml-2">
                 {cert}
               </span>
             </div>
