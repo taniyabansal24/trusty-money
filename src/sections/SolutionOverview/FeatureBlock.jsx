@@ -4,9 +4,13 @@ import { motion } from "framer-motion";
 export function FeatureBlock({ title, children, index, isActive, bulletRef }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -30 }} // Increased from -20 for more dramatic entrance
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.1 * index }}
+      transition={{ 
+        delay: 0.4 * index, // Doubled from 0.2
+        duration: 1.5, // Increased from 0.9 (50% slower)
+        ease: "easeOut" // Added easing
+      }}
       className="group relative p-4"
     >
       <div className="flex items-start gap-3">
@@ -22,21 +26,54 @@ export function FeatureBlock({ title, children, index, isActive, bulletRef }) {
               animate={{
                 scale: isActive ? 1.2 : 1,
               }}
-              transition={{ duration: 0.3 }}
+              transition={{ 
+                duration: 1.2, // Increased from 0.8 (50% slower)
+                ease: "easeInOut"
+              }}
             />
-            <div className="absolute h-2 w-2 rounded-full bg-[#0B43A0] z-10" />
+            <motion.div 
+              className="absolute h-2 w-2 rounded-full bg-[#0B43A0] z-10"
+              animate={{
+                scale: isActive ? [1, 1.3, 1] : 1, // Added subtle pulsing effect
+              }}
+              transition={{
+                duration: 2, // Very slow pulsing
+                ease: "easeInOut",
+                repeat: isActive ? Infinity : 0,
+                repeatType: "reverse"
+              }}
+            />
           </div>
         </div>
 
         <div className="flex-1">
-          <h3
+          <motion.h3
             className={`feature-title mb-1 ${
               isActive ? "text-[#0B43A0]" : "text-[#0A2540]"
             }`}
+            animate={{
+              scale: isActive ? 1.02 : 1, // Subtle scale effect
+            }}
+            transition={{
+              duration: 1, // Slow scale transition
+              ease: "easeOut"
+            }}
           >
             {title}
-          </h3>
-          <div className="feature-description text-[#425466]">{children}</div>
+          </motion.h3>
+          <motion.div 
+            className="feature-description text-[#425466]"
+            animate={{
+              opacity: isActive ? 1 : 0.8, // Subtle opacity change
+            }}
+            transition={{
+              duration: 1.2, // Slow opacity transition
+              ease: "easeOut",
+              delay: isActive ? 0.2 : 0, // Delayed effect when active
+            }}
+          >
+            {children}
+          </motion.div>
         </div>
       </div>
     </motion.div>
@@ -59,11 +96,11 @@ export function ProgressLine({
   left = "left-[11px]",
   top = "top-0",
   width = "w-[2px]",
-  // Animation props
+  // Animation props - Slowed down
   animationType = "spring",
-  stiffness = 120,
-  damping = 15,
-  duration = 0.6,
+  stiffness = 80, // Reduced from 120 (lower = slower)
+  damping = 25, // Increased from 15 (higher = slower)
+  duration = 1.5, // Increased from 0.6
 }) {
   const [lineHeight, setLineHeight] = useState(0);
   const lineRef = useRef(null);
@@ -76,29 +113,24 @@ export function ProgressLine({
       const bullets = bulletRefs.current.filter(Boolean);
       if (bullets.length < 2) return;
 
-      // Get container position
       const containerRect = containerRef.current.getBoundingClientRect();
 
-      // Get first bullet position
       const firstBullet = bullets[0];
       const firstRect = firstBullet.getBoundingClientRect();
       const firstY = firstRect.top - containerRect.top + firstRect.height / 2;
 
-      // Get active bullet position
       const activeBullet = bullets[activeFeature];
       if (!activeBullet) return;
 
       const activeRect = activeBullet.getBoundingClientRect();
-      const activeY =
-        activeRect.top - containerRect.top + activeRect.height / 2;
+      const activeY = activeRect.top - containerRect.top + activeRect.height / 2;
 
-      // Calculate height (ensure it's at least 0)
       const height = Math.max(0, activeY - firstY);
       setLineHeight(height);
     };
 
-    // Small delay to ensure DOM is ready
-    const timer = setTimeout(calculateLineHeight, 50);
+    // Increased delay slightly for smoother transition
+    const timer = setTimeout(calculateLineHeight, 100); // Increased from 50
     return () => clearTimeout(timer);
   }, [activeFeature, bulletRefs, containerRef, isVisible]);
 
@@ -108,6 +140,8 @@ export function ProgressLine({
       type: "spring",
       stiffness,
       damping,
+      restDelta: 0.001, // Added for smoother stop
+      restSpeed: 0.001, // Added for smoother stop
     },
     tween: {
       type: "tween",
@@ -157,7 +191,12 @@ export function ProgressLine({
           }}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 200 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 150, // Reduced from 200
+            damping: 20, // Increased damping
+            duration: 0.8 // Added duration
+          }}
         />
       )}
     </div>
