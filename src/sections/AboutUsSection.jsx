@@ -12,8 +12,8 @@ import ProfileCardIcon from "../components/svg/ProfileCardIcon";
 import InfoCircleIcon from "../components/svg/InfoCircleIcon";
 import DatabaseIcon from "../components/svg/DatabaseIcon";
 import GlobeIcon from "../components/svg/GlobeIcon";
-import {founderImage} from "../assets/homeFounder.svg";
-import {sunilSimarImage} from "../assets/sunil-simar.webp";
+import FounderImage from "../assets/homeFounder.svg";
+import SunilSimarImage from "../assets/sunil-simar.webp";
 
 const AboutUsSection = () => {
   // Rotating animation for orbit rings
@@ -393,7 +393,7 @@ const AboutUsSection = () => {
               {/* Left */}
               <div className="flex flex-col items-center">
                 <div className="w-[230px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
-                 <img src={founderImage} alt="" className="w-full h-full object-cover"/>
+                 <img src={FounderImage} alt="" className="w-full h-full object-cover"/>
                 </div>
 
                 <h3 className="mt-6 section-subtitle font-bold text-[#073F9E]">
@@ -452,7 +452,7 @@ const AboutUsSection = () => {
               {/* Left */}
               <div className="flex flex-col items-center">
                 <div className="w-[230px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
-                  <img src={sunilSimarImage} alt="" className="pt-36" />
+                  <img src={SunilSimarImage} alt="" className="pt-36" />
                 </div>
 
                 <h3 className="mt-6 section-subtitle font-bold text-[#073F9E]">
