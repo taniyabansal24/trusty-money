@@ -12,6 +12,8 @@ import ProfileCardIcon from "../components/svg/ProfileCardIcon";
 import InfoCircleIcon from "../components/svg/InfoCircleIcon";
 import DatabaseIcon from "../components/svg/DatabaseIcon";
 import GlobeIcon from "../components/svg/GlobeIcon";
+import {founderImage} from "../assets/homeFounder.svg";
+import {sunilSimarImage} from "../assets/sunil-simar.webp";
 
 const AboutUsSection = () => {
   // Rotating animation for orbit rings
@@ -103,7 +105,7 @@ const AboutUsSection = () => {
                   for Global Commerce
                 </span>
               </motion.h1>
-              <p className="section-subtitle text-gray-600 max-w-xl ">
+              <p className="section-subtitle max-w-xl ">
                 Unifying billing, compliance, payments, and treasury into a
                 single, coherent platform
               </p>
@@ -289,7 +291,7 @@ const AboutUsSection = () => {
           <section className="subsection">
             <div className="flex items-center justify-center gap-3 h-[56px]">
               <ProfileCardIcon className="w-14 h-14" />
-              <h2 className="section-heading text-center text-[#0F172B]">
+              <h2 className="sub-section-heading text-center text-[#0F172B]">
                 Why Trusty Money Exists
               </h2>
             </div>
@@ -374,13 +376,13 @@ const AboutUsSection = () => {
               {/* Icon + Heading */}
               <div className="flex items-center justify-center gap-3 h-[56px]">
                 <ProfileCardIcon className="w-14 h-14" />
-                <h2 className="section-heading text-[#0F172B]">
+                <h2 className="sub-section-heading text-[#0F172B] pb-3 ">
                   Our Leadership Team
                 </h2>
               </div>
 
               {/* Subtitle */}
-              <p className="mt-4 section-subtitle text-[#45556C]">
+              <p className="mt-4 section-subtitle ">
                 Led by experienced professionals from leading fintech
                 institutions
               </p>
@@ -391,7 +393,7 @@ const AboutUsSection = () => {
               {/* Left */}
               <div className="flex flex-col items-center">
                 <div className="w-[230px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
-                 <img src="src/assets/homeFounder.svg" alt="" className="w-full h-full object-cover"/>
+                 <img src={founderImage} alt="" className="w-full h-full object-cover"/>
                 </div>
 
                 <h3 className="mt-6 section-subtitle font-bold text-[#073F9E]">
@@ -450,7 +452,7 @@ const AboutUsSection = () => {
               {/* Left */}
               <div className="flex flex-col items-center">
                 <div className="w-[230px] h-[260px] border-4 border-[#073F9E] rounded-[30px] overflow-hidden bg-gray-300 flex items-center justify-center">
-                  <img src="src/assets/sunil-simar.webp" alt="" className="pt-36" />
+                  <img src={sunilSimarImage} alt="" className="pt-36" />
                 </div>
 
                 <h3 className="mt-6 section-subtitle font-bold text-[#073F9E]">
@@ -521,7 +523,7 @@ const AboutUsSection = () => {
                 <div className="w-10 h-10 shrink-0 bg-gradient-to-br from-[#0B43A0] to-[#073F9E] rounded-xl flex items-center justify-center shadow-lg">
                   <GlobeIcon className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="section-heading leading-none text-[#0F172B] mb-0">
+                <h2 className="sub-section-heading leading-none text-[#0F172B] mb-0">
                   Our Vision
                 </h2>
               </div>

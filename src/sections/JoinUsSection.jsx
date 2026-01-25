@@ -130,7 +130,7 @@ const JoinUsSection = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
             <div>
               <h2
-                className="section-heading font-bold"
+                className="section-hero-heading font-bold"
                 style={{ color: "#0A2540" }}
               >
                 Open Positions
