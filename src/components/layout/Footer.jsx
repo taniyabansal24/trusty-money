@@ -2,9 +2,15 @@ import React from "react";
 import { Container } from "../ui";
 import { COMPANY_NAME } from "../../constants";
 import { FaTwitter, FaLinkedin, FaGithub, FaYoutube } from "react-icons/fa";
+import logo from "../../assets/logo2.png";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 
   const footerLinks = {
     Navigation: [
@@ -47,11 +53,17 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-2">
-            <h3 className="text-xl font-bold mb-4 text-[#0B43A0]">
-              {COMPANY_NAME}
-            </h3>
+            <div className="flex items-center gap-2 mb-4">
+              <a href="/">
+                <img
+                  src={logo}
+                  alt="Company Logo"
+                  className=" w-[170px] h-[32px]"
+                />
+              </a>
+            </div>
 
-            <p className="mb-4 max-w-sm text-body">
+            <p className="mb-4 max-w-sm text-body text text-[#425466]">
               One platform for global payments, zero FX markup, GST invoicing &
               instant settlements. Built for SMEs.
             </p>
@@ -64,7 +76,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="text-[#425466] hover:text-[#0B43A0] transition-colors"
+                  className="text-[#425466] hover:txt-blue transition-colors"
                 >
                   <social.icon size={20} />
                 </a>
@@ -98,12 +110,12 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center border-t border-gray-200">
           <p className="text-muted mb-4 md:mb-0 ">
-            Copyright © {currentYear} Tushti Technologies Pvt. Ltd.
+            Copyright © {formattedDate} Tushti Technologies Pvt. Ltd.
           </p>
 
           <a
             href="mailto:support@trustymoney.in"
-            className="text-sm text-[#0B43A0] hover:underline"
+            className="text-sm txt-blue hover:underline"
           >
             support@trustymoney.in
           </a>
