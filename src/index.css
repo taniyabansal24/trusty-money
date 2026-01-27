@@ -276,7 +276,9 @@ html {
   .txt-blue {
     @apply text-[#073F9E];
   }
-
+.light-bg {
+    @apply bg-[#073f9e12];
+  }
   /* MAIN SECTIONS Spacing */
   .section {
     @apply py-20 md:py-24;

@@ -349,9 +349,9 @@ export function WireframeComplianceDashboard({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: animationPhase === 1 ? 0.4 : 0.3 }}
-              className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 text-xs text-[#0B43A0]"
+              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs txt-blue light-bg"
             >
-              <div className="h-2 w-2 animate-pulse rounded-full bg-[#3b82f6]"></div>
+              <div className="h-2 w-2 animate-pulse rounded-full bg-[#073F9E]"></div>
               Live Monitoring
             </motion.div>
           </div>

@@ -213,8 +213,7 @@ export function PaymentsModule() {
             className="mb-8 flex items-center gap-3"
           >
             <span
-              className="inline-block px-4 py-2 rounded-full hero-badge"
-              style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+              className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
             >
               Payment Infrastructure
             </span>
@@ -452,12 +451,12 @@ export function PaymentsModule() {
                     <div className="text-sm text-slate-600">
                       Available Balance
                     </div>
-                    <div className="flex items-center gap-1.5 rounded-full bg-emerald-100 px-2 py-1 text-xs text-emerald-700">
-                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                    <div className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-2 py-1 text-xs txt-blue">
+                      <div className="h-1.5 w-1.5 rounded-full bg-[#073F9E]"></div>
                       Active
                     </div>
                   </div>
-                  <div className="text-3xl text-slate-900">
+                  <div className="sub-section-heading">
                     {activeCard.currency} {activeCard.balance}
                   </div>
                   <div className="mt-2 text-xs text-slate-500">

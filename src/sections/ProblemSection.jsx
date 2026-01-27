@@ -514,16 +514,16 @@ const ProblemSection = () => {
       }
 
       // ========== STEP 1: CONTINUOUS PHONE FLOAT (NO ENTRANCE) ==========
-      trackTween(
-        gsap.to(phoneRef.current, {
-          y: "+=10",
-          duration: 3,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: 0.5, // wait after scroll-trigger entrance
-        }),
-      );
+      // trackTween(
+      //   gsap.to(phoneRef.current, {
+      //     y: "+=10",
+      //     duration: 3,
+      //     repeat: -1,
+      //     yoyo: true,
+      //     ease: "sine.inOut",
+      //     delay: 0.5, // wait after scroll-trigger entrance
+      //   }),
+      // );
 
       // ========== STEP 2: ANIMATE FIRST SCREEN ELEMENTS ==========
       const firstScreenTl = gsap.timeline({ delay: 0.5 });

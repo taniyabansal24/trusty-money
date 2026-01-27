@@ -49,11 +49,11 @@ export function FeatureBlock({ title, children, index, isActive, bulletRef }) {
         <div className="flex-1">
           <motion.h3
             className={`feature-title mb-1 ${
-              isActive ? "text-[#0B43A0]" : "text-[#0A2540]"
+              isActive ? "txt-blue" : "text-[#0A2540]"
             }`}
-            animate={{
-              scale: isActive ? 1.02 : 1, // Subtle scale effect
-            }}
+            // animate={{
+            //   scale: isActive ? 1.02 : 1, // Subtle scale effect
+            // }}
             transition={{
               duration: 1, // Slow scale transition
               ease: "easeOut"
@@ -62,7 +62,9 @@ export function FeatureBlock({ title, children, index, isActive, bulletRef }) {
             {title}
           </motion.h3>
           <motion.div 
-            className="feature-description text-[#425466]"
+            className={`feature-description  mb-1 ${
+              isActive ? "text-[#1B1B1B]" : "text-[#425466]"
+            }`}
             animate={{
               opacity: isActive ? 1 : 0.8, // Subtle opacity change
             }}

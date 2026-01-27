@@ -55,12 +55,20 @@ const Footer = () => {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <a href="/">
-                <img
-                  src={logo}
-                  alt="Company Logo"
-                  className=" w-[170px] h-[32px]"
-                />
-              </a>
+              <div className="logo">
+                <a href="/">
+                  <img
+                    src="https://demo.trustymoney.in/assets/newLOGO-Cj83E8a4.svg"
+                    alt="Trusty Money Logo"
+                    width="170"
+                    height="32"
+                    fetchpriority="high"
+                    decoding="async"
+                    
+                  />
+                </a>
+              </div>
+            </a>
             </div>
 
             <p className="mb-4 max-w-sm text-body text text-[#425466]">
@@ -126,28 +134,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

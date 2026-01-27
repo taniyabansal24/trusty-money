@@ -727,7 +727,7 @@ export function WireframeTreasuryDashboard({
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <div className="flex items-center gap-1">
-                <div className="h-2.5 w-2.5 rounded-sm bg-gradient-to-br from-blue-500 to-blue-600"></div>
+                <div className="h-2.5 w-2.5 rounded-sm bg-[#073F9E]"></div>
                 <span>Inflow</span>
               </div>
             </div>
@@ -957,7 +957,7 @@ export function WireframeTreasuryDashboard({
                     </motion.div>
                   </AnimatePresence>
                 </div>
-                <div className={`text-[10px] text-${metric.color}-600`}>
+                <div className={`text-[10px] txt-blue`}>
                   {metric.sub}
                 </div>
               </motion.div>

@@ -633,9 +633,8 @@ export function WireframeReportingDashboard({
                     </td>
                     <td className="px-3 py-3 text-right">
                       <span
-                        className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-bold"
+                        className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-bold light-bg"
                         style={{
-                          background: "#E4EBFA",
                           color: "#073F9E",
                         }}
                       >

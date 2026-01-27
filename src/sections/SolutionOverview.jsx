@@ -12,7 +12,7 @@ export function SolutionOverview() {
   return (
     <section className="relative w-full overflow-hidden">
       {/* Hero Section */}
-      <div className="relative w-full min-h-[56.5rem] overflow-hidden  max-w-7xl mx-auto ">
+      <div className="relative w-full min-h-[52rem] overflow-hidden  max-w-7xl mx-auto ">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-xl opacity-30 animate-float"></div>
           <div
@@ -45,8 +45,8 @@ export function SolutionOverview() {
               className="mb-6 flex justify-center"
             >
               <span
-                className="inline-block px-4 py-2 rounded-full hero-badge"
-                style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+                className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
+              
               >
                 Global Solution
               </span>
@@ -73,21 +73,21 @@ export function SolutionOverview() {
           </div>
 
           {/* ========== GLOBE SECTION ========== */}
-          <div className="relative">
+          <div className="">
             {/* Outer container for positioning */}
-            <div className="relative w-[102%] h-[55vh] overflow-hidden">
+            <div className=" overflow-visible">
               
               {/* Globe Container - Fixed, isolated */}
               <div className="absolute inset-0 z-10">
-                <div className=" w-full h-full overflow-hidden">
-                  <div className="flex absolute w-[100%] h-[239%] inset-x-0 top-[-22%] -bottom-10/12 justify-center mask-globe">
+                <div className=" w-full h-full overflow-visible">
+                  <div className="flex absolute w-[100%] h-[338%] inset-x-0 top-[14.5rem] -bottom-10/12 justify-center mask-globe">
                     <RandomGlobe />
                   </div>
                 </div>
               </div>
 
               {/* Cards Component - Completely separate layer */}
-              <div className="absolute inset-0 z-20">
+              <div className="absolute inset-0 z-20 top-[35rem]">
                 <GlobeCards />
               </div>
             </div>
@@ -180,7 +180,7 @@ export function SolutionOverview() {
       </div>
 
       {/* Product Modules */}
-      <div className="relative z-10 -mt-12 lg:-mt-16 pt-0">
+      <div className="relative z-10  pt-0">
         <BillingModule />
         <ComplianceModule />
         <PaymentsModule />

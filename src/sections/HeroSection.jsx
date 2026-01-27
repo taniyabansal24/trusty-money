@@ -119,8 +119,8 @@ const HeroSection = () => {
                 className="mb-8 flex items-center gap-3"
               >
                 <span
-                  className="inline-block px-4 py-2 rounded-full hero-badge txt-blue"
-                  style={{ backgroundColor: "#073f9e12" }}
+                  className="inline-block px-4 py-2 rounded-full hero-badge txt-blue light-bg"
+                  
                 >
                   Cross-Border Operating System
                 </span>

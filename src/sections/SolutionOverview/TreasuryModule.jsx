@@ -132,8 +132,7 @@ export function TreasuryModule() {
             className="mb-8 flex items-center gap-3"
           >
             <span
-              className="inline-block px-4 py-2 rounded-full hero-badge"
-              style={{ backgroundColor: "#073f9e12", color: "#073f9e" }}
+              className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
             >
               Treasury Operations
             </span>

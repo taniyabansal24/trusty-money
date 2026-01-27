@@ -479,7 +479,7 @@ export function WireframeInvoiceCard({
                   <motion.span
                     animate={animationPhase >= 2 ? { scale: [1, 1.1, 1] } : {}}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="rounded bg-gradient-to-r from-blue-100 to-blue-200 px-1.5 py-0.5 text-xs text-[#0B43A0]"
+                    className="rounded  px-1.5 py-0.5 text-xs light-bg txt-blue"
                   >
                     Auto-calc
                   </motion.span>
