@@ -12,7 +12,7 @@ export function SolutionOverview() {
   return (
     <section className="relative w-full overflow-hidden">
       {/* Hero Section */}
-      <div className="relative w-full min-h-[60rem] overflow-hidden  max-w-7xl mx-auto ">
+      <div className="relative w-full min-h-[56.5rem] overflow-hidden  max-w-7xl mx-auto ">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-xl opacity-30 animate-float"></div>
           <div
@@ -75,12 +75,12 @@ export function SolutionOverview() {
           {/* ========== GLOBE SECTION ========== */}
           <div className="relative">
             {/* Outer container for positioning */}
-            <div className="relative w-full h-[60vh] overflow-hidden">
+            <div className="relative w-[102%] h-[55vh] overflow-hidden">
               
               {/* Globe Container - Fixed, isolated */}
               <div className="absolute inset-0 z-10">
                 <div className=" w-full h-full overflow-hidden">
-                  <div className="flex absolute w-[100%] h-[215%] inset-x-0 top-[-22%] -bottom-10/12 justify-center mask-globe">
+                  <div className="flex absolute w-[100%] h-[239%] inset-x-0 top-[-22%] -bottom-10/12 justify-center mask-globe">
                     <RandomGlobe />
                   </div>
                 </div>
