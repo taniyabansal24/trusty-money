@@ -61,7 +61,7 @@ export function SolutionOverview() {
             </motion.h1>
 
             <div className="max-w-3xl mx-auto">
-              <p className="section-subtitle text-lg md:text-xl">
+              <p className="section-subtitle">
                 Trusty Money is not just a payment gateway. It&apos;s a{" "}
                 <span className="font-semibold text-[#073F9E]">
                   global financial operating system
