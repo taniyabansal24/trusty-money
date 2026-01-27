@@ -123,7 +123,7 @@ const SignUpCard = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="text-center mb-2">
-              <h1 className="section-hero-heading txt-blue mb-2">
+              <h1 className="section-hero-heading gradient-text mb-2">
                 Create your account
 
               </h1>

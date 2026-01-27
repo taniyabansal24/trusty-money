@@ -108,7 +108,7 @@ const SignInCard = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="text-center mb-2">
-              <h1 className="section-hero-heading txt-blue mb-2">
+              <h1 className="section-hero-heading gradient-text mb-2">
                 Welcome back
               </h1>
               <p className="section-subtitle mb-3">Sign in to your account</p>
