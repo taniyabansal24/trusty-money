@@ -155,7 +155,7 @@ export function BillingModule() {
   return (
     <section
       ref={sectionRef}
-      className="subsection relative border-t border-blue-100 overflow-hidden isolate"
+      className=" relative border-t border-blue-100 overflow-hidden isolate pt-40 pb-20"
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 filter opacity-30 animate-float"></div>
