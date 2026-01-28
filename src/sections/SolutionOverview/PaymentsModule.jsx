@@ -387,20 +387,7 @@ export function PaymentsModule() {
                           </div>
                         </div>
 
-                        {/* Active Badge - Only show on front card */}
-                        <div className={`px-2.5 py-1.5 rounded-full ${
-                          index === activeIndex 
-                            ? 'bg-green-50 border border-green-200' 
-                            : 'bg-gray-50 border border-gray-200'
-                        }`}>
-                          <span className={`text-xs font-normal leading-[14px] ${
-                            index === activeIndex 
-                              ? 'text-[#009966]' 
-                              : 'text-gray-400'
-                          }`}>
-                            {index === activeIndex ? 'Active' : 'Inactive'}
-                          </span>
-                        </div>
+                        
                       </div>
 
                       {/* Account Number Section */}
@@ -415,7 +402,7 @@ export function PaymentsModule() {
                               {card.accountNumber}
                             </div>
                           </div>
-                          <DuplicateIcon className="w-10 h-10 text-[#073F9E]" />
+                          
                         </div>
                       </div>
 
@@ -446,7 +433,7 @@ export function PaymentsModule() {
                             <div className="text-sm font-normal text-[#0F172B] leading-[18px]">
                               {card.routingCode}
                             </div>
-                            <DuplicateIcon className="w-10 h-10 text-[#073F9E] relative -top-3" />
+                           
                           </div>
                         </div>
                       </div>
