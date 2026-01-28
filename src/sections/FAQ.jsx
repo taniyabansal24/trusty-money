@@ -132,7 +132,7 @@ Complete visibility and control:
 
             {/* Answer */}
             {openIndex === index && (
-              <div className="px-6 pb-6 bg-gray-50">
+              <div className="px-6 pb-6 light-bg">
                 <p className="text-mute pt-4 border-t border-gray-200 whitespace-pre-line">
                   {faq.answer}
                 </p>
