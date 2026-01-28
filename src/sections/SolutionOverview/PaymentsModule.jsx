@@ -201,7 +201,7 @@ export function PaymentsModule() {
     return String(address).replace(re, flag);
   };
 
-  // Animation variants for stack cascade effect
+  // Animation variants for stack cascade effect - UPDATED FOR TOP STAIRS
   const cardStackVariants = {
     // Position 0: Front position (fully visible, normal scale)
     frontPosition: {
@@ -214,9 +214,9 @@ export function PaymentsModule() {
         ease: "easeInOut"
       }
     },
-    // Position 1: First behind (slightly down, smaller scale)
+    // Position 1: First behind (slightly UP, smaller scale) - CHANGED from y: 40 to y: -40
     behindPosition1: {
-      y: 40,
+      y: -40,
       scale: 0.9,
       opacity: 0.7,
       zIndex: 20,
@@ -225,9 +225,9 @@ export function PaymentsModule() {
         ease: "easeInOut"
       }
     },
-    // Position 2: Second behind (further down, even smaller)
+    // Position 2: Second behind (further UP, even smaller) - CHANGED from y: 70 to y: -70
     behindPosition2: {
-      y: 70,
+      y: -70,
       scale: 0.8,
       opacity: 0.4,
       zIndex: 10,
@@ -236,9 +236,9 @@ export function PaymentsModule() {
         ease: "easeInOut"
       }
     },
-    // Position 3: Hidden (completely down and faded)
+    // Position 3: Hidden (completely UP and faded) - CHANGED from y: 100 to y: -100
     hiddenPosition: {
-      y: 100,
+      y: -100,
       scale: 0.7,
       opacity: 0,
       zIndex: 0,
@@ -343,7 +343,9 @@ export function PaymentsModule() {
         {/* Visual - Vertical Card Stack Animation */}
         <motion.div className="relative">
           <div className="relative">
-            {/* Card Stack Container */}
+            
+
+            {/* Card Stack Container - Adjusted position to accommodate balance above */}
             <div className="relative" style={{ height: "450px" }}>
               {/* Render all cards in a stack */}
               {accounts.map((card, index) => (
@@ -480,13 +482,12 @@ export function PaymentsModule() {
                 </motion.div>
               ))}
             </div>
-
-            {/* Balance Display Below Card */}
+            {/* Balance Display ABOVE Card */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className=" rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+              className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm mb-4"
             >
               <motion.div
                 key={`balance-${activeCard.currency}-${activeCard.accountNumber}`}
