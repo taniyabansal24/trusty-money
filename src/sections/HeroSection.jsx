@@ -104,7 +104,7 @@ const HeroSection = () => {
             zIndex: "1",
           }}
         ></div>
-        <Container className="relative z-10 mt-10">
+        <Container className="relative z-10 mt-16">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left Side - Text Content */}
             <motion.div
@@ -136,7 +136,7 @@ const HeroSection = () => {
               </motion.h1>
 
               {/* Subheadline line */}
-              <motion.p className="section-subtitle mb-6 max-w-lg">
+              <motion.p className="section-subtitle mb-6 max-w-md">
                 Designed for billing, compliance, payments, FX, treasury and
                 working capital
               </motion.p>

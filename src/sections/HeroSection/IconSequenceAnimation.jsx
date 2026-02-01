@@ -403,7 +403,7 @@ export default function CircularShiftAnimation() {
       />
 
       {/* Middle — CIRCULAR SHIFT ANIMATION */}
-      <div className="absolute -translate-y-1/2 left-[3%] top-[46%]">
+      <div className="absolute -translate-y-1/2 left-[3%] top-[40%]">
         <div className="relative w-[300px] h-[400px]">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
             {ICONS.map((iconData, index) => {
@@ -427,7 +427,7 @@ export default function CircularShiftAnimation() {
       </div>
 
       {/* RIGHT — SCREEN DISPLAY */}
-      <div className="w-[34rem] h-[35rem] relative bottom-[9%] right-[-24%]">
+      <div className="w-[34rem] h-[35rem] relative bottom-[16%] right-[-24%]">
         {/* Main container with shadow */}
         <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_0px_100px_-20px_rgba(50,50,93,0.25),0px_0px_60px_-30px_rgba(0,0,0,0.15),inset_0px_0px_6px_rgba(10,37,64,0.2)]"></div>
 

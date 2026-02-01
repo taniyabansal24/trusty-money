@@ -9,6 +9,7 @@ import SecuritySection from "../sections/SecuritySection.jsx";
 import TestimonialSection from "../sections/TestimonialSection.jsx";
 import FAQ from "../sections/FAQ.jsx";
 import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper.jsx";
+import Cards from "../sections/SolutionOverview/Cards.jsx";
 
 const HomePage = () => {
   return (
@@ -34,6 +35,7 @@ const HomePage = () => {
           </div>
           <div className="section">
             <FAQ />
+            <Cards/>
           </div>
         </div>
       </main>

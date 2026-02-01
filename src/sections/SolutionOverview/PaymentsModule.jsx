@@ -487,7 +487,7 @@ export function PaymentsModule() {
                   <div className="text-sm text-slate-600">
                     Available Balance
                   </div>
-                  <div className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-2 py-1 text-xs txt-blue">
+                  <div className="flex items-center gap-1.5 rounded-full px-2 py-1 text-xs txt-blue light-bg">
                     <div className="h-1.5 w-1.5 rounded-full bg-[#073F9E]"></div>
                     Active
                   </div>
