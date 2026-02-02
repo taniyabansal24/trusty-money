@@ -4,7 +4,7 @@ import { PaymentsModule } from "../sections/SolutionOverview/PaymentsModule";
 import { TreasuryModule } from "../sections/SolutionOverview/TreasuryModule";
 import { ReportingModule } from "../sections/SolutionOverview/ReportingModule";
 import { RandomGlobe } from "../components/layout/randomglobe";
-import { GlobeCards } from "../components/layout/GlobeCards"; // Import the new component
+import { GlobeCards } from "../components/layout/GlobeCards.tsx"; // Import the new component
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "../utils/animations";
 

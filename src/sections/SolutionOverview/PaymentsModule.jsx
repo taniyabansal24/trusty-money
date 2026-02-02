@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "../../components/ui";
 import usFlag from "../../assets/usflag.jpg";
 import ukFlag from "../../assets/ukflag.png";
@@ -150,7 +150,8 @@ export function PaymentsModule() {
 
   const activeCard = accounts[activeIndex % accounts.length];
   const nextCard = accounts[(activeIndex + 1) % accounts.length];
-  const prevCard = accounts[(activeIndex - 1 + accounts.length) % accounts.length];
+  const prevCard =
+    accounts[(activeIndex - 1 + accounts.length) % accounts.length];
 
   const escapeRegExp = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -211,8 +212,8 @@ export function PaymentsModule() {
       zIndex: 30,
       transition: {
         duration: 0.8,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     // Position 1: First behind (slightly UP, smaller scale) - CHANGED from y: 40 to y: -40
     behindPosition1: {
@@ -222,8 +223,8 @@ export function PaymentsModule() {
       zIndex: 20,
       transition: {
         duration: 0.8,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     // Position 2: Second behind (further UP, even smaller) - CHANGED from y: 70 to y: -70
     behindPosition2: {
@@ -233,8 +234,8 @@ export function PaymentsModule() {
       zIndex: 10,
       transition: {
         duration: 0.8,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     // Position 3: Hidden (completely UP and faded) - CHANGED from y: 100 to y: -100
     hiddenPosition: {
@@ -244,19 +245,46 @@ export function PaymentsModule() {
       zIndex: 0,
       transition: {
         duration: 0.8,
-        ease: "easeInOut"
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   // Calculate card positions based on active index
   const getCardPosition = (cardIndex) => {
-    const relativeIndex = (cardIndex - activeIndex + accounts.length) % accounts.length;
-    
+    const relativeIndex =
+      (cardIndex - activeIndex + accounts.length) % accounts.length;
+
     if (relativeIndex === 0) return "frontPosition";
     if (relativeIndex === 1) return "behindPosition1";
     if (relativeIndex === 2) return "behindPosition2";
     return "hiddenPosition";
+  };
+
+  const cardVariants = {
+    initial: {
+      y: -40,
+      opacity: 0,
+      scale: 0.96,
+    },
+    animate: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      y: 140, // ⬅️ FALLS DOWN
+      opacity: 0,
+      scale: 0.92,
+      transition: {
+        duration: 0.6,
+        ease: "easeIn",
+      },
+    },
   };
 
   return (
@@ -343,138 +371,117 @@ export function PaymentsModule() {
         {/* Visual - Vertical Card Stack Animation */}
         <motion.div className="relative">
           <div className="relative">
-            
+            {/* Card Stack Container */}
+            <div className="relative" style={{ height: "400px" }}>
+              <div className="relative" style={{ height: "450px" }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`${activeCard.currency}-${activeCard.accountNumber}`}
+                    variants={cardVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="absolute top-0 left-0"
+                    style={{ width: "510px", height: "350px" }}
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl border border-gray-200">
+                      {/* Background blur effects */}
+                      <div className="absolute w-[220px] h-[220px] left-[420px] top-[-80px] bg-blue-50 opacity-37 blur-[50px] rounded-full" />
+                      <div className="absolute w-[220px] h-[220px] left-[-70px] top-[250px] bg-blue-50 opacity-46 blur-[50px] rounded-full" />
 
-            {/* Card Stack Container - Adjusted position to accommodate balance above */}
-            <div className="relative" style={{ height: "450px" }}>
-              {/* Render all cards in a stack */}
-              {accounts.map((card, index) => (
-                <motion.div
-                  key={`${card.currency}-${card.accountNumber}-${index}`}
-                  className="absolute top-0 left-0"
-                  initial={getCardPosition(index)}
-                  animate={getCardPosition(index)}
-                  variants={cardStackVariants}
-                  style={{
-                    width: "580px",
-                    height: "400px",
-                  }}
-                >
-                  <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl border border-gray-200">
-                    {/* Background blur effects */}
-                    <div className="absolute w-[220px] h-[220px] left-[420px] top-[-80px] bg-blue-50 opacity-37 blur-[50px] rounded-full" />
-                    <div className="absolute w-[220px] h-[220px] left-[-70px] top-[250px] bg-blue-50 opacity-46 blur-[50px] rounded-full" />
-
-                    {/* Main Content Container */}
-                    <div className="relative w-full h-full p-6">
-                      {/* Header Container */}
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={getFlagAsset(card).src}
-                            alt={getFlagAsset(card).alt}
-                            className="w-7 h-6 rounded-md object-cover border border-slate-200 shadow-sm"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                          <div>
-                            <div className="text-xs text-[#45556C] leading-[18px]">
-                              Bank Account
-                            </div>
-                            <div className="font-bold text-base text-[#0F172B] leading-[24px]">
-                              {card.country}
-                            </div>
-                          </div>
-                        </div>
-
-                        
-                      </div>
-
-                      {/* Account Number Section */}
-                      <div className="mb-5">
-                        <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px] mb-2">
-                          Account Number
-                        </div>
-                        <div className="w-full h-14 bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center justify-between">
+                      {/* Main Content */}
+                      <div className="relative w-full h-full p-5">
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-5">
                           <div className="flex items-center gap-3">
-                            <CardIcon className="w-5 h-4 text-[#073F9E]" />
-                            <div className="text-xl font-normal text-[#0F172B] tracking-[1px] leading-[28px]">
-                              {card.accountNumber}
+                            <img
+                              src={getFlagAsset(activeCard).src}
+                              alt={getFlagAsset(activeCard).alt}
+                              className="w-7 h-6 rounded-md object-cover border border-slate-200 shadow-sm"
+                            />
+                            <div>
+                              <div className="text-xs text-[#45556C]">
+                                Bank Account
+                              </div>
+                              <div className="font-semibold text-sm text-[#0F172B]">
+                                {activeCard.country}
+                              </div>
                             </div>
                           </div>
+
                           
                         </div>
-                      </div>
 
-                      {/* Bank Info Grid */}
-                      <div className="grid grid-cols-2 gap-3 mb-5">
-                        {/* Bank Name Card */}
-                        <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                          <div className="flex items-center gap-2 mb-1">
-                            <BankIcon className="w-4 h-4 text-[#073F9E]" />
-                            <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
-                              Bank Name
-                            </div>
+                        {/* Account Number */}
+                        <div className="mb-4">
+                          <div className="text-xs text-[#62748E] uppercase mb-1.5">
+                            Account Number
                           </div>
-                          <div className="text-sm font-normal text-[#0F172B] leading-[18px] truncate">
-                            {card.bankName}
-                          </div>
-                        </div>
-
-                        {/* Routing Code Card */}
-                        <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                          <div className="flex items-center gap-2 mb-1">
-                            <FilterIcon className="w-4 h-4 text-[#073F9E]" />
-                            <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
-                              {card.routingCodeType}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between relative -top-1">
-                            <div className="text-sm font-normal text-[#0F172B] leading-[18px]">
-                              {card.routingCode}
+                          <div className="h-14 bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <CardIcon className="w-4 h-4 text-[#073F9E]" />
+                              <div className="text-lg text-[#0F172B] tracking-[1px]">
+                                {activeCard.accountNumber}
+                              </div>
                             </div>
                            
                           </div>
                         </div>
-                      </div>
 
-                      {/* Bank Address Card */}
-                      <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3 mb-5">
-                        <div className="flex items-center gap-2 mb-1">
-                          <LocationIcon className="w-4 h-4 text-[#073F9E]" />
-                          <div className="text-xs font-normal text-[#62748E] tracking-[0.5px] uppercase leading-[14px]">
-                            Bank Address
+                        {/* Bank Info */}
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                            <div className="flex items-center gap-2 mb-1">
+                              <BankIcon className="w-3.5 h-3.5 text-[#073F9E]" />
+                              <div className="text-xs text-[#62748E] uppercase">
+                                Bank Name
+                              </div>
+                            </div>
+                            <div className="text-sm text-[#0F172B] truncate">
+                              {activeCard.bankName}
+                            </div>
+                          </div>
+
+                          <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                            <div className="flex items-center gap-2 mb-1">
+                              <FilterIcon className="w-3.5 h-3.5 text-[#073F9E]" />
+                              <div className="text-xs text-[#62748E] uppercase">
+                                {activeCard.routingCodeType}
+                              </div>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm">
+                                {activeCard.routingCode}
+                              </span>
+                             
+                            </div>
                           </div>
                         </div>
-                        <div className="text-sm font-normal text-[#0F172B] leading-[18px] truncate">
-                          {card.bankAddress}
-                        </div>
-                      </div>
 
-                      {/* Footer */}
-                      <div className="absolute bottom-6 left-6 right-6 border-t border-gray-300 pt-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex gap-3">
-                            <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full" />
-                            <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full opacity-70" />
-                            <div className="w-1.5 h-1.5 bg-[#073F9E] rounded-full opacity-40" />
+                        {/* Address */}
+                        <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <LocationIcon className="w-3.5 h-3.5 text-[#073F9E]" />
+                            <div className="text-xs text-[#62748E] uppercase">
+                              Bank Address
+                            </div>
                           </div>
-                          <div className="text-xs font-normal text-[#90A1B9] leading-[14px]">
-                            Secured Connection
+                          <div className="text-sm truncate">
+                            {activeCard.bankAddress}
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
             {/* Balance Display ABOVE Card */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm mb-4"
+              className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm mb-4"
             >
               <motion.div
                 key={`balance-${activeCard.currency}-${activeCard.accountNumber}`}
@@ -487,15 +494,15 @@ export function PaymentsModule() {
                   <div className="text-sm text-slate-600">
                     Available Balance
                   </div>
-                  <div className="flex items-center gap-1.5 rounded-full px-2 py-1 text-xs txt-blue light-bg">
+                  <div className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-2 py-1 text-xs txt-blue">
                     <div className="h-1.5 w-1.5 rounded-full bg-[#073F9E]"></div>
                     Active
                   </div>
                 </div>
-                <div className="sub-section-heading">
+                <div className="text-lg font-semibold text-slate-900">
                   {activeCard.currency} {activeCard.balance}
                 </div>
-                <div className="mt-2 text-xs text-slate-500">
+                <div className="mt-1.5 text-xs text-slate-500">
                   Last transaction: 2 hours ago
                 </div>
               </motion.div>
