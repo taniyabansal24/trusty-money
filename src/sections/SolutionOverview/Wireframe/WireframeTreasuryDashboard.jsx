@@ -614,27 +614,23 @@ export function WireframeTreasuryDashboard({
           isVisible ? { opacity: animationPhase >= 1 ? 1 : 0, y: 0 } : {}
         }
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl h-[40rem]"
+        className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl h-[35.5rem]"
       >
         {/* Dashboard Header */}
         <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white px-4 py-2">
-          {" "}
-          {/* Reduced padding */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={animationPhase >= 1 ? { opacity: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.2 : 0.1 }}
-            className="mb-3 flex items-center justify-between" // Reduced margin
+            className="mb-3 flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              {" "}
-              {/* Reduced gap */}
               <div>
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={animationPhase >= 1 ? { opacity: 1 } : {}}
                   transition={{ delay: animationPhase === 1 ? 0.3 : 0.2 }}
-                  className="text-[10px] uppercase tracking-wider text-slate-500" // Smaller text
+                  className="text-xs uppercase tracking-normal text-slate-500"
                 >
                   Treasury Operations
                 </motion.div>
@@ -642,7 +638,7 @@ export function WireframeTreasuryDashboard({
                   initial={{ opacity: 0, y: 10 }}
                   animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: animationPhase === 1 ? 0.4 : 0.3 }}
-                  className="text-lg text-slate-900" // Smaller text
+                  className="text-base font-semibold text-slate-900"
                 >
                   Working Capital Dashboard
                 </motion.div>
@@ -654,37 +650,29 @@ export function WireframeTreasuryDashboard({
               transition={{ delay: animationPhase === 1 ? 0.5 : 0.4 }}
               className="text-right"
             >
-              <div className="text-[10px] text-slate-500">Last updated</div>{" "}
-              {/* Smaller text */}
-              <div className="text-[10px] text-slate-900">2 min ago</div>{" "}
-              {/* Smaller text */}
+              <div className="text-xs text-slate-500">Last updated</div>
+              <div className="text-xs text-slate-900">2 min ago</div>
             </motion.div>
           </motion.div>
+          
           {/* Main Liquidity Display */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.6 : 0.5 }}
-            className="rounded-lg border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-3" // Reduced padding
+            className="rounded-lg border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 px-3 py-2"
           >
-            <div className="mb-1 flex items-center justify-between">
-              {" "}
-              {/* Reduced margin */}
-              <div className="text-[10px] uppercase tracking-wider text-slate-600">
+            <div className="mb-1.5 flex items-center justify-between">
+              <div className="text-xs uppercase tracking-wider text-slate-600">
                 Available Liquidity
-              </div>{" "}
-              {/* Smaller text */}
-              <div className="flex items-center gap-1 text-[10px] text-emerald-600">
-                {" "}
-                {/* Smaller text */}
+              </div>
+              <div className="flex items-center gap-1 text-xs text-emerald-600">
                 <svg
-                  className="h-2.5 w-2.5"
+                  className="h-3 w-3"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  {" "}
-                  {/* Smaller icon */}
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -696,8 +684,6 @@ export function WireframeTreasuryDashboard({
               </div>
             </div>
             <div className="relative h-5 overflow-hidden">
-              {" "}
-              {/* Reduced height */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={data?.index || 0}
@@ -705,7 +691,7 @@ export function WireframeTreasuryDashboard({
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -15, opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="text-lg text-slate-900" // Smaller text
+                  className="text-base text-slate-900"
                 >
                   {data?.index === 0 ? "$2,847,250" : "$3,102,400"}
                 </motion.div>
@@ -715,28 +701,27 @@ export function WireframeTreasuryDashboard({
         </div>
 
         {/* Cash Flow Chart */}
-        <div className="px-4 py-4">
+        <div className="p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={animationPhase >= 1 ? { opacity: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.7 : 0.6 }}
-            className="mb-4 flex items-center justify-between"
+            className="mb-2 flex items-center justify-between"
           >
-            <div className="text-sm text-slate-900">
+            <div className="text-sm font-medium text-slate-900">
               Monthly Cash Flow Trend
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <div className="flex items-center gap-1">
-                <div className="h-2.5 w-2.5 rounded-sm bg-[#073F9E]"></div>
+                <div className="h-3 w-3 rounded-sm bg-[#073F9E]"></div>
                 <span>Inflow</span>
               </div>
             </div>
           </motion.div>
 
-          {/* Chart Area - Your existing chart implementation will go here */}
-          {/* This will be revealed after wireframe animation */}
-          <div className="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50/50 to-white px-6 py-3">
-            <div className="relative h-48">
+          {/* Chart Area */}
+          <div className="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50/50 to-white px-4 py-3">
+            <div className="relative h-40">
               {/* Y-axis labels */}
               <div className="absolute left-0 top-0 flex h-full flex-col justify-between text-xs text-slate-500">
                 <span>$3M</span>
@@ -747,7 +732,7 @@ export function WireframeTreasuryDashboard({
               </div>
 
               {/* Chart area */}
-              <div className="ml-12 h-full">
+              <div className="ml-10 h-full">
                 <svg
                   className="h-full w-full"
                   viewBox="0 0 600 200"
@@ -846,15 +831,15 @@ export function WireframeTreasuryDashboard({
                             <motion.circle
                               animate={{ cx: point.x, cy: point.y }}
                               transition={{ duration: 0.8 }}
-                              r="6"
+                              r="5"
                               fill="white"
                               stroke="#3b82f6"
-                              strokeWidth="2.5"
+                              strokeWidth="2"
                             />
                             <motion.circle
                               animate={{ cx: point.x, cy: point.y }}
                               transition={{ duration: 0.8 }}
-                              r="3"
+                              r="2.5"
                               fill="#3b82f6"
                             />
                           </g>
@@ -867,7 +852,7 @@ export function WireframeTreasuryDashboard({
             </div>
 
             {/* X-axis labels */}
-            <div className="ml-12 mt-2 flex justify-between text-xs text-slate-600">
+            <div className="ml-10 mt-2 flex justify-between text-xs text-slate-600">
               {chartDataSets[0].map((d) => (
                 <span key={d.month}>{d.month}</span>
               ))}
@@ -875,7 +860,7 @@ export function WireframeTreasuryDashboard({
           </div>
 
           {/* Key Metrics Grid */}
-          <div className="mt-6 grid grid-cols-2 gap-3">
+          <div className="mt-4 grid grid-cols-2 gap-3">
             {[
               {
                 label: "DSO",
@@ -914,11 +899,15 @@ export function WireframeTreasuryDashboard({
                   delay: animationPhase === 1 ? 0.9 + i * 0.1 : i * 0.1,
                   duration: 0.4,
                 }}
-                className={`rounded-lg border border-slate-100 px-4 py-2 ${i === 3 ? "bg-gradient-to-br from-blue-50 to-indigo-50" : "bg-gradient-to-br from-slate-50 to-white"}`}
+                className={`rounded-lg border border-slate-100 py-2 px-4 ${
+                  i === 3
+                    ? "bg-gradient-to-br from-blue-50 to-indigo-50"
+                    : "bg-gradient-to-br from-slate-50 to-white"
+                }`}
               >
-                <div className="mb-2 flex items-center gap-2 text-xs text-slate-500">
+                <div className=" flex items-center gap-1.5 text-xs text-slate-500">
                   <svg
-                    className="h-3 w-3"
+                    className="h-3.5 w-3.5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -941,9 +930,7 @@ export function WireframeTreasuryDashboard({
                   {metric.label}
                 </div>
                 {/* Sliding Data Wrapper */}
-                <div className="relative h-6 overflow-hidden">
-                  {" "}
-                  {/* Reduced height */}
+                <div className="relative overflow-hidden">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={data?.index || 0}
@@ -951,13 +938,13 @@ export function WireframeTreasuryDashboard({
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: -12, opacity: 0 }}
                       transition={{ duration: 0.4 }}
-                      className="text-lg text-slate-900" // Smaller text
+                      className="text-base text-slate-900"
                     >
                       {data?.index === 0 ? metric.val0 : metric.val1}
                     </motion.div>
                   </AnimatePresence>
                 </div>
-                <div className={`text-[10px] txt-blue`}>
+                <div className={`text-xs text-[#073F9E]`}>
                   {metric.sub}
                 </div>
               </motion.div>

@@ -5,7 +5,6 @@ import SyncIcon from "../../components/svg/SyncIcon";
 import SortVerticalIcon from "../../components/svg/SortVerticalIcon";
 import InfoCircleIcon from "../../components/svg/InfoCircleIcon";
 
-
 const Screen4Invoicing = React.forwardRef((props, ref) => {
   const {
     screen4CardsRef, 
@@ -16,34 +15,34 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
       className="absolute inset-0 bg-white rounded-[34px] overflow-hidden"
     >
       <div className="relative w-full h-full bg-white rounded-[44px] overflow-hidden shadow-inner">
-        <div className="w-full h-full bg-white flex flex-col px-5 py-8">
+        <div className="w-full h-full bg-white flex flex-col px-4 py-6">
           {/* HEADER */}
-          <div className="problem-screen-header flex items-center justify-between mb-5">
+          <div className="problem-screen-header flex items-center justify-between mb-4">
             <div>
               <div className="text-xs text-[#425466] tracking-wide uppercase">
                 Invoicing
               </div>
-              <h3 className="text-[#0A2540] text-lg tracking-tight">
+              <h3 className="text-[#0A2540] text-base font-semibold tracking-tight">
                 Manual processes
               </h3>
             </div>
 
-            <div className="w-9 h-9 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-xl flex items-center justify-center">
-              <DocumentIcon className="w-5 h-5" />
+            <div className="w-8 h-8 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-xl flex items-center justify-center">
+              <DocumentIcon className="w-4 h-4" />
             </div>
           </div>
 
           {/* CONTENT */}
-          <div className="flex-1 space-y-3">
+          <div className="flex-1 space-y-2.5">
             {/* INVOICE CARD */}
             <div
               ref={(el) => (screen4CardsRef.current[0] = el)}
-              className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-4 shadow-sm border border-[#dbeafe]"
+              className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-3.5 shadow-sm border border-[#dbeafe]"
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2.5">
                 <div className="flex items-start gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-lg flex items-center justify-center">
-                    <BuildingIcon size={56} />
+                  <div className="w-7 h-7 bg-gradient-to-br from-[#e0efff] to-[#d0e7ff] rounded-lg flex items-center justify-center">
+                    <BuildingIcon size={48} />
                   </div>
 
                   <div>
@@ -54,14 +53,13 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between px-1 py-1 bg-gradient-to-br from-[#eff6ff] to-[#dbeafe] text-[#0B43A0] text-xs w-24 rounded-md border border-[#bfdbfe]">
-                  <span className="">Awaiting review</span>
-
-                  <SortVerticalIcon className="w-7 h-7 text-[#1E3A8A]" />
+                <div className="flex items-center justify-between px-1 py-1 bg-gradient-to-br from-[#eff6ff] to-[#dbeafe] text-[#0B43A0] text-xs w-20 rounded-md border border-[#bfdbfe]">
+                  <span className="truncate">Awaiting</span>
+                  <SortVerticalIcon className="w-6 h-6 text-[#1E3A8A]" />
                 </div>
               </div>
 
-              <div className="space-y-2 mb-3">
+              <div className="space-y-1.5 mb-2.5">
                 <div className="flex justify-between text-xs">
                   <span className="text-[#425466]">Amount</span>
                   <span className="text-sm text-[#0A2540]">$12,450.00</span>
@@ -78,9 +76,9 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-[#dbeafe]">
-                <div className="flex items-center gap-2 text-xs text-[#425466]">
-                  <SyncIcon size={34} />
+              <div className="pt-2.5 border-t border-[#dbeafe]">
+                <div className="flex items-center gap-1.5 text-xs text-[#425466]">
+                  <SyncIcon size={28} />
                   <span>Manual entry: 2.5 hours</span>
                 </div>
               </div>
@@ -89,11 +87,11 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
             {/* TAX CONFLICT */}
             <div
               ref={(el) => (screen4CardsRef.current[1] = el)}
-              className="bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-xl p-4 border border-[#bfdbfe]"
+              className="bg-gradient-to-br from-[#eff6ff] to-[#e0efff] rounded-xl p-3.5 border border-[#bfdbfe]"
             >
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#8b5cf6] to-[#3b82f6] rounded-lg flex items-center justify-center shadow-sm">
-                  <InfoCircleIcon size={56} />
+              <div className="flex items-start gap-2.5 mb-2.5">
+                <div className="w-7 h-7 bg-gradient-to-br from-[#8b5cf6] to-[#3b82f6] rounded-lg flex items-center justify-center shadow-sm">
+                  <InfoCircleIcon size={48} />
                 </div>
 
                 <div className="flex-1">
@@ -106,7 +104,7 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1.5">
                 {[
                   { label: "India", value: "18%" },
                   { label: "UAE", value: "5%" },
@@ -114,9 +112,9 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="bg-gradient-to-br from-white to-[#f8fafc] rounded-md px-2 py-1 text-xs flex items-center gap-1 border border-[#e5e7eb]"
+                    className="bg-gradient-to-br from-white to-[#f8fafc] rounded-md px-1.5 py-1 text-xs flex items-center gap-1 border border-[#e5e7eb]"
                   >
-                    <span className="text-[#425466]">{item.label}</span>
+                    <span className="text-[#425466] truncate">{item.label}</span>
                     <span className="text-sm text-[#0A2540]">{item.value}</span>
                   </div>
                 ))}
@@ -126,12 +124,12 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
             {/* STATS */}
             <div
               ref={(el) => (screen4CardsRef.current[2] = el)}
-              className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-4 shadow-sm border border-[#dbeafe]"
+              className="bg-gradient-to-br from-[#f8fafc] to-[#f0f7ff] rounded-xl p-3.5 shadow-sm border border-[#dbeafe]"
             >
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <div className="flex justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-br from-[#073f9e] to-[#0B43A0] rounded-full" />
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-gradient-to-br from-[#073f9e] to-[#0B43A0] rounded-full" />
                     <span className="text-xs text-[#425466]">
                       Pending invoices
                     </span>
@@ -139,8 +137,8 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
                   <span className="text-sm text-[#0A2540]">23</span>
                 </div>
                 <div className="flex justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-full" />
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-full" />
                     <span className="text-xs text-[#425466]">
                       Errors this week
                     </span>
@@ -148,8 +146,8 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
                   <span className="text-sm text-[#0A2540]">17</span>
                 </div>
                 <div className="flex justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-br from-[#3b82f6] to-[#0B43A0] rounded-full" />
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-gradient-to-br from-[#3b82f6] to-[#0B43A0] rounded-full" />
                     <span className="text-xs text-[#425466]">
                       Hours spent/week
                     </span>
@@ -161,7 +159,7 @@ const Screen4Invoicing = React.forwardRef((props, ref) => {
           </div>
 
           {/* CTA */}
-          <div className="bg-gradient-to-br from-[#0A2540] to-[#101111] text-white px-6 py-3 rounded-xl text-sm text-center shadow-lg mt-4">
+          <div className="bg-gradient-to-br from-[#0A2540] to-[#101111] text-white px-5 py-2.5 rounded-xl text-sm text-center shadow-lg mt-3">
             Manual invoicing
           </div>
         </div>

@@ -39,25 +39,25 @@ const Screen2Payments = React.forwardRef((props, ref) => {
       ref={ref} // This connects to screensRef.current[1] in parent
       className="absolute inset-0 bg-white rounded-[34px] overflow-hidden"
     >
-      <div className="w-full h-full bg-white flex flex-col px-5 py-8">
+      <div className="w-full h-full bg-white flex flex-col px-4 py-6">
         {/* ===== HEADER ===== */}
-        <div className="problem-screen-header flex items-center justify-between mb-5">
+        <div className="problem-screen-header flex items-center justify-between mb-4">
           <div>
             <p className="text-xs tracking-wide uppercase text-[#425466]">
               Payments
             </p>
-            <h3 className="text-[#0A2540] text-lg tracking-tight leading-snug">
+            <h3 className="text-[#0A2540] text-base font-semibold tracking-tight leading-snug">
               Expensive, slow & <br /> opaque
             </h3>
           </div>
 
-          <div className="w-9 h-9 bg-[#3b82f6]/10 rounded-xl flex items-center justify-center">
-            <AnalyticsIcon size={48} />
+          <div className="w-8 h-8 bg-[#3b82f6]/10 rounded-xl flex items-center justify-center">
+            <AnalyticsIcon size={40} />
           </div>
         </div>
 
         {/* ===== CONTENT ===== */}
-        <div className="flex-1 space-y-3">
+        <div className="flex-1 space-y-2.5">
           {/* ===== CARD 1 : PAYMENT CYCLES ===== */}
           <div
             ref={(el) => {
@@ -66,15 +66,15 @@ const Screen2Payments = React.forwardRef((props, ref) => {
                 screen2CardsRef.current[0] = el;
               }
             }}
-            className="bg-gradient-to-br from-[#f0f7ff] to-[#e6f0ff] rounded-xl p-4 border border-[#dbeafe]"
+            className="bg-gradient-to-br from-[#f0f7ff] to-[#e6f0ff] rounded-xl p-3.5 border border-[#dbeafe]"
             style={{
               background: "linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%)",
               borderColor: "#dbeafe",
             }}
           >
-            <div className="flex items-start gap-3 mb-3">
-              <div className="w-8 h-8 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-                <SyncIcon size={56} />
+            <div className="flex items-start gap-2.5 mb-2.5">
+              <div className="w-7 h-7 bg-[#3b82f6] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                <SyncIcon size={48} />
               </div>
 
               <div className="flex-1">
@@ -87,7 +87,7 @@ const Screen2Payments = React.forwardRef((props, ref) => {
               </div>
             </div>
 
-            <div className="space-y-2 text-xs">
+            <div className="space-y-1.5 text-xs">
               <div className="flex justify-between">
                 <span className="text-[#425466]">🇮🇳 India clients</span>
                 <span className="text-sm text-[#0A2540]">45–60 days</span>
@@ -110,15 +110,15 @@ const Screen2Payments = React.forwardRef((props, ref) => {
                 screen2CardsRef.current[1] = el;
               }
             }}
-            className="bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] rounded-xl p-4 border border-[#dbeafe]"
+            className="bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] rounded-xl p-3.5 border border-[#dbeafe]"
             style={{
               background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
               borderColor: "#dbeafe",
             }}
           >
-            <div className="flex items-start gap-3 mb-3">
-              <div className="w-8 h-8 bg-[#073f9e] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-                <DollarCircleIcon size={56} />
+            <div className="flex items-start gap-2.5 mb-2.5">
+              <div className="w-7 h-7 bg-[#073f9e] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                <DollarCircleIcon size={48} />
               </div>
 
               <div className="flex-1">
@@ -130,11 +130,11 @@ const Screen2Payments = React.forwardRef((props, ref) => {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-white/80 rounded-lg p-2.5">
+              <div className="bg-white/80 rounded-lg p-2">
                 <p className="text-[10px] text-[#425466] mb-1">FX markup</p>
                 <p className="text-sm text-[#0A2540]">2.5%</p>
               </div>
-              <div className="bg-white/80 rounded-lg p-2.5">
+              <div className="bg-white/80 rounded-lg p-2">
                 <p className="text-[10px] text-[#425466] mb-1">Transfer fees</p>
                 <p className="text-sm text-[#0A2540]">$35–75</p>
               </div>
@@ -148,15 +148,15 @@ const Screen2Payments = React.forwardRef((props, ref) => {
                 screen2CardsRef.current[2] = el;
               }
             }}
-            className="bg-gradient-to-br from-white to-[#f8fafc] rounded-xl p-4 shadow-sm border border-[#e5e7eb]"
+            className="bg-gradient-to-br from-white to-[#f8fafc] rounded-xl p-3.5 shadow-sm border border-[#e5e7eb]"
             style={{
               background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
               borderColor: "#e5e7eb",
             }}
           >
-            <div className="mb-3">
-              <div className="flex items-center gap-2 mb-2">
-                <IconWarning className="w-4 h-4" />
+            <div className="mb-2.5">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <IconWarning className="w-3.5 h-3.5" />
                 <span className="text-sm text-[#0A2540]">Slow settlements</span>
               </div>
 
@@ -165,7 +165,7 @@ const Screen2Payments = React.forwardRef((props, ref) => {
               </p>
             </div>
 
-            <div className="flex justify-between pt-3 border-t border-gray-200">
+            <div className="flex justify-between pt-2 border-t border-gray-200">
               <span className="text-xs text-[#425466]">
                 Avg settlement time
               </span>
@@ -174,7 +174,7 @@ const Screen2Payments = React.forwardRef((props, ref) => {
           </div>
 
           {/* ===== CTA ===== */}
-          <div className="bg-[#0A2540] text-white px-6 py-3 rounded-xl text-sm text-center shadow-lg mt-4">
+          <div className="bg-[#0A2540] text-white px-5 py-2.5 rounded-xl text-sm text-center shadow-lg mt-3">
             Expensive &amp; slow collections
           </div>
         </div>

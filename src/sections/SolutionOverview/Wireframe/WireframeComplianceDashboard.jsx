@@ -31,7 +31,7 @@ export function WireframeComplianceDashboard({
   }, [isVisible, shouldAnimate, onAnimationComplete]);
 
   // Dashboard dimensions - adjust based on your actual dashboard size
-  const dashboardWidth = 500; // Adjust based on your dashboard
+  const dashboardWidth = 550; // Adjust based on your dashboard
   const dashboardHeight = 650; // Adjust based on your dashboard
   const borderRadius = 12; // rounded-xl = 12px
 
@@ -323,7 +323,7 @@ export function WireframeComplianceDashboard({
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
       >
-        <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white p-6">
+        <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div>
@@ -339,7 +339,7 @@ export function WireframeComplianceDashboard({
                   initial={{ opacity: 0, y: 10 }}
                   animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: animationPhase === 1 ? 0.3 : 0.2 }}
-                  className="text-xl text-slate-900"
+                  className="text-lg font-semibold text-slate-900"
                 >
                   Global Tax & Regulations
                 </motion.div>
@@ -349,15 +349,15 @@ export function WireframeComplianceDashboard({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: animationPhase === 1 ? 0.4 : 0.3 }}
-              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs txt-blue light-bg"
+              className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs txt-blue light-bg"
             >
-              <div className="h-2 w-2 animate-pulse rounded-full bg-[#073F9E]"></div>
+              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#073F9E]"></div>
               Live Monitoring
             </motion.div>
           </div>
 
           {/* Metrics Grid */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-3">
             <motion.div
               initial={{ opacity: 0 }}
               animate={animationPhase >= 1 ? { opacity: 1 } : {}}
@@ -365,14 +365,14 @@ export function WireframeComplianceDashboard({
               className="rounded-lg border border-slate-100 bg-white p-3"
             >
               <div className="mb-1 text-xs text-slate-500">Regions</div>
-              <div className="relative h-8 overflow-hidden">
+              <div className="relative h-7 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={data.index || 0}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -15, opacity: 0 }}
-                    className="text-2xl text-slate-900"
+                    className="text-xl text-slate-900"
                   >
                     {data.index === 0 ? "180+" : "184"}
                   </motion.div>
@@ -387,7 +387,7 @@ export function WireframeComplianceDashboard({
               className="rounded-lg border border-slate-100 bg-white p-3"
             >
               <div className="mb-1 text-xs text-slate-500">Compliance Rate</div>
-              <div className="text-2xl text-[#0B43A0]">100%</div>
+              <div className="text-xl text-[#0B43A0]">100%</div>
             </motion.div>
 
             <motion.div
@@ -397,20 +397,20 @@ export function WireframeComplianceDashboard({
               className="rounded-lg border border-slate-100 bg-white p-3"
             >
               <div className="mb-1 text-xs text-slate-500">Auto-checks</div>
-              <div className="text-2xl text-slate-900">24/7</div>
+              <div className="text-xl text-slate-900">24/7</div>
             </motion.div>
           </div>
         </div>
 
         {/* Active Tax Jurisdictions */}
-        <div className="p-6">
+        <div className="p-5">
           <motion.div
             initial={{ opacity: 0 }}
             animate={animationPhase >= 1 ? { opacity: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.8 : 0.7 }}
             className="mb-4 flex items-center justify-between"
           >
-            <div className="text-sm text-slate-900">
+            <div className="text-sm font-medium text-slate-900">
               Active Tax Jurisdictions
             </div>
             <div className="text-xs text-slate-500">
@@ -428,26 +428,38 @@ export function WireframeComplianceDashboard({
                   delay: animationPhase === 1 ? 0.9 + idx * 0.1 : idx * 0.1,
                   duration: 0.4,
                 }}
-                className="group relative overflow-hidden rounded-lg border border-slate-100 bg-slate-50 p-4 hover:bg-white hover:shadow-sm"
+                className="group relative overflow-hidden rounded-lg border border-slate-100 bg-slate-50 px-4 py-2 hover:bg-white hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center text-lg shadow-sm overflow-hidden">
+                    <div className="flex h-9 w-9 items-center justify-center text-lg shadow-sm overflow-hidden rounded-full">
                       {region.code === "US" && (
-                        <US title="United States" className="h-6 w-auto" />
+                        <US 
+                          title="United States" 
+                          style={{ width: "18px", height: "12px" }}
+                        />
                       )}
                       {region.code === "GB" && (
-                        <GB title="United Kingdom" className="h-6 w-auto" />
+                        <GB 
+                          title="United Kingdom" 
+                          style={{ width: "18px", height: "12px" }}
+                        />
                       )}
                       {region.code === "EU" && (
-                        <EU title="European Union" className="h-6 w-auto" />
+                        <EU 
+                          title="European Union" 
+                          style={{ width: "18px", height: "12px" }}
+                        />
                       )}
                       {region.code === "CA" && (
-                        <CA title="Canada" className="h-6 w-auto" />
+                        <CA 
+                          title="Canada" 
+                          style={{ width: "18px", height: "12px" }}
+                        />
                       )}
                     </div>
                     <div>
-                      <div className="mb-1 text-sm text-slate-900">
+                      <div className="mb-1 text-sm font-medium text-slate-900">
                         {region.name}
                       </div>
                       <div className="text-xs text-slate-600">
@@ -513,14 +525,6 @@ WireframeComplianceDashboard.defaultProps = {
         tax: "VAT",
         rate: "19-27%",
         transactions: "4,152",
-        compliance: 100,
-      },
-      {
-        code: "CA",
-        name: "Canada",
-        tax: "GST/HST",
-        rate: "5-15%",
-        transactions: "892",
         compliance: 100,
       },
     ],

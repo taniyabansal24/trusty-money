@@ -19,12 +19,12 @@ const Screen1CrossBorder = React.forwardRef((props, ref) => {
       className="absolute inset-0 bg-white rounded-[34px] overflow-hidden"
       style={{ opacity: 1 }}
     >
-      <div className="w-full h-full flex flex-col items-center justify-center px-8 text-center">
-        <div className="relative flex items-center justify-center h-[180px] w-full">
+      <div className="w-full h-full flex flex-col items-center justify-center px-6 text-center">
+        <div className="relative flex items-center justify-center h-[160px] w-full">
           <div className="relative">
             {/* Rings */}
             <div
-              className="w-28 h-28 relative"
+              className="w-24 h-24 relative"
               style={{ transform: "rotate(14deg)" }}
             >
               <div
@@ -57,9 +57,9 @@ const Screen1CrossBorder = React.forwardRef((props, ref) => {
             <div className="absolute inset-0 flex items-center justify-center">
               <div
                 ref={globeRef}
-                className="w-16 h-16 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-2xl flex items-center justify-center shadow-lg"
+                className="w-14 h-14 bg-gradient-to-br from-[#0B43A0] to-[#073f9e] rounded-2xl flex items-center justify-center shadow-lg"
               >
-                <GlobeIcon className="w-10 h-10 text-white" />
+                <GlobeIcon className="w-8 h-8 text-white" />
               </div>
             </div>
 
@@ -75,18 +75,18 @@ const Screen1CrossBorder = React.forwardRef((props, ref) => {
                 className="absolute top-3/4 left-3/4 -translate-x-1/2 -translate-y-1/2"
                 style={{ zIndex: 10 - i }}
               >
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <DollarIcon className="w-5 h-5 text-[#4f7aff]" />
+                <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-lg">
+                  <DollarIcon className="w-4 h-4 text-[#4f7aff]" />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-3">
           <h1
             ref={titleRef}
-            className="text-[#0A2540] text-xl font-semibold tracking-tight mb-2"
+            className="text-[#0A2540] text-lg font-semibold tracking-tight mb-1"
           >
             Cross-Border Operations
           </h1>
@@ -95,7 +95,7 @@ const Screen1CrossBorder = React.forwardRef((props, ref) => {
           </p>
         </div>
 
-        <div className="flex gap-2 mt-10">
+        <div className="flex gap-1.5 mt-8">
           <span
             ref={(el) => {
               if (dotsRef && dotsRef.current) {

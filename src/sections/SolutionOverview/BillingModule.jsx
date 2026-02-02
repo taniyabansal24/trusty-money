@@ -217,7 +217,7 @@ export function BillingModule() {
                 containerRef={featuresContainerRef}
                 isVisible={isVisible}
                 // Custom positioning
-                left="left-[10.3%]"
+                left="left-[11.5%]"
                 top="top-6"
                 width="w-[2px]"
                 // Animation

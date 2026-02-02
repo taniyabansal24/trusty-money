@@ -480,16 +480,16 @@ export function WireframeReportingDashboard({
         className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
       >
         {/* Dashboard Header - EXACT structure */}
-        <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white p-6">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white px-4 pt-4 pb-2">
+          <div className="mb-2 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: animationPhase === 1 ? 0.2 : 0.1 }}
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-100 to-violet-200"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-100 to-violet-200"
               >
-                <BarChartIcon className="w-12 h-12" />
+                <BarChartIcon className="w-10 h-10" />
               </motion.div>
               <div>
                 <motion.div
@@ -504,7 +504,7 @@ export function WireframeReportingDashboard({
                   initial={{ opacity: 0, y: 10 }}
                   animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: animationPhase === 1 ? 0.4 : 0.3 }}
-                  className="text-xl text-slate-900"
+                  className="text-lg font-semibold text-slate-900"
                 >
                   Transaction Overview
                 </motion.div>
@@ -514,9 +514,9 @@ export function WireframeReportingDashboard({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: animationPhase === 1 ? 0.5 : 0.4 }}
-              className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-3 py-1.5 text-xs text-slate-700"
+              className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-3 py-1 text-xs text-slate-700"
             >
-              <CloudSyncBadge className="w-12 h-12" />
+              <CloudSyncBadge className="w-10 h-10" />
               Live sync
             </motion.div>
           </div>
@@ -529,14 +529,14 @@ export function WireframeReportingDashboard({
               transition={{ delay: animationPhase === 1 ? 0.6 : 0.5 }}
             >
               <div className="text-xs text-slate-500">Today</div>
-              <div className="relative h-8 overflow-hidden">
+              <div className="relative h-7 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={data.index || 0}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -15, opacity: 0 }}
-                    className="text-xl text-slate-900"
+                    className="text-base text-slate-900"
                   >
                     {data.index === 0 ? "147" : "152"}
                   </motion.div>
@@ -550,7 +550,7 @@ export function WireframeReportingDashboard({
               transition={{ delay: animationPhase === 1 ? 0.7 : 0.6 }}
             >
               <div className="text-xs text-slate-500">Reconciled</div>
-              <div className="text-xl text-[#436AB4]">99.8%</div>
+              <div className="text-base text-[#436AB4] font-medium">99.8%</div>
             </motion.div>
 
             <motion.div
@@ -559,14 +559,14 @@ export function WireframeReportingDashboard({
               transition={{ delay: animationPhase === 1 ? 0.8 : 0.7 }}
             >
               <div className="text-xs text-slate-500">Volume</div>
-              <div className="relative h-8 overflow-hidden">
+              <div className="relative h-7 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={data.index || 0}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -15, opacity: 0 }}
-                    className="text-xl text-slate-900"
+                    className="text-base text-slate-900"
                   >
                     {data.index === 0 ? "$2.4M" : "$2.7M"}
                   </motion.div>
@@ -577,12 +577,12 @@ export function WireframeReportingDashboard({
         </div>
 
         {/* Transaction Table - EXACT structure */}
-        <div className="p-6">
+        <div className="px-5 py-2">
           <motion.div
             initial={{ opacity: 0 }}
             animate={animationPhase >= 1 ? { opacity: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.9 : 0.8 }}
-            className="mb-4 text-sm text-slate-900 font-bold"
+            className=" text-sm font-medium text-slate-900"
           >
             Recent Transactions
           </motion.div>
@@ -617,23 +617,23 @@ export function WireframeReportingDashboard({
                     }}
                     className="border-b border-slate-100 transition-colors hover:bg-slate-50"
                   >
-                    <td className="px-3 py-3">
-                      <div className="text-slate-900">{txn.id}</div>
-                      <div className="text-slate-500">
+                    <td className="px-3 py-2">
+                      <div className="text-sm text-slate-900">{txn.id}</div>
+                      <div className="text-xs text-slate-500">
                         {txn.date} • {txn.method}
                       </div>
                     </td>
-                    <td className="px-3 py-3">
-                      <div className="text-slate-900">{txn.company}</div>
-                      <div className="text-slate-500">{txn.invoice}</div>
+                    <td className="px-3 py-2">
+                      <div className="text-sm text-slate-900">{txn.company}</div>
+                      <div className="text-xs text-slate-500">{txn.invoice}</div>
                     </td>
-                    <td className="px-3 py-3 text-right">
-                      <div className="text-slate-900">{txn.amount}</div>
-                      <div className="text-slate-500">{txn.currency}</div>
+                    <td className="px-3 py-2 text-right">
+                      <div className="text-sm text-slate-900">{txn.amount}</div>
+                      <div className="text-xs text-slate-500">{txn.currency}</div>
                     </td>
-                    <td className="px-3 py-3 text-right">
+                    <td className="px-3 py-2 text-right">
                       <span
-                        className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-bold light-bg"
+                        className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium light-bg"
                         style={{
                           color: "#073F9E",
                         }}
@@ -658,10 +658,10 @@ export function WireframeReportingDashboard({
               initial={{ opacity: 0, x: -10 }}
               animate={animationPhase >= 1 ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 1.3 : 0.3 }}
-              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 transition-all hover:bg-slate-50"
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 transition-all hover:bg-slate-50"
             >
               <svg
-                className="h-4 w-4"
+                className="h-3.5 w-3.5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -679,10 +679,10 @@ export function WireframeReportingDashboard({
               initial={{ opacity: 0, x: 10 }}
               animate={animationPhase >= 1 ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 1.4 : 0.4 }}
-              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#F0F6FF] px-4 py-2.5 text-sm text-[#364153] transition-all"
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#F0F6FF] px-3 py-2 text-xs text-[#364153] transition-all"
             >
               <svg
-                className="h-4 w-4 text-[#073F9E]"
+                className="h-3.5 w-3.5 text-[#073F9E]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -717,14 +717,14 @@ export function WireframeReportingDashboard({
             transition={{ delay: animationPhase === 1 ? 1.6 : 0.6 }}
             className="flex h-8 w-8 items-center justify-center rounded-full"
           >
-            <UserActivityIcon className="w-8 h-8" />
+            <UserActivityIcon className="w-7 h-7" />
           </motion.div>
           <div className="flex-1">
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 1.7 : 0.7 }}
-              className="text-sm font-semibold text-[#073F9E]"
+              className="text-sm font-medium text-[#073F9E]"
             >
               Auto-reconciliation active
             </motion.div>

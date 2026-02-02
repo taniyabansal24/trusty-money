@@ -67,7 +67,7 @@ const SecuritySection = () => {
 
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Column - Features */}
-        <div className="space-y-8 w-[27rem]">
+        <div className="space-y-8 w-[29rem]">
           {features.map((feature, index) => (
             <div key={index} className="flex gap-6">
               <div className="flex-shrink-0">
@@ -100,11 +100,11 @@ const SecuritySection = () => {
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-white text-sm font-mono">
+                  <span className="text-white text-xs font-mono">
                     security_monitor
                   </span>
                 </div>
-                <div className="text-green-400 text-xs opacity-80">● LIVE</div>
+                <div className="text-white text-xs opacity-80">● LIVE</div>
               </div>
             </div>
 
@@ -112,19 +112,19 @@ const SecuritySection = () => {
             <div className="bg-gray-50 p-6">
               {/* Status Lines */}
               <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-2 font-mono text-sm text-gray-700">
+                <div className="flex items-center gap-2 font-mono text-xs text-gray-700">
                   <span className="text-green-600">✓</span>
                   <span>Initializing security protocols...</span>
                 </div>
-                <div className="flex items-center gap-2 font-mono text-sm text-gray-700">
+                <div className="flex items-center gap-2 font-mono text-xs text-gray-700">
                   <span className="text-green-600">✓</span>
                   <span>AML screening engine:</span>
-                  <span className="text-blue-900 font-medium">ACTIVE</span>
+                  <span className="text-blue-900 font-medium text-xs">ACTIVE</span>
                 </div>
-                <div className="flex items-center gap-2 font-mono text-sm text-gray-700">
+                <div className="flex items-center gap-2 font-mono text-xs text-gray-700">
                   <span className="text-green-600">✓</span>
                   <span>Encryption layer:</span>
-                  <span className="text-blue-900 font-medium">256-BIT AES</span>
+                  <span className="text-blue-900 font-medium text-xs">256-BIT AES</span>
                 </div>
               </div>
 
@@ -134,10 +134,10 @@ const SecuritySection = () => {
               <div className="space-y-6 mb-8">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-mono text-sm text-gray-600">
+                    <span className="font-mono text-xs text-gray-600">
                       Compliance Score
                     </span>
-                    <span className="font-mono text-sm text-gray-900 font-medium">
+                    <span className="font-mono text-xs text-gray-900 font-medium">
                       99.87%
                     </span>
                   </div>
@@ -148,10 +148,10 @@ const SecuritySection = () => {
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-mono text-sm text-gray-600">
+                    <span className="font-mono text-xs text-gray-600">
                       Threat Detection
                     </span>
-                    <span className="font-mono text-sm text-gray-900 font-medium">
+                    <span className="font-mono text-xs text-gray-900 font-medium">
                       MONITORING
                     </span>
                   </div>
@@ -162,10 +162,10 @@ const SecuritySection = () => {
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-mono text-sm text-gray-600">
+                    <span className="font-mono text-xs text-gray-600">
                       Audit Trail
                     </span>
-                    <span className="font-mono text-sm text-gray-900 font-medium">
+                    <span className="font-mono text-xs text-gray-900 font-medium">
                       RECORDING
                     </span>
                   </div>
@@ -179,10 +179,10 @@ const SecuritySection = () => {
 
               {/* Network Activity */}
               <div>
-                <div className="font-mono text-sm text-gray-600 mb-4">
+                <div className="font-mono text-xs text-gray-600 mb-4">
                   Network Activity
                 </div>
-                <div className="h-20 flex items-end gap-1 mb-2">
+                <div className="h-14 flex items-end gap-1 mb-2">
                   {networkActivity.map((height, index) => (
                     <div
                       key={index}
@@ -202,19 +202,19 @@ const SecuritySection = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-blue-50 rounded-xl p-5 border border-gray-200 shadow-sm">
-              <div className="text-gray-500 text-sm mb-1">
+            <div className="bg-blue-50 rounded-xl p-3 border border-gray-200 shadow-sm">
+              <div className="text-gray-500 text-sm ">
                 Threats Blocked Today
               </div>
-              <div className="text-3xl text-gray-900 font-normal mb-1">
+              <div className="text-lg text-gray-900 font-normal ">
                 1,247
               </div>
-              <div className="text-green-600 text-sm">+12% from yesterday</div>
+              <div className="txt-blue text-xs">+12% from yesterday</div>
             </div>
-            <div className="bg-blue-50 rounded-xl p-5 border border-gray-200 shadow-sm">
-              <div className="text-gray-500 text-sm mb-1">Active Sessions</div>
-              <div className="text-3xl text-gray-900 font-normal mb-1">847</div>
-              <div className="text-blue-900 text-sm">Monitoring live</div>
+            <div className="bg-blue-50 rounded-xl p-3 border border-gray-200 shadow-sm">
+              <div className="text-gray-500 text-sm ">Active Sessions</div>
+              <div className="text-lg text-gray-900 font-normal">847</div>
+              <div className="txt-blue text-xs">Monitoring live</div>
             </div>
           </div>
         </div>

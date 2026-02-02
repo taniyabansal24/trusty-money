@@ -27,15 +27,14 @@ export function WireframeInvoiceCard({
     }
   }, [isVisible, shouldAnimate, onAnimationComplete]);
 
-  // Calculate dimensions based on your original container
-  // Your original: width: 34rem (544px), height: 42rem (672px)
-  const containerWidth = 544; // 34rem in pixels
-  const containerHeight = 672; // 42rem in pixels
+  // New container dimensions: 31rem x 38rem
+  const containerWidth = 496; // 31rem in pixels (31 * 16)
+  const containerHeight = 608; // 38rem in pixels (38 * 16)
   const borderRadius = 16; // 1rem in pixels (16px)
 
-  // Wireframe paths with rounded corners and gaps
+  // Wireframe paths with rounded corners and gaps - ADJUSTED FOR NEW DIMENSIONS
   const wireframePaths = [
-    // Main card outline with rounded corners - using rect with rx for rounded corners
+    // Main card outline with rounded corners
     { 
       type: 'rect',
       x: 0, 
@@ -49,41 +48,27 @@ export function WireframeInvoiceCard({
       duration: 1.5 
     },
     
-    // Header separator line - starts and ends before the rounded corners
-    // { 
-    //   type: 'line',
-    //   x1: borderRadius, 
-    //   y1: containerHeight * 0.18, 
-    //   x2: containerWidth - borderRadius, 
-    //   y2: containerHeight * 0.18,
-    //   stroke: "#60a5fa", 
-    //   strokeWidth: 1.5, 
-    //   delay: 0.5, 
-    //   duration: 1 
-    // },
-    
-    // Bill To box outline - rounded corners
+    // Bill To box outline - adjusted position and size
     { 
       type: 'rect',
-      x: 22, 
-      y: 140, 
-      width: 490, 
-      height: 102,
-      rx: 8, // Smaller radius for inner boxes
+      x: 20, 
+      y: 125, 
+      width: 456, 
+      height: 90,
+      rx: 8,
       stroke: "#93c5fd", 
       strokeWidth: 1.5, 
       delay: 1.0, 
       duration: 0.8 
     },
     
-    
-    // Table horizontal lines - don't extend into rounded corners
+    // Table horizontal lines - adjusted positions for new height
     { 
       type: 'line',
-      x1: containerWidth * 0.04 + 8, // Start after left rounded corner
-      y1: containerHeight * 0.44, 
-      x2: containerWidth * 0.96 - 8, // End before right rounded corner
-      y2: containerHeight * 0.44,
+      x1: containerWidth * 0.04 + 8,
+      y1: containerHeight * 0.46, 
+      x2: containerWidth * 0.96 - 8,
+      y2: containerHeight * 0.46,
       stroke: "#60a5fa", 
       strokeWidth: 1, 
       delay: 2.0, 
@@ -92,9 +77,9 @@ export function WireframeInvoiceCard({
     { 
       type: 'line',
       x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.5, 
+      y1: containerHeight * 0.52, 
       x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.5,
+      y2: containerHeight * 0.52,
       stroke: "#60a5fa", 
       strokeWidth: 1, 
       delay: 2.3, 
@@ -103,9 +88,9 @@ export function WireframeInvoiceCard({
     { 
       type: 'line',
       x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.56, 
+      y1: containerHeight * 0.58, 
       x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.56,
+      y2: containerHeight * 0.58,
       stroke: "#60a5fa", 
       strokeWidth: 1, 
       delay: 2.6, 
@@ -114,34 +99,23 @@ export function WireframeInvoiceCard({
     { 
       type: 'line',
       x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.62, 
+      y1: containerHeight * 0.64, 
       x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.62,
+      y2: containerHeight * 0.64,
       stroke: "#60a5fa", 
       strokeWidth: 1, 
       delay: 2.9, 
       duration: 0.6 
     },
-    { 
-      type: 'line',
-      x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.68, 
-      x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.68,
-      stroke: "#60a5fa", 
-      strokeWidth: 1, 
-      delay: 3.2, 
-      duration: 0.6 
-    },
     
-    // PENDING button outline - rounded corners
+    // PENDING button outline - adjusted position
     { 
       type: 'rect',
       x: containerWidth * 0.75, 
-      y: containerHeight * 0.85, 
+      y: containerHeight * 0.88, 
       width: containerWidth * 0.17, 
       height: containerHeight * 0.04,
-      rx: 12, // Pill-shaped radius
+      rx: 12,
       stroke: "#60a5fa", 
       strokeWidth: 1.5, 
       delay: 3.5, 
@@ -153,7 +127,7 @@ export function WireframeInvoiceCard({
     <div
       className="relative perspective-1000"
     >
-      {/* Wireframe Overlay - NO BACKGROUND, EXACT CONTAINER DIMENSIONS */}
+      {/* Wireframe Overlay - ADJUSTED DIMENSIONS */}
       <AnimatePresence>
         {shouldAnimate && animationPhase === 0 && (
           <motion.div
@@ -162,13 +136,13 @@ export function WireframeInvoiceCard({
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-30 overflow-hidden"
             style={{ 
-              width: '34rem',  // Your exact width
-              height: '42rem', // Your exact height
-              borderRadius: '1rem', // Your exact border radius
+              width: '31rem',  // Updated width
+              height: '38rem', // Updated height
+              borderRadius: '1rem',
               backgroundColor: 'transparent'
             }}
           >
-            {/* Wireframe Drawing - Scaled to your container */}
+            {/* Wireframe Drawing - Scaled to new container */}
             <svg 
               className="absolute inset-0 w-full h-full" 
               viewBox={`0 0 ${containerWidth} ${containerHeight}`}
@@ -225,14 +199,10 @@ export function WireframeInvoiceCard({
                 return null;
               })}
               
-              
-              
-              
-              
               {/* "PENDING" label in button area */}
               <motion.text
                 x={containerWidth * 0.81}
-                y={containerHeight * 0.87}
+                y={containerHeight * 0.905}
                 fill="none"
                 stroke="#60a5fa"
                 strokeWidth="0.8"
@@ -246,12 +216,11 @@ export function WireframeInvoiceCard({
               </motion.text>
               
             </svg>
-        
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Invoice Card - Your exact original content with EXACT DIMENSIONS */}
+      {/* Main Invoice Card - UPDATED DIMENSIONS */}
       <motion.div
         initial={{ opacity: 0, y: 40, rotateY: 10 }}
         animate={
@@ -270,8 +239,8 @@ export function WireframeInvoiceCard({
         }}
         className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl transform-style-3d"
         style={{
-          width: '34rem',    // Your exact width
-          height: '42rem',   // Your exact height
+          width: '31rem',    // Updated width
+          height: '38rem',   // Updated height
         }}
       >
         {/* Background gradient */}
@@ -285,9 +254,9 @@ export function WireframeInvoiceCard({
           className="absolute top-0 left-0 h-1 bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]"
         />
 
-        {/* Header Section */}
-        <div className="relative border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white p-6">
-          <div className="mb-6 flex items-start justify-between">
+        {/* Header Section - ADJUSTED PADDING */}
+        <div className="relative border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5">
+          <div className="mb-5 flex items-start justify-between">
             <div>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -301,7 +270,7 @@ export function WireframeInvoiceCard({
                 initial={{ opacity: 0, y: 10 }}
                 animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: animationPhase === 1 ? 0.3 : 0.2 }}
-                className="mb-1 text-[#0A2540]"
+                className="mb-1 text-sm text-[#0A2540] font-medium"
               >
                 RougeCodes Pvt. Ltd.
               </motion.div>
@@ -328,7 +297,7 @@ export function WireframeInvoiceCard({
                 initial={{ scale: 0.9 }}
                 animate={animationPhase >= 1 ? { scale: 1 } : {}}
                 transition={{ delay: animationPhase === 1 ? 0.6 : 0.5 }}
-                className="mb-2 text-2xl font-bold text-[#0A2540]"
+                className="mb-2 text-xl font-bold text-[#0A2540]"
               >
                 INVOICE
               </motion.div>
@@ -374,7 +343,7 @@ export function WireframeInvoiceCard({
             <div className="mb-1 text-xs uppercase tracking-wider text-[#0B43A0]">
               Bill To
             </div>
-            <div className="mb-1 text-[#0A2540]">{data.client}</div>
+            <div className="mb-1 text-sm text-[#0A2540] font-medium">{data.client}</div>
             <div className="text-xs text-[#425466]">
               {data.country}
               <br />
@@ -383,8 +352,8 @@ export function WireframeInvoiceCard({
           </motion.div>
         </div>
 
-        {/* Line Items Table */}
-        <div className="relative p-6">
+        {/* Line Items Table - ADJUSTED PADDING */}
+        <div className="relative p-5">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-[#425466]">
@@ -436,16 +405,16 @@ export function WireframeInvoiceCard({
                     }}
                     className="border-b border-gray-100 hover:bg-blue-50/50 transition-colors duration-200"
                   >
-                    <td className="py-3 text-[#0A2540]">
+                    <td className="py-2.5 text-sm text-[#0A2540]">
                       {item.description}
                     </td>
-                    <td className="py-3 text-right text-[#425466]">
+                    <td className="py-2.5 text-right text-sm text-[#425466]">
                       {item.quantity}
                     </td>
-                    <td className="py-3 text-right text-[#425466]">
+                    <td className="py-2.5 text-right text-sm text-[#425466]">
                       ${item.rate}
                     </td>
-                    <td className="py-3 text-right font-medium text-[#0A2540]">
+                    <td className="py-2.5 text-right text-sm font-medium text-[#0A2540]">
                       ${item.amount}
                     </td>
                   </motion.tr>
@@ -455,8 +424,8 @@ export function WireframeInvoiceCard({
           </table>
 
           {/* Totals Section */}
-          <div className="mt-6 flex justify-end">
-            <div className="w-64 space-y-2 text-sm">
+          <div className="mt-4 flex justify-end">
+            <div className="w-60 space-y-2 text-sm">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={animationPhase >= 1 ? { opacity: 1 } : {}}
@@ -474,12 +443,12 @@ export function WireframeInvoiceCard({
                 transition={{ delay: animationPhase === 1 ? 1.8 : 1.4 }}
                 className="flex justify-between text-[#425466]"
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-1.5">
                   {data.taxInfo}
                   <motion.span
                     animate={animationPhase >= 2 ? { scale: [1, 1.1, 1] } : {}}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="rounded  px-1.5 py-0.5 text-xs light-bg txt-blue"
+                    className="rounded px-1 py-0.5 text-xs light-bg txt-blue"
                   >
                     Auto-calc
                   </motion.span>
@@ -492,7 +461,7 @@ export function WireframeInvoiceCard({
                 initial={{ opacity: 0 }}
                 animate={animationPhase >= 1 ? { opacity: 1 } : {}}
                 transition={{ delay: animationPhase === 1 ? 1.9 : 1.5 }}
-                className="flex justify-between border-t border-gray-200 pt-2 text-base text-[#0A2540]"
+                className="flex justify-between border-t border-gray-200 pt-2 text-sm text-[#0A2540]"
               >
                 <span>Total Due</span>
                 <motion.span
@@ -500,7 +469,7 @@ export function WireframeInvoiceCard({
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: animationPhase === 1 ? 2.0 : 1.6 }}
-                  className="text-xl font-bold"
+                  className="text-lg font-bold"
                 >
                   ${data.total}
                 </motion.span>
@@ -509,12 +478,12 @@ export function WireframeInvoiceCard({
           </div>
         </div>
 
-        {/* Footer with PENDING button */}
+        {/* Footer with PENDING button - ADJUSTED PADDING */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={animationPhase >= 1 ? { opacity: 1 } : {}}
           transition={{ delay: animationPhase === 1 ? 2.1 : 1.7 }}
-          className="border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white px-6 py-4"
+          className="border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white px-5 py-2"
         >
           <div className="flex items-center justify-between">
             <div className="text-xs text-[#425466]">

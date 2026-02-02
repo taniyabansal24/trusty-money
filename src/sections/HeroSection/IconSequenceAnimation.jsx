@@ -403,7 +403,7 @@ export default function CircularShiftAnimation() {
       />
 
       {/* Middle — CIRCULAR SHIFT ANIMATION */}
-      <div className="absolute -translate-y-1/2 left-[3%] top-[40%]">
+      <div className="absolute -translate-y-1/2 left-[14%] lg:left-0 top-[35%]">
         <div className="relative w-[300px] h-[400px]">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
             {ICONS.map((iconData, index) => {
@@ -412,7 +412,7 @@ export default function CircularShiftAnimation() {
                 <div
                   key={id}
                   ref={(el) => (iconsRef.current[index] = el)}
-                  className="absolute left-1/2 top-1/2 w-32 h-32 flex items-center justify-center"
+                  className="absolute left-1/2 top-1/2 w-28 h-24 flex items-center justify-center"
                   style={{
                     transform: "translate(-50%, -50%)",
                     willChange: "transform, opacity, filter",
@@ -427,7 +427,7 @@ export default function CircularShiftAnimation() {
       </div>
 
       {/* RIGHT — SCREEN DISPLAY */}
-      <div className="w-[34rem] h-[35rem] relative bottom-[16%] right-[-24%]">
+      <div className="w-[30rem] h-[31rem] relative bottom-[13%] right-[-30%] lg:right-[-24%]">
         {/* Main container with shadow */}
         <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_0px_100px_-20px_rgba(50,50,93,0.25),0px_0px_60px_-30px_rgba(0,0,0,0.15),inset_0px_0px_6px_rgba(10,37,64,0.2)]"></div>
 
@@ -438,8 +438,7 @@ export default function CircularShiftAnimation() {
           style={{ opacity: 1 }}
         >
           <CurrentScreen />
-          {/* <BillingInvoice/> */}
-         
+          {/* <BillingInvoice /> */}
         </div>
       </div>
     </div>

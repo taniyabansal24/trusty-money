@@ -1292,7 +1292,7 @@ const ProblemSection = () => {
           {visibleSidebars[0] && (
             <div
               className="absolute left-1/2 top-1/4 -translate-y-1/2 z-50"
-              style={{ marginLeft: "175px" }}
+              style={{ marginLeft: "155px" }}
             >
               <div className="relative">
                 {/* Progress line from phone to card */}
@@ -1309,7 +1309,7 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[0] = el)}
-                  className={`absolute left-[200px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl w-[280px] pointer-events-auto border-2 ${
+                  className={`absolute left-[180px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl w-[255px] pointer-events-auto border-2 ${
                     activeSidebar === 0
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-200/50"
@@ -1321,10 +1321,10 @@ const ProblemSection = () => {
                         : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                  <div className="hero-badge text-[#0B43A0] mb-2 uppercase">
                     Problem
                   </div>
-                  <h3 className="text-[#0A2540] feature-title mb-3 ">
+                  <h3 className="text-[#0A2540] feature-title mb-2">
                     Expensive &amp; slow collections
                   </h3>
                   <p className="text-[#425466] text-muted">
@@ -1341,7 +1341,7 @@ const ProblemSection = () => {
           {visibleSidebars[1] && (
             <div
               className="absolute left-1/2 top-1/4 -translate-y-1/2 z-50"
-              style={{ marginLeft: "-175px" }}
+              style={{ marginLeft: "-155px" }}
             >
               <div className="relative">
                 {/* Progress line from phone to card (right to left) */}
@@ -1358,7 +1358,7 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[1] = el)}
-                  className={`absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border-2 w-[280px] pointer-events-auto ${
+                  className={`absolute right-[180px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl border-2 w-[255px] pointer-events-auto ${
                     activeSidebar === 1
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-100"
@@ -1370,10 +1370,10 @@ const ProblemSection = () => {
                         : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                  <div className="hero-badge text-[#0B43A0] mb-2 uppercase">
                     Problem
                   </div>
-                  <h3 className="text-[#0A2540] text-lg font-semibold mb-3 tracking-tight">
+                  <h3 className="text-[#0A2540] feature-title mb-2">
                     Fragmented reconciliation
                   </h3>
                   <p className="text-[#425466] text-sm leading-relaxed">
@@ -1389,7 +1389,7 @@ const ProblemSection = () => {
           {visibleSidebars[2] && (
             <div
               className="absolute left-1/2 top-[65%] -translate-y-1/2 z-50"
-              style={{ marginLeft: "175px" }}
+              style={{ marginLeft: "155px" }}
             >
               <div className="relative">
                 {/* Progress line from phone to card */}
@@ -1406,7 +1406,7 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[2] = el)}
-                  className={`absolute left-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border-2 w-[280px] pointer-events-auto ${
+                  className={`absolute left-[180px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl border-2 w-[255px] pointer-events-auto ${
                     activeSidebar === 2
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-100"
@@ -1418,10 +1418,10 @@ const ProblemSection = () => {
                         : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                  <div className="hero-badge text-[#0B43A0] mb-2 uppercase">
                     Problem
                   </div>
-                  <h3 className="text-[#0A2540] feature-title mb-3 ">
+                  <h3 className="text-[#0A2540] feature-title mb-2">
                     Manual invoicing
                   </h3>
                   <p className="text-[#425466] text-muted">
@@ -1438,7 +1438,7 @@ const ProblemSection = () => {
           {visibleSidebars[3] && (
             <div
               className="absolute left-1/2 top-[65%] -translate-y-1/2 z-50"
-              style={{ marginLeft: "-175px" }}
+              style={{ marginLeft: "-155px" }}
             >
               <div className="relative">
                 {/* Progress line from phone to card (right to left) */}
@@ -1455,7 +1455,7 @@ const ProblemSection = () => {
                 {/* Sidebar card */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[3] = el)}
-                  className={`absolute right-[200px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl border-2 w-[280px] pointer-events-auto ${
+                  className={`absolute right-[180px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl border-2 w-[255px] pointer-events-auto ${
                     activeSidebar === 3
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-100"
@@ -1467,10 +1467,10 @@ const ProblemSection = () => {
                         : "0 20px 40px rgba(11, 67, 160, 0.1)",
                   }}
                 >
-                  <div className="hero-badge text-[#0B43A0] mb-3 uppercase">
+                  <div className="hero-badge text-[#0B43A0] mb-2 uppercase">
                     Problem
                   </div>
-                  <h3 className="feature-title mb-3">Fragmented compliance</h3>
+                  <h3 className="feature-title mb-2">Fragmented compliance</h3>
                   <p className="text-[#425466] text-muted">
                     Compliance requirements constantly change by geography and
                     transaction type, creating ongoing operational burden.
@@ -1487,7 +1487,7 @@ const ProblemSection = () => {
             {/* Phone mockup */}
             <div
               ref={phoneRef}
-              className="relative w-[300px] h-[610px] sm:w-[343px] sm:h-[680px] z-20 transform-gpu translate-y-12 sm:translate-y-16 md:translate-y-28"
+              className="relative w-[310px] h-[620px] z-20 transform-gpu translate-y-12 sm:translate-y-16 md:translate-y-28"
             >
               {/* Glow effect */}
               <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-2xl rounded-[70px]" />

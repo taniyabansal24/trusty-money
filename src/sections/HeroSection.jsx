@@ -56,7 +56,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative w-auto h-lvh  flex flex-col items-start overflow-hidden">
+    <section className="relative w-auto h-fit lg:h-lvh  flex flex-col items-start overflow-hidden">
       {/* Main Section Container - matching original padding */}
       <div
         className="relative w-full h-full flex flex-col items-start"
@@ -104,7 +104,7 @@ const HeroSection = () => {
             zIndex: "1",
           }}
         ></div>
-        <Container className="relative z-10 mt-16">
+        <Container className="relative z-10 mt-0 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left Side - Text Content */}
             <motion.div
@@ -127,7 +127,7 @@ const HeroSection = () => {
               </motion.div>
 
               {/* Headline */}
-              <motion.h1 className="hero-heading">
+              <motion.h1 className="hero-heading w-[47rem] lg:w-full">
                 The Operating System for{" "}
                 <span className="gradient-text relative">
                   Cross-Border Business
@@ -185,7 +185,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Right Side - Mobile Mockup with Graphs */}
-            <div className="relative">
+            <div className="relative mt-16 lg:mt-0">
               <IconSequenceAnimation />
             </div>
           </div>
