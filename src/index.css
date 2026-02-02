@@ -236,56 +236,55 @@ html {
 @layer components {
   /* HERO */
   .hero-badge {
-    @apply text-xs md:text-sm font-semibold;
+    @apply text-sm font-semibold;
   }
 
   .hero-heading {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-gray-900 mb-5;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 mb-6;
   }
 
   /* SECTION INTRO / SECONDARY HERO */
   .section-hero-heading {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-5;
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6;
   }
 
   .section-subtitle {
-    @apply text-sm md:text-base text-[#1B1B1B] leading-relaxed;
+    @apply text-base md:text-lg text-[#1B1B1B] leading-relaxed;
   }
 
   .sub-section-heading {
-    @apply text-lg md:text-xl font-semibold;
+    @apply text-xl md:text-2xl font-semibold;
   }
 
   .feature-title {
-    @apply text-sm md:text-base text-[#1B1B1B] leading-relaxed font-semibold;
+    @apply text-base md:text-lg text-[#1B1B1B] leading-relaxed font-semibold;
   }
 
   .feature-description {
-    @apply text-sm text-gray-700 leading-relaxed;
+    @apply text-base text-gray-700 leading-relaxed;
   }
 
   /* TEXT */
   .text-body {
-    @apply text-sm md:text-base text-gray-700 leading-relaxed;
+    @apply text-base text-gray-700 leading-relaxed;
   }
 
   .text-muted {
-    @apply text-xs md:text-sm text-gray-600;
+    @apply text-sm text-gray-600;
   }
 
   .txt-blue {
     @apply text-[#073F9E];
   }
-
-  .light-bg {
+.light-bg {
     @apply bg-[#073f9e12];
   }
-
   /* MAIN SECTIONS Spacing */
   .section {
     @apply py-20 md:py-24;
   }
 
+  /* SUBSECTIONS (modules inside a section) */
   .subsection {
     @apply py-16 md:py-20;
   }

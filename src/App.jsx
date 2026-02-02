@@ -12,6 +12,7 @@ import JoinUsPage from "./sections/JoinUsSection";
 import AboutUs from "./sections/AboutUsSection";
 import { Footer, Navbar } from "./components/layout";
 import AboutUsPage from "./pages/AboutUsPage";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
 
           {/* About-us route */}
           <Route path="/about-us" element={<AboutUsPage/>} />
+
+          {/* About-us route */}
+          <Route path="/product" element={<ProductPage/>} />
 
           {/* Redirect any unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
