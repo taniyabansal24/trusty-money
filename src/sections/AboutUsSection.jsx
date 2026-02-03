@@ -14,6 +14,7 @@ import DatabaseIcon from "../components/svg/DatabaseIcon";
 import GlobeIcon from "../components/svg/GlobeIcon";
 import FounderImage from "../assets/homeFounder.svg";
 import SunilSimarImage from "../assets/sunil-simar.webp";
+import AutoDispatchAnimation from "./AboutUs/AutoDispatchAnimation";
 
 const AboutUsSection = () => {
   // Rotating animation for orbit rings
@@ -161,129 +162,8 @@ const AboutUsSection = () => {
               </div>
 
               {/* Right Column - Solar System Orbital Motion */}
-              <div className="lg:sticky lg:top-32">
-                <div className="w-full aspect-square max-w-[750px] mx-auto relative top-[-32%]">
-                  {/* Main Orbital System Container */}
-                  <div className="relative w-full h-full">
-                    {/* Center Logo */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-                      <div className="w-20 h-20 bg-white rounded-full shadow-2xl flex items-center justify-center">
-                        <Logo width={38} height={38} />
-                      </div>
-                    </div>
-
-                    {/* Four Orbit Lines (Static) */}
-                    <div className="absolute inset-0 border-2 border-[#073F9E] rounded-full opacity-30"></div>
-                    <div className="absolute inset-14 border-2 border-[#073F9E] rounded-full opacity-30"></div>
-                    <div className="absolute inset-28 border-2 border-[#073F9E] rounded-full opacity-30"></div>
-                    <div className="absolute inset-44 border-2 border-[#073F9E] rounded-full opacity-30"></div>
-
-                    {/* Orbiting Cards with Proper Counter-Rotation */}
-
-                    {/* Outer Orbit Ring (Tax & Treasury) */}
-                    <motion.div
-                      className="absolute inset-0"
-                      {...orbitAnimations.outer}
-                    >
-                      {/* Tax - Top Position */}
-                      <motion.div
-                        className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                        {...counterRotateAnimations.outer}
-                      >
-                        <div className="transform scale-[0.8] hover:scale-95 transition-transform duration-300">
-                          <Tax />
-                        </div>
-                      </motion.div>
-
-                      {/* Treasury - Bottom Position */}
-                      <motion.div
-                        className="absolute bottom-[136px] right-[26%] transform -translate-x-1/2 translate-y-1/2"
-                        {...counterRotateAnimations.outer}
-                      >
-                        <div className="transform scale-[0.8] hover:scale-95 transition-transform duration-300">
-                          <Treasury />
-                        </div>
-                      </motion.div>
-                    </motion.div>
-
-                    {/* Middle Orbit Ring (E-wallet & Billing) */}
-                    <motion.div
-                      className="absolute inset-14"
-                      {...orbitAnimations.middle}
-                    >
-                      {/* Billing - Right Position */}
-                      <motion.div
-                        className="absolute top-[85%] right-0 transform translate-x-1/2 -translate-y-1/2"
-                        {...counterRotateAnimations.middle}
-                      >
-                        <div className="transform scale-[0.8] hover:scale-95 transition-transform duration-300">
-                          <Billing />
-                        </div>
-                      </motion.div>
-
-                      {/* E-wallet - Left Position */}
-                      <motion.div
-                        className="absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-1/2"
-                        {...counterRotateAnimations.middle}
-                      >
-                        <div className="transform scale-[0.8] hover:scale-95 transition-transform duration-300">
-                          <EwalletIcon />
-                        </div>
-                      </motion.div>
-                    </motion.div>
-
-                    {/* Connecting Lines from Center to Orbits */}
-                    <svg className="absolute inset-0 w-full h-full pointer-events-none z-[-1]">
-                      {/* Line to Top (Tax) */}
-                      <line
-                        x1="50%"
-                        y1="50%"
-                        x2="50%"
-                        y2="10%"
-                        stroke="#073F9E"
-                        strokeWidth="1"
-                        strokeDasharray="4"
-                        className="opacity-30"
-                      />
-
-                      {/* Line to Right (Billing) */}
-                      <line
-                        x1="50%"
-                        y1="50%"
-                        x2="90%"
-                        y2="50%"
-                        stroke="#073F9E"
-                        strokeWidth="1"
-                        strokeDasharray="4"
-                        className="opacity-30"
-                      />
-
-                      {/* Line to Bottom (Treasury) */}
-                      <line
-                        x1="50%"
-                        y1="50%"
-                        x2="50%"
-                        y2="90%"
-                        stroke="#073F9E"
-                        strokeWidth="1"
-                        strokeDasharray="4"
-                        className="opacity-30"
-                      />
-
-                      {/* Line to Left (E-wallet) */}
-                      <line
-                        x1="50%"
-                        y1="50%"
-                        x2="10%"
-                        y2="50%"
-                        stroke="#073F9E"
-                        strokeWidth="1"
-                        strokeDasharray="4"
-                        className="opacity-30"
-                      />
-                    </svg>
-                  </div>
-                </div>
+              <div className="relative mx-auto top-[-37%] ">
+                  <AutoDispatchAnimation/>
               </div>
             </div>
           </section>
