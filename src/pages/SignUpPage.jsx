@@ -29,7 +29,7 @@ const BackgroundSection = () => {
     <section className="relative w-auto h-full flex flex-col items-start overflow-hidden">
       {/* Main Section Container - matching original padding */}
       <div
-        className="relative w-full h-[115vh] flex flex-col items-start"
+        className="relative w-full h-[100vh] flex flex-col items-start"
         style={{
           padding: "160px 0px 0px 0px",
           isolation: "isolate",
@@ -116,7 +116,7 @@ const SignUpCard = () => {
         className="w-full max-w-xl overflow-hidden rounded-2xl flex bg-white shadow-xl"
       >
        
-        <div className="w-full p-8 md:p-10 flex flex-col justify-center bg-white">
+        <div className="w-full px-8 md:px-10 py-6 flex flex-col justify-center bg-white">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -133,7 +133,7 @@ const SignUpCard = () => {
               </p>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-4">
               <button
                 className="w-full flex items-center justify-center gap-3 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 hover:bg-gray-100 transition-all duration-300 text-gray-700 shadow-sm font-medium"
                 type="button"
@@ -160,7 +160,7 @@ const SignUpCard = () => {
               </button>
             </div>
 
-            <div className="relative my-6">
+            <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
               </div>
