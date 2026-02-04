@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { WireframeInvoiceCard } from "./Wireframe/WireframeInvoiceCard";
 import { Container } from "../../components/ui";
 import { FeatureBlock } from "./FeatureBlock";
@@ -153,36 +148,36 @@ export function BillingModule() {
   }, []);
 
   return (
-    <section
+    <div
       ref={sectionRef}
-      className=" relative border-t border-blue-100 overflow-hidden isolate pt-40 pb-20"
+      className="subsection relative border-t border-blue-100 overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -right-40 w-80 h-80 filter opacity-30 animate-float"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80  rounded-full filter opacity-30 animate-float"></div>
         <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full filter opacity-30 animate-float"
+          className="absolute -bottom-40 -left-40 w-80 h-80  rounded-full filter opacity-30 animate-float"
           style={{ animationDelay: "1s" }}
         ></div>
         <div
           className="absolute inset-0 hero-grid opacity-50"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 opacity-70" aria-hidden="true" />
+        <div
+          className="absolute inset-0 hero-ambient opacity-70"
+          aria-hidden="true"
+        />
       </div>
 
-      <Container className="relative z-10 grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
-        {/* Content */}
-        <div>
+      <Container className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* Content Side */}
+        <div className="order-1 lg:order-1">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
             className="mb-8 flex items-center gap-3"
           >
-            <span
-              className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
-              
-            >
+            <span className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue">
               Intelligent Billing
             </span>
           </motion.div>
@@ -207,20 +202,19 @@ export function BillingModule() {
             every country you operate in.
           </motion.p>
 
+          {/* Feature Blocks with Progress Line */}
           <div ref={featuresContainerRef} className="relative">
-            <div className="relative pl-8">
-              {/* Use the reusable ProgressLine component with custom positioning */}
+            <div className="relative md:pl-8">
+              {/* Progress Line */}
               <ProgressLine
                 bulletRefs={bulletRefs}
                 activeFeature={activeFeature}
                 featuresLength={features.length}
                 containerRef={featuresContainerRef}
                 isVisible={isVisible}
-                // Custom positioning - adjust as needed
-                left="left-[59px]"
+                left="left-[27px] md:left-[59px]"
                 top="top-7"
                 width="w-[2px]"
-                // Animation
                 animationType="spring"
                 stiffness={120}
                 damping={15}
@@ -245,14 +239,16 @@ export function BillingModule() {
           </div>
         </div>
 
-        {/* Visual - Interactive Card */}
-        <WireframeInvoiceCard
-          data={current}
-          isVisible={isVisible}
-          y={y}
-          rotateX={rotateX}
-        />
+        {/* Visual Side - Dashboard */}
+        <div className="order-2 lg:order-2">
+          <WireframeInvoiceCard
+            data={current}
+            isVisible={isVisible}
+            y={y}
+            rotateX={rotateX}
+          />
+        </div>
       </Container>
-    </section>
+    </div>
   );
 }

@@ -7,19 +7,40 @@ export function WireframeInvoiceCard({
   y = 0,
   rotateX = 0,
   onAnimationComplete = () => {},
+  className = "",
 }) {
-  const [animationPhase, setAnimationPhase] = useState(0); // 0: wireframe, 1: reveal, 2: complete
+  const [animationPhase, setAnimationPhase] = useState(0);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 496, height: 608 });
+
+  // Calculate responsive dimensions
+  useEffect(() => {
+    const calculateDimensions = () => {
+      if (window.innerWidth < 640) {
+        // Mobile: smaller dimensions
+        setDimensions({ width: 300, height: 400 });
+      } else if (window.innerWidth < 1024) {
+        // Tablet: medium dimensions
+        setDimensions({ width: 400, height: 500 });
+      } else {
+        // Desktop: original dimensions
+        setDimensions({ width: 496, height: 608 });
+      }
+    };
+
+    calculateDimensions();
+    window.addEventListener("resize", calculateDimensions);
+    return () => window.removeEventListener("resize", calculateDimensions);
+  }, []);
 
   useEffect(() => {
     if (isVisible && !shouldAnimate) {
       setShouldAnimate(true);
-      
-      // Start wireframe animation
+
       setTimeout(() => {
         setAnimationPhase(1);
       }, 3500);
-      
+
       setTimeout(() => {
         setAnimationPhase(2);
         onAnimationComplete();
@@ -27,107 +48,102 @@ export function WireframeInvoiceCard({
     }
   }, [isVisible, shouldAnimate, onAnimationComplete]);
 
-  // New container dimensions: 31rem x 38rem
-  const containerWidth = 496; // 31rem in pixels (31 * 16)
-  const containerHeight = 608; // 38rem in pixels (38 * 16)
-  const borderRadius = 16; // 1rem in pixels (16px)
+  const borderRadius = 16;
 
-  // Wireframe paths with rounded corners and gaps - ADJUSTED FOR NEW DIMENSIONS
+  // Responsive wireframe paths using dimensions state
   const wireframePaths = [
-    // Main card outline with rounded corners
-    { 
-      type: 'rect',
-      x: 0, 
-      y: 0, 
-      width: containerWidth, 
-      height: containerHeight,
+    // Main card outline
+    {
+      type: "rect",
+      x: 0,
+      y: 0,
+      width: dimensions.width,
+      height: dimensions.height,
       rx: borderRadius,
-      stroke: "#3b82f6", 
-      strokeWidth: 2, 
-      delay: 0, 
-      duration: 1.5 
+      stroke: "#3b82f6",
+      strokeWidth: 2,
+      delay: 0,
+      duration: 1.5,
     },
-    
-    // Bill To box outline - adjusted position and size
-    { 
-      type: 'rect',
-      x: 20, 
-      y: 125, 
-      width: 456, 
-      height: 90,
+
+    // Bill To box outline
+    {
+      type: "rect",
+      x: 20,
+      y: dimensions.height * 0.21,
+      width: dimensions.width - 40,
+      height: dimensions.height * 0.15,
       rx: 8,
-      stroke: "#93c5fd", 
-      strokeWidth: 1.5, 
-      delay: 1.0, 
-      duration: 0.8 
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 1.0,
+      duration: 0.8,
     },
-    
-    // Table horizontal lines - adjusted positions for new height
-    { 
-      type: 'line',
-      x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.46, 
-      x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.46,
-      stroke: "#60a5fa", 
-      strokeWidth: 1, 
-      delay: 2.0, 
-      duration: 0.6 
+
+    // Table horizontal lines - responsive positioning
+    {
+      type: "line",
+      x1: dimensions.width * 0.04 + 8,
+      y1: dimensions.height * 0.46,
+      x2: dimensions.width * 0.96 - 8,
+      y2: dimensions.height * 0.46,
+      stroke: "#60a5fa",
+      strokeWidth: 1,
+      delay: 2.0,
+      duration: 0.6,
     },
-    { 
-      type: 'line',
-      x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.52, 
-      x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.52,
-      stroke: "#60a5fa", 
-      strokeWidth: 1, 
-      delay: 2.3, 
-      duration: 0.6 
+    {
+      type: "line",
+      x1: dimensions.width * 0.04 + 8,
+      y1: dimensions.height * 0.52,
+      x2: dimensions.width * 0.96 - 8,
+      y2: dimensions.height * 0.52,
+      stroke: "#60a5fa",
+      strokeWidth: 1,
+      delay: 2.3,
+      duration: 0.6,
     },
-    { 
-      type: 'line',
-      x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.58, 
-      x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.58,
-      stroke: "#60a5fa", 
-      strokeWidth: 1, 
-      delay: 2.6, 
-      duration: 0.6 
+    {
+      type: "line",
+      x1: dimensions.width * 0.04 + 8,
+      y1: dimensions.height * 0.58,
+      x2: dimensions.width * 0.96 - 8,
+      y2: dimensions.height * 0.58,
+      stroke: "#60a5fa",
+      strokeWidth: 1,
+      delay: 2.6,
+      duration: 0.6,
     },
-    { 
-      type: 'line',
-      x1: containerWidth * 0.04 + 8,
-      y1: containerHeight * 0.64, 
-      x2: containerWidth * 0.96 - 8,
-      y2: containerHeight * 0.64,
-      stroke: "#60a5fa", 
-      strokeWidth: 1, 
-      delay: 2.9, 
-      duration: 0.6 
+    {
+      type: "line",
+      x1: dimensions.width * 0.04 + 8,
+      y1: dimensions.height * 0.64,
+      x2: dimensions.width * 0.96 - 8,
+      y2: dimensions.height * 0.64,
+      stroke: "#60a5fa",
+      strokeWidth: 1,
+      delay: 2.9,
+      duration: 0.6,
     },
-    
-    // PENDING button outline - adjusted position
-    { 
-      type: 'rect',
-      x: containerWidth * 0.75, 
-      y: containerHeight * 0.88, 
-      width: containerWidth * 0.17, 
-      height: containerHeight * 0.04,
+
+    // PENDING button outline
+    {
+      type: "rect",
+      x: dimensions.width * 0.75,
+      y: dimensions.height * 0.88,
+      width: dimensions.width * 0.17,
+      height: dimensions.height * 0.04,
       rx: 12,
-      stroke: "#60a5fa", 
-      strokeWidth: 1.5, 
-      delay: 3.5, 
-      duration: 0.8 
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 3.5,
+      duration: 0.8,
     },
   ];
 
   return (
-    <div
-      className="relative perspective-1000"
-    >
-      {/* Wireframe Overlay - ADJUSTED DIMENSIONS */}
+    <div className={`relative perspective-1000 ${className}`}>
+      {/* Wireframe Overlay */}
       <AnimatePresence>
         {shouldAnimate && animationPhase === 0 && (
           <motion.div
@@ -135,22 +151,19 @@ export function WireframeInvoiceCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-30 overflow-hidden"
-            style={{ 
-              width: '31rem',  // Updated width
-              height: '38rem', // Updated height
-              borderRadius: '1rem',
-              backgroundColor: 'transparent'
+            style={{
+              borderRadius: "1rem",
+              backgroundColor: "transparent",
             }}
           >
-            {/* Wireframe Drawing - Scaled to new container */}
-            <svg 
-              className="absolute inset-0 w-full h-full" 
-              viewBox={`0 0 ${containerWidth} ${containerHeight}`}
+            <svg
+              className="absolute inset-0 w-full h-full"
+              viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
               {wireframePaths.map((path, index) => {
-                if (path.type === 'rect') {
+                if (path.type === "rect") {
                   return (
                     <motion.rect
                       key={index}
@@ -174,7 +187,7 @@ export function WireframeInvoiceCard({
                       fill="none"
                     />
                   );
-                } else if (path.type === 'line') {
+                } else if (path.type === "line") {
                   return (
                     <motion.line
                       key={index}
@@ -198,15 +211,15 @@ export function WireframeInvoiceCard({
                 }
                 return null;
               })}
-              
-              {/* "PENDING" label in button area */}
+
+              {/* "PENDING" label */}
               <motion.text
-                x={containerWidth * 0.81}
-                y={containerHeight * 0.905}
+                x={dimensions.width * 0.81}
+                y={dimensions.height * 0.905}
                 fill="none"
                 stroke="#60a5fa"
                 strokeWidth="0.8"
-                fontSize="12"
+                fontSize={dimensions.width < 400 ? "10" : "12"}
                 fontFamily="monospace"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.6 }}
@@ -214,13 +227,12 @@ export function WireframeInvoiceCard({
               >
                 PENDING
               </motion.text>
-              
             </svg>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Invoice Card - UPDATED DIMENSIONS */}
+      {/* Main Invoice Card - Responsive */}
       <motion.div
         initial={{ opacity: 0, y: 40, rotateY: 10 }}
         animate={
@@ -237,11 +249,7 @@ export function WireframeInvoiceCard({
           ease: [0.22, 1, 0.36, 1],
           rotateY: { duration: 1 },
         }}
-        className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl transform-style-3d"
-        style={{
-          width: '31rem',    // Updated width
-          height: '38rem',   // Updated height
-        }}
+        className={`relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl md:shadow-2xl transform-style-3d w-full max-w-[90vw] sm:max-w-md md:max-w-lg lg:w-[31rem] lg:h-[38rem] h-auto min-h-[25rem]`}
       >
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-sky-50/50" />
@@ -254,10 +262,10 @@ export function WireframeInvoiceCard({
           className="absolute top-0 left-0 h-1 bg-gradient-to-r from-[#3b82f6] to-[#0B43A0]"
         />
 
-        {/* Header Section - ADJUSTED PADDING */}
-        <div className="relative border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5">
-          <div className="mb-5 flex items-start justify-between">
-            <div>
+        {/* Header Section - Responsive padding */}
+        <div className="relative border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white p-4 md:p-5">
+          <div className="mb-4 md:mb-5 flex flex-row items-start justify-between gap-4">
+            <div className="flex-1">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={animationPhase >= 1 ? { opacity: 1 } : {}}
@@ -278,7 +286,7 @@ export function WireframeInvoiceCard({
                 initial={{ opacity: 0 }}
                 animate={animationPhase >= 1 ? { opacity: 1 } : {}}
                 transition={{ delay: animationPhase === 1 ? 0.4 : 0.3 }}
-                className="text-xs text-[#425466]"
+                className="text-xs text-[#425466] leading-relaxed"
               >
                 B-47, Janakpuri West
                 <br />
@@ -291,13 +299,13 @@ export function WireframeInvoiceCard({
               initial={{ opacity: 0 }}
               animate={animationPhase >= 1 ? { opacity: 1 } : {}}
               transition={{ delay: animationPhase === 1 ? 0.5 : 0.4 }}
-              className="text-right"
+              className="text-left sm:text-right"
             >
               <motion.div
                 initial={{ scale: 0.9 }}
                 animate={animationPhase >= 1 ? { scale: 1 } : {}}
                 transition={{ delay: animationPhase === 1 ? 0.6 : 0.5 }}
-                className="mb-2 text-xl font-bold text-[#0A2540]"
+                className="mb-2 text-lg md:text-xl font-bold text-[#0A2540]"
               >
                 INVOICE
               </motion.div>
@@ -334,16 +342,18 @@ export function WireframeInvoiceCard({
             key={data.inv}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ 
+            transition={{
               delay: animationPhase === 1 ? 1.0 : 0.5,
-              duration: 0.5 
+              duration: 0.5,
             }}
-            className="rounded-lg border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-4"
+            className="rounded-lg border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-3 md:p-4"
           >
             <div className="mb-1 text-xs uppercase tracking-wider text-[#0B43A0]">
               Bill To
             </div>
-            <div className="mb-1 text-sm text-[#0A2540] font-medium">{data.client}</div>
+            <div className="mb-1 text-sm text-[#0A2540] font-medium">
+              {data.client}
+            </div>
             <div className="text-xs text-[#425466]">
               {data.country}
               <br />
@@ -352,140 +362,143 @@ export function WireframeInvoiceCard({
           </motion.div>
         </div>
 
-        {/* Line Items Table - ADJUSTED PADDING */}
-        <div className="relative p-5">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-[#425466]">
-                <motion.th
-                  initial={{ opacity: 0 }}
-                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                  transition={{ delay: animationPhase === 1 ? 1.1 : 0.9 }}
-                  className="pb-3 text-left"
-                >
-                  Description
-                </motion.th>
-                <motion.th
-                  initial={{ opacity: 0 }}
-                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                  transition={{ delay: animationPhase === 1 ? 1.15 : 0.95 }}
-                  className="pb-3 text-right"
-                >
-                  Qty
-                </motion.th>
-                <motion.th
-                  initial={{ opacity: 0 }}
-                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                  transition={{ delay: animationPhase === 1 ? 1.2 : 1.0 }}
-                  className="pb-3 text-right"
-                >
-                  Rate
-                </motion.th>
-                <motion.th
-                  initial={{ opacity: 0 }}
-                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                  transition={{ delay: animationPhase === 1 ? 1.25 : 1.05 }}
-                  className="pb-3 text-right"
-                >
-                  Amount
-                </motion.th>
-              </tr>
-            </thead>
-            <AnimatePresence mode="wait">
-              <motion.tbody key={data.inv}>
-                {data.lineItems.map((item, idx) => (
-                  <motion.tr
-                    key={idx}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
-                    transition={{ 
-                      delay: animationPhase === 1 ? 1.3 + (idx * 0.1) : idx * 0.1,
-                      duration: 0.4 
-                    }}
-                    className="border-b border-gray-100 hover:bg-blue-50/50 transition-colors duration-200"
+        {/* Line Items Table - Responsive */}
+        <div className="relative px-2 py-3 md:px-5 md:py-4 overflow-x-auto">
+          <div className="min-w-[300px]">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-[#425466]">
+                  <motion.th
+                    initial={{ opacity: 0 }}
+                    animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                    transition={{ delay: animationPhase === 1 ? 1.1 : 0.9 }}
+                    className="pb-2 md:pb-3 text-left"
                   >
-                    <td className="py-2.5 text-sm text-[#0A2540]">
-                      {item.description}
-                    </td>
-                    <td className="py-2.5 text-right text-sm text-[#425466]">
-                      {item.quantity}
-                    </td>
-                    <td className="py-2.5 text-right text-sm text-[#425466]">
-                      ${item.rate}
-                    </td>
-                    <td className="py-2.5 text-right text-sm font-medium text-[#0A2540]">
-                      ${item.amount}
-                    </td>
-                  </motion.tr>
-                ))}
-              </motion.tbody>
-            </AnimatePresence>
-          </table>
+                    Description
+                  </motion.th>
+                  <motion.th
+                    initial={{ opacity: 0 }}
+                    animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                    transition={{ delay: animationPhase === 1 ? 1.15 : 0.95 }}
+                    className="pb-2 md:pb-3 text-right "
+                  >
+                    Qty
+                  </motion.th>
+                  <motion.th
+                    initial={{ opacity: 0 }}
+                    animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                    transition={{ delay: animationPhase === 1 ? 1.2 : 1.0 }}
+                    className="pb-2 md:pb-3 text-right hidden md:table-cell"
+                  >
+                    Rate
+                  </motion.th>
 
-          {/* Totals Section */}
-          <div className="mt-4 flex justify-end">
-            <div className="w-60 space-y-2 text-sm">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                transition={{ delay: animationPhase === 1 ? 1.7 : 1.3 }}
-                className="flex justify-between text-[#425466]"
-              >
-                <span>Subtotal</span>
-                <span key={`sub-${data.inv}`}>
-                  ${data.sub}
-                </span>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                transition={{ delay: animationPhase === 1 ? 1.8 : 1.4 }}
-                className="flex justify-between text-[#425466]"
-              >
-                <span className="flex items-center gap-1.5">
-                  {data.taxInfo}
-                  <motion.span
-                    animate={animationPhase >= 2 ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="rounded px-1 py-0.5 text-xs light-bg txt-blue"
+                  <motion.th
+                    initial={{ opacity: 0 }}
+                    animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                    transition={{ delay: animationPhase === 1 ? 1.25 : 1.05 }}
+                    className="pb-2 md:pb-3 text-right"
                   >
-                    Auto-calc
-                  </motion.span>
-                </span>
-                <span key={`vat-${data.inv}`}>
-                  ${data.vat}
-                </span>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={animationPhase >= 1 ? { opacity: 1 } : {}}
-                transition={{ delay: animationPhase === 1 ? 1.9 : 1.5 }}
-                className="flex justify-between border-t border-gray-200 pt-2 text-sm text-[#0A2540]"
-              >
-                <span>Total Due</span>
-                <motion.span
-                  key={`total-${data.inv}`}
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: animationPhase === 1 ? 2.0 : 1.6 }}
-                  className="text-lg font-bold"
+                    Amount
+                  </motion.th>
+                </tr>
+              </thead>
+              <AnimatePresence mode="wait">
+                <motion.tbody key={data.inv}>
+                  {data.lineItems.map((item, idx) => (
+                    <motion.tr
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      transition={{
+                        delay:
+                          animationPhase === 1 ? 1.3 + idx * 0.1 : idx * 0.1,
+                        duration: 0.4,
+                      }}
+                      className="border-b border-gray-100 hover:bg-blue-50/50 transition-colors duration-200"
+                    >
+                      <td className="py-2 md:py-2.5 text-xs md:text-sm text-[#0A2540] truncate max-w-[150px]">
+                        {item.description}
+                      </td>
+                      <td className="py-2 md:py-2.5 text-right text-xs md:text-sm text-[#425466]">
+                        {item.quantity}
+                      </td>
+                      <td className="py-2 md:py-2.5 text-right text-xs md:text-sm text-[#425466] hidden md:table-cell">
+                        ${item.rate}
+                      </td>
+
+                      <td className="py-2 md:py-2.5 text-right text-xs md:text-sm font-medium text-[#0A2540]">
+                        ${item.amount}
+                      </td>
+                    </motion.tr>
+                  ))}
+                </motion.tbody>
+              </AnimatePresence>
+            </table>
+
+            {/* Totals Section */}
+            <div className="mt-3 md:mt-4 flex justify-end">
+              <div className="w-full sm:w-60 space-y-1 md:space-y-2 text-sm">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                  transition={{ delay: animationPhase === 1 ? 1.7 : 1.3 }}
+                  className="flex justify-between text-xs md:text-sm text-[#425466]"
                 >
-                  ${data.total}
-                </motion.span>
-              </motion.div>
+                  <span>Subtotal</span>
+                  <span key={`sub-${data.inv}`}>${data.sub}</span>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                  transition={{ delay: animationPhase === 1 ? 1.8 : 1.4 }}
+                  className="flex justify-between text-xs md:text-sm text-[#425466]"
+                >
+                  <span className="flex items-center gap-1.5">
+                    {data.taxInfo}
+                    <motion.span
+                      animate={
+                        animationPhase >= 2 ? { scale: [1, 1.1, 1] } : {}
+                      }
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="rounded px-1 py-0.5 text-xs light-bg txt-blue hidden sm:inline"
+                    >
+                      Auto-calc
+                    </motion.span>
+                  </span>
+                  <span key={`vat-${data.inv}`}>${data.vat}</span>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={animationPhase >= 1 ? { opacity: 1 } : {}}
+                  transition={{ delay: animationPhase === 1 ? 1.9 : 1.5 }}
+                  className="flex justify-between border-t border-gray-200 pt-2 text-xs md:text-sm text-[#0A2540]"
+                >
+                  <span>Total Due</span>
+                  <motion.span
+                    key={`total-${data.inv}`}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: animationPhase === 1 ? 2.0 : 1.6 }}
+                    className="text-base md:text-lg font-bold"
+                  >
+                    ${data.total}
+                  </motion.span>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Footer with PENDING button - ADJUSTED PADDING */}
+        {/* Footer with PENDING button */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={animationPhase >= 1 ? { opacity: 1 } : {}}
           transition={{ delay: animationPhase === 1 ? 2.1 : 1.7 }}
-          className="border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white px-5 py-2"
+          className="border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white px-3 md:px-5 py-2 md:py-3"
         >
-          <div className="flex items-center justify-between">
+          <div className="flex flex-row items-start sm:items-center justify-between gap-2">
             <div className="text-xs text-[#425466]">
               Payment due by February 14, 2025
             </div>
@@ -498,7 +511,7 @@ export function WireframeInvoiceCard({
                 ],
               }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="rounded-full px-3 py-1 text-xs font-medium text-[#0B43A0]"
+              className="rounded-full px-3 py-1 text-xs font-medium text-[#0B43A0] whitespace-nowrap"
             >
               PENDING
             </motion.div>

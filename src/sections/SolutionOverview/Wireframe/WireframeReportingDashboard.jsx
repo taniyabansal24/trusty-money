@@ -1,4 +1,3 @@
-// WireframeReportingDashboard.jsx
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BarChartIcon from "../../../components/svg/BarChartIcon";
@@ -12,15 +11,36 @@ export function WireframeReportingDashboard({
   isVisible = false,
   y = 0,
   onAnimationComplete = () => {},
+  className = "",
 }) {
-  const [animationPhase, setAnimationPhase] = useState(0); // 0: wireframe, 1: reveal, 2: complete
+  const [animationPhase, setAnimationPhase] = useState(0);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 550, height: 650 });
+
+  // Calculate responsive dimensions
+  useEffect(() => {
+    const calculateDimensions = () => {
+      if (window.innerWidth < 640) {
+        // Mobile
+        setDimensions({ width: 320, height: 550 });
+      } else if (window.innerWidth < 1024) {
+        // Tablet
+        setDimensions({ width: 450, height: 600 });
+      } else {
+        // Desktop
+        setDimensions({ width: 550, height: 650 });
+      }
+    };
+
+    calculateDimensions();
+    window.addEventListener('resize', calculateDimensions);
+    return () => window.removeEventListener('resize', calculateDimensions);
+  }, []);
 
   useEffect(() => {
     if (isVisible && !shouldAnimate) {
       setShouldAnimate(true);
 
-      // Start wireframe animation
       setTimeout(() => {
         setAnimationPhase(1);
       }, 3500);
@@ -32,335 +52,9 @@ export function WireframeReportingDashboard({
     }
   }, [isVisible, shouldAnimate, onAnimationComplete]);
 
-  // Dashboard dimensions - matching your actual component
-  const dashboardWidth = 550;
-  const dashboardHeight = 650;
-  const borderRadius = 12; // rounded-xl
-
-  // Wireframe paths - ONLY drawing what actually exists in your component
-  const wireframePaths = [
-    // Main dashboard outline (the white container)
-    {
-      type: "rect",
-      x: 0,
-      y: 0,
-      width: dashboardWidth,
-      height: dashboardHeight - 100, // Main dashboard without the bottom badge
-      rx: borderRadius,
-      stroke: "#3b82f6",
-      strokeWidth: 2,
-      delay: 0,
-      duration: 1.5,
-    },
-
-    // Header section (p-6 area with border-b)
-    {
-      type: "rect",
-      x: 24, // p-6 = 24px
-      y: 24,
-      width: dashboardWidth - 48,
-      height: 140, // Approximate header height
-      rx: 0, // No border radius for inner sections
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 0.5,
-      duration: 1,
-    },
-
-    // Icon box (h-10 w-10 rounded-lg)
-    {
-      type: "rect",
-      x: 24,
-      y: 24,
-      width: 40,
-      height: 40,
-      rx: 8, // rounded-lg
-      stroke: "#60a5fa",
-      strokeWidth: 1.5,
-      delay: 0.8,
-      duration: 0.8,
-    },
-
-    // "Live sync" badge
-    {
-      type: "rect",
-      x: dashboardWidth - 120,
-      y: 30,
-      width: 90,
-      height: 30,
-      rx: 15, // pill shape
-      stroke: "#60a5fa",
-      strokeWidth: 1.5,
-      delay: 1.0,
-      duration: 0.8,
-    },
-
-    // Stats boxes - 3 equal width boxes
-    {
-      type: "rect",
-      x: 30,
-      y: 100,
-      width: (dashboardWidth - 100) / 3,
-      height: 50,
-      rx: 0, // No border radius in your actual component
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 1.2,
-      duration: 0.6,
-    },
-    {
-      type: "rect",
-      x: 30 + (dashboardWidth - 100) / 3 + 20,
-      y: 100,
-      width: (dashboardWidth - 100) / 3,
-      height: 50,
-      rx: 0,
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 1.4,
-      duration: 0.6,
-    },
-    {
-      type: "rect",
-      x: 30 + 2 * ((dashboardWidth - 100) / 3) + 40,
-      y: 100,
-      width: (dashboardWidth - 100) / 3,
-      height: 50,
-      rx: 0,
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 1.6,
-      duration: 0.6,
-    },
-
-    // Table area (p-6 section)
-    {
-      type: "rect",
-      x: 24,
-      y: 180,
-      width: dashboardWidth - 48,
-      height: 320, // Approximate table area height
-      rx: 0,
-      stroke: "#3b82f6",
-      strokeWidth: 1.5,
-      delay: 2.0,
-      duration: 1,
-    },
-
-    // "Recent Transactions" text
-    {
-      type: "rect",
-      x: 30,
-      y: 190,
-      width: 120,
-      height: 16,
-      rx: 2,
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 2.3,
-      duration: 0.6,
-    },
-
-    // Table container (rounded-lg border)
-    {
-      type: "rect",
-      x: 30,
-      y: 220,
-      width: dashboardWidth - 60,
-      height: 180, // Approximate table height for 3 rows
-      rx: 8, // rounded-lg
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 2.6,
-      duration: 0.7,
-    },
-
-    // Table header row
-    {
-      type: "rect",
-      x: 30,
-      y: 220,
-      width: dashboardWidth - 60,
-      height: 35,
-      rx: 8, // Top corners only but we'll use full for simplicity
-      stroke: "#cbd5e1",
-      strokeWidth: 1.2,
-      delay: 2.8,
-      duration: 0.6,
-    },
-
-    // Table rows (3 rows matching your transactions)
-    {
-      type: "rect",
-      x: 30,
-      y: 255,
-      width: dashboardWidth - 60,
-      height: 48,
-      rx: 0,
-      stroke: "#93c5fd",
-      strokeWidth: 1,
-      delay: 3.0,
-      duration: 0.5,
-    },
-    {
-      type: "rect",
-      x: 30,
-      y: 303,
-      width: dashboardWidth - 60,
-      height: 48,
-      rx: 0,
-      stroke: "#93c5fd",
-      strokeWidth: 1,
-      delay: 3.1,
-      duration: 0.5,
-    },
-    {
-      type: "rect",
-      x: 30,
-      y: 351,
-      width: dashboardWidth - 60,
-      height: 48,
-      rx: 0,
-      stroke: "#93c5fd",
-      strokeWidth: 1,
-      delay: 3.2,
-      duration: 0.5,
-    },
-
-    // Status badges in table (right side)
-    {
-      type: "rect",
-      x: dashboardWidth - 120,
-      cy: 279,
-      width: 70,
-      height: 24,
-      rx: 12, // Pill shape for status badges
-      stroke: "#60a5fa",
-      strokeWidth: 1,
-      delay: 3.3,
-      duration: 0.4,
-    },
-    {
-      type: "rect",
-      x: dashboardWidth - 120,
-      cy: 327,
-      width: 70,
-      height: 24,
-      rx: 12,
-      stroke: "#60a5fa",
-      strokeWidth: 1,
-      delay: 3.4,
-      duration: 0.4,
-    },
-    {
-      type: "rect",
-      x: dashboardWidth - 120,
-      cy: 375,
-      width: 70,
-      height: 24,
-      rx: 12,
-      stroke: "#60a5fa",
-      strokeWidth: 1,
-      delay: 3.5,
-      duration: 0.4,
-    },
-
-    // Action buttons area (mt-4 flex gap-2)
-    {
-      type: "rect",
-      x: 30,
-      y: 410,
-      width: dashboardWidth - 60,
-      height: 45,
-      rx: 0,
-      stroke: "#3b82f6",
-      strokeWidth: 1.5,
-      delay: 3.6,
-      duration: 0.6,
-    },
-
-    // Filter button (left button)
-    {
-      type: "rect",
-      x: 30,
-      y: 410,
-      width: (dashboardWidth - 60 - 8) / 2, // Half width minus gap
-      height: 45,
-      rx: 8, // rounded-lg
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 3.7,
-      duration: 0.5,
-    },
-
-    // Export CSV button (right button)
-    {
-      type: "rect",
-      x: 30 + (dashboardWidth - 60 - 8) / 2 + 8, // Position after gap
-      y: 410,
-      width: (dashboardWidth - 60 - 8) / 2,
-      height: 45,
-      rx: 8, // rounded-lg
-      stroke: "#93c5fd",
-      strokeWidth: 1.5,
-      delay: 3.8,
-      duration: 0.5,
-    },
-
-    // Reconciliation badge (separate element below dashboard)
-    {
-      type: "rect",
-      x: 0,
-      y: dashboardHeight - 80, // Positioned below main dashboard
-      width: dashboardWidth,
-      height: 80,
-      rx: borderRadius,
-      stroke: "#10b981",
-      strokeWidth: 2,
-      delay: 4.0,
-      duration: 0.8,
-    },
-
-    // Check icon circle in badge
-    {
-      type: "circle",
-      cx: 40,
-      cy: dashboardHeight - 40,
-      r: 16,
-      stroke: "#10b981",
-      strokeWidth: 1.5,
-      delay: 4.2,
-      duration: 0.5,
-    },
-
-    // Text area in reconciliation badge
-    {
-      type: "rect",
-      x: 70,
-      y: dashboardHeight - 55,
-      width: dashboardWidth - 90,
-      height: 16,
-      rx: 2,
-      stroke: "#10b981",
-      strokeWidth: 1,
-      delay: 4.3,
-      duration: 0.4,
-    },
-    {
-      type: "rect",
-      x: 70,
-      y: dashboardHeight - 35,
-      width: dashboardWidth - 90,
-      height: 12,
-      rx: 2,
-      stroke: "#10b981",
-      strokeWidth: 1,
-      delay: 4.4,
-      duration: 0.4,
-    },
-  ];
-
-  // Default transactions data - matching your original
+  const borderRadius = 12;
+  
+  // Default transactions data
   const defaultTransactions = data.transactions || [
     {
       id: "TXN-8472",
@@ -394,8 +88,259 @@ export function WireframeReportingDashboard({
     },
   ];
 
+  // Responsive wireframe paths using dimensions
+  const wireframePaths = [
+    // Main dashboard outline
+    {
+      type: "rect",
+      x: 0,
+      y: 0,
+      width: dimensions.width,
+      height: dimensions.height - (dimensions.height * 0.123),
+      rx: borderRadius,
+      stroke: "#3b82f6",
+      strokeWidth: 2,
+      delay: 0,
+      duration: 1.5,
+    },
+
+    // Header section
+    {
+      type: "rect",
+      x: dimensions.width * 0.044,
+      y: dimensions.height * 0.037,
+      width: dimensions.width * 0.912,
+      height: dimensions.height * 0.215,
+      rx: 0,
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 0.5,
+      duration: 1,
+    },
+
+    // Icon box
+    {
+      type: "rect",
+      x: dimensions.width * 0.044,
+      y: dimensions.height * 0.037,
+      width: dimensions.width * 0.073,
+      height: dimensions.height * 0.062,
+      rx: 8,
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 0.8,
+      duration: 0.8,
+    },
+
+    // Live sync badge
+    {
+      type: "rect",
+      x: dimensions.width * 0.782,
+      y: dimensions.height * 0.046,
+      width: dimensions.width * 0.164,
+      height: dimensions.height * 0.046,
+      rx: 15,
+      stroke: "#60a5fa",
+      strokeWidth: 1.5,
+      delay: 1.0,
+      duration: 0.8,
+    },
+
+    // Stats boxes - 3 equal width boxes
+    ...[0, 1, 2].map((i) => ({
+      type: "rect",
+      x: dimensions.width * (0.055 + (i * 0.3)),
+      y: dimensions.height * 0.154,
+      width: dimensions.width * 0.273,
+      height: dimensions.height * 0.077,
+      rx: 0,
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 1.2 + (i * 0.2),
+      duration: 0.6,
+    })),
+
+    // Table area
+    {
+      type: "rect",
+      x: dimensions.width * 0.044,
+      y: dimensions.height * 0.277,
+      width: dimensions.width * 0.912,
+      height: dimensions.height * 0.492,
+      rx: 0,
+      stroke: "#3b82f6",
+      strokeWidth: 1.5,
+      delay: 2.0,
+      duration: 1,
+    },
+
+    // "Recent Transactions" text
+    {
+      type: "rect",
+      x: dimensions.width * 0.055,
+      y: dimensions.height * 0.292,
+      width: dimensions.width * 0.218,
+      height: dimensions.height * 0.025,
+      rx: 2,
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 2.3,
+      duration: 0.6,
+    },
+
+    // Table container
+    {
+      type: "rect",
+      x: dimensions.width * 0.055,
+      y: dimensions.height * 0.338,
+      width: dimensions.width * 0.891,
+      height: dimensions.height * 0.277,
+      rx: 8,
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 2.6,
+      duration: 0.7,
+    },
+
+    // Table header row
+    {
+      type: "rect",
+      x: dimensions.width * 0.055,
+      y: dimensions.height * 0.338,
+      width: dimensions.width * 0.891,
+      height: dimensions.height * 0.054,
+      rx: 8,
+      stroke: "#cbd5e1",
+      strokeWidth: 1.2,
+      delay: 2.8,
+      duration: 0.6,
+    },
+
+    // Table rows (3 rows)
+    ...[0, 1, 2].map((i) => ({
+      type: "rect",
+      x: dimensions.width * 0.055,
+      y: dimensions.height * (0.392 + (i * 0.074)),
+      width: dimensions.width * 0.891,
+      height: dimensions.height * 0.074,
+      rx: 0,
+      stroke: "#93c5fd",
+      strokeWidth: 1,
+      delay: 3.0 + (i * 0.1),
+      duration: 0.5,
+    })),
+
+    // Status badges in table
+    ...[0, 1, 2].map((i) => ({
+      type: "rect",
+      x: dimensions.width * 0.782,
+      y: dimensions.height * (0.429 + (i * 0.074)),
+      width: dimensions.width * 0.127,
+      height: dimensions.height * 0.037,
+      rx: 12,
+      stroke: "#60a5fa",
+      strokeWidth: 1,
+      delay: 3.3 + (i * 0.1),
+      duration: 0.4,
+    })),
+
+    // Action buttons area
+    {
+      type: "rect",
+      x: dimensions.width * 0.055,
+      y: dimensions.height * 0.631,
+      width: dimensions.width * 0.891,
+      height: dimensions.height * 0.069,
+      rx: 0,
+      stroke: "#3b82f6",
+      strokeWidth: 1.5,
+      delay: 3.6,
+      duration: 0.6,
+    },
+
+    // Filter button
+    {
+      type: "rect",
+      x: dimensions.width * 0.055,
+      y: dimensions.height * 0.631,
+      width: dimensions.width * 0.436,
+      height: dimensions.height * 0.069,
+      rx: 8,
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 3.7,
+      duration: 0.5,
+    },
+
+    // Export CSV button
+    {
+      type: "rect",
+      x: dimensions.width * 0.505,
+      y: dimensions.height * 0.631,
+      width: dimensions.width * 0.436,
+      height: dimensions.height * 0.069,
+      rx: 8,
+      stroke: "#93c5fd",
+      strokeWidth: 1.5,
+      delay: 3.8,
+      duration: 0.5,
+    },
+
+    // Reconciliation badge
+    {
+      type: "rect",
+      x: 0,
+      y: dimensions.height * 0.877,
+      width: dimensions.width,
+      height: dimensions.height * 0.123,
+      rx: borderRadius,
+      stroke: "#10b981",
+      strokeWidth: 2,
+      delay: 4.0,
+      duration: 0.8,
+    },
+
+    // Check icon circle in badge
+    {
+      type: "circle",
+      cx: dimensions.width * 0.073,
+      cy: dimensions.height * 0.938,
+      r: dimensions.width * 0.029,
+      stroke: "#10b981",
+      strokeWidth: 1.5,
+      delay: 4.2,
+      duration: 0.5,
+    },
+
+    // Text area in reconciliation badge
+    {
+      type: "rect",
+      x: dimensions.width * 0.127,
+      y: dimensions.height * 0.915,
+      width: dimensions.width * 0.836,
+      height: dimensions.height * 0.025,
+      rx: 2,
+      stroke: "#10b981",
+      strokeWidth: 1,
+      delay: 4.3,
+      duration: 0.4,
+    },
+    {
+      type: "rect",
+      x: dimensions.width * 0.127,
+      y: dimensions.height * 0.946,
+      width: dimensions.width * 0.836,
+      height: dimensions.height * 0.018,
+      rx: 2,
+      stroke: "#10b981",
+      strokeWidth: 1,
+      delay: 4.4,
+      duration: 0.4,
+    },
+  ];
+
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {/* Wireframe Overlay */}
       <AnimatePresence>
         {shouldAnimate && animationPhase === 0 && (
@@ -409,10 +354,9 @@ export function WireframeReportingDashboard({
               backgroundColor: "transparent",
             }}
           >
-            {/* Wireframe Drawing */}
             <svg
               className="absolute inset-0 w-full h-full"
-              viewBox={`0 0 ${dashboardWidth} ${dashboardHeight}`}
+              viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
               fill="none"
               preserveAspectRatio="xMidYMid meet"
             >
@@ -470,26 +414,26 @@ export function WireframeReportingDashboard({
         )}
       </AnimatePresence>
 
-      {/* Main Reporting Dashboard - EXACTLY your original component structure */}
+      {/* Main Reporting Dashboard - Responsive */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={
           isVisible ? { opacity: animationPhase >= 1 ? 1 : 0, y: 0 } : {}
         }
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+        className="overflow-hidden rounded-lg md:rounded-xl border border-slate-200 bg-white shadow-lg md:shadow-xl w-full max-w-[90vw] sm:max-w-md md:max-w-lg lg:w-[550px] h-auto min-h-[30rem]"
       >
-        {/* Dashboard Header - EXACT structure */}
-        <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white px-4 pt-4 pb-2">
-          <div className="mb-2 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        {/* Dashboard Header - Responsive */}
+        <div className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white px-3 md:px-4 pt-3 md:pt-4 pb-2 md:pb-3">
+          <div className="mb-2 flex flex-row items-start sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2 md:gap-3">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: animationPhase === 1 ? 0.2 : 0.1 }}
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-100 to-violet-200"
+                className="flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-100 to-violet-200"
               >
-                <BarChartIcon className="w-10 h-10" />
+                <BarChartIcon className="w-7 h-7 md:w-10 md:h-10" />
               </motion.div>
               <div>
                 <motion.div
@@ -504,7 +448,7 @@ export function WireframeReportingDashboard({
                   initial={{ opacity: 0, y: 10 }}
                   animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: animationPhase === 1 ? 0.4 : 0.3 }}
-                  className="text-lg font-semibold text-slate-900"
+                  className="text-sm md:text-lg font-semibold text-slate-900"
                 >
                   Transaction Overview
                 </motion.div>
@@ -514,29 +458,30 @@ export function WireframeReportingDashboard({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: animationPhase === 1 ? 0.5 : 0.4 }}
-              className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-3 py-1 text-xs text-slate-700"
+              className="flex items-center gap-1.5 rounded-full bg-[#EEF1F9] px-2 md:px-3 py-1 text-xs text-slate-700"
             >
-              <CloudSyncBadge className="w-10 h-10" />
-              Live sync
+              <CloudSyncBadge className="w-7 h-7 md:w-10 md:h-10" />
+              <span className="hidden sm:inline">Live sync</span>
+              <span className="sm:hidden">Live</span>
             </motion.div>
           </div>
 
-          {/* Stats - EXACT 3 boxes without borders */}
-          <div className="grid grid-cols-3 gap-4">
+          {/* Stats - Responsive grid */}
+          <div className="grid grid-cols-3 gap-2 md:gap-4">
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 0.6 : 0.5 }}
             >
               <div className="text-xs text-slate-500">Today</div>
-              <div className="relative h-7 overflow-hidden">
+              <div className="relative h-6 md:h-7 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={data.index || 0}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -15, opacity: 0 }}
-                    className="text-base text-slate-900"
+                    className="text-sm md:text-base text-slate-900"
                   >
                     {data.index === 0 ? "147" : "152"}
                   </motion.div>
@@ -550,7 +495,7 @@ export function WireframeReportingDashboard({
               transition={{ delay: animationPhase === 1 ? 0.7 : 0.6 }}
             >
               <div className="text-xs text-slate-500">Reconciled</div>
-              <div className="text-base text-[#436AB4] font-medium">99.8%</div>
+              <div className="text-sm md:text-base text-[#436AB4] font-medium">99.8%</div>
             </motion.div>
 
             <motion.div
@@ -559,14 +504,14 @@ export function WireframeReportingDashboard({
               transition={{ delay: animationPhase === 1 ? 0.8 : 0.7 }}
             >
               <div className="text-xs text-slate-500">Volume</div>
-              <div className="relative h-7 overflow-hidden">
+              <div className="relative h-6 md:h-7 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={data.index || 0}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -15, opacity: 0 }}
-                    className="text-base text-slate-900"
+                    className="text-sm md:text-base text-slate-900"
                   >
                     {data.index === 0 ? "$2.4M" : "$2.7M"}
                   </motion.div>
@@ -576,84 +521,92 @@ export function WireframeReportingDashboard({
           </div>
         </div>
 
-        {/* Transaction Table - EXACT structure */}
-        <div className="px-5 py-2">
+        {/* Transaction Table - Responsive */}
+        <div className="px-3 md:px-5 py-2 md:py-3">
           <motion.div
             initial={{ opacity: 0 }}
             animate={animationPhase >= 1 ? { opacity: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 0.9 : 0.8 }}
-            className=" text-sm font-medium text-slate-900"
+            className="text-sm font-medium text-slate-900 mb-2"
           >
             Recent Transactions
           </motion.div>
 
-          <div className="overflow-hidden rounded-lg border border-slate-200">
-            <table className="w-full text-xs">
-              <thead className="bg-slate-50">
-                <tr className="border-b border-slate-200">
-                  <th className="px-3 py-2 text-left uppercase tracking-wider text-slate-600">
-                    Transaction
-                  </th>
-                  <th className="px-3 py-2 text-left uppercase tracking-wider text-slate-600">
-                    Company
-                  </th>
-                  <th className="px-3 py-2 text-right uppercase tracking-wider text-slate-600">
-                    Amount
-                  </th>
-                  <th className="px-3 py-2 text-right uppercase tracking-wider text-slate-600">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white">
-                {defaultTransactions.map((txn, idx) => (
-                  <motion.tr
-                    key={txn.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={animationPhase >= 1 ? { opacity: 1, x: 0 } : {}}
-                    transition={{
-                      delay: animationPhase === 1 ? 1.0 + idx * 0.1 : idx * 0.1,
-                      duration: 0.4,
-                    }}
-                    className="border-b border-slate-100 transition-colors hover:bg-slate-50"
-                  >
-                    <td className="px-3 py-2">
-                      <div className="text-sm text-slate-900">{txn.id}</div>
-                      <div className="text-xs text-slate-500">
-                        {txn.date} • {txn.method}
-                      </div>
-                    </td>
-                    <td className="px-3 py-2">
-                      <div className="text-sm text-slate-900">{txn.company}</div>
-                      <div className="text-xs text-slate-500">{txn.invoice}</div>
-                    </td>
-                    <td className="px-3 py-2 text-right">
-                      <div className="text-sm text-slate-900">{txn.amount}</div>
-                      <div className="text-xs text-slate-500">{txn.currency}</div>
-                    </td>
-                    <td className="px-3 py-2 text-right">
-                      <span
-                        className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium light-bg"
-                        style={{
-                          color: "#073F9E",
+          <div className="overflow-x-auto">
+            <div className="min-w-[280px]">
+              <div className="overflow-hidden rounded-lg border border-slate-200">
+                <table className="w-full text-xs">
+                  <thead className="bg-slate-50">
+                    <tr className="border-b border-slate-200">
+                      <th className="px-2 md:px-3 py-1.5 md:py-2 text-left uppercase tracking-wider text-slate-600 whitespace-nowrap">
+                        Transaction
+                      </th>
+                      <th className="px-2 md:px-3 py-1.5 md:py-2 text-left uppercase tracking-wider text-slate-600 whitespace-nowrap">
+                        Company
+                      </th>
+                      <th className="px-2 md:px-3 py-1.5 md:py-2 text-right uppercase tracking-wider text-slate-600 whitespace-nowrap hidden md:table-cell">
+                        Amount
+                      </th>
+                      <th className="px-2 md:px-3 py-1.5 md:py-2 text-right uppercase tracking-wider text-slate-600 whitespace-nowrap">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white">
+                    {defaultTransactions.map((txn, idx) => (
+                      <motion.tr
+                        key={txn.id}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={animationPhase >= 1 ? { opacity: 1, x: 0 } : {}}
+                        transition={{
+                          delay: animationPhase === 1 ? 1.0 + idx * 0.1 : idx * 0.1,
+                          duration: 0.4,
                         }}
+                        className="border-b border-slate-100 transition-colors hover:bg-slate-50"
                       >
-                        {txn.status === "Reconciled" ? (
-                          <UserCheckIcon className="h-3 w-3" />
-                        ) : (
-                          <UserPresenceIcon className="h-3 w-3" />
-                        )}
-                        {txn.status}
-                      </span>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
+                        <td className="px-2 md:px-3 py-1.5 md:py-2">
+                          <div className="text-sm text-slate-900 truncate max-w-[100px] md:max-w-none">
+                            {txn.id}
+                          </div>
+                          <div className="text-xs text-slate-500">
+                            {txn.date} • {txn.method}
+                          </div>
+                        </td>
+                        <td className="px-2 md:px-3 py-1.5 md:py-2">
+                          <div className="text-sm text-slate-900 truncate max-w-[80px] md:max-w-none">
+                            {txn.company}
+                          </div>
+                          <div className="text-xs text-slate-500">{txn.invoice}</div>
+                        </td>
+                        <td className="px-2 md:px-3 py-1.5 md:py-2 text-right hidden md:table-cell">
+                          <div className="text-sm text-slate-900">{txn.amount}</div>
+                          <div className="text-xs text-slate-500">{txn.currency}</div>
+                        </td>
+                        <td className="px-2 md:px-3 py-1.5 md:py-2 text-right">
+                          <span
+                            className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium light-bg whitespace-nowrap"
+                            style={{
+                              color: "#073F9E",
+                            }}
+                          >
+                            {txn.status === "Reconciled" ? (
+                              <UserCheckIcon className="h-3 w-3" />
+                            ) : (
+                              <UserPresenceIcon className="h-3 w-3" />
+                            )}
+                            {txn.status}
+                          </span>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
-          {/* Action Buttons - EXACT structure */}
-          <div className="mt-4 flex gap-2">
+          {/* Action Buttons - Responsive */}
+          <div className="mt-3 md:mt-4 flex flex-col sm:flex-row gap-2">
             <motion.button
               initial={{ opacity: 0, x: -10 }}
               animate={animationPhase >= 1 ? { opacity: 1, x: 0 } : {}}
@@ -694,37 +647,38 @@ export function WireframeReportingDashboard({
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                 />
               </svg>
-              Export CSV
+              <span className="hidden sm:inline">Export CSV</span>
+              <span className="sm:hidden">Export</span>
             </motion.button>
           </div>
         </div>
       </motion.div>
 
-      {/* Reconciliation Badge - EXACT structure (outside main dashboard) */}
+      {/* Reconciliation Badge - Responsive */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
         transition={{ delay: animationPhase === 1 ? 1.5 : 0.5 }}
-        className="mt-4 rounded-lg p-3 bg-[#F2F7FF]"
+        className="mt-3 md:mt-4 rounded-lg p-2 md:p-3 bg-[#F2F7FF]"
         style={{
           border: "1px solid #073F9E",
         }}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={animationPhase >= 1 ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: animationPhase === 1 ? 1.6 : 0.6 }}
-            className="flex h-8 w-8 items-center justify-center rounded-full"
+            className="flex h-7 w-7 md:h-8 md:w-8 items-center justify-center rounded-full"
           >
-            <UserActivityIcon className="w-7 h-7" />
+            <UserActivityIcon className="w-5 h-5 md:w-7 md:h-7" />
           </motion.div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 1.7 : 0.7 }}
-              className="text-sm font-medium text-[#073F9E]"
+              className="text-sm font-medium text-[#073F9E] truncate"
             >
               Auto-reconciliation active
             </motion.div>
@@ -732,7 +686,7 @@ export function WireframeReportingDashboard({
               initial={{ opacity: 0, y: 5 }}
               animate={animationPhase >= 1 ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: animationPhase === 1 ? 1.8 : 0.8 }}
-              className="text-xs text-slate-600"
+              className="text-xs text-slate-600 truncate"
             >
               {data.index === 0 ? "145 of 147" : "150 of 152"} transactions
               matched automatically

@@ -15,7 +15,7 @@ export function ComplianceModule() {
   const [activeFeature, setActiveFeature] = useState(0);
   const sectionRef = useRef(null);
   const [dataIndex, setDataIndex] = useState(0);
-  
+
   // Refs for progress line functionality
   const bulletRefs = useRef([]);
   const featuresContainerRef = useRef(null);
@@ -189,10 +189,7 @@ export function ComplianceModule() {
             transition={{ duration: 0.6 }}
             className="mb-8 flex items-center gap-3"
           >
-            <span
-              className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
-             
-            >
+            <span className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue">
               Compliance Engine
             </span>
           </motion.div>
@@ -219,7 +216,7 @@ export function ComplianceModule() {
 
           {/* Feature Blocks with Progress Line */}
           <div ref={featuresContainerRef} className="relative">
-            <div className="relative pl-8">
+            <div className="relative md:pl-8">
               {/* Progress Line */}
               <ProgressLine
                 bulletRefs={bulletRefs}
@@ -227,16 +224,14 @@ export function ComplianceModule() {
                 featuresLength={features.length}
                 containerRef={featuresContainerRef}
                 isVisible={isVisible}
-                // Custom positioning - adjust as needed
-                left="left-[59px]"
+                left="left-[27px] md:left-[59px]"
                 top="top-7"
                 width="w-[2px]"
-                // Animation
                 animationType="spring"
                 stiffness={120}
                 damping={15}
               />
-
+              
               <div className="space-y-2">
                 {features.map((feature, index) => (
                   <FeatureBlock
@@ -257,6 +252,7 @@ export function ComplianceModule() {
         </div>
 
         {/* Visual Side - Dashboard */}
+        <div className="order-2 lg:order-1">
         <WireframeComplianceDashboard
           data={{
             index: dataIndex,
@@ -264,9 +260,9 @@ export function ComplianceModule() {
           }}
           isVisible={isVisible}
           y={y}
-          onAnimationComplete={() => {
-          }}
+          onAnimationComplete={() => {}}
         />
+        </div>
       </Container>
     </div>
   );

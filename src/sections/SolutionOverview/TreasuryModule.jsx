@@ -62,7 +62,7 @@ export function TreasuryModule() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) {
@@ -131,9 +131,7 @@ export function TreasuryModule() {
             transition={{ duration: 0.6 }}
             className="mb-8 flex items-center gap-3"
           >
-            <span
-              className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
-            >
+            <span className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue">
               Treasury Operations
             </span>
           </motion.div>
@@ -160,7 +158,7 @@ export function TreasuryModule() {
 
           {/* Feature Blocks with Progress Line */}
           <div ref={featuresContainerRef} className="relative">
-            <div className="relative pl-8">
+            <div className="relative md:pl-8">
               {/* Progress Line */}
               <ProgressLine
                 bulletRefs={bulletRefs}
@@ -168,11 +166,9 @@ export function TreasuryModule() {
                 featuresLength={features.length}
                 containerRef={featuresContainerRef}
                 isVisible={isVisible}
-                // Custom positioning for treasury theme
-                left="left-[59px]"
+                left="left-[27px] md:left-[59px]"
                 top="top-7"
                 width="w-[2px]"
-                // Animation
                 animationType="spring"
                 stiffness={120}
                 damping={15}
@@ -196,20 +192,21 @@ export function TreasuryModule() {
             </div>
           </div>
         </div>
-
-        <WireframeTreasuryDashboard
-          data={{
-            index: dataIndex,
-            chartData: chartData, // This should be your actual chart data array
-          }}
-          chartDataSets={chartDataSets} // Pass this as a separate prop
-          maxValue={maxValue} // Pass this as a separate prop
-          isVisible={isVisible}
-          y={y}
-          onAnimationComplete={() => {
-            // Your completion logic
-          }}
-        />
+        <div className="order-2 lg:order-1">
+          <WireframeTreasuryDashboard
+            data={{
+              index: dataIndex,
+              chartData: chartData, // This should be your actual chart data array
+            }}
+            chartDataSets={chartDataSets} // Pass this as a separate prop
+            maxValue={maxValue} // Pass this as a separate prop
+            isVisible={isVisible}
+            y={y}
+            onAnimationComplete={() => {
+              // Your completion logic
+            }}
+          />
+        </div>
       </Container>
     </div>
   );

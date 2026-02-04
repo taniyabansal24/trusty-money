@@ -333,7 +333,7 @@ export function PaymentsModule() {
 
           {/* Feature Blocks with Progress Line */}
           <div ref={featuresContainerRef} className="relative">
-            <div className="relative pl-8">
+            <div className="relative md:pl-8">
               {/* Progress Line */}
               <ProgressLine
                 bulletRefs={bulletRefs}
@@ -341,7 +341,7 @@ export function PaymentsModule() {
                 featuresLength={features.length}
                 containerRef={featuresContainerRef}
                 isVisible={isVisible}
-                left="left-[59px]"
+                left="left-[27px] md:left-[59px]"
                 top="top-7"
                 width="w-[2px]"
                 animationType="spring"
@@ -371,9 +371,9 @@ export function PaymentsModule() {
         {/* Visual - Vertical Card Stack Animation */}
         <motion.div className="relative">
           <div className="relative">
-            {/* Card Stack Container */}
-            <div className="relative" style={{ height: "400px" }}>
-              <div className="relative" style={{ height: "450px" }}>
+            {/* Card Container - Responsive */}
+            <div className="relative w-full">
+              <div className="relative h-[320px] sm:h-[350px] md:h-[380px] lg:h-[400px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`${activeCard.currency}-${activeCard.accountNumber}`}
@@ -381,92 +381,87 @@ export function PaymentsModule() {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="absolute top-0 left-0"
-                    style={{ width: "510px", height: "350px" }}
+                    className="absolute top-0 left-0 right-0"
                   >
-                    <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl border border-gray-200">
-                      {/* Background blur effects */}
-                      <div className="absolute w-[220px] h-[220px] left-[420px] top-[-80px] bg-blue-50 opacity-37 blur-[50px] rounded-full" />
-                      <div className="absolute w-[220px] h-[220px] left-[-70px] top-[250px] bg-blue-50 opacity-46 blur-[50px] rounded-full" />
+                    <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-white shadow-lg md:shadow-xl border border-gray-200 mx-auto w-full max-w-[90vw] sm:max-w-md md:max-w-lg lg:w-[510px] lg:h-[350px] h-[280px] sm:h-[300px] md:h-[320px]">
+                      {/* Background blur effects - Responsive */}
+                      <div className="absolute w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] md:w-[180px] md:h-[180px] lg:w-[220px] lg:h-[220px] left-[70%] sm:left-[75%] lg:left-[420px] top-[-40px] sm:top-[-50px] lg:top-[-80px] bg-blue-50 opacity-30 lg:opacity-37 blur-[30px] sm:blur-[40px] lg:blur-[50px] rounded-full" />
+                      <div className="absolute w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] md:w-[180px] md:h-[180px] lg:w-[220px] lg:h-[220px] left-[-20%] sm:left-[-30%] lg:left-[-70px] top-[60%] sm:top-[65%] lg:top-[250px] bg-blue-50 opacity-30 lg:opacity-46 blur-[30px] sm:blur-[40px] lg:blur-[50px] rounded-full" />
 
-                      {/* Main Content */}
-                      <div className="relative w-full h-full p-5">
+                      {/* Main Content - Responsive padding */}
+                      <div className="relative w-full h-full p-3 sm:p-4 md:p-5">
                         {/* Header */}
-                        <div className="flex items-center justify-between mb-5">
-                          <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-between mb-3 sm:mb-4 md:mb-5">
+                          <div className="flex items-center gap-2 sm:gap-3">
                             <img
                               src={getFlagAsset(activeCard).src}
                               alt={getFlagAsset(activeCard).alt}
-                              className="w-7 h-6 rounded-md object-cover border border-slate-200 shadow-sm"
+                              className="w-5 h-4 sm:w-6 sm:h-5 md:w-7 md:h-6 rounded sm:rounded-md object-cover border border-slate-200 shadow-sm"
                             />
                             <div>
                               <div className="text-xs text-[#45556C]">
                                 Bank Account
                               </div>
-                              <div className="font-semibold text-sm text-[#0F172B]">
+                              <div className="font-semibold text-xs sm:text-sm text-[#0F172B]">
                                 {activeCard.country}
                               </div>
                             </div>
                           </div>
-
-                          
                         </div>
 
                         {/* Account Number */}
-                        <div className="mb-4">
-                          <div className="text-xs text-[#62748E] uppercase mb-1.5">
+                        <div className="mb-3 sm:mb-4">
+                          <div className="text-xs text-[#62748E] uppercase mb-1 sm:mb-1.5">
                             Account Number
                           </div>
-                          <div className="h-14 bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <CardIcon className="w-4 h-4 text-[#073F9E]" />
-                              <div className="text-lg text-[#0F172B] tracking-[1px]">
+                          <div className="h-10 sm:h-12 md:h-14 bg-blue-50 border border-blue-100 rounded-lg md:rounded-xl p-2 sm:p-3 flex items-center justify-between">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                              <CardIcon className="w-3 h-3 sm:w-4 sm:h-4 text-[#073F9E]" />
+                              <div className="text-sm sm:text-base md:text-lg text-[#0F172B] tracking-[0.5px] sm:tracking-[1px] truncate">
                                 {activeCard.accountNumber}
                               </div>
                             </div>
-                           
                           </div>
                         </div>
 
-                        {/* Bank Info */}
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                          <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                            <div className="flex items-center gap-2 mb-1">
-                              <BankIcon className="w-3.5 h-3.5 text-[#073F9E]" />
-                              <div className="text-xs text-[#62748E] uppercase">
+                        {/* Bank Info - Responsive grid */}
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
+                          <div className="h-12 sm:h-14 md:h-16 bg-blue-50 border border-blue-100 rounded-lg md:rounded-xl p-2 sm:p-3">
+                            <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                              <BankIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#073F9E]" />
+                              <div className="text-xs text-[#62748E] uppercase truncate">
                                 Bank Name
                               </div>
                             </div>
-                            <div className="text-sm text-[#0F172B] truncate">
+                            <div className="text-xs sm:text-sm text-[#0F172B] truncate">
                               {activeCard.bankName}
                             </div>
                           </div>
 
-                          <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                            <div className="flex items-center gap-2 mb-1">
-                              <FilterIcon className="w-3.5 h-3.5 text-[#073F9E]" />
-                              <div className="text-xs text-[#62748E] uppercase">
+                          <div className="h-12 sm:h-14 md:h-16 bg-blue-50 border border-blue-100 rounded-lg md:rounded-xl p-2 sm:p-3">
+                            <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                              <FilterIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#073F9E]" />
+                              <div className="text-xs text-[#62748E] uppercase truncate">
                                 {activeCard.routingCodeType}
                               </div>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm">
+                              <span className="text-xs sm:text-sm truncate">
                                 {activeCard.routingCode}
                               </span>
-                             
                             </div>
                           </div>
                         </div>
 
                         {/* Address */}
-                        <div className="h-16 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                          <div className="flex items-center gap-2 mb-1">
-                            <LocationIcon className="w-3.5 h-3.5 text-[#073F9E]" />
+                        <div className="h-12 sm:h-14 md:h-16 bg-blue-50 border border-blue-100 rounded-lg md:rounded-xl p-2 sm:p-3">
+                          <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                            <LocationIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#073F9E]" />
                             <div className="text-xs text-[#62748E] uppercase">
                               Bank Address
                             </div>
                           </div>
-                          <div className="text-sm truncate">
+                          <div className="text-xs sm:text-sm truncate leading-tight">
                             {activeCard.bankAddress}
                           </div>
                         </div>

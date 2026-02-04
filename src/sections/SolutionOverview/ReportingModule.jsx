@@ -104,9 +104,7 @@ export function ReportingModule() {
             transition={{ duration: 0.6 }}
             className="mb-8 flex items-center gap-3"
           >
-            <span
-              className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
-            >
+            <span className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue">
               Financial Intelligence
             </span>
           </motion.div>
@@ -133,7 +131,7 @@ export function ReportingModule() {
 
           {/* Feature Blocks with Progress Line */}
           <div ref={featuresContainerRef} className="relative">
-            <div className="relative pl-8">
+            <div className="relative md:pl-8">
               {/* Progress Line */}
               <ProgressLine
                 bulletRefs={bulletRefs}
@@ -141,12 +139,9 @@ export function ReportingModule() {
                 featuresLength={features.length}
                 containerRef={featuresContainerRef}
                 isVisible={isVisible}
-                // Custom positioning for reporting theme
-                left="left-[59px]"
+                left="left-[27px] md:left-[59px]"
                 top="top-7"
                 width="w-[2px]"
- 
-                // Animation
                 animationType="spring"
                 stiffness={120}
                 damping={15}
