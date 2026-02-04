@@ -1,21 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./animation.css"; // We'll create this CSS file
-import ArrowIcon from "../components/svg/ArrowIcon";
-import LoadingSpinner from "../components/svg/LoadingSpinner";
-import CheckIcon from "../components/svg/CheckIcon";
-import MoreIcon from "../components/svg/MoreIcon";
-import LayersIcon from "../components/svg/LayersIcon";
-import CalendarArrowIcon from "../components/svg/CalendarArrowIcon";
-import MoreDotsIcon from "../components/svg/MoreDotsIcon";
-import PlusSquareIcon from "../components/svg/PlusSquareIcon";
-import ReceiptIcon from "../components/svg/ReceiptIcon";
-import GlobeIcon from "../components/svg/GlobeIcon";
-import ChevronDownIcon from "../components/svg/ChevronDownIcon";
-import PlusCircleIcon from "../components/svg/PlusCircleIcon";
-import CursorIcon from "../components/svg/CursorIcon";
-import PlusIcon from "../components/svg/PlusIcon";
+import "./animation.css";
+import ArrowIcon from "../../components/svg/ArrowIcon";
+import LoadingSpinner from "../../components/svg/LoadingSpinner";
+import CheckIcon from "../../components/svg/CheckIcon";
+import MoreIcon from "../../components/svg/MoreIcon";
+import LayersIcon from "../../components/svg/LayersIcon";
+import CalendarArrowIcon from "../../components/svg/CalendarArrowIcon";
+import MoreDotsIcon from "../../components/svg/MoreDotsIcon";
+import PlusSquareIcon from "../../components/svg/PlusSquareIcon";
+import ReceiptIcon from "../../components/svg/ReceiptIcon";
+import GlobeIcon from "../../components/svg/GlobeIcon";
+import ChevronDownIcon from "../../components/svg/ChevronDownIcon";
+import PlusCircleIcon from "../../components/svg/PlusCircleIcon";
+import CursorIcon from "../../components/svg/CursorIcon";
+import PlusIcon from "../../components/svg/PlusIcon";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button, Container } from "../../components/ui";
+import { staggerContainer, staggerItem } from "../../utils/animations";
 
-const ProductPage = () => {
+const HeroSection = () => {
   const [animationStage, setAnimationStage] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [rowHeight, setRowHeight] = useState(0);
@@ -52,7 +55,7 @@ const ProductPage = () => {
     setOverlayOpacity(0);
     setInputTransform("translateY(-20px)");
     setSuggestionsTransform("translateY(-20px)");
-    setCursorPosition({ x: 707.939, y: 74.6 });
+    setCursorPosition({ x: 707.939, y: 43 });
     setCursorOpacity(0);
     setCursorScale(1);
     setLoadingOpacity(0);
@@ -74,7 +77,7 @@ const ProductPage = () => {
 
     // Scene 2 – Cursor moves to "Add product" (0.4s → 1.0s)
     setTimeout(() => {
-      setCursorPosition({ x: 100, y: 340 });
+      setCursorPosition({ x: 100, y: 330 });
       setCursorScale(0.9);
       setAnimationStage(2);
     }, 1000);
@@ -116,7 +119,7 @@ const ProductPage = () => {
           // Brief pause after typing
           setTimeout(() => {
             // Scene 6 – Move cursor to footer (3.2s → 3.6s)
-            setCursorPosition({ x: 320, y: 490 }); // Better position for footer text
+            setCursorPosition({ x: 320, y: 460 }); // Better position for footer text
             setCursorScale(0.9);
             setAnimationStage(6);
 
@@ -149,7 +152,7 @@ const ProductPage = () => {
 
     // Scene 9 – Cursor moves to "Start billing" (4.4s → 5.0s)
     setTimeout(() => {
-      setCursorPosition({ x: 707.939, y: 74.6 });
+      setCursorPosition({ x: 707.939, y: 35 });
       setCursorScale(0.9);
       setAnimationStage(8);
     }, 5000);
@@ -213,8 +216,77 @@ const ProductPage = () => {
   };
 
   return (
-    <div class="relative mt-8 flex w-full max-w-full justify-center sm:mt-20 lg:mt-32">
-      <div className="relative w-full max-w-[817px]">
+    <div class="relative mt-8 flex flex-col w-full max-w-full justify-center sm:mt-20 ">
+      {/* Text Content */}
+      <motion.div
+        variants={staggerContainer}
+        initial="false"
+        animate="animate"
+        className="text-center relative"
+      >
+        {/* Badge - RESPONSIVE */}
+        <motion.div
+          variants={staggerItem}
+          className="mb-6 flex justify-center items-center gap-3"
+        >
+          <span className="inline-block px-4 py-2 rounded-full hero-badge txt-blue light-bg text-center">
+            Smart Invoice and Automation
+          </span>
+        </motion.div>
+
+        {/* Headline - RESPONSIVE */}
+        <motion.h1 className="hero-heading w-full text-center ">
+          Translate sales contracts into <br />
+          <span className="gradient-text relative">automated billing.</span>
+        </motion.h1>
+
+        {/* Subheadline line - RESPONSIVE */}
+        <motion.p className="section-subtitle mb-6 max-w-xl mx-auto text-center ">
+          Automate invoices, subscriptions, and usage-based pricing with global
+          accuracy and compliance. Designed for companies with hybrid pricing
+          and custom deal terms.
+        </motion.p>
+
+        {/* CTA Buttons - RESPONSIVE */}
+        {/* <motion.div
+                variants={staggerItem}
+                className="flex flex-col sm:flex-row gap-4 mb-8 justify-center"
+              >
+                <Button variant="primary" size="md" shimmer>
+                  Request a Demo
+                </Button>
+                <Button variant="secondary" size="md">
+                  Talk to Sales
+                </Button>
+              </motion.div> */}
+
+        <motion.div variants={staggerItem} className="text-muted space-y-2">
+          {[].map((item, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 2 + i * 0.1 }}
+              className="flex items-center gap-2"
+            >
+              <motion.span
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{
+                  duration: 2,
+                  delay: 2.5 + i * 0.2,
+                  repeat: Infinity,
+                  repeatDelay: 3,
+                }}
+                className="text-green-600 font-bold"
+              >
+                {item.icon}
+              </motion.span>
+              {item.text}
+            </motion.p>
+          ))}
+        </motion.div>
+      </motion.div>
+      <div className="relative w-full max-w-[817px] mx-auto mt-20">
         <div id="hero-animation-root" className="relative w-full">
           {/* Cursor */}
           <div
@@ -231,36 +303,17 @@ const ProductPage = () => {
 
           {/* Main Card */}
           <div
-            className="relative w-full overflow-hidden rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white px-6 pb-3 pt-5"
+            className="relative w-full overflow-hidden rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white px-6 py-5"
             style={{
               boxShadow:
                 "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
             }}
           >
-            <div className="flex h-5 gap-x-3">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                preserveAspectRatio="none"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M20 4L13.6183 16.4755H7.62401L10.2948 11.3051H10.1749C7.9716 14.1654 4.68412 16.0483 0 16.4755V11.3767C0 11.3767 2.99655 11.1997 4.75813 9.34768H0V4.0001H5.34763V8.39841L5.46765 8.39791L7.65291 4.0001H11.6972V8.37052L11.8171 8.37032L14.0844 4H20Z"
-                  fill="#146EF5"
-                ></path>
-              </svg>
-              <p className="text-left text-[13px] text-[#1d1d20]">Webflow</p>
-            </div>
-            <div className="mt-[10px] flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center">
-              <p className="text-left text-xl font-bold text-[#14171c]">
+            <div className="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center align-center">
+              <p className="hero-heading text-[#1B1B1B] text-left text-xl font-bold mb-0">
                 Create a billing schedule
               </p>
-              <div className="mt-4 flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
+              <div className=" flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
                 <div
                   className="flex h-9 w-full items-center justify-center rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white px-3"
                   style={{
@@ -271,11 +324,11 @@ const ProductPage = () => {
                 </div>
                 <div
                   id="hero-animation-start-billing"
-                  className="flex h-9 w-[120px] items-center justify-center rounded-lg border border-[#003337] bg-[#05454a] text-white relative overflow-hidden"
+                  className="flex h-9 w-[120px] items-center justify-center rounded-lg border bg-[#073F9E] text-white relative overflow-hidden"
                   style={{
                     boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
-                    minWidth: "120px", // Fixed width
-                    maxWidth: "120px", // Fixed width
+                    minWidth: "120px",
+                    maxWidth: "120px",
                   }}
                 >
                   {/* Loading Spinner */}
@@ -316,7 +369,7 @@ const ProductPage = () => {
                   </p>
                 </div>
                 <div className="hidden items-center p-2 sm:flex">
-                  <MoreIcon size={20} color="#666" />
+                  <MoreIcon size={20} color="#073F9E" />
                 </div>
               </div>
             </div>
@@ -336,7 +389,7 @@ const ProductPage = () => {
             >
               {/* Header */}
               <div className="relative flex items-center justify-start self-stretch px-6">
-                <p className="text-left text-base font-bold text-[#14171c]">
+                <p className="section-subtitle text-[#1B1B1B] text-left text-base font-bold">
                   Pricing
                 </p>
               </div>
@@ -344,32 +397,32 @@ const ProductPage = () => {
               {/* Desktop view */}
               <div className="hidden w-full items-start justify-between px-4 sm:flex">
                 {/* Product column */}
-                <div className="flex flex-col items-start justify-start text-[#14171c] sm:w-[151px] lg:w-[240px]">
+                <div className="flex flex-col items-start justify-start text-[#1b1b1b] sm:w-[151px] lg:w-[240px]">
                   <div className="relative flex h-9 items-center gap-2 px-2">
-                    <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
+                    <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
                       product
                     </p>
                   </div>
                   <div className="relative overflow-hidden px-2">
                     <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                      <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                      <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
                         Platform Access
                       </p>
                     </div>
                   </div>
                   <div className="relative overflow-hidden px-2">
                     <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                      <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                      <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
                         Onboarding fees
                       </p>
                     </div>
                   </div>
                   <div className="relative overflow-hidden px-2">
                     <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                      <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                      <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
                         Account verification
                       </p>
-                      <LayersIcon size={24} />
+                      <LayersIcon size={24} color="#073F9E" />
                     </div>
                   </div>
                   {/* API Product row with animated height */}
@@ -385,7 +438,7 @@ const ProductPage = () => {
                     }}
                   >
                     <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                      <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                      <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
                         API Product
                       </p>
                     </div>
@@ -395,28 +448,28 @@ const ProductPage = () => {
                 {/* Frequency column */}
                 <div className="flex flex-col items-start justify-start">
                   <div className="relative flex h-9 items-center justify-start gap-2 self-stretch px-2">
-                    <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
-                      Frequency
+                    <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
+                      frequency
                     </p>
                   </div>
                   <div className="relative self-stretch overflow-hidden px-2">
                     <div className="flex h-9 items-center justify-start gap-2">
-                      <p className="text-left text-sm text-[#344054]">
+                      <p className="feature-description text-left text-[#344054]">
                         Annually
                       </p>
-                      <CalendarArrowIcon size={24} />
+                      <CalendarArrowIcon size={24} color="#073F9E" />
                     </div>
                   </div>
                   <div className="relative self-stretch overflow-hidden px-2">
                     <div className="flex h-9 items-center justify-start gap-2">
-                      <p className="text-left text-sm text-[#344054]">
+                      <p className="feature-description text-left text-[#344054]">
                         One time
                       </p>
                     </div>
                   </div>
                   <div className="relative self-stretch overflow-hidden px-2">
                     <div className="flex h-9 items-center justify-start gap-2">
-                      <p className="text-left text-sm text-[#344054]">
+                      <p className="feature-description text-left text-[#344054]">
                         Monthly
                       </p>
                     </div>
@@ -433,7 +486,7 @@ const ProductPage = () => {
                     }}
                   >
                     <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                      <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                      <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
                         One time
                       </p>
                     </div>
@@ -443,46 +496,45 @@ const ProductPage = () => {
                 {/* Discount column */}
                 <div className="flex flex-col items-start justify-start">
                   <div className="relative flex h-9 items-center justify-start gap-2 px-2">
-                    <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
+                    <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
                       discount
                     </p>
                   </div>
                   <div className="relative flex h-9 items-center justify-start gap-2 p-2">
-                    <p className="flex-grow text-left text-sm text-[#344054]">
+                    <p className="feature-description flex-grow text-left text-[#344054]">
                       10% off once
                     </p>
                   </div>
                 </div>
 
                 {/* Price column */}
-                {/* Price column */}
                 <div className="flex">
                   <div className="flex flex-col items-start justify-start">
                     <div className="relative flex h-9 items-center justify-end gap-2 self-stretch px-2">
-                      <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
+                      <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
                         price
                       </p>
                     </div>
                     <div className="relative w-full overflow-hidden px-2">
                       <div className="flex h-9 items-center justify-end gap-2">
-                        <p className="flex-grow text-right text-sm text-[#7483a0] line-through">
+                        <p className="text-muted flex-grow text-right text-sm text-[#7483a0] line-through">
                           £5,000.00
                         </p>
-                        <p className="flex-grow text-right text-sm text-[#14171c]">
+                        <p className="feature-title flex-grow text-right text-[#1B1B1B]">
                           £4,500.00
                         </p>
                       </div>
                     </div>
                     <div className="relative w-full overflow-hidden px-2">
                       <div className="flex h-9 items-center justify-end gap-2">
-                        <p className="flex-grow text-right text-sm text-[#14171c]">
+                        <p className="feature-title flex-grow text-right text-[#1B1B1B]">
                           £5,900.00
                         </p>
                       </div>
                     </div>
                     <div className="relative w-full overflow-hidden px-2">
                       <div className="flex h-9 items-center justify-end gap-2">
-                        <p className="flex-grow text-right text-sm text-[#14171c]">
+                        <p className="feature-title flex-grow text-right text-[#1B1B1B]">
                           From £0.20
                         </p>
                       </div>
@@ -500,7 +552,7 @@ const ProductPage = () => {
                       }}
                     >
                       <div className="flex h-9 items-center justify-end gap-2">
-                        <p className="flex-grow text-right text-sm text-[#14171c]">
+                        <p className="feature-title flex-grow text-right text-[#1B1B1B]">
                           £5,900.00
                         </p>
                       </div>
@@ -510,7 +562,7 @@ const ProductPage = () => {
                     <div className="flex h-9 w-9 items-center justify-center px-2"></div>
                     <div className="overflow-hidden px-2">
                       <div className="flex h-9 w-9 items-center justify-center">
-                        <MoreDotsIcon color="#1D1D20" />
+                        <MoreDotsIcon color="#073F9E" />
                       </div>
                     </div>
                     <div className="overflow-hidden px-2">
@@ -520,7 +572,7 @@ const ProductPage = () => {
                     </div>
                     <div className="overflow-hidden px-2">
                       <div className="flex h-9 w-9 items-center justify-center">
-                        <MoreDotsIcon size={24} />
+                        <MoreDotsIcon size={24} color="#073F9E" />
                       </div>
                     </div>
                     {/* API Product more dots with animated height */}
@@ -534,7 +586,7 @@ const ProductPage = () => {
                       }}
                     >
                       <div className="flex h-9 w-9 items-center justify-center">
-                        <MoreDotsIcon size={24} />
+                        <MoreDotsIcon size={24} color="#073F9E" />
                       </div>
                     </div>
                   </div>
@@ -544,72 +596,72 @@ const ProductPage = () => {
               {/* Mobile view */}
               <div className="w-full sm:hidden">
                 <div className="mb-2 grid w-full auto-rows-[36px] grid-cols-[auto,179px] items-center gap-x-4 border-b px-6 pb-2 last:mb-0 last:border-b-0 last:pb-0">
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     product
                   </p>
                   <div className="relative flex items-center justify-start gap-2 overflow-hidden rounded-bl-md rounded-tl-md py-2">
-                    <p className="text-right text-sm text-[#14171c]">
+                    <p className="feature-title text-right text-[#1B1B1B]">
                       Platform Access
                     </p>
                   </div>
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     frequency
                   </p>
                   <div className="relative flex items-center justify-start gap-2 self-stretch py-2">
-                    <p className="flex-shrink-0 flex-grow-0 text-left text-sm text-[#344054]">
+                    <p className="feature-description flex-shrink-0 flex-grow-0 text-left text-[#344054]">
                       Annually
                     </p>
-                    <CalendarArrowIcon size={20} />
+                    <CalendarArrowIcon size={20} color="#073F9E" />
                   </div>
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     discount
                   </p>
                   <div className="relative flex items-center justify-start gap-2 overflow-hidden rounded-bl-md rounded-tl-md py-2">
-                    <p className="text-left text-sm text-[#344054]">
+                    <p className="feature-description text-left text-[#344054]">
                       10% off once
                     </p>
                   </div>
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     price
                   </p>
                   <div className="relative flex items-center justify-start gap-2 py-2">
-                    <p className="text-left text-sm text-[#7483a0] line-through">
+                    <p className="text-muted text-left text-sm text-[#7483a0] line-through">
                       £5,000.00
                     </p>
-                    <p className="text-left text-sm text-[#14171c]">
+                    <p className="feature-title text-left text-[#1B1B1B]">
                       £4,500.00
                     </p>
                   </div>
                 </div>
                 <div className="mb-2 grid w-full auto-rows-[36px] grid-cols-[auto,179px] items-center gap-x-4 border-b px-6 pb-2 last:mb-0 last:border-b-0 last:pb-0">
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     product
                   </p>
                   <div className="relative flex items-center justify-start gap-2 overflow-hidden rounded-bl-md rounded-tl-md py-2">
-                    <p className="text-right text-sm text-[#14171c]">
+                    <p className="feature-title text-right text-[#1B1B1B]">
                       Onboarding fees
                     </p>
                   </div>
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     frequency
                   </p>
                   <div className="relative flex items-center justify-start gap-2 self-stretch py-2">
-                    <p className="flex-shrink-0 flex-grow-0 text-left text-sm text-[#344054]">
+                    <p className="feature-description flex-shrink-0 flex-grow-0 text-left text-[#344054]">
                       One time
                     </p>
-                    <CalendarArrowIcon className="h-5 w-5 text-gray-400" />
+                    <CalendarArrowIcon className="h-5 w-5 text-[#073F9E]" />
                   </div>
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     discount
                   </p>
                   <div className="relative flex items-center justify-start gap-2 overflow-hidden rounded-bl-md rounded-tl-md py-2">
-                    <p className="text-left text-sm text-[#344054]"></p>
+                    <p className="feature-description text-left text-[#344054]"></p>
                   </div>
-                  <p className="block text-left text-xs font-bold uppercase text-[#7483a0]">
+                  <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
                     price
                   </p>
                   <div className="relative flex items-center justify-start gap-2 py-2">
-                    <p className="text-left text-sm text-[#14171c]">
+                    <p className="feature-title text-left text-[#1B1B1B]">
                       £5,900.00
                     </p>
                   </div>
@@ -618,7 +670,7 @@ const ProductPage = () => {
 
               {/* Action buttons section */}
               <div className="hidden flex-col items-start justify-start gap-2.5 self-stretch px-4 sm:flex">
-                <div className="flex items-start justify-between gap-1.5 self-stretch rounded-md bg-[#f7f9fb] p-2 text-[13px]">
+                <div className="flex items-start justify-between gap-1.5 self-stretch rounded-md light-bg p-2 text-[13px]">
                   <div className="flex items-start justify-start gap-1.5 md:gap-3">
                     <div
                       id="hero-animation-add-product"
@@ -629,8 +681,8 @@ const ProductPage = () => {
                         boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
                       }}
                     >
-                      <PlusSquareIcon size={24} />
-                      <p className="whitespace-nowrap text-left font-bold tracking-tight text-[#344054] md:tracking-normal">
+                      <PlusSquareIcon size={24} color="#073F9E" />
+                      <p className="feature-title whitespace-nowrap text-left text-[#344054] ">
                         Add product
                       </p>
                     </div>
@@ -641,8 +693,8 @@ const ProductPage = () => {
                         boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
                       }}
                     >
-                      <ReceiptIcon size={24} />
-                      <p className="whitespace-nowrap text-left font-bold tracking-tight text-[#344054] md:tracking-normal">
+                      <ReceiptIcon size={24} color="#073F9E" />
+                      <p className="feature-title whitespace-nowrap text-left  text-[#344054] ">
                         Add discount
                       </p>
                     </div>
@@ -653,8 +705,8 @@ const ProductPage = () => {
                         boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
                       }}
                     >
-                      <GlobeIcon color="#1D1D20" size={24} />
-                      <p className="whitespace-nowrap text-left font-bold tracking-tight text-[#344054] md:tracking-normal">
+                      <GlobeIcon color="#073F9E" size={24} />
+                      <p className="feature-title whitespace-nowrap text-left  text-[#344054] ">
                         Add minimum
                       </p>
                     </div>
@@ -665,21 +717,21 @@ const ProductPage = () => {
                       boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
                     }}
                   >
-                    <div className="relative flex flex-grow items-center justify-start self-stretch whitespace-nowrap p-3">
+                    <div className="text-muted relative flex flex-grow items-center justify-start self-stretch whitespace-nowrap p-3">
                       Select tax rate
                     </div>
-                    <ChevronDownIcon size={20} />
+                    <ChevronDownIcon size={20} color="#073F9E" />
                   </div>
                 </div>
               </div>
 
               {/* Add new phase section */}
               <div className="relative flex items-center justify-between self-stretch border-b-0 border-l-0 border-r-0 border-t border-[#e4e8ef] bg-white px-6 py-[18px]">
-                <p className="text-left text-sm font-medium text-[#716fff]">
+                <p className="txt-blue text-left text-sm font-medium">
                   Add new phase
                 </p>
                 <div className="relative flex w-5 flex-shrink-0 flex-grow-0 items-center justify-between">
-                  <PlusCircleIcon size={24} />
+                  <PlusCircleIcon size={24} color="#073F9E" />
                 </div>
               </div>
             </div>
@@ -695,16 +747,16 @@ const ProductPage = () => {
                 }}
               >
                 <div
-                  className="input flex h-10 w-full items-center rounded-md border-2 border-[#716FFF] bg-white px-3 transition-all duration-300 ease-out"
+                  className="input flex h-10 w-full items-center rounded-md border-2 border-[#073F9E] bg-white px-3 transition-all duration-300 ease-out"
                   style={{
                     transform: inputTransform,
                     transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
                 >
-                  <span className="text-animation text-[14px]/[16px]">
+                  <span className="feature-description text-animation">
                     {typedText}
                   </span>
-                  <CursorIcon height={20} />
+                  <CursorIcon height={20} color="#073F9E" />
                 </div>
                 <div
                   className="suggestions relative flex h-[324px] w-full flex-col items-start justify-between overflow-hidden rounded-md border border-[#d1d9e4] bg-white transition-all duration-300 ease-out"
@@ -718,28 +770,28 @@ const ProductPage = () => {
                   <div className="flex flex-col items-start justify-start self-stretch p-2">
                     <div className="items-center justify-start self-stretch px-2">
                       <div className="flex h-10 items-center justify-start">
-                        <p className="text-left text-sm font-bold text-[#14171c]">
+                        <p className="feature-title text-left text-[#1B1B1B]">
                           Account verifications
                         </p>
                       </div>
                       <div className="pl-3">
                         <div className="flex h-10 items-center justify-start">
-                          <p className="text-left text-sm text-[#7483a0]">
+                          <p className="text-muted text-left">
                             From $0.20 + $200.00 / Monthly
                           </p>
                         </div>
                         <div className="flex h-10 items-center justify-start">
-                          <p className="text-left text-sm text-[#7483a0]">
+                          <p className="text-muted text-left">
                             From $0.19 / Monthly
                           </p>
                         </div>
                         <div className="flex h-10 items-center justify-start">
-                          <p className="text-left text-sm text-[#7483a0]">
+                          <p className="text-muted text-left">
                             From $0.18 / Monthly
                           </p>
                         </div>
                         <div className="flex h-10 items-center justify-start">
-                          <p className="text-left text-sm text-[#7483a0]">
+                          <p className="text-muted text-left">
                             From $0.17 / Monthly
                           </p>
                         </div>
@@ -747,13 +799,13 @@ const ProductPage = () => {
                     </div>
                     <div className="items-center justify-start self-stretch px-2">
                       <div className="flex h-10 items-center justify-start">
-                        <p className="text-left text-sm font-bold text-[#14171c]">
+                        <p className="feature-title text-left text-[#1B1B1B]">
                           Analytics Platform
                         </p>
                       </div>
                       <div className="pl-3">
                         <div className="flex h-10 items-center justify-start">
-                          <p className="text-left text-sm text-[#7483a0]">
+                          <p className="text-muted text-left">
                             $200.00 / Monthly
                           </p>
                         </div>
@@ -765,8 +817,8 @@ const ProductPage = () => {
                       showFooterClick ? "scale-95" : ""
                     }`}
                   >
-                    <PlusIcon size={20} />
-                    <p className="text-left text-sm font-semibold text-[#716fff]">
+                    <PlusIcon size={20} color="#073F9E" />
+                    <p className="txt-blue text-left text-sm font-semibold">
                       Add '
                       <span className="text-animation">
                         {typedText || "API Product"}
@@ -784,4 +836,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default HeroSection;

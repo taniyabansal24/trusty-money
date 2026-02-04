@@ -12,7 +12,7 @@ import JoinUsPage from "./sections/JoinUsSection";
 import AboutUs from "./sections/AboutUsSection";
 import { Footer, Navbar } from "./components/layout";
 import AboutUsPage from "./pages/AboutUsPage";
-import ProductPage from "./pages/ProductPage";
+import BillingPage from "./pages/BillingPage";
 
 function App() {
   return (
@@ -32,7 +32,7 @@ function App() {
           <Route path="/about-us" element={<AboutUsPage/>} />
 
           {/* About-us route */}
-          <Route path="/product" element={<ProductPage/>} />
+          <Route path="/products/billing" element={<BillingPage/>} />
 
           {/* Redirect any unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
