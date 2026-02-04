@@ -12,7 +12,7 @@ export function SolutionOverview() {
   return (
     <section className="relative w-full overflow-hidden">
       {/* Hero Section */}
-      <div className="relative w-full min-h-[52rem] overflow-hidden  max-w-7xl mx-auto ">
+      <div className="relative w-full h-[38rem] md:h-[43rem] lg:min-h-[52rem] overflow-hidden  max-w-7xl mx-auto ">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-xl opacity-30 animate-float"></div>
           <div
@@ -44,10 +44,7 @@ export function SolutionOverview() {
               variants={staggerItem}
               className="mb-6 flex justify-center"
             >
-              <span
-                className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue"
-              
-              >
+              <span className="inline-block px-4 py-2 rounded-full hero-badge light-bg txt-blue">
                 Global Solution
               </span>
             </motion.div>
@@ -76,24 +73,24 @@ export function SolutionOverview() {
           <div className="">
             {/* Outer container for positioning */}
             <div className=" overflow-visible">
-              
               {/* Globe Container - Fixed, isolated */}
               <div className="absolute inset-0 z-10">
                 <div className=" w-full h-full overflow-visible">
-                  <div className="flex absolute w-[100%] h-[338%] inset-x-0 top-[14.5rem] -bottom-10/12 justify-center mask-globe">
+                  <div className="flex absolute w-[100%] h-[123%] sm:h-[250%] md:h-[314%] top-[21.5rem] sm:top-[13.5rem]  lg:top-[14.5rem] inset-x-0 -bottom-10/12 justify-center mask-globe">
+                  {/* <div className="flex absolute w-[100%] h-[146%] sm:h-[254%] md:h-[338%] top-[19.5rem] md:top-[10.5rem] lg:top-[14.5rem] inset-x-0 -bottom-10/12 justify-center mask-globe"> */}
                     <RandomGlobe />
                   </div>
                 </div>
               </div>
 
               {/* Cards Component - Completely separate layer */}
-              <div className="absolute inset-0 z-20 top-[35rem]">
+              <div className="absolute inset-0 z-20 top-[28rem] sm:top-[25rem] md:top-[28rem] lg:top-[35rem]">
                 <GlobeCards />
               </div>
             </div>
 
             {/* Mobile Cards - Stacked */}
-            <div className="lg:hidden w-full max-w-md mx-auto mt-8">
+            {/* <div className="lg:hidden w-full max-w-md mx-auto mt-8">
               <div className="flex flex-col gap-4">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -167,7 +164,7 @@ export function SolutionOverview() {
                   </div>
                 </motion.div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

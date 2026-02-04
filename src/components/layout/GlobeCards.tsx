@@ -9,7 +9,7 @@ const CARD_DATA = [
     initials: "RK",
     name: "Rohan Kapoor",
     role: "Owner, Glow Space",
-    amount: "₹ 5,00,000",
+    amount: "₹ 5,00,00",
     status: "Payment Sent",
     statusColor: "green",
     bgColor: "blue",
@@ -33,7 +33,7 @@ const CARD_DATA = [
     initials: "SR",
     name: "Sophia Rodriguez",
     role: "CEO, TechFlow Inc",
-    amount: "€ 12,500",
+    amount: "€ 12,50",
     status: "Payment Sent",
     statusColor: "green",
     bgColor: "purple",
@@ -45,7 +45,7 @@ const CARD_DATA = [
     initials: "TK",
     name: "Takashi Kimura",
     role: "Tokyo, Japan",
-    amount: "¥ 1,250,000",
+    amount: "¥ 1,250,00",
     status: "Payment Received",
     statusColor: "blue",
     bgColor: "amber",
@@ -57,7 +57,7 @@ const CARD_DATA = [
     initials: "AG",
     name: "Aisha Gupta",
     role: "Director, Urban Living",
-    amount: "₹ 8,75,000",
+    amount: "₹ 8,75,00",
     status: "Payment Sent",
     statusColor: "green",
     bgColor: "pink",
@@ -121,7 +121,12 @@ function Card({ card, isVisible }: CardProps) {
       }}
       className={`absolute ${card.position === "left" ? "left-0 -translate-x-full" : "right-0 translate-x-full"} top-1/2 -translate-y-1/2 pointer-events-auto`}
     >
-      <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-4 h-40 w-60 backdrop-blur-sm bg-white/95">
+           {/* Card container - Responsive sizing */}
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border border-slate-200 p-3 md:p-4 
+        h-32 w-48 
+        sm:h-36 sm:w-52 
+        md:h-40 md:w-60 
+        backdrop-blur-sm bg-white/95">
         <div className="flex items-center gap-3 mb-3">
           <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${color.from} ${color.to} flex items-center justify-center shrink-0`}>
             <span className={`${color.text} font-semibold text-sm`}>
