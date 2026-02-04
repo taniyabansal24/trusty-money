@@ -4,7 +4,7 @@ const BillingInvoice = () => {
   // Invoice data
   const invoiceItems = [
     {
-      description: "SaaS Subscription (12 months)",
+      description: "SaaS Subscription",
       qty: 12,
       rate: "$1,000.00",
       amount: "$12,000.00"
@@ -26,7 +26,7 @@ const BillingInvoice = () => {
   // Summary data
   const summary = {
     subtotal: "$15,000.00",
-    taxLabel: "MwSt (DE 19%)",
+    taxLabel: "MwSt",
     taxAmount: "$3,000.00",
     totalDue: "$18,000.00"
   };
@@ -107,7 +107,7 @@ const BillingInvoice = () => {
                   </div>
                 </div>
                 <div className="w-[97.44px] text-right">
-                  <div className="text-xs leading-[14px] font-bold tracking-[0.3px] uppercase text-[#425466]">
+                  <div className="hidden md:block text-xs leading-[14px] font-bold tracking-[0.3px] uppercase text-[#425466]">
                     Rate
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const BillingInvoice = () => {
                       </div>
                     </div>
                     <div className="w-[97.44px] text-right">
-                      <div className="text-sm leading-[18px] text-[#425466]">
+                      <div className="hidden md:block text-sm leading-[18px] text-[#425466]">
                         {item.rate}
                       </div>
                     </div>

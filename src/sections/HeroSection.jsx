@@ -56,12 +56,14 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative w-auto h-fit lg:h-lvh  flex flex-col items-start overflow-hidden">
+<section className="relative w-full min-h-screen lg:h-screen flex flex-col items-start overflow-hidden">
+
+
       {/* Main Section Container - matching original padding */}
       <div
         className="relative w-full h-full flex flex-col items-start"
         style={{
-          padding: "160px 0px 0px 0px",
+          paddingTop: "120px",
           isolation: "isolate",
           background: "linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)",
         }}
@@ -75,9 +77,9 @@ const HeroSection = () => {
           }}
         ></div>
 
-        {/* Background+Blur - Circle on right side */}
+        {/* Background+Blur - Circle on right side - RESPONSIVE */}
         <div
-          className="absolute"
+          className="absolute hidden lg:block"
           style={{
             width: "501px",
             height: "499px",
@@ -87,6 +89,23 @@ const HeroSection = () => {
             mixBlendMode: "multiply",
             opacity: "0.3",
             filter: "blur(12px)",
+            borderRadius: "9999px",
+            zIndex: "0",
+          }}
+        ></div>
+
+        {/* Mobile background blur */}
+        <div
+          className="absolute lg:hidden block"
+          style={{
+            width: "300px",
+            height: "300px",
+            right: "-100px",
+            top: "-100px",
+            background: "#FFFFFF",
+            mixBlendMode: "multiply",
+            opacity: "0.2",
+            filter: "blur(8px)",
             borderRadius: "9999px",
             zIndex: "0",
           }}
@@ -104,47 +123,46 @@ const HeroSection = () => {
             zIndex: "1",
           }}
         ></div>
-        <Container className="relative z-10 mt-0 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        
+        <Container className="relative z-10 px-4 sm:px-6 ">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-6">
             {/* Left Side - Text Content */}
             <motion.div
               variants={staggerContainer}
               initial="false"
               animate="animate"
-              className="text-left relative"
+              className="text-center lg:text-left relative"
             >
-              {/* Badge */}
+              {/* Badge - RESPONSIVE */}
               <motion.div
                 variants={staggerItem}
-                className="mb-8 flex items-center gap-3"
+                className="mb-6 lg:mb-8 flex justify-center lg:justify-start items-center gap-3"
               >
                 <span
-                  className="inline-block px-4 py-2 rounded-full hero-badge txt-blue light-bg"
-                  
+                  className="inline-block px-4 py-2 rounded-full hero-badge txt-blue light-bg text-center"
                 >
                   Cross-Border Operating System
                 </span>
               </motion.div>
 
-              {/* Headline */}
-              <motion.h1 className="hero-heading w-[47rem] lg:w-full">
+              {/* Headline - RESPONSIVE */}
+              <motion.h1 className="hero-heading w-full text-center lg:text-left">
                 The Operating System for{" "}
                 <span className="gradient-text relative">
                   Cross-Border Business
-                  {/* Animated underline */}
                 </span>
               </motion.h1>
 
-              {/* Subheadline line */}
-              <motion.p className="section-subtitle mb-6 max-w-md">
+              {/* Subheadline line - RESPONSIVE */}
+              <motion.p className="section-subtitle mb-6 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
                 Designed for billing, compliance, payments, FX, treasury and
                 working capital
               </motion.p>
 
-              {/* CTA Buttons */}
+              {/* CTA Buttons - RESPONSIVE */}
               <motion.div
                 variants={staggerItem}
-                className="flex flex-col sm:flex-row gap-4 mb-8"
+                className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start"
               >
                 <Button variant="primary" size="md" shimmer>
                   Request a Demo
@@ -185,7 +203,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Right Side - Mobile Mockup with Graphs */}
-            <div className="relative mt-16 lg:mt-0">
+            <div className="relative sm:mt-20 lg:mt-20">
               <IconSequenceAnimation />
             </div>
           </div>

@@ -61,7 +61,7 @@ const Ewallet = () => {
               </div>
 
               {/* USD currency selector */}
-              <div className="relative w-28 h-7">
+              <div className="absolute w-28 h-7 right-[6%] top-[16%]">
                 <div className="absolute left-0 top-1.5 w-5 h-5">
                   <US
                     title="United States"
@@ -122,7 +122,7 @@ const Ewallet = () => {
               </div>
 
               {/* INR currency selector */}
-              <div className="relative w-28 h-7">
+              <div className="absolute w-28 h-7 right-[6%] top-[32%]">
                 <div className="absolute left-0 top-1.5 w-5 h-5">
                   <IN
                     title="India"
@@ -269,7 +269,7 @@ const Ewallet = () => {
               </div>
               
               {/* Exchange summary */}
-              <div className="text-xs text-[#425466]">
+              <div className="text-xs text-[#425466] hidden sm:block">
                 1 USD = 118 INR
               </div>
             </div>

@@ -63,14 +63,14 @@ const InvoiceDashboard = () => {
       iconColor: "#D08700",
       Icon: ArrowUpRightIcon,
     },
-    {
-      title: "FX Rate Alert",
-      description: "USD/EUR favorable for conversion",
-      color: "bg-gradient-to-r from-[#ECF4FE] to-[#F7FAFD] border-[#BEDBFF]",
-      textColor: "text-[#1C398E]",
-      iconColor: "#155DFC",
-      Icon: TrendingUpIcon,
-    },
+    // {
+    //   title: "FX Rate Alert",
+    //   description: "USD/EUR favorable for conversion",
+    //   color: "bg-gradient-to-r from-[#ECF4FE] to-[#F7FAFD] border-[#BEDBFF]",
+    //   textColor: "text-[#1C398E]",
+    //   iconColor: "#155DFC",
+    //   Icon: TrendingUpIcon,
+    // },
     {
       title: "Payment Received",
       description: "Acme Corp - $12,450 settled",
@@ -85,10 +85,19 @@ const InvoiceDashboard = () => {
   const columnWidths = [
     "w-[101px]", // Invoice ID (was 126.45px)
     "w-[117px]", // Client (was 145.98px)
-    "w-[70px]",  // Country (was 87.68px)
-    "w-[87px]",  // Tax Applied (was 108.52px)
-    "w-[81px]",  // Amount (was 101.64px)
-    "w-[79px]",  // Status (was 98.41px)
+    "w-[70px]", // Country (was 87.68px)
+    "w-[87px]", // Tax Applied (was 108.52px)
+    "w-[81px]", // Amount (was 101.64px)
+    "w-[79px]", // Status (was 98.41px)
+  ];
+
+  const tableHeaders = [
+    { label: "Invoice ID", className: "" },
+    { label: "Client", className: "hidden sm:flex" }, // 👈 key change
+    { label: "Country", className: "" },
+    { label: "Tax Applied", className: "hidden sm:flex"  },
+    { label: "Amount", className: "" },
+    { label: "Status", className: "" },
   ];
 
   const columnPadding = "pl-3";
@@ -115,21 +124,21 @@ const InvoiceDashboard = () => {
         {/* Table section - scaled down */}
         <div className="w-full max-w-full overflow-hidden">
           {/* Table Header */}
+
           <div className="w-full h-[35px] flex border-b border-black border-opacity-10">
-            {[
-              "Invoice ID",
-              "Client",
-              "Country",
-              "Tax Applied",
-              "Amount",
-              "Status",
-            ].map((header, index) => (
+            {tableHeaders.map((header, index) => (
               <div
                 key={index}
-                className={`${columnWidths[index]} h-[28px] flex items-center ${columnPadding}`}
+                className={`
+        ${columnWidths[index]}
+        h-[28px]
+        flex items-center
+        ${columnPadding}
+        ${header.className}
+      `}
               >
                 <span className="text-xs text-[#717182] font-normal">
-                  {header}
+                  {header.label}
                 </span>
               </div>
             ))}
@@ -151,9 +160,9 @@ const InvoiceDashboard = () => {
 
                 {/* Client */}
                 <div
-                  className={`${columnWidths[1]} h-[52px] flex items-center ${columnPadding}`}
+                  className={`${columnWidths[1]} h-[52px] hidden sm:flex items-center ${columnPadding}`}
                 >
-                  <span className="text-xs text-[#0A0A0A] truncate">
+                  <span className="text-xs text-[#0A0A0A] truncate hidden sm:block">
                     {invoice.client}
                   </span>
                 </div>
@@ -169,11 +178,9 @@ const InvoiceDashboard = () => {
 
                 {/* Tax Applied */}
                 <div
-                  className={`${columnWidths[3]} h-[52px] flex items-center ${columnPadding}`}
+                  className={`${columnWidths[3]} h-[52px] hidden sm:flex items-center ${columnPadding}`}
                 >
-                  <span className="text-xs text-[#717182]">
-                    {invoice.tax}
-                  </span>
+                  <span className="text-xs text-[#717182] hidden sm:block">{invoice.tax}</span>
                 </div>
 
                 {/* Amount */}
@@ -237,19 +244,19 @@ const InvoiceDashboard = () => {
                 return (
                   <div
                     key={index}
-                    className={`w-full h-[52px] relative rounded-lg border ${alert.color} ${alert.textColor} p-0`}
+                    className={`w-full h-9 sm:h-[52px] relative rounded-lg border ${alert.color} ${alert.textColor} p-0`}
                   >
                     {/* Icon */}
-                    <div className="absolute w-[16px] h-[16px] left-[10px] top-[12px]">
+                    <div className="absolute w-[16px] h-[16px] sm:left-[10px] sm:top-[12px] left-[6px] top-[10px]">
                       <AlertIcon size={16} color={alert.iconColor} />
                     </div>
-                    
+
                     {/* Text content */}
-                    <div className="absolute left-[36px] top-[10px] flex flex-col gap-0.5">
+                    <div className="absolute left-[27px] sm:left-[36px] top-[10px] flex flex-col gap-0.5">
                       <p className="text-xs font-normal leading-4 truncate">
                         {alert.title}
                       </p>
-                      <p className="text-[10px] leading-3 opacity-80 truncate">
+                      <p className="text-[10px] leading-3 opacity-80 truncate hidden sm:block">
                         {alert.description}
                       </p>
                     </div>

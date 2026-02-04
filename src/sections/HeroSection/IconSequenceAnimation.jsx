@@ -16,14 +16,14 @@ import EwalletIcon from "../../components/svg/EwalletIcon";
 // Store screen components separately
 const SCREENS = [
   Virtual,
-  BillingInvoice,     // 0
-  InvoiceDashboard,   // 1
-  CountryTaxCard,     // 2
-  Ewallet,            // 3
-  Virtual,            // 4
-  Virtual,            // 5
-  Virtual,            // 6
-  Virtual,            // 7
+  BillingInvoice, // 0
+  InvoiceDashboard, // 1
+  CountryTaxCard, // 2
+  Ewallet, // 3
+  Virtual, // 4
+  Virtual, // 5
+  Virtual, // 6
+  Virtual, // 7
 ];
 
 const ICONS = [
@@ -53,7 +53,7 @@ export default function CircularShiftAnimation() {
   const [isAnimatingScreen, setIsAnimatingScreen] = useState(false);
 
   const currentPositionsRef = useRef(
-    Array.from({ length: TOTAL_ICONS }, (_, i) => i)
+    Array.from({ length: TOTAL_ICONS }, (_, i) => i),
   );
   const animationInProgressRef = useRef(false);
 
@@ -67,7 +67,7 @@ export default function CircularShiftAnimation() {
     }
 
     console.log(
-      `Updating screen from ${currentScreenIndex} to index: ${screenIndex}`
+      `Updating screen from ${currentScreenIndex} to index: ${screenIndex}`,
     );
     setIsAnimatingScreen(true);
 
@@ -145,7 +145,7 @@ export default function CircularShiftAnimation() {
         {},
         {
           duration: 0.5,
-        }
+        },
       );
   };
 
@@ -157,7 +157,7 @@ export default function CircularShiftAnimation() {
 
     // Update positions
     currentPositionsRef.current = currentPositionsRef.current.map(
-      (pos) => (pos + 1) % TOTAL_ICONS
+      (pos) => (pos + 1) % TOTAL_ICONS,
     );
 
     console.log("New positions:", currentPositionsRef.current);
@@ -185,7 +185,7 @@ export default function CircularShiftAnimation() {
         const iconData = ICONS[iconIndex];
         highlightedScreenIndex = iconData.screenIndex;
         console.log(
-          `Highlighted icon: ${iconData.Icon.name}, Screen index: ${highlightedScreenIndex}`
+          `Highlighted icon: ${iconData.Icon.name}, Screen index: ${highlightedScreenIndex}`,
         );
       }
 
@@ -217,7 +217,7 @@ export default function CircularShiftAnimation() {
         return new Promise((resolve) => {
           anim.eventCallback("onComplete", resolve);
         });
-      })
+      }),
     )
       .then(() => {
         animationInProgressRef.current = false;
@@ -275,7 +275,7 @@ export default function CircularShiftAnimation() {
       if (isHighlighted) {
         initialHighlightedScreenIndex = iconData.screenIndex;
         console.log(
-          `Initial highlighted icon: ${iconData.Icon.name}, Screen: ${initialHighlightedScreenIndex}`
+          `Initial highlighted icon: ${iconData.Icon.name}, Screen: ${initialHighlightedScreenIndex}`,
         );
       }
     });
@@ -294,10 +294,10 @@ export default function CircularShiftAnimation() {
     // Set a timeout to START ANIMATIONS after delay
     initializationRef.current = setTimeout(() => {
       console.log("Starting animations after 3 second delay");
-      
+
       // Start gradient animation
       animateGradient();
-      
+
       // Start the main animation timer
       startAnimationTimer();
     }, INITIAL_DELAY);
@@ -377,7 +377,7 @@ export default function CircularShiftAnimation() {
 
       {/* SOFT ARC MASK — Image-1 style fade */}
       <div
-        className="absolute left-[60%] top-1/2 z-30 h-[180%] w-[120%] -translate-y-1/2 pointer-events-none"
+        className="hidden md:block  absolute left-[60%] top-1/2 z-30 h-[180%] w-[120%] -translate-y-1/2 pointer-events-none"
         style={{
           WebkitMaskImage: `
             linear-gradient(
@@ -403,7 +403,7 @@ export default function CircularShiftAnimation() {
       />
 
       {/* Middle — CIRCULAR SHIFT ANIMATION */}
-      <div className="absolute -translate-y-1/2 left-[14%] lg:left-0 top-[35%]">
+      <div className="hidden md:block absolute -translate-y-1/2 left-[14%] lg:left-0 top-[35%]">
         <div className="relative w-[300px] h-[400px]">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
             {ICONS.map((iconData, index) => {
@@ -427,7 +427,8 @@ export default function CircularShiftAnimation() {
       </div>
 
       {/* RIGHT — SCREEN DISPLAY */}
-      <div className="w-[30rem] h-[31rem] relative bottom-[13%] right-[-30%] lg:right-[-24%]">
+      <div
+        className=" w-auto sm:w-[30rem] h-[31rem] relative left-1/2 -translate-x-1/2 bottom-0 md:left-auto md:translate-x-0 md:bottom-[13%] md:right-[-30%] lg:right-[-24%]">
         {/* Main container with shadow */}
         <div className="absolute inset-0 bg-[#F6F9FC] rounded-[36px] shadow-[0px_0px_100px_-20px_rgba(50,50,93,0.25),0px_0px_60px_-30px_rgba(0,0,0,0.15),inset_0px_0px_6px_rgba(10,37,64,0.2)]"></div>
 
@@ -439,6 +440,9 @@ export default function CircularShiftAnimation() {
         >
           <CurrentScreen />
           {/* <BillingInvoice /> */}
+          {/* <CountryTaxCard/> */}
+          {/* <InvoiceDashboard/> */}
+          {/* <Ewallet/> */}
         </div>
       </div>
     </div>
