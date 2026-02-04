@@ -179,14 +179,14 @@ const JoinUsSection = () => {
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                   <div className="mb-4 md:mb-0">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex flex-col sm:flex-row gap-3 mb-2">
                       <h3
                         className="feature-title group-hover:underline"
                         style={{ color: "#0A2540" }}
                       >
                         {job.title}
                       </h3>
-                      <span className="px-3 py-1 rounded-full hero-badge bg-blue-100 text-blue-800">
+                      <span className="px-3 py-1 rounded-full hero-badge bg-blue-100 text-blue-800 w-fit">
                         {job.type}
                       </span>
                     </div>
@@ -225,7 +225,7 @@ const JoinUsSection = () => {
                     <div className="text-sm mb-3" style={{ color: "#425466" }}>
                       Posted {job.posted}
                     </div>
-                    <Button variant="primary" shimmer size="md">
+                    <Button variant="primary" shimmer size="md"  >
                       Apply Now
                       <ArrowRight className="w-4 h-4" />
                     </Button>

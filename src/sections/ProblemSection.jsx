@@ -38,8 +38,7 @@ const ProblemSection = () => {
   const inViewRef = useRef(false);
   const isScrollingRef = useRef(false);
   const scrollEndTimeoutRef = useRef(null);
-  // Add this with your other state declarations
-  const [activeSidebar, setActiveSidebar] = useState(-1); // -1 means none active
+  const [activeSidebar, setActiveSidebar] = useState(-1);
   const activeSidebarRef = useRef(-1);
 
   const trackTween = (tween) => {
@@ -67,10 +66,7 @@ const ProblemSection = () => {
   };
 
   const [reduceEffects, setReduceEffects] = useState(true);
-
-  // State to track if animation should start
   const [animationStarted, setAnimationStarted] = useState(false);
-  // State to track visible sidebars - now controls ALL sidebars
   const [visibleSidebars, setVisibleSidebars] = useState([
     false,
     false,
@@ -78,7 +74,6 @@ const ProblemSection = () => {
     false,
   ]);
 
-  // Refs for screens and cards
   const screensRef = useRef([]);
   const screen2CardsRef = useRef([]);
   const screen3CardsRef = useRef([]);
@@ -86,7 +81,6 @@ const ProblemSection = () => {
   const screen5CardsRef = useRef([]);
   const screen6CardsRef = useRef([]);
 
-  // Refs for initial animation
   const globeRef = useRef(null);
   const ringsRef = useRef([]);
   const titleRef = useRef(null);
@@ -94,254 +88,43 @@ const ProblemSection = () => {
   const dotsRef = useRef([]);
   const dollarRefs = useRef([]);
 
-  // Refs for sidebar elements
   const sidebarRefs = useRef([]);
   const sidebarCardsRef = useRef([]);
   const sidebarLinesRef = useRef([]);
 
+  // State to track screen size
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check screen size on mount and resize
   useEffect(() => {
-    const canvas = pixelCanvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const state = {
-      raf: 0,
-      last: 0,
-      w: 0,
-      h: 0,
-      dpr: 1,
-      grid: null,
-      pending: false,
-      inView: true,
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 1024); // CHANGED FROM 768 TO 1024 (md → lg)
     };
 
-    const baseColor = { r: 7, g: 63, b: 158 };
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
 
-    const stop = () => {
-      if (state.raf) cancelAnimationFrame(state.raf);
-      state.raf = 0;
-    };
-
-    const shouldAnimate = () => {
-      if (prefersReducedMotion) return false;
-      if (document.hidden) return false;
-      if (!state.inView) return false;
-      return true;
-    };
-
-    const makeGrid = () => {
-      const grid = document.createElement("canvas");
-      grid.width = Math.floor(state.w * state.dpr);
-      grid.height = Math.floor(state.h * state.dpr);
-      const gctx = grid.getContext("2d");
-      if (!gctx) return;
-      gctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
-
-      const cell = 5;
-      const gap = 3;
-      const step = cell + gap;
-      const cols = Math.ceil(state.w / step);
-      const rows = Math.ceil(state.h / step);
-
-      gctx.clearRect(0, 0, state.w, state.h);
-      gctx.fillStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, 0.035)`;
-      for (let y = 0; y < rows; y += 1) {
-        for (let x = 0; x < cols; x += 1) {
-          if ((x + y) % 2 !== 0) continue;
-          if (Math.random() < 0.35) continue;
-          const px = x * step + gap;
-          const py = y * step + gap;
-          gctx.fillRect(px, py, cell, cell);
-        }
-      }
-
-      state.grid = grid;
-    };
-
-    const resize = () => {
-      const parent = canvas.parentElement;
-      const rect = parent
-        ? parent.getBoundingClientRect()
-        : canvas.getBoundingClientRect();
-      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      state.dpr = dpr;
-      state.w = Math.max(1, Math.floor(rect.width));
-      state.h = Math.max(1, Math.floor(rect.height));
-      canvas.width = Math.floor(state.w * dpr);
-      canvas.height = Math.floor(state.h * dpr);
-      canvas.style.width = `${state.w}px`;
-      canvas.style.height = `${state.h}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      makeGrid();
-      state.pending = true;
-      render();
-    };
-
-    const render = () => {
-      if (prefersReducedMotion) return;
-      if (document.hidden) return;
-
-      ctx.clearRect(0, 0, state.w, state.h);
-      if (state.grid) {
-        const t = (performance.now() || 0) * 0.001;
-        const ox = Math.sin(t * 0.6) * 1.2;
-        const oy = Math.cos(t * 0.55) * 1.2;
-
-        ctx.save();
-        ctx.globalAlpha = 0.92;
-        ctx.drawImage(state.grid, ox, oy, state.w, state.h);
-        ctx.globalAlpha = 0.5 + 0.08 * (1 + Math.sin(t * 1.25));
-        ctx.globalCompositeOperation = "lighter";
-        ctx.drawImage(state.grid, -ox * 0.6, -oy * 0.6, state.w, state.h);
-        ctx.restore();
-      }
-
-      const mx = pixelMouseRef.current.x;
-      const my = pixelMouseRef.current.y;
-      const active = pixelMouseRef.current.active;
-      if (!active) return;
-
-      const radius = 170;
-      const grad = ctx.createRadialGradient(mx, my, 0, mx, my, radius);
-      grad.addColorStop(0, `rgba(14,165,233,0.14)`);
-      grad.addColorStop(0.45, `rgba(6,182,212,0.07)`);
-      grad.addColorStop(1, `rgba(14,165,233,0)`);
-
-      ctx.save();
-      ctx.globalCompositeOperation = "lighter";
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(mx, my, radius, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    };
-
-    const tick = (ts) => {
-      if (!shouldAnimate()) {
-        stop();
-        return;
-      }
-
-      const fps = 24;
-      const frameMs = 1000 / fps;
-      if (ts - state.last >= frameMs) {
-        state.last = ts;
-        render();
-      }
-      state.raf = requestAnimationFrame(tick);
-    };
-
-    const onMove = (clientX, clientY) => {
-      const rect = canvas.getBoundingClientRect();
-      pixelMouseRef.current.x = clientX - rect.left;
-      pixelMouseRef.current.y = clientY - rect.top;
-      pixelMouseRef.current.active = true;
-
-      if (!state.pending) {
-        state.pending = true;
-        requestAnimationFrame(() => {
-          state.pending = false;
-          render();
-        });
-      }
-
-      if (!state.raf && shouldAnimate()) {
-        state.last = 0;
-        state.raf = requestAnimationFrame(tick);
-      }
-    };
-
-    const onMouseMove = (e) => onMove(e.clientX, e.clientY);
-    const onTouchMove = (e) => {
-      const t = e.touches && e.touches[0];
-      if (t) onMove(t.clientX, t.clientY);
-    };
-    const onLeave = () => {
-      pixelMouseRef.current.active = false;
-      if (!state.pending) {
-        state.pending = true;
-        requestAnimationFrame(() => {
-          state.pending = false;
-          render();
-        });
-      }
-    };
-
-    const onVisibility = () => {
-      if (!shouldAnimate()) {
-        stop();
-      } else if (!state.raf) {
-        state.last = 0;
-        state.raf = requestAnimationFrame(tick);
-      }
-    };
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        state.inView = !!entry?.isIntersecting;
-        onVisibility();
-      },
-      { threshold: 0.05 },
-    );
-    io.observe(canvas);
-    document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("blur", onLeave, { passive: true });
-
-    resize();
-    window.addEventListener("resize", resize);
-
-    render();
-
-    if (shouldAnimate()) {
-      state.last = 0;
-      state.raf = requestAnimationFrame(tick);
-    }
-
-    return () => {
-      stop();
-      io.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("blur", onLeave);
-    };
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
   // Initialize refs after component mounts
   useEffect(() => {
-    // Set initial state for all screens - START WITH WHITE SCREEN
     const allScreens = screensRef.current.filter(Boolean);
-
-    // Hide all screens initially
     gsap.set(allScreens, {
       opacity: 0,
       pointerEvents: "none",
     });
 
-    // Set first screen to white (phone already on)
     gsap.set(screensRef.current[0], {
       backgroundColor: "#ffffff",
-      opacity: 1, // Show white screen
+      opacity: 1,
       pointerEvents: "auto",
     });
 
-    // Show first screen content immediately (no black to white transition)
     gsap.set(screensRef.current[0], {
       backgroundColor: "#EDF2FE",
     });
 
-    // Show all first screen content immediately
     gsap.set(
       [
         globeRef.current,
@@ -357,15 +140,16 @@ const ProblemSection = () => {
       },
     );
 
-    // Initialize sidebars refs arrays
     sidebarLinesRef.current = [];
     sidebarCardsRef.current = [];
   }, []);
 
-  // ========== ADD THIS SCROLL-TRIGGERED ANIMATION INSTEAD ==========
+  // ========== MODIFIED: Only run phone animations on desktop ==========
   useEffect(() => {
+    // Don't run phone animations on mobile
+    if (isMobile) return;
+
     const ctx = gsap.context(() => {
-      // Hide phone initially for entrance animation
       gsap.set(phoneRef.current, {
         opacity: 0,
         scale: 0.85,
@@ -373,26 +157,20 @@ const ProblemSection = () => {
         rotationX: 15,
       });
 
-      // Create smooth entrance timeline with ScrollTrigger
       const entranceTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%", // Start when 15% of section is visible
+          start: "top 85%",
           end: "top 20%",
-          once: true, // Only run once
+          once: true,
           onEnter: () => {
             setAnimationStarted(true);
-            // Delay the full animation sequence slightly
             const startId = window.setTimeout(() => {
               startFullAnimationSequence();
             }, 800);
             trackTimeout(startId);
           },
-          onEnterBack: () => {
-            // Optional: if you want it to animate again when scrolling back up
-            // setAnimationStarted(true);
-          },
-          markers: false, // Set to true for debugging
+          markers: false,
         },
       });
 
@@ -419,9 +197,7 @@ const ProblemSection = () => {
       });
       activeTriggersRef.current.push(visibilityTrigger);
 
-      // ===== PHONE ENTRANCE ANIMATION =====
       entranceTl
-        // Phone floats in from bottom
         .fromTo(
           phoneRef.current,
           {
@@ -439,7 +215,6 @@ const ProblemSection = () => {
             ease: "power3.out",
           },
         )
-        // Animate phone shadow simultaneously
         .fromTo(
           phoneRef.current.querySelector(".phone-shadow"),
           {
@@ -454,15 +229,14 @@ const ProblemSection = () => {
             duration: 1,
             ease: "power2.out",
           },
-          "<", // Start at same time as phone animation
+          "<",
         );
     });
 
-    // Cleanup ScrollTrigger
     return () => {
       ctx.revert();
     };
-  }, []); // Empty dependency array - runs once on mount
+  }, [isMobile]); // Re-run when isMobile changes
 
   useEffect(() => {
     const onScroll = () => {
@@ -490,9 +264,9 @@ const ProblemSection = () => {
     };
   }, []);
 
-  // Main animation sequence
+  // MODIFIED: Only start phone animations on desktop
   const startFullAnimationSequence = () => {
-    if (startedRef.current) return;
+    if (startedRef.current || isMobile) return;
     startedRef.current = true;
     const ctx = gsap.context(() => {
       const phoneHighlight = phoneRef.current?.querySelector(
@@ -513,22 +287,8 @@ const ProblemSection = () => {
         );
       }
 
-      // ========== STEP 1: CONTINUOUS PHONE FLOAT (NO ENTRANCE) ==========
-      // trackTween(
-      //   gsap.to(phoneRef.current, {
-      //     y: "+=10",
-      //     duration: 3,
-      //     repeat: -1,
-      //     yoyo: true,
-      //     ease: "sine.inOut",
-      //     delay: 0.5, // wait after scroll-trigger entrance
-      //   }),
-      // );
-
-      // ========== STEP 2: ANIMATE FIRST SCREEN ELEMENTS ==========
       const firstScreenTl = gsap.timeline({ delay: 0.5 });
 
-      // Rings animation
       ringsRef.current.forEach((ring, index) => {
         gsap.fromTo(
           ring,
@@ -548,7 +308,6 @@ const ProblemSection = () => {
         );
       });
 
-      // Globe animation
       gsap.fromTo(
         globeRef.current,
         { scale: 0, opacity: 0, rotationY: 180 },
@@ -562,7 +321,6 @@ const ProblemSection = () => {
         },
       );
 
-      // Title & subtitle
       gsap.fromTo(
         titleRef.current,
         { y: 40, opacity: 0 },
@@ -575,7 +333,6 @@ const ProblemSection = () => {
         { y: 0, opacity: 1, duration: 0.6, delay: 0.7 },
       );
 
-      // Dots animation (entrance only, no pulse)
       dotsRef.current.forEach((dot, index) => {
         gsap.fromTo(
           dot,
@@ -589,7 +346,6 @@ const ProblemSection = () => {
         );
       });
 
-      // Dollar icons
       dollarRefs.current.forEach((el, i) => {
         if (!el) return;
 
@@ -611,7 +367,6 @@ const ProblemSection = () => {
         );
       });
 
-      // Background blobs animation
       const blobs = bgBlobsRef.current.filter(Boolean);
       if (blobs.length > 0) {
         blobs.forEach((blob, i) => {
@@ -688,7 +443,6 @@ const ProblemSection = () => {
         });
       }
 
-      // ========== STEP 3: START AUTOMATIC TRANSITIONS ==========
       const transitionTimeout = window.setTimeout(() => {
         startAutomaticTransitions();
       }, 4000);
@@ -722,25 +476,23 @@ const ProblemSection = () => {
     };
   }, []);
 
-  // Automatic screen transitions with sidebar animations
+  // MODIFIED: Only run transitions on desktop
   const startAutomaticTransitions = () => {
+    if (isMobile) return;
+
     const ctx = gsap.context(() => {
-      // Start with all sidebars hidden
       setVisibleSidebars([false, false, false, false]);
 
-      // Hide all other screens initially
       const otherScreens = screensRef.current.slice(1).filter(Boolean);
       gsap.set(otherScreens, {
         opacity: 0,
         pointerEvents: "none",
       });
 
-      // ========== MASTER TRANSITION TIMELINE ==========
       const masterTl = gsap.timeline({
         defaults: { ease: "power2.out" },
       });
 
-      // Enhanced professional animateSidebar function with subtle border hit effect
       const animateSidebar = (lineIndex, cardIndex, isLeftSide = false) => {
         const line = sidebarLinesRef.current[lineIndex];
         const card = sidebarCardsRef.current[cardIndex];
@@ -751,18 +503,14 @@ const ProblemSection = () => {
           line._flowTween = null;
         }
 
-        // FIRST: Reset previous active sidebar border to normal if it exists
-        // Use the ref which has the current value immediately
         const previousActiveIndex = activeSidebarRef.current;
         if (
           previousActiveIndex !== -1 &&
           sidebarCardsRef.current[previousActiveIndex]
         ) {
           const previousCard = sidebarCardsRef.current[previousActiveIndex];
-
-          // Animate previous card border back to normal
           gsap.to(previousCard, {
-            borderColor: "rgba(226, 232, 240, 0.8)", // Light border
+            borderColor: "rgba(226, 232, 240, 0.8)",
             borderWidth: "1px",
             boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
             duration: 0.3,
@@ -770,32 +518,27 @@ const ProblemSection = () => {
           });
         }
 
-        // Update both ref and state for the new active sidebar
         activeSidebarRef.current = cardIndex;
         setActiveSidebar(cardIndex);
 
-        // Simple line style (unchanged)
         gsap.set(line, {
           scaleX: 0,
           transformOrigin: isLeftSide ? "right center" : "left center",
           opacity: 1,
         });
 
-        // Set card with initial state - start with active border
         gsap.set(card, {
           opacity: 0,
           scale: 0.95,
           x: isLeftSide ? -15 : 15,
           y: 8,
-          borderColor: "rgba(59, 130, 246, 0)", // Start transparent
+          borderColor: "rgba(59, 130, 246, 0)",
           borderWidth: "2px",
           borderStyle: "solid",
           boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
         });
 
         const sidebarTl = gsap.timeline();
-
-        // 1. Draw the line from phone to card position
         sidebarTl.to(
           line,
           {
@@ -806,7 +549,6 @@ const ProblemSection = () => {
           0,
         );
 
-        // 2. Animate card appearing
         sidebarTl.to(
           card,
           {
@@ -820,12 +562,10 @@ const ProblemSection = () => {
           0.6,
         );
 
-        // 3. Border hit effect - NOW STAYS ACTIVE
         sidebarTl
           .to(
             card,
             {
-              // Flash effect
               borderColor: "rgba(59, 130, 246, 0.9)",
               borderWidth: "2.5px",
               duration: 0.3,
@@ -833,11 +573,10 @@ const ProblemSection = () => {
             },
             0.85,
           )
-          // Then settle to persistent active state
           .to(
             card,
             {
-              borderColor: "rgba(59, 130, 246, 0.7)", // Keep active border
+              borderColor: "rgba(59, 130, 246, 0.7)",
               borderWidth: "2px",
               boxShadow: "0 25px 50px rgba(11, 67, 160, 0.15)",
               duration: 0.3,
@@ -849,7 +588,6 @@ const ProblemSection = () => {
         return sidebarTl;
       };
 
-      // Helper function for screen header animations
       const animateScreenHeader = (screenIndex) => {
         const screen = screensRef.current[screenIndex];
         if (!screen) return;
@@ -877,7 +615,9 @@ const ProblemSection = () => {
         );
       };
 
-      // Screen 1 → Screen 2 (Payments) - SHOW SIDEBAR 1 (RIGHT SIDE)
+      // Screen transitions (same as before, but only for desktop)
+      // ... [rest of the transition code remains the same] ...
+      // Screen 1 → Screen 2
       masterTl
         .to(screensRef.current[0], {
           opacity: 0,
@@ -896,23 +636,19 @@ const ProblemSection = () => {
           "<",
         )
         .call(() => {
-          // Show sidebar 1 BUT keep it invisible initially
           setVisibleSidebars([true, false, false, false]);
         })
-        .to({}, { duration: 0.001 }) // Minimal delay for DOM to update
+        .to({}, { duration: 0.001 })
         .call(() => {
-          // CRITICAL: Set the card to invisible immediately after React renders it
           if (sidebarCardsRef.current[0]) {
             gsap.set(sidebarCardsRef.current[0], {
               opacity: 0,
               scale: 0.8,
               x: 20,
               y: 10,
-              immediateRender: true, // Force immediate render
+              immediateRender: true,
             });
           }
-
-          // Start animation AFTER the element is properly initialized
           setTimeout(() => {
             animateSidebar(0, 0, false);
           }, 10);
@@ -931,7 +667,7 @@ const ProblemSection = () => {
         )
         .to({}, { duration: 2.8 });
 
-      // Screen 2 → Screen 3 (Reconciliation) - KEEP SIDEBAR 1, ADD SIDEBAR 2 (LEFT SIDE)
+      // Screen 2 → Screen 3
       masterTl
         .to(screensRef.current[1], {
           opacity: 0,
@@ -954,7 +690,6 @@ const ProblemSection = () => {
         })
         .to({}, { duration: 0.001 })
         .call(() => {
-          // CRITICAL: Set the card to invisible immediately
           if (sidebarCardsRef.current[1]) {
             gsap.set(sidebarCardsRef.current[1], {
               opacity: 0,
@@ -964,7 +699,6 @@ const ProblemSection = () => {
               immediateRender: true,
             });
           }
-
           setTimeout(() => {
             animateSidebar(1, 1, true);
           }, 10);
@@ -983,7 +717,7 @@ const ProblemSection = () => {
         )
         .to({}, { duration: 2.8 });
 
-      // Screen 3 → Screen 4 (Invoicing) - KEEP SIDEBARS 1 & 2, ADD SIDEBAR 3 (RIGHT SIDE)
+      // Screen 3 → Screen 4
       masterTl
         .to(screensRef.current[2], {
           opacity: 0,
@@ -1006,7 +740,6 @@ const ProblemSection = () => {
         })
         .to({}, { duration: 0.001 })
         .call(() => {
-          // CRITICAL: Set the card to invisible immediately
           if (sidebarCardsRef.current[2]) {
             gsap.set(sidebarCardsRef.current[2], {
               opacity: 0,
@@ -1016,7 +749,6 @@ const ProblemSection = () => {
               immediateRender: true,
             });
           }
-
           setTimeout(() => {
             animateSidebar(2, 2, false);
           }, 10);
@@ -1035,7 +767,7 @@ const ProblemSection = () => {
         )
         .to({}, { duration: 2.8 });
 
-      // Screen 4 → Screen 5 (Compliance) - KEEP SIDEBARS 1,2,3, ADD SIDEBAR 4 (LEFT SIDE)
+      // Screen 4 → Screen 5
       masterTl
         .to(screensRef.current[3], {
           opacity: 0,
@@ -1058,7 +790,6 @@ const ProblemSection = () => {
         })
         .to({}, { duration: 0.001 })
         .call(() => {
-          // CRITICAL: Set the card to invisible immediately
           if (sidebarCardsRef.current[3]) {
             gsap.set(sidebarCardsRef.current[3], {
               opacity: 0,
@@ -1068,7 +799,6 @@ const ProblemSection = () => {
               immediateRender: true,
             });
           }
-
           setTimeout(() => {
             animateSidebar(3, 3, true);
           }, 10);
@@ -1087,7 +817,7 @@ const ProblemSection = () => {
         )
         .to({}, { duration: 3.8 });
 
-      // ========== ENHANCED SIDEBAR FADE OUT ANIMATION ==========
+      // Sidebar fade out
       masterTl
         .to({}, { duration: 0.1 })
         .call(() => {
@@ -1095,24 +825,22 @@ const ProblemSection = () => {
             defaults: { ease: "power2.inOut" },
           });
 
-          // First, reset all sidebar borders to normal
           sidebarCardsRef.current.forEach((card, index) => {
             if (card) {
               fadeOutTl.to(
                 card,
                 {
-                  borderColor: "rgba(226, 232, 240, 0.8)", // Normal border
+                  borderColor: "rgba(226, 232, 240, 0.8)",
                   borderWidth: "1px",
                   boxShadow: "0 20px 40px rgba(11, 67, 160, 0.1)",
                   duration: 0.3,
                   ease: "power2.out",
                 },
-                0, // All reset simultaneously
+                0,
               );
             }
           });
 
-          // Then, shrink lines back to phone
           sidebarLinesRef.current.forEach((line, index) => {
             if (line) {
               if (line._flowTween) {
@@ -1127,12 +855,11 @@ const ProblemSection = () => {
                   duration: 0.5,
                   ease: "power2.in",
                 },
-                index * 0.08 + 0.2, // Delay after border reset
+                index * 0.08 + 0.2,
               );
             }
           });
 
-          // Then fade out cards
           sidebarCardsRef.current.forEach((card, index) => {
             if (card) {
               fadeOutTl.to(
@@ -1145,16 +872,15 @@ const ProblemSection = () => {
                   duration: 0.45,
                   ease: "power2.in",
                 },
-                index * 0.08 + 0.3, // Delay after line shrink
+                index * 0.08 + 0.3,
               );
             }
           });
 
-          // Hide sidebars after animation completes
           fadeOutTl.call(
             () => {
               setVisibleSidebars([false, false, false, false]);
-              setActiveSidebar(-1); // Reset active sidebar at the end
+              setActiveSidebar(-1);
             },
             null,
             "+=0.2",
@@ -1202,8 +928,7 @@ const ProblemSection = () => {
         )
         .to({}, { duration: 4 });
 
-      // ========== LOOP BACK TO BEGINNING ==========
-      // ========== SEAMLESS LOOP (NO BLACK FRAME) ==========
+      // Loop back
       masterTl
         .to(
           screensRef.current[0],
@@ -1213,7 +938,7 @@ const ProblemSection = () => {
             duration: 0.6,
             ease: "power2.inOut",
           },
-          "<", // 👈 overlap with screen 6 still visible
+          "<",
         )
         .to(
           screensRef.current[5],
@@ -1235,19 +960,14 @@ const ProblemSection = () => {
     });
   };
 
-  // Reset to initial state (white screen with content)
   const resetToInitialState = () => {
-    // Hide all sidebars
     setVisibleSidebars([false, false, false, false]);
-
-    // Hide all screens except first one
     const allScreens = screensRef.current.filter(Boolean);
     gsap.set(allScreens, {
       opacity: 0,
       pointerEvents: "none",
     });
 
-    // Show all first screen content
     gsap.set(
       [
         globeRef.current,
@@ -1278,38 +998,48 @@ const ProblemSection = () => {
             at Every Layer
           </span>
         </motion.h1>
-        <p className="section-subtitle max-w-lg mx-auto">
-          The Problem Isn’t Payments — It’s Everything Around Them
+        <p className="section-subtitle max-w-64 sm:max-w-lg mx-auto">
+          The Problem Isn't Payments — It's Everything Around Them
         </p>
       </div>
       <div
         ref={sectionRef}
         className="relative overflow-hidden isolate bg-white"
       >
-        {/* Sidebar Components */}
+        {/* Sidebar Components - MODIFIED: Always visible on mobile, positioned differently */}
         <div className="absolute inset-0 overflow-visible pointer-events-none z-40">
-          {/* Sidebar 1 (for Screen 2: Payments) - RIGHT SIDE */}
+          {/* Sidebar 1 (for Screen 2: Payments) */}
           {visibleSidebars[0] && (
             <div
-              className="absolute left-1/2 top-1/4 -translate-y-1/2 z-50"
-              style={{ marginLeft: "155px" }}
+              className={`absolute ${
+                isMobile
+                  ? "left-4 top-1/4 w-[calc(100%-2rem)]"
+                  : "left-1/2 top-1/4 -translate-y-1/2"
+              } z-50`}
+              style={!isMobile ? { marginLeft: "155px" } : {}}
             >
               <div className="relative">
-                {/* Progress line from phone to card */}
-                <div
-                  ref={(el) => (sidebarLinesRef.current[0] = el)}
-                  className="h-[2px] w-[200px] absolute left-0 top-[20%] -translate-y-1/2"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #0B43A0 0%, rgba(11, 67, 160, 0.2) 100%)",
-                    transformOrigin: "left center",
-                  }}
-                />
+                {/* Progress line - hidden on mobile */}
+                {!isMobile && (
+                  <div
+                    ref={(el) => (sidebarLinesRef.current[0] = el)}
+                    className="h-[2px] w-[200px] absolute left-0 top-[20%] -translate-y-1/2"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #0B43A0 0%, rgba(11, 67, 160, 0.2) 100%)",
+                      transformOrigin: "left center",
+                    }}
+                  />
+                )}
 
-                {/* Sidebar card */}
+                {/* Sidebar card - responsive width */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[0] = el)}
-                  className={`absolute left-[180px] top-[20%] -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl w-[255px] pointer-events-auto border-2 ${
+                  className={`bg-white rounded-2xl p-4 shadow-xl pointer-events-auto border-2 ${
+                    isMobile
+                      ? "w-full"
+                      : "w-[255px] absolute left-[180px] top-[20%] -translate-y-1/2"
+                  } ${
                     activeSidebar === 0
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-200/50"
@@ -1337,28 +1067,38 @@ const ProblemSection = () => {
             </div>
           )}
 
-          {/* Sidebar 2 (for Screen 3: Reconciliation) - LEFT SIDE */}
+          {/* Sidebar 2 (for Screen 3: Reconciliation) */}
           {visibleSidebars[1] && (
             <div
-              className="absolute left-1/2 top-1/4 -translate-y-1/2 z-50"
-              style={{ marginLeft: "-155px" }}
+              className={`absolute ${
+                isMobile
+                  ? "right-4 top-2/4 w-[calc(100%-2rem)]"
+                  : "left-1/2 top-1/4 -translate-y-1/2"
+              } z-50`}
+              style={!isMobile ? { marginLeft: "-155px" } : {}}
             >
               <div className="relative">
-                {/* Progress line from phone to card (right to left) */}
-                <div
-                  ref={(el) => (sidebarLinesRef.current[1] = el)}
-                  className="h-[2px] w-[200px] absolute right-0 top-1/2 -translate-y-1/2"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(11, 67, 160, 0.2) 0%, #0B43A0 100%)",
-                    transformOrigin: "right center",
-                  }}
-                />
+                {/* Progress line - hidden on mobile */}
+                {!isMobile && (
+                  <div
+                    ref={(el) => (sidebarLinesRef.current[1] = el)}
+                    className="h-[2px] w-[200px] absolute right-0 top-1/2 -translate-y-1/2"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(11, 67, 160, 0.2) 0%, #0B43A0 100%)",
+                      transformOrigin: "right center",
+                    }}
+                  />
+                )}
 
-                {/* Sidebar card */}
+                {/* Sidebar card - responsive width */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[1] = el)}
-                  className={`absolute right-[180px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl border-2 w-[255px] pointer-events-auto ${
+                  className={`bg-white rounded-2xl p-4 shadow-xl border-2 pointer-events-auto ${
+                    isMobile
+                      ? "w-full"
+                      : "w-[255px] absolute right-[180px] top-1/2 -translate-y-1/2"
+                  } ${
                     activeSidebar === 1
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-100"
@@ -1385,28 +1125,38 @@ const ProblemSection = () => {
             </div>
           )}
 
-          {/* Sidebar 3 (for Screen 4: Invoicing) - RIGHT SIDE */}
+          {/* Sidebar 3 (for Screen 4: Invoicing) */}
           {visibleSidebars[2] && (
             <div
-              className="absolute left-1/2 top-[65%] -translate-y-1/2 z-50"
-              style={{ marginLeft: "155px" }}
+              className={`absolute ${
+                isMobile
+                  ? "left-4 top-3/4 w-[calc(100%-2rem)]"
+                  : "left-1/2 top-[65%] -translate-y-1/2"
+              } z-50`}
+              style={!isMobile ? { marginLeft: "155px" } : {}}
             >
               <div className="relative">
-                {/* Progress line from phone to card */}
-                <div
-                  ref={(el) => (sidebarLinesRef.current[2] = el)}
-                  className="h-[2px] w-[200px] absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #0B43A0 0%, rgba(11, 67, 160, 0.2) 100%)",
-                    transformOrigin: "left center",
-                  }}
-                />
+                {/* Progress line - hidden on mobile */}
+                {!isMobile && (
+                  <div
+                    ref={(el) => (sidebarLinesRef.current[2] = el)}
+                    className="h-[2px] w-[200px] absolute left-0 top-1/2 -translate-y-1/2"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #0B43A0 0%, rgba(11, 67, 160, 0.2) 100%)",
+                      transformOrigin: "left center",
+                    }}
+                  />
+                )}
 
-                {/* Sidebar card */}
+                {/* Sidebar card - responsive width */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[2] = el)}
-                  className={`absolute left-[180px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl border-2 w-[255px] pointer-events-auto ${
+                  className={`bg-white rounded-2xl p-4 shadow-xl border-2 pointer-events-auto ${
+                    isMobile
+                      ? "w-full"
+                      : "w-[255px] absolute left-[180px] top-1/2 -translate-y-1/2"
+                  } ${
                     activeSidebar === 2
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-100"
@@ -1434,28 +1184,38 @@ const ProblemSection = () => {
             </div>
           )}
 
-          {/* Sidebar 4 (for Screen 5: Compliance) - LEFT SIDE */}
+          {/* Sidebar 4 (for Screen 5: Compliance) */}
           {visibleSidebars[3] && (
             <div
-              className="absolute left-1/2 top-[65%] -translate-y-1/2 z-50"
-              style={{ marginLeft: "-155px" }}
+              className={`absolute ${
+                isMobile
+                  ? "right-4 top-full w-[calc(100%-2rem)] mt-8"
+                  : "left-1/2 top-[65%] -translate-y-1/2"
+              } z-50`}
+              style={!isMobile ? { marginLeft: "-155px" } : {}}
             >
               <div className="relative">
-                {/* Progress line from phone to card (right to left) */}
-                <div
-                  ref={(el) => (sidebarLinesRef.current[3] = el)}
-                  className="h-[2px] w-[200px] absolute right-0 top-1/2 -translate-y-1/2"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(11, 67, 160, 0.2) 0%, #0B43A0 100%)",
-                    transformOrigin: "right center",
-                  }}
-                />
+                {/* Progress line - hidden on mobile */}
+                {!isMobile && (
+                  <div
+                    ref={(el) => (sidebarLinesRef.current[3] = el)}
+                    className="h-[2px] w-[200px] absolute right-0 top-1/2 -translate-y-1/2"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(11, 67, 160, 0.2) 0%, #0B43A0 100%)",
+                      transformOrigin: "right center",
+                    }}
+                  />
+                )}
 
-                {/* Sidebar card */}
+                {/* Sidebar card - responsive width */}
                 <div
                   ref={(el) => (sidebarCardsRef.current[3] = el)}
-                  className={`absolute right-[180px] top-1/2 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl border-2 w-[255px] pointer-events-auto ${
+                  className={`bg-white rounded-2xl p-4 shadow-xl border-2 pointer-events-auto ${
+                    isMobile
+                      ? "w-full"
+                      : "w-[255px] absolute right-[180px] top-1/2 -translate-y-1/2"
+                  } ${
                     activeSidebar === 3
                       ? "border-blue-500 shadow-blue-500/20"
                       : "border-gray-100"
@@ -1483,11 +1243,17 @@ const ProblemSection = () => {
 
         {/* Main container */}
         <Container className="relative z-0 pb-20 md:pb-24">
-          <div className="min-h-max flex items-center justify-center ">
-            {/* Phone mockup */}
+          <div
+            className={`min-h-max flex items-center justify-center ${isMobile ? "flex-col" : ""}`}
+          >
+            {/* Phone mockup - HIDDEN ON MOBILE */}
             <div
               ref={phoneRef}
-              className="relative w-[310px] h-[620px] z-20 transform-gpu translate-y-12 sm:translate-y-16 md:translate-y-28"
+              className={`relative z-20 transform-gpu ${
+                isMobile
+                  ? "hidden"
+                  : "w-[310px] h-[620px] translate-y-12 sm:translate-y-16 md:translate-y-28"
+              }`}
             >
               {/* Glow effect */}
               <div className="absolute inset-[-40px] bg-gradient-to-br from-blue-400/10 via-transparent to-orange-400/10 blur-2xl rounded-[70px]" />
@@ -1513,7 +1279,6 @@ const ProblemSection = () => {
                 {/* Screens Container */}
                 <div className="absolute inset-[2px] rounded-[34px] overflow-hidden">
                   {/* All screens */}
-                  {/* Screen 1: Cross-Border Operations - STARTS VISIBLE */}
                   <Screen1CrossBorder
                     ref={(el) => (screensRef.current[0] = el)}
                     globeRef={globeRef}
@@ -1524,31 +1289,26 @@ const ProblemSection = () => {
                     dollarRefs={dollarRefs}
                   />
 
-                  {/* Screen 2: Payments */}
                   <Screen2Payments
                     ref={(el) => (screensRef.current[1] = el)}
                     screen2CardsRef={screen2CardsRef}
                   />
 
-                  {/* Screen 3: Reconciliation */}
                   <Screen3Reconciliation
                     ref={(el) => (screensRef.current[2] = el)}
                     screen3CardsRef={screen3CardsRef}
                   />
 
-                  {/* Screen 4: Invoicing */}
                   <Screen4Invoicing
                     ref={(el) => (screensRef.current[3] = el)}
                     screen4CardsRef={screen4CardsRef}
                   />
 
-                  {/* Screen 5: Compliance */}
                   <Screen5Compliance
                     ref={(el) => (screensRef.current[4] = el)}
                     screen5CardsRef={screen5CardsRef}
                   />
 
-                  {/* Screen 6: Cash Flow */}
                   <Screen6CashFlow
                     ref={(el) => (screensRef.current[5] = el)}
                     screen6CardsRef={screen6CardsRef}
@@ -1556,6 +1316,54 @@ const ProblemSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* MOBILE ALTERNATIVE: Show a simplified view or just sidebars */}
+            {isMobile && (
+              <div className="w-full space-y-6 ">
+                {/* Show sidebar cards as regular cards on mobile */}
+                {!animationStarted && (
+                  <div className="space-y-4">
+                    {[
+                      {
+                        title: "Expensive & slow collections",
+                        description:
+                          "Cross-border payments are slow, expensive, and opaque. Hidden FX margins and unpredictable settlement times drain resources.",
+                      },
+                      {
+                        title: "Fragmented reconciliation",
+                        description:
+                          "Data scattered across banks, gateways, and ERPs creates reconciliation nightmares and operational inefficiency.",
+                      },
+                      {
+                        title: "Manual invoicing",
+                        description:
+                          "Invoicing is inconsistent across countries, with different formats, currencies, and tax requirements slowing operations.",
+                      },
+                      {
+                        title: "Fragmented compliance",
+                        description:
+                          "Compliance requirements constantly change by geography and transaction type, creating ongoing operational burden.",
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="bg-white rounded-2xl p-4 shadow-lg border border-gray-200"
+                      >
+                        <div className="hero-badge text-[#0B43A0] mb-2 uppercase">
+                          Problem
+                        </div>
+                        <h3 className="text-[#0A2540] feature-title mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-[#425466] text-muted">
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </Container>
       </div>
