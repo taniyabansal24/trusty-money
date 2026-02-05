@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import "./animation.css";
 import ArrowIcon from "../../components/svg/ArrowIcon";
@@ -24,11 +25,10 @@ const HeroSection = () => {
   const [animationStage, setAnimationStage] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [rowHeight, setRowHeight] = useState(0);
-  const [blurAmount, setBlurAmount] = useState(0); // Start with 0 blur (visible)
+  const [blurAmount, setBlurAmount] = useState(0);
   const [overlayOpacity, setOverlayOpacity] = useState(0);
   const [inputTransform, setInputTransform] = useState("translateY(-20px)");
-  const [suggestionsTransform, setSuggestionsTransform] =
-    useState("translateY(-20px)");
+  const [suggestionsTransform, setSuggestionsTransform] = useState("translateY(-20px)");
   const [cursorPosition, setCursorPosition] = useState({ x: 707.939, y: 74.6 });
   const [cursorOpacity, setCursorOpacity] = useState(0);
   const [cursorScale, setCursorScale] = useState(1);
@@ -36,21 +36,46 @@ const HeroSection = () => {
   const [checkOpacity, setCheckOpacity] = useState(0);
   const [startedOpacity, setStartedOpacity] = useState(0);
   const [startedTransform, setStartedTransform] = useState("translateX(-25%)");
-  const [startTextOpacity, setStartTextOpacity] = useState(1); // Start with visible
-  const [startTextTransform, setStartTextTransform] = useState("scale(1)"); // Start with normal scale
+  const [startTextOpacity, setStartTextOpacity] = useState(1);
+  const [startTextTransform, setStartTextTransform] = useState("scale(1)");
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showFooterClick, setShowFooterClick] = useState(false);
 
+  // ========== ADDED: Animation Management System ==========
+  const activeTimeoutsRef = useRef([]);
   const animationRef = useRef(null);
+  const isAnimatingRef = useRef(false);
+  const componentMountedRef = useRef(true);
+
   const textToType = "API Product";
 
-  const startAnimationLoop = () => {
+  // ========== ADDED: Cleanup function ==========
+  const clearAllTimeouts = () => {
+    activeTimeoutsRef.current.forEach((timeoutId) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        clearInterval(timeoutId);
+      }
+    });
+    activeTimeoutsRef.current = [];
+    
     if (animationRef.current) {
       clearTimeout(animationRef.current);
+      animationRef.current = null;
     }
+  };
 
-    // Reset all states for new loop
+  // ========== ADDED: Track timeout for cleanup ==========
+  const trackTimeout = (timeoutId) => {
+    activeTimeoutsRef.current.push(timeoutId);
+    return timeoutId;
+  };
+
+  // ========== ADDED: Reset all states ==========
+  const resetAllStates = () => {
+    if (!componentMountedRef.current) return;
+    
     setTypedText("");
     setRowHeight(0);
     setBlurAmount(0);
@@ -70,67 +95,94 @@ const HeroSection = () => {
     setButtonClicked(false);
     setShowFooterClick(false);
     setAnimationStage(0);
+  };
+
+  // ========== MODIFIED: startAnimationLoop with better cleanup ==========
+  const startAnimationLoop = () => {
+    // Clear any existing animations first
+    clearAllTimeouts();
+    isAnimatingRef.current = true;
+    
+    // Reset states
+    resetAllStates();
 
     // Scene 1 – Initial cursor appears (0s → 0.4s)
-    setTimeout(() => {
+    const timeout1 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setCursorOpacity(1);
       setAnimationStage(1);
     }, 400);
+    trackTimeout(timeout1);
 
     // Scene 2 – Cursor moves to "Add product" (0.4s → 1.0s)
-    setTimeout(() => {
+    const timeout2 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setCursorPosition({ x: 100, y: 300 });
       setCursorScale(0.9);
       setAnimationStage(2);
     }, 1000);
+    trackTimeout(timeout2);
 
     // Scene 3 – Click "Add product" (1.0s → 1.4s)
-    setTimeout(() => {
+    const timeout3 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setButtonClicked(true);
       setCursorScale(0.7);
-      setTimeout(() => {
+      const clickTimeout = setTimeout(() => {
+        if (!componentMountedRef.current) return;
         setCursorScale(0.9);
         setButtonClicked(false);
       }, 150);
+      trackTimeout(clickTimeout);
       setAnimationStage(3);
-
-      // Apply blur to background
       setBlurAmount(5);
     }, 1400);
+    trackTimeout(timeout3);
 
     // Scene 4 – Overlay opens (1.4s → 1.8s)
-    setTimeout(() => {
+    const timeout4 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setIsInputOpen(true);
       setOverlayOpacity(1);
       setInputTransform("translateY(0px)");
       setSuggestionsTransform("translateY(0px)");
       setAnimationStage(4);
     }, 1800);
+    trackTimeout(timeout4);
 
     // Scene 5 – Typing "API Product" (1.8s → 3.0s)
-    setTimeout(() => {
+    const timeout5 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setAnimationStage(5);
       let i = 0;
       const typeInterval = setInterval(() => {
+        if (!componentMountedRef.current) {
+          clearInterval(typeInterval);
+          return;
+        }
         if (i < textToType.length) {
           setTypedText(textToType.substring(0, i + 1));
           i++;
         } else {
           clearInterval(typeInterval);
+          trackTimeout(typeInterval);
 
           // Brief pause after typing
-          setTimeout(() => {
+          const pauseTimeout = setTimeout(() => {
+            if (!componentMountedRef.current) return;
             // Scene 6 – Move cursor to footer (3.2s → 3.6s)
-            setCursorPosition({ x: 320, y: 460 }); // Better position for footer text
+            setCursorPosition({ x: 320, y: 460 });
             setCursorScale(0.9);
             setAnimationStage(6);
 
             // Scene 7 – Click footer CTA (3.6s → 4.0s)
-            setTimeout(() => {
+            const clickTimeout2 = setTimeout(() => {
+              if (!componentMountedRef.current) return;
               setShowFooterClick(true);
               setCursorScale(0.7);
 
-              setTimeout(() => {
+              const resetCursorTimeout = setTimeout(() => {
+                if (!componentMountedRef.current) return;
                 setCursorScale(0.9);
                 setShowFooterClick(false);
 
@@ -139,87 +191,185 @@ const HeroSection = () => {
                 setInputTransform("translateY(-20px)");
                 setSuggestionsTransform("translateY(-20px)");
 
-                setTimeout(() => {
+                const closeTimeout = setTimeout(() => {
+                  if (!componentMountedRef.current) return;
                   setIsInputOpen(false);
                   setRowHeight(36);
                   setBlurAmount(0);
                   setAnimationStage(7);
                 }, 300);
+                trackTimeout(closeTimeout);
               }, 150);
+              trackTimeout(resetCursorTimeout);
             }, 400);
+            trackTimeout(clickTimeout2);
           }, 200);
+          trackTimeout(pauseTimeout);
         }
-      }, 90); // Faster typing for smoothness
+      }, 90);
+      trackTimeout(typeInterval);
     }, 3000);
+    trackTimeout(timeout5);
 
     // Scene 9 – Cursor moves to "Start billing" (4.4s → 5.0s)
-    setTimeout(() => {
+    const timeout6 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setCursorPosition({ x: 707.939, y: 35 });
       setCursorScale(0.9);
       setAnimationStage(8);
     }, 5000);
+    trackTimeout(timeout6);
 
     // Scene 10 – Click "Start billing" (5.0s → 5.4s)
-    setTimeout(() => {
+    const timeout7 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setButtonClicked(true);
       setCursorScale(0.7);
-      setTimeout(() => {
+      const clickTimeout3 = setTimeout(() => {
+        if (!componentMountedRef.current) return;
         setCursorScale(0.9);
         setButtonClicked(false);
-
-        // Fade out "Start billing" text
         setStartTextOpacity(0);
         setStartTextTransform("scale(0.9)");
-
-        // Show loading spinner
         setLoadingOpacity(1);
         setAnimationStage(9);
       }, 150);
+      trackTimeout(clickTimeout3);
     }, 5400);
+    trackTimeout(timeout7);
 
     // Scene 11 – Loading to success (5.4s → 6.0s)
-    setTimeout(() => {
-      // Hide loading spinner
+    const timeout8 = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setLoadingOpacity(0);
-
-      // Show checkmark
       setCheckOpacity(1);
-
-      // Show "Started" text
-      setTimeout(() => {
+      const successTimeout = setTimeout(() => {
+        if (!componentMountedRef.current) return;
         setStartedOpacity(1);
         setStartedTransform("translateX(0px)");
         setAnimationStage(10);
       }, 200);
+      trackTimeout(successTimeout);
     }, 6000);
+    trackTimeout(timeout8);
 
     // Scene 12 – Pause and restart loop (6.0s → 7.5s)
-    setTimeout(() => {
+    const restartTimeout = setTimeout(() => {
+      if (!componentMountedRef.current) return;
       setTimeout(() => {
-        startAnimationLoop(); // Restart the loop
+        if (!componentMountedRef.current) return;
+        startAnimationLoop();
       }, 1500);
     }, 7500);
+    trackTimeout(restartTimeout);
+
+    // Store main timeout reference
+    animationRef.current = restartTimeout;
   };
+
+  // ========== ADDED: Manual restart function ==========
+  const handleRestart = () => {
+    if (isAnimatingRef.current) {
+      clearAllTimeouts();
+      isAnimatingRef.current = false;
+    }
+    setTimeout(() => {
+      startAnimationLoop();
+    }, 100);
+  };
+
+  // ========== MODIFIED: useEffect with proper cleanup ==========
   useEffect(() => {
+    componentMountedRef.current = true;
+    isAnimatingRef.current = true;
+    
     // Start the animation loop
     startAnimationLoop();
 
+    // ========== ADDED: Visibility change handler ==========
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Pause animations when tab is not visible
+        clearAllTimeouts();
+        isAnimatingRef.current = false;
+      } else {
+        // Resume animations when tab becomes visible
+        if (!isAnimatingRef.current) {
+          handleRestart();
+        }
+      }
+    };
+
+    // Add visibility change listener
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     // Cleanup function
     return () => {
-      if (animationRef.current) {
-        clearTimeout(animationRef.current);
-      }
+      componentMountedRef.current = false;
+      isAnimatingRef.current = false;
+      clearAllTimeouts();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []); // Run once on mount
 
-  // Handle manual restart
-  const handleRestart = () => {
-    startAnimationLoop();
-  };
+  // ========== ADDED: Debug/Reset button (remove in production) ==========
+  // This is useful for development - shows that animations can be controlled
+  const DebugControls = () => (
+    <div style={{
+      position: 'fixed',
+      bottom: '20px',
+      right: '20px',
+      zIndex: 9999,
+      display: 'flex',
+      gap: '10px',
+      opacity: 0.7,
+      transition: 'opacity 0.3s'
+    }}
+    onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+    onMouseLeave={e => e.currentTarget.style.opacity = '0.7'}>
+      <button
+        onClick={handleRestart}
+        style={{
+          background: '#073F9E',
+          color: 'white',
+          border: 'none',
+          padding: '8px 16px',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontSize: '12px',
+          fontWeight: 'bold'
+        }}
+      >
+        Restart Anim
+      </button>
+      <button
+        onClick={() => {
+          clearAllTimeouts();
+          resetAllStates();
+          isAnimatingRef.current = false;
+        }}
+        style={{
+          background: '#dc2626',
+          color: 'white',
+          border: 'none',
+          padding: '8px 16px',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontSize: '12px',
+          fontWeight: 'bold'
+        }}
+      >
+        Stop Anim
+      </button>
+    </div>
+  );
 
   return (
     <>
-      <div class="relative mt-8 flex flex-col w-full max-w-full justify-center sm:mt-20 ">
+      {/* ADD: Debug controls (remove in production) */}
+      {/* {process.env.NODE_ENV === 'development' && <DebugControls />} */}
+      
+     <div class="relative mt-8 flex flex-col w-full max-w-full justify-center sm:mt-20 ">
         {/* Text Content */}
         <motion.div
           variants={staggerContainer}
