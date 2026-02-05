@@ -9,68 +9,50 @@ const CalendarArrowIcon = ({
 }) => {
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 20 20"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`relative ${className}`}
-      preserveAspectRatio="none"
-      {...props}
     >
-      <g clipPath="url(#calendar-arrow-clip)">
+      <g clip-path="url(#clip0_850_2574)">
         <path
-          d="M10.4163 17.5H4.99967C4.55765 17.5 4.13372 17.3244 3.82116 17.0119C3.5086 16.6993 3.33301 16.2754 3.33301 15.8334V5.83335C3.33301 5.39133 3.5086 4.9674 3.82116 4.65484C4.13372 4.34228 4.55765 4.16669 4.99967 4.16669H14.9997C15.4417 4.16669 15.8656 4.34228 16.1782 4.65484C16.4907 4.9674 16.6663 5.39133 16.6663 5.83335V10"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M4.66797 1.17078L4.66909 3.50411"
+          stroke="#90A1B9"
+          stroke-width="1.16667"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         />
-
         <path
-          d="M13.333 2.5V5.83333"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M9.33398 1.16883L9.3351 3.50216"
+          stroke="#90A1B9"
+          stroke-width="1.16667"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         />
-
         <path
-          d="M6.66699 2.5V5.83333"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M11.0853 2.33427L2.91862 2.33819C2.27429 2.3385 1.7522 2.86108 1.75251 3.50542L1.75643 11.6721C1.75674 12.3164 2.27933 12.8385 2.92366 12.8382L11.0903 12.8343C11.7347 12.834 12.2567 12.3114 12.2564 11.667L12.2525 3.50038C12.2522 2.85604 11.7296 2.33396 11.0853 2.33427Z"
+          stroke="#90A1B9"
+          stroke-width="1.16667"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         />
-
         <path
-          d="M3.33301 9.16669H16.6663"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M13.333 15.8333L18.333 15.8333"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M15.833 18.3333L18.333 15.8333L15.833 13.3333"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M1.75195 5.83875L12.252 5.83371"
+          stroke="#90A1B9"
+          stroke-width="1.16667"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         />
       </g>
-
       <defs>
-        <clipPath id="calendar-arrow-clip">
-          <rect width="20" height="20" fill="white" />
+        <clipPath id="clip0_850_2574">
+          <rect
+            width="14"
+            height="14"
+            fill="white"
+            transform="translate(0 0.00671754) rotate(-0.0274919)"
+          />
         </clipPath>
       </defs>
     </svg>
