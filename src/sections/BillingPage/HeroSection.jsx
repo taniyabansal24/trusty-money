@@ -1,25 +1,21 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import "./animation.css";
 import ArrowIcon from "../../components/svg/ArrowIcon";
 import LoadingSpinner from "../../components/svg/LoadingSpinner";
 import CheckIcon from "../../components/svg/CheckIcon";
 import MoreIcon from "../../components/svg/MoreIcon";
-import LayersIcon from "../../components/svg/LayersIcon";
 import CalendarArrowIcon from "../../components/svg/CalendarArrowIcon";
 import MoreDotsIcon from "../../components/svg/MoreDotsIcon";
-import PlusSquareIcon from "../../components/svg/PlusSquareIcon";
 import ReceiptIcon from "../../components/svg/ReceiptIcon";
-import GlobeIcon from "../../components/svg/GlobeIcon";
 import ChevronDownIcon from "../../components/svg/ChevronDownIcon";
-import PlusCircleIcon from "../../components/svg/PlusCircleIcon";
 import CursorIcon from "../../components/svg/CursorIcon";
 import PlusIcon from "../../components/svg/PlusIcon";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button, Container } from "../../components/ui";
 import { staggerContainer, staggerItem } from "../../utils/animations";
 import ClockIcon from "../../components/svg/ClockIcon";
 import UserGroupIcon from "../../components/svg/UserGroupIcon";
+import CardTileIcon from "../../components/svg/CardTileIcon";
 
 const HeroSection = () => {
   const [animationStage, setAnimationStage] = useState(0);
@@ -28,7 +24,8 @@ const HeroSection = () => {
   const [blurAmount, setBlurAmount] = useState(0);
   const [overlayOpacity, setOverlayOpacity] = useState(0);
   const [inputTransform, setInputTransform] = useState("translateY(-20px)");
-  const [suggestionsTransform, setSuggestionsTransform] = useState("translateY(-20px)");
+  const [suggestionsTransform, setSuggestionsTransform] =
+    useState("translateY(-20px)");
   const [cursorPosition, setCursorPosition] = useState({ x: 707.939, y: 74.6 });
   const [cursorOpacity, setCursorOpacity] = useState(0);
   const [cursorScale, setCursorScale] = useState(1);
@@ -48,7 +45,7 @@ const HeroSection = () => {
   const isAnimatingRef = useRef(false);
   const componentMountedRef = useRef(true);
 
-  const textToType = "API Product";
+  const textToType = "API Calls";
 
   // ========== ADDED: Cleanup function ==========
   const clearAllTimeouts = () => {
@@ -59,7 +56,7 @@ const HeroSection = () => {
       }
     });
     activeTimeoutsRef.current = [];
-    
+
     if (animationRef.current) {
       clearTimeout(animationRef.current);
       animationRef.current = null;
@@ -75,7 +72,7 @@ const HeroSection = () => {
   // ========== ADDED: Reset all states ==========
   const resetAllStates = () => {
     if (!componentMountedRef.current) return;
-    
+
     setTypedText("");
     setRowHeight(0);
     setBlurAmount(0);
@@ -102,7 +99,7 @@ const HeroSection = () => {
     // Clear any existing animations first
     clearAllTimeouts();
     isAnimatingRef.current = true;
-    
+
     // Reset states
     resetAllStates();
 
@@ -117,7 +114,7 @@ const HeroSection = () => {
     // Scene 2 – Cursor moves to "Add product" (0.4s → 1.0s)
     const timeout2 = setTimeout(() => {
       if (!componentMountedRef.current) return;
-      setCursorPosition({ x: 100, y: 300 });
+      setCursorPosition({ x: 100, y: 370 });
       setCursorScale(0.9);
       setAnimationStage(2);
     }, 1000);
@@ -282,7 +279,7 @@ const HeroSection = () => {
   useEffect(() => {
     componentMountedRef.current = true;
     isAnimatingRef.current = true;
-    
+
     // Start the animation loop
     startAnimationLoop();
 
@@ -315,29 +312,31 @@ const HeroSection = () => {
   // ========== ADDED: Debug/Reset button (remove in production) ==========
   // This is useful for development - shows that animations can be controlled
   const DebugControls = () => (
-    <div style={{
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      zIndex: 9999,
-      display: 'flex',
-      gap: '10px',
-      opacity: 0.7,
-      transition: 'opacity 0.3s'
-    }}
-    onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-    onMouseLeave={e => e.currentTarget.style.opacity = '0.7'}>
+    <div
+      style={{
+        position: "fixed",
+        bottom: "20px",
+        right: "20px",
+        zIndex: 9999,
+        display: "flex",
+        gap: "10px",
+        opacity: 0.7,
+        transition: "opacity 0.3s",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+      onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+    >
       <button
         onClick={handleRestart}
         style={{
-          background: '#073F9E',
-          color: 'white',
-          border: 'none',
-          padding: '8px 16px',
-          borderRadius: '6px',
-          cursor: 'pointer',
-          fontSize: '12px',
-          fontWeight: 'bold'
+          background: "#073F9E",
+          color: "white",
+          border: "none",
+          padding: "8px 16px",
+          borderRadius: "6px",
+          cursor: "pointer",
+          fontSize: "12px",
+          fontWeight: "bold",
         }}
       >
         Restart Anim
@@ -349,14 +348,14 @@ const HeroSection = () => {
           isAnimatingRef.current = false;
         }}
         style={{
-          background: '#dc2626',
-          color: 'white',
-          border: 'none',
-          padding: '8px 16px',
-          borderRadius: '6px',
-          cursor: 'pointer',
-          fontSize: '12px',
-          fontWeight: 'bold'
+          background: "#dc2626",
+          color: "white",
+          border: "none",
+          padding: "8px 16px",
+          borderRadius: "6px",
+          cursor: "pointer",
+          fontSize: "12px",
+          fontWeight: "bold",
         }}
       >
         Stop Anim
@@ -368,8 +367,8 @@ const HeroSection = () => {
     <>
       {/* ADD: Debug controls (remove in production) */}
       {/* {process.env.NODE_ENV === 'development' && <DebugControls />} */}
-      
-     <div class="relative mt-8 flex flex-col w-full max-w-full justify-center sm:mt-20 ">
+
+      <div class="relative mt-8 flex flex-col w-full max-w-full justify-center sm:mt-20 ">
         {/* Text Content */}
         <motion.div
           variants={staggerContainer}
@@ -389,8 +388,8 @@ const HeroSection = () => {
 
           {/* Headline - RESPONSIVE */}
           <motion.h1 className="hero-heading w-full text-center ">
-            Translate sales contracts into <br />
-            <span className="gradient-text relative">automated billing.</span>
+            AI-Powered Billing, Invoicing & <br />
+            <span className="gradient-text relative">Usage Billing.</span>
           </motion.h1>
 
           {/* Subheadline line - RESPONSIVE */}
@@ -464,7 +463,7 @@ const HeroSection = () => {
             >
               <div className="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center align-center">
                 <p className="hero-heading text-[#1B1B1B] text-left text-xl font-bold mb-0">
-                  Create a billing schedule
+                  Automated Billing Schedule
                 </p>
                 <div className=" flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
                   <div
@@ -541,11 +540,26 @@ const HeroSection = () => {
                 }}
               >
                 {/* Header */}
-                {/* <div className="relative flex items-center justify-start self-stretch px-6">
-                <p className="section-subtitle text-[#1B1B1B] text-left text-base font-bold">
-                  Contract
-                </p>
-              </div> */}
+                <div className="relative flex gap-3 items-center justify-start self-stretch py-3 px-2 light-bg mx-4 rounded-lg">
+                  <CardTileIcon size={40} />
+                  {/* Text container matching Figma specs */}
+                  <div className="flex flex-col">
+                    {/* Contract title */}
+                    <span
+                      className="font-bold text-base leading-5 text-[#0F172B]"
+                      style={{ marginTop: "-1.2px" }}
+                    >
+                      Contract
+                    </span>
+                    {/* Subtitle */}
+                    <span
+                      className="font-normal text-xs leading-4 text-[#62748E]"
+                      style={{ marginTop: "3px" }}
+                    >
+                      Draft • ENT-2024-001
+                    </span>
+                  </div>
+                </div>
 
                 {/* Desktop view */}
                 <div className="hidden w-full items-start justify-between px-4 sm:flex">
@@ -573,7 +587,7 @@ const HeroSection = () => {
                     <div className="relative overflow-hidden px-2">
                       <div className="flex h-9 max-w-full items-center justify-start gap-2">
                         <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
-                          Account verification
+                          API Usage (Tier 1)
                         </p>
                         {/* <LayersIcon size={24} color="#073F9E" /> */}
                       </div>
@@ -592,7 +606,7 @@ const HeroSection = () => {
                     >
                       <div className="flex h-9 max-w-full items-center justify-start gap-2">
                         <p className="feature-description min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right">
-                          API Product
+                          API Calls
                         </p>
                       </div>
                     </div>
@@ -611,7 +625,6 @@ const HeroSection = () => {
                         <p className="feature-description text-left text-[#344054]">
                           Annually
                         </p>
-                        
                       </div>
                     </div>
                     <div className="relative self-stretch overflow-hidden px-2">
@@ -620,7 +633,6 @@ const HeroSection = () => {
                         <p className="feature-description text-left text-[#344054]">
                           One time
                         </p>
-                        
                       </div>
                     </div>
                     {/* <div className="relative self-stretch overflow-hidden px-2">
@@ -632,7 +644,7 @@ const HeroSection = () => {
                     </div> */}
                     <div className="relative self-stretch overflow-hidden px-2">
                       <div className="flex h-9 items-center justify-start gap-2">
-                        <UserGroupIcon/>
+                        <UserGroupIcon />
                         <p className="feature-description text-left text-[#344054]">
                           Monthly
                         </p>
@@ -658,15 +670,25 @@ const HeroSection = () => {
                   </div>
 
                   {/* Discount column */}
-                  <div className="flex flex-col items-start justify-start">
-                    <div className="relative flex h-9 items-center justify-start gap-2 px-2">
-                      <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
-                        discount
+                  <div className="flex flex-col items-center justify-start">
+                    <div className="relative flex h-9 items-center justify-center gap-2 px-2 w-full">
+                      <p className="hero-badge text-center text-xs font-bold uppercase text-[#7483a0]">
+                        DISCOUNT
                       </p>
                     </div>
-                    <div className="relative flex h-9 items-center justify-start gap-2 p-2">
-                      <p className="feature-description flex-grow text-left text-[#344054]">
-                        10% off once
+                    <div className="relative flex h-9 items-center justify-center gap-2 p-2 w-full">
+                      <p className="feature-description text-center text-[#344054]">
+                        -
+                      </p>
+                    </div>
+                    <div className="relative flex h-9 items-center justify-center gap-2 p-2 w-full">
+                      <p className="feature-description text-center text-[#344054]">
+                        -
+                      </p>
+                    </div>
+                    <div className="relative flex h-9 items-center justify-center gap-2 p-2 w-full">
+                      <p className="feature-description text-center text-[#344054]">
+                        -
                       </p>
                     </div>
                   </div>
@@ -682,24 +704,24 @@ const HeroSection = () => {
                       <div className="relative w-full overflow-hidden px-2">
                         <div className="flex h-9 items-center justify-end gap-2">
                           <p className="text-muted flex-grow text-right text-sm text-[#7483a0] line-through">
-                            $5,000.00
+                            $2,000.00
                           </p>
                           <p className="feature-title flex-grow text-right text-[#1B1B1B]">
-                            $4,500.00
-                          </p>
-                        </div>
-                      </div>
-                      <div className="relative w-full overflow-hidden px-2">
-                        <div className="flex h-9 items-center justify-end gap-2">
-                          <p className="feature-title flex-grow text-right text-[#1B1B1B]">
-                            $5,900.00
+                            $1,000.00
                           </p>
                         </div>
                       </div>
                       <div className="relative w-full overflow-hidden px-2">
                         <div className="flex h-9 items-center justify-end gap-2">
                           <p className="feature-title flex-grow text-right text-[#1B1B1B]">
-                            From $0.20
+                            $1,900.00
+                          </p>
+                        </div>
+                      </div>
+                      <div className="relative w-full overflow-hidden px-2">
+                        <div className="flex h-9 items-center justify-end gap-2">
+                          <p className="feature-title flex-grow text-right text-[#1B1B1B]">
+                            From $0.10
                           </p>
                         </div>
                       </div>
@@ -719,7 +741,7 @@ const HeroSection = () => {
                       >
                         <div className="flex h-9 items-center justify-end gap-2">
                           <p className="feature-title flex-grow text-right text-[#1B1B1B]">
-                            $5,900.00
+                            $1,900.00
                           </p>
                         </div>
                       </div>
@@ -780,11 +802,11 @@ const HeroSection = () => {
                       <CalendarArrowIcon size={20} color="#073F9E" />
                     </div>
                     <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
-                      discount
+                      free Units
                     </p>
                     <div className="relative flex items-center justify-start gap-2 overflow-hidden rounded-bl-md rounded-tl-md py-2">
                       <p className="feature-description text-left text-[#344054]">
-                        10% off once
+                        1000
                       </p>
                     </div>
                     <p className="hero-badge block text-left text-xs font-bold uppercase text-[#7483a0]">
@@ -792,10 +814,10 @@ const HeroSection = () => {
                     </p>
                     <div className="relative flex items-center justify-start gap-2 py-2">
                       <p className="text-muted text-left text-sm text-[#7483a0] line-through">
-                        $5,000.00
+                        $2,000.00
                       </p>
                       <p className="feature-title text-left text-[#1B1B1B]">
-                        $4,500.00
+                        $1,000.00
                       </p>
                     </div>
                   </div>
@@ -828,7 +850,7 @@ const HeroSection = () => {
                     </p>
                     <div className="relative flex items-center justify-start gap-2 py-2">
                       <p className="feature-title text-left text-[#1B1B1B]">
-                        $5,900.00
+                        $1,900.00
                       </p>
                     </div>
                   </div>
@@ -837,7 +859,7 @@ const HeroSection = () => {
                 {/* Action buttons section */}
                 <div className="hidden flex-col items-start justify-start gap-2.5 self-stretch px-4 sm:flex ">
                   <div className="flex items-start justify-between gap-1.5 self-stretch p-2 text-[13px] border-t-2">
-                    <div className="flex items-start justify-start gap-1.5 md:gap-3">
+                    <div className="flex items-start justify-start gap-1.5 md:gap-3 ">
                       <div
                         id="hero-animation-add-product"
                         className={`relative flex h-9 items-center justify-center gap-1 rounded-lg border border-[#d1d9e4] bg-white p-2 transition-transform duration-200 ${
@@ -868,13 +890,13 @@ const HeroSection = () => {
                       </div>
                     </div>
                     <div
-                      className="relative flex h-9 w-full max-w-[161px] flex-shrink items-center justify-start rounded-lg border border-[#d1d9e4] bg-white pr-3"
+                      className="relative flex h-9 w-full max-w-[185px] flex-shrink items-center justify-start rounded-lg border border-[#d1d9e4] bg-white pr-2"
                       style={{
                         boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
                       }}
                     >
                       <div className="feature-description relative flex flex-grow items-center justify-start self-stretch p-3">
-                        Select tax rate
+                        Select Tax Ratio (%)
                       </div>
                       <ChevronDownIcon size={20} color="#073F9E" />
                     </div>
@@ -929,28 +951,28 @@ const HeroSection = () => {
                       <div className="items-center justify-start self-stretch px-2">
                         <div className="flex h-10 items-center justify-start">
                           <p className="feature-title text-left text-[#1B1B1B]">
-                            Account verifications
+                            Account verifications API
                           </p>
                         </div>
                         <div className="pl-3">
                           <div className="flex h-10 items-center justify-start">
                             <p className="text-muted text-left">
-                              From $0.20 + $200.00 / Monthly
+                              From $0.10 + $100.00 / Monthly
                             </p>
                           </div>
                           <div className="flex h-10 items-center justify-start">
                             <p className="text-muted text-left">
-                              From $0.19 / Monthly
+                              From $0.15 / Monthly
                             </p>
                           </div>
                           <div className="flex h-10 items-center justify-start">
                             <p className="text-muted text-left">
-                              From $0.18 / Monthly
+                              From $0.12 / Monthly
                             </p>
                           </div>
                           <div className="flex h-10 items-center justify-start">
                             <p className="text-muted text-left">
-                              From $0.17 / Monthly
+                              From $0.16 / Monthly
                             </p>
                           </div>
                         </div>
@@ -958,13 +980,13 @@ const HeroSection = () => {
                       <div className="items-center justify-start self-stretch px-2">
                         <div className="flex h-10 items-center justify-start">
                           <p className="feature-title text-left text-[#1B1B1B]">
-                            Analytics Platform
+                            Usage Analytics
                           </p>
                         </div>
                         <div className="pl-3">
                           <div className="flex h-10 items-center justify-start">
                             <p className="text-muted text-left">
-                              $200.00 / Monthly
+                              $100.00 / Monthly
                             </p>
                           </div>
                         </div>
