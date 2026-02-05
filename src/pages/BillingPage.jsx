@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar } from "../components/layout";
 import HeroSection from "../sections/BillingPage/HeroSection";
 import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
-import Automation from "../sections/BillingPage/Automation";
+import SalesToFinance from "../sections/BillingPage/SalesToFinance";
 
 const BillingPage = () => {
   return (
@@ -12,9 +12,9 @@ const BillingPage = () => {
         <HeroSection />
       </section>
       <section className="section">
-        {/* <Automation/> */}
+        <SalesToFinance/>
       </section>
-      <section className="section">
+      <section className="pt-20 md:pt-24">
         <MapBackgroundWrapper />
       </section>
     </div>
