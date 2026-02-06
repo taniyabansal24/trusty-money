@@ -123,30 +123,30 @@ const WorkflowAnimation = () => {
 
   // Manual restart function
   const handleRestart = () => {
-    console.log('Restarting workflow animation...');
+    console.log("Restarting workflow animation...");
     clearAllAnimations();
     hasStartedRef.current = false;
-    
+
     // Reset states immediately
     resetAllStates();
-    
+
     // Small delay before restarting to ensure clean state
     const restartTimeout = setTimeout(() => {
       if (componentMountedRef.current) {
         startAnimation();
       }
     }, 100);
-    
+
     trackTimeout(restartTimeout);
   };
 
   // Stop animation function
   const handleStop = () => {
-    console.log('Stopping workflow animation...');
+    console.log("Stopping workflow animation...");
     clearAllAnimations();
     hasStartedRef.current = false;
     isAnimatingRef.current = false;
-    
+
     // Reset to initial state
     resetAllStates();
   };
@@ -154,12 +154,12 @@ const WorkflowAnimation = () => {
   // Start animation sequence
   const startAnimation = () => {
     if (!componentMountedRef.current || isAnimatingRef.current) return;
-    
+
     isAnimatingRef.current = true;
     hasStartedRef.current = true;
     clearAllAnimations();
 
-    console.log('Starting workflow animation sequence...');
+    console.log("Starting workflow animation sequence...");
 
     // Scene 1: Invoice shows (0s)
     setAnimationStage(1);
@@ -368,17 +368,17 @@ const WorkflowAnimation = () => {
   // Initialize animation
   useEffect(() => {
     componentMountedRef.current = true;
-    
+
     // Handle visibility changes
     const handleVisibilityChange = () => {
       if (document.hidden) {
         // Page is hidden - pause animations
-        console.log('Page hidden, pausing animations');
+        console.log("Page hidden, pausing animations");
         clearAllAnimations();
       } else {
         // Page is visible again - restart if we were animating
         if (hasStartedRef.current && !isAnimatingRef.current) {
-          console.log('Page visible again, restarting animation');
+          console.log("Page visible again, restarting animation");
           setTimeout(() => {
             if (componentMountedRef.current) {
               startAnimation();
@@ -389,7 +389,7 @@ const WorkflowAnimation = () => {
     };
 
     // Add visibility change listener
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Start animation on mount
     const startDelay = setTimeout(() => {
@@ -402,25 +402,25 @@ const WorkflowAnimation = () => {
 
     // Cleanup function
     return () => {
-      console.log('Cleaning up workflow animation');
+      console.log("Cleaning up workflow animation");
       componentMountedRef.current = false;
       clearAllAnimations();
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
   // ========== ADDED: Debug Controls Component ==========
   const DebugControls = () => {
-    if (process.env.NODE_ENV !== 'development') return null;
-    
+    if (process.env.NODE_ENV !== "development") return null;
+
     return (
-      <div 
+      <div
         className="fixed bottom-4 right-4 z-50 flex gap-2 opacity-70 transition-opacity hover:opacity-100"
-        style={{ 
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          padding: '8px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          padding: "8px",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
         <button
@@ -446,372 +446,374 @@ const WorkflowAnimation = () => {
     <>
       {/* Debug Controls - Only in development */}
       {/* <DebugControls /> */}
-      
-    <div className="">
-      <div className="relative w-full">
-        <div className="relative mx-auto flex w-full items-center justify-center">
-          {/* Cursor */}
-          <div
-            id="hero-animation-cursor"
-            className="absolute z-20 transition-all duration-500 ease-out"
-            style={{
-              transform: `translate(${cursorPosition.x}px, ${cursorPosition.y}px) scale(${cursorScale})`,
-              opacity: cursorOpacity,
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
-            <ArrowIcon width={30} height={30} />
-          </div>
 
-          {/* Invoice */}
-          <div
-            id="workflow-invoice"
-            className="mx-auto w-full max-w-[360px] overflow-hidden rounded transition-all duration-500 ease-out"
-            style={{
-              boxShadow:
-                "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px",
-              opacity: invoiceOpacity,
-              transform: invoiceTransform,
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
-            {/* Invoice content (same as before) */}
-            <div className="bg-[#FBFBFB] px-6 py-8">
-              <img
-                alt="Trusty Money"
-                loading="lazy"
-                width="173"
-                height="46"
-                decoding="async"
-                className="ml-auto w-[76px] shrink-0 grow-0 object-contain"
-                  src="https://demo.trustymoney.in/assets/newLOGO-Cj83E8a4.svg"
-              />
-              
-              <div className="mt-[14px] flex justify-between">
-                <div
-                  className="h-2 rounded-full bg-[#D4D4D4] invoice-row basis-[25%]"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                ></div>
-                <div
-                  className="invoice-row flex basis-[24%] flex-col gap-y-1.5"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
-                  <div className="h-2 rounded-full bg-[#D4D4D4]"></div>
-                  <div className="h-2 rounded-full bg-[#F1F1F1] w-[50%]"></div>
-                  <div className="h-2 rounded-full bg-[#F1F1F1] w-[60%]"></div>
-                  <div className="h-2 rounded-full bg-[#F1F1F1] w-[90%]"></div>
-                </div>
-              </div>
-            </div>
-            <div className="p-6">
-              <p className="pb-1 text-xs font-bold">Billing</p>
-              <div
-                className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-              >
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
-                </div>
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
-                </div>
-              </div>
-              <div
-                className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-              >
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                </div>
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                </div>
-              </div>
-              <div
-                className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-              >
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                </div>
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                </div>
-              </div>
-              <div
-                className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-              >
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                </div>
-                <div className="flex basis-1/2">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                </div>
-              </div>
-            </div>
-            <div className="p-6">
-              <div
-                className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-              >
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
-                </div>
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
-                </div>
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
-                </div>
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
-                </div>
-              </div>
-              <div
-                className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-              >
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
-                </div>
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
-                </div>
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
-                </div>
-                <div className="flex basis-1/4">
-                  <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Dashboard */}
-          <div
-            id="workflow-dashboard"
-            className="absolute w-full max-w-[512px] transition-all duration-500 ease-out"
-            style={{
-              opacity: dashboardOpacity,
-              transform: dashboardTransform,
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
+      <div className="">
+        <div className="relative w-full">
+          <div className="relative mx-auto flex w-full items-center justify-center">
+            {/* Cursor */}
             <div
-              className="relative w-full overflow-hidden rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white py-5 pl-6 pr-4"
+              id="hero-animation-cursor"
+              className="absolute z-20 transition-all duration-500 ease-out"
               style={{
-                boxShadow:
-                  "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
+                transform: `translate(${cursorPosition.x}px, ${cursorPosition.y}px) scale(${cursorScale})`,
+                opacity: cursorOpacity,
+                transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
-              <div className="flex w-full justify-between gap-x-3">
-                <div className="flex items-center gap-2">
-                  <a href="/">
-                    <img
-                      src="https://demo.trustymoney.in/assets/newLOGO-Cj83E8a4.svg"
-                      alt="Trusty Money Logo"
-                      width="155"
-                      height="24"
-                      fetchpriority="high"
-                      decoding="async"
-                    />
-                  </a>
+              <ArrowIcon width={30} height={30} />
+            </div>
+
+            {/* Invoice */}
+            <div
+              id="workflow-invoice"
+              className="mx-auto w-full max-w-[360px] overflow-hidden rounded transition-all duration-500 ease-out"
+              style={{
+                boxShadow:
+                  "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px",
+                opacity: invoiceOpacity,
+                transform: invoiceTransform,
+                transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            >
+              {/* Invoice content (same as before) */}
+              <div className="bg-[#FBFBFB] px-6 py-8">
+                <img
+                  alt="Trusty Money"
+                  loading="lazy"
+                  width="173"
+                  height="46"
+                  decoding="async"
+                  className="ml-auto w-[76px] shrink-0 grow-0 object-contain"
+                  src="https://demo.trustymoney.in/assets/newLOGO-Cj83E8a4.svg"
+                />
+
+                <div className="mt-[14px] flex justify-between">
+                  <div
+                    className="h-2 rounded-full bg-[#D4D4D4] invoice-row basis-[25%]"
+                    style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                  ></div>
+                  <div
+                    className="invoice-row flex basis-[24%] flex-col gap-y-1.5"
+                    style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                  >
+                    <div className="h-2 rounded-full bg-[#D4D4D4]"></div>
+                    <div className="h-2 rounded-full bg-[#F1F1F1] w-[50%]"></div>
+                    <div className="h-2 rounded-full bg-[#F1F1F1] w-[60%]"></div>
+                    <div className="h-2 rounded-full bg-[#F1F1F1] w-[90%]"></div>
+                  </div>
                 </div>
-                <div className=" flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
-                  <div
-                    className="flex h-9 w-full items-center justify-center rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white px-3"
-                    style={{
-                      boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
-                    }}
-                  >
-                    <p className="text-[#344054]">Save</p>
+              </div>
+              <div className="p-6">
+                <p className="pb-1 text-xs font-bold">Billing</p>
+                <div
+                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
+                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                >
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
                   </div>
-                  <div
-                    id="hero-animation-start-billing"
-                    className="flex h-9 w-[120px] items-center justify-center rounded-lg border bg-[#073F9E] text-white relative overflow-hidden"
-                    style={{
-                      boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
-                      minWidth: "120px",
-                      maxWidth: "120px",
-                    }}
-                  >
-                    {/* Loading Spinner - Updated with opacity control */}
-                    <LoadingSpinner
-                      opacity={loadingOpacity}
-                      spinning={loadingOpacity === 1}
-                      className="loading absolute transition-opacity duration-300"
-                      style={{
-                        opacity: loadingOpacity,
-                        animation:
-                          loadingOpacity === 1
-                            ? "spin 0.4s linear infinite"
-                            : "none",
-                      }}
-                    />
-
-                    {/* Checkmark and Started text - Updated with opacity control */}
-                    <div className="absolute flex items-center space-x-2 whitespace-nowrap">
-                      <CheckIcon
-                        opacity={checkOpacity}
-                        style={{
-                          opacity: checkOpacity,
-                          transitionDelay: checkOpacity === 1 ? "0.3s" : "0s",
-                        }}
-                      />
-
-                      <span
-                        className="started inline-block transition-all duration-300 ease-out"
-                        style={{
-                          opacity: startedOpacity,
-                          transform: startedTransform,
-                          transitionTimingFunction:
-                            "cubic-bezier(0.22, 1, 0.36, 1)",
-                        }}
-                      >
-                        Started
-                      </span>
-                    </div>
-
-                    {/* Start Billing text - Updated with opacity control */}
-                    <p
-                      className="start whitespace-nowrap transition-all duration-300 ease-out absolute inset-0 flex items-center justify-center"
-                      style={{
-                        opacity: startTextOpacity,
-                        transform: startTextTransform,
-                        transitionTimingFunction:
-                          "cubic-bezier(0.22, 1, 0.36, 1)",
-                      }}
-                    >
-                      Start billing
-                    </p>
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
                   </div>
-                  <div className="hidden items-center p-2 sm:flex">
-                    <MoreDotsIcon size={20} color="#073F9E" />
+                </div>
+                <div
+                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
+                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                >
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                  </div>
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                  </div>
+                </div>
+                <div
+                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
+                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                >
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                  </div>
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                  </div>
+                </div>
+                <div
+                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
+                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                >
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                  </div>
+                  <div className="flex basis-1/2">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <div
+                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
+                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                >
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                  </div>
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                  </div>
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                  </div>
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                  </div>
+                </div>
+                <div
+                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
+                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
+                >
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                  </div>
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                  </div>
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                  </div>
+                  <div className="flex basis-1/4">
+                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="relative">
+
+            {/* Dashboard */}
+            <div
+              id="workflow-dashboard"
+              className="absolute w-full max-w-[512px] transition-all duration-500 ease-out"
+              style={{
+                opacity: dashboardOpacity,
+                transform: dashboardTransform,
+                transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            >
               <div
-                id="hero-animation-bottom"
-                className="mt-3 flex w-full flex-col items-start justify-start gap-4 overflow-hidden rounded-lg bg-white py-5"
+                className="relative w-full overflow-hidden rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white py-5 pl-6 pr-4"
                 style={{
                   boxShadow:
                     "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
                 }}
               >
-                <div className="relative flex items-center justify-start self-stretch px-6">
-                  <p className="text-left text-base font-bold text-[#14171c]">
-                    Pricing
-                  </p>
+                <div className="flex w-full justify-between gap-x-3">
+                  <div className="flex items-center gap-2">
+                    <a href="/">
+                      <img
+                        src="https://demo.trustymoney.in/assets/newLOGO-Cj83E8a4.svg"
+                        alt="Trusty Money Logo"
+                        width="155"
+                        height="24"
+                        fetchpriority="high"
+                        decoding="async"
+                      />
+                    </a>
+                  </div>
+                  <div className=" flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
+                    <div
+                      className="flex h-9 w-full items-center justify-center rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white px-3"
+                      style={{
+                        boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
+                      }}
+                    >
+                      <p className="text-[#344054]">Save</p>
+                    </div>
+                    <div
+                      id="hero-animation-start-billing"
+                      className="flex h-9 w-[120px] items-center justify-center rounded-lg border bg-[#073F9E] text-white relative overflow-hidden"
+                      style={{
+                        boxShadow: "rgba(20, 23, 28, 0.08) 0px 2px 2px 0px",
+                        minWidth: "120px",
+                        maxWidth: "120px",
+                      }}
+                    >
+                      {/* Loading Spinner - Updated with opacity control */}
+                      <LoadingSpinner
+                        opacity={loadingOpacity}
+                        spinning={loadingOpacity === 1}
+                        className="loading absolute transition-opacity duration-300"
+                        style={{
+                          opacity: loadingOpacity,
+                          animation:
+                            loadingOpacity === 1
+                              ? "spin 0.4s linear infinite"
+                              : "none",
+                        }}
+                      />
+
+                      {/* Checkmark and Started text - Updated with opacity control */}
+                      <div className="absolute flex items-center space-x-2 whitespace-nowrap">
+                        <CheckIcon
+                          opacity={checkOpacity}
+                          style={{
+                            opacity: checkOpacity,
+                            transitionDelay: checkOpacity === 1 ? "0.3s" : "0s",
+                          }}
+                        />
+
+                        <span
+                          className="started inline-block transition-all duration-300 ease-out"
+                          style={{
+                            opacity: startedOpacity,
+                            transform: startedTransform,
+                            transitionTimingFunction:
+                              "cubic-bezier(0.22, 1, 0.36, 1)",
+                          }}
+                        >
+                          Started
+                        </span>
+                      </div>
+
+                      {/* Start Billing text - Updated with opacity control */}
+                      <p
+                        className="start whitespace-nowrap transition-all duration-300 ease-out absolute inset-0 flex items-center justify-center"
+                        style={{
+                          opacity: startTextOpacity,
+                          transform: startTextTransform,
+                          transitionTimingFunction:
+                            "cubic-bezier(0.22, 1, 0.36, 1)",
+                        }}
+                      >
+                        Start billing
+                      </p>
+                    </div>
+                    <div className="hidden items-center p-2 sm:flex">
+                      <MoreDotsIcon size={20} color="#073F9E" />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex w-full items-start justify-between px-4">
-                  {/* Dashboard content remains the same */}
-                  <div className="flex flex-col items-start justify-start text-[#14171c]">
-                    <div className="relative flex h-9 items-center gap-2 px-2">
-                      <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
-                        product
-                      </p>
-                    </div>
-                    <div className="relative overflow-hidden px-2">
-                      <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                        <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
-                          Platform Access
-                        </p>
-                      </div>
-                    </div>
-                    <div className="relative overflow-hidden px-2">
-                      <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                        <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
-                          Onboarding fees
-                        </p>
-                      </div>
-                    </div>
-                    <div className="relative overflow-hidden px-2">
-                      <div className="flex h-9 max-w-full items-center justify-start gap-2">
-                        <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
-                              API Usage (Tier 1)
-                        </p>
-                        {/* <LayersIcon size={24} color="#073F9E" /> */}
-                      </div>
-                    </div>
+              </div>
+              <div className="relative">
+                <div
+                  id="hero-animation-bottom"
+                  className="mt-3 flex w-full flex-col items-start justify-start gap-4 overflow-hidden rounded-lg bg-white py-5"
+                  style={{
+                    boxShadow:
+                      "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
+                  }}
+                >
+                  <div className="relative flex items-center justify-start self-stretch px-6">
+                    <p className="text-left text-base font-bold text-[#14171c]">
+                      Pricing
+                    </p>
                   </div>
-                  <div className="flex flex-col items-start justify-start">
-                    <div className="relative flex h-9 items-center justify-start gap-2 self-stretch px-2">
-                      <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
-                        frequency
-                      </p>
-                    </div>
-                    <div className="relative self-stretch overflow-hidden px-2">
-                      <div className="flex h-9 items-center justify-start gap-2">
-                        <CalendarArrowIcon size={24} color="#073F9E" />
-                        <p className="feature-description text-left text-[#344054]">
-                          Annually
-                        </p>
-                      </div>
-                    </div>
-                    <div className="relative self-stretch overflow-hidden px-2">
-                      <div className="flex h-9 items-center justify-start gap-2">
-                        <ClockIcon size={17} />
-                        <p className="feature-description text-left text-[#344054]">
-                          One time
-                        </p>
-                      </div>
-                    </div>
-                    <div className="relative self-stretch overflow-hidden px-2">
-                      <div className="flex h-9 items-center justify-start gap-2">
-                        <UserGroupIcon />
-                        <p className="feature-description text-left text-[#344054]">
-                          Monthly
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="flex flex-col items-start justify-start">
-                      <div className="relative flex h-9 items-center justify-end gap-2 self-stretch px-2">
+                  <div className="flex w-full items-start justify-between px-4">
+                    {/* Dashboard content remains the same */}
+                    <div className="flex flex-col items-start justify-start text-[#14171c]">
+                      <div className="relative flex h-9 items-center gap-2 px-2">
                         <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
-                          price
+                          product
                         </p>
                       </div>
-                      <div className="relative w-full overflow-hidden px-2">
-                        <div className="flex h-9 items-center justify-end gap-2">
-                          <p className="flex-grow text-right text-sm text-[#14171c]">
-                            $5,000.00
+                      <div className="relative overflow-hidden px-2">
+                        <div className="flex h-9 max-w-full items-center justify-start gap-2">
+                          <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                            Platform Access
                           </p>
                         </div>
                       </div>
-                      <div className="relative w-full overflow-hidden px-2">
-                        <div className="flex h-9 items-center justify-end gap-2">
-                          <p className="flex-grow text-right text-sm text-[#14171c]">
-                            $5,900.00
+                      <div className="relative overflow-hidden px-2">
+                        <div className="flex h-9 max-w-full items-center justify-start gap-2">
+                          <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                            Onboarding fees
                           </p>
                         </div>
                       </div>
-                      <div className="relative w-full overflow-hidden px-2">
-                        <div className="flex h-9 items-center justify-end gap-2">
-                          <p className="flex-grow text-right text-sm text-[#14171c]">
-                            From $0.20
+                      <div className="relative overflow-hidden px-2">
+                        <div className="flex h-9 max-w-full items-center justify-start gap-2">
+                          <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
+                            API Usage (Tier 1)
+                          </p>
+                          {/* <LayersIcon size={24} color="#073F9E" /> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-start justify-start">
+                      <div className="relative hidden sm:flex h-9 items-center justify-start gap-2 self-stretch px-2">
+                        <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
+                          frequency
+                        </p>
+                      </div>
+
+                      <div className="hidden sm:block relative self-stretch overflow-hidden px-2">
+                        <div className="flex h-9 items-center justify-start gap-2">
+                          <CalendarArrowIcon size={24} color="#073F9E" />
+                          <p className="feature-description text-left text-[#344054]">
+                            Annually
+                          </p>
+                        </div>
+                      </div>
+                      <div className="hidden sm:block relative self-stretch overflow-hidden px-2">
+                        <div className="flex h-9 items-center justify-start gap-2">
+                          <ClockIcon size={17} />
+                          <p className="feature-description text-left text-[#344054]">
+                            One time
+                          </p>
+                        </div>
+                      </div>
+                      <div className="hidden sm:block relative self-stretch overflow-hidden px-2">
+                        <div className="flex h-9 items-center justify-start gap-2">
+                          <UserGroupIcon />
+                          <p className="feature-description text-left text-[#344054]">
+                            Monthly
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col items-center justify-start">
-                      <div className="flex h-9 w-9 items-center justify-center px-2"></div>
-                      <div className="overflow-hidden">
-                        <div className="flex h-9 w-9 items-center justify-center">
-                          <MoreDotsIcon className="h-6 w-6 text-gray-400" />
+                    <div className="flex">
+                      <div className="flex flex-col items-start justify-start">
+                        <div className="relative flex h-9 items-center justify-end gap-2 self-stretch px-2">
+                          <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
+                            price
+                          </p>
+                        </div>
+                        <div className="relative w-full overflow-hidden px-2">
+                          <div className="flex h-9 items-center justify-end gap-2">
+                            <p className="flex-grow text-right text-sm text-[#14171c]">
+                              $5,000.00
+                            </p>
+                          </div>
+                        </div>
+                        <div className="relative w-full overflow-hidden px-2">
+                          <div className="flex h-9 items-center justify-end gap-2">
+                            <p className="flex-grow text-right text-sm text-[#14171c]">
+                              $5,900.00
+                            </p>
+                          </div>
+                        </div>
+                        <div className="relative w-full overflow-hidden px-2">
+                          <div className="flex h-9 items-center justify-end gap-2">
+                            <p className="flex-grow text-right text-sm text-[#14171c]">
+                              From $0.20
+                            </p>
+                          </div>
                         </div>
                       </div>
-                      <div className="overflow-hidden">
-                        <div className="flex h-9 w-9 items-center justify-center">
-                          <MoreDotsIcon />
+                      <div className="flex flex-col items-center justify-start">
+                        <div className="flex h-9 w-9 items-center justify-center px-2"></div>
+                        <div className="overflow-hidden">
+                          <div className="flex h-9 w-9 items-center justify-center">
+                            <MoreDotsIcon className="h-6 w-6 text-gray-400" />
+                          </div>
                         </div>
-                      </div>
-                      <div className="overflow-hidden">
-                        <div className="flex h-9 w-9 items-center justify-center">
-                          <MoreDotsIcon />
+                        <div className="overflow-hidden">
+                          <div className="flex h-9 w-9 items-center justify-center">
+                            <MoreDotsIcon />
+                          </div>
+                        </div>
+                        <div className="overflow-hidden">
+                          <div className="flex h-9 w-9 items-center justify-center">
+                            <MoreDotsIcon />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -819,133 +821,136 @@ const WorkflowAnimation = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Activity Card */}
-          <div className="absolute h-full w-full max-w-[calc(512px+40px*2)]">
-            <div
-              id="workflow-activity"
-              className="absolute left-0 top-[68%] rounded-lg bg-white p-4 transition-all duration-500 ease-out"
-              style={{
-                boxShadow:
-                  "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
-                transform: activityTransform,
-                opacity: activityOpacity,
-                transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-            >
-              <p className="text-xs font-bold">Activity</p>
+            {/* Activity Card */}
+            <div className="absolute h-full w-full max-w-[calc(512px+40px*2)]">
               <div
-                id="workflow-activity-list"
-                className="mt-3 min-w-[262px] overflow-hidden transition-all duration-500 ease-out"
+                id="workflow-activity"
+                className="absolute left-0 top-[68%] rounded-lg bg-white p-4 transition-all duration-500 ease-out"
                 style={{
-                  height: activityHeight,
+                  boxShadow:
+                    "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
+                  transform: activityTransform,
+                  opacity: activityOpacity,
                   transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
-                {/* Activity Item 1 */}
+                <p className="text-xs font-bold">Activity</p>
                 <div
-                  className="workflow-activity-item transition-all duration-500 ease-out"
+                  id="workflow-activity-list"
+                  className="mt-3 min-w-[262px] overflow-hidden transition-all duration-500 ease-out"
                   style={{
-                    transform: activityItems[0].transform,
-                    opacity: activityItems[0].opacity,
+                    height: activityHeight,
                     transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
                 >
-                  <div className="flex items-start text-xs">
-                    <div className="relative flex flex-col items-center mr-2">
-                      <img
-                        alt="Facu Montanaro avatar image"
-                        loading="lazy"
-                        width="16"
-                        height="16"
-                        decoding="async"
-                        className="h-4 w-4 shrink-0 grow-0 rounded-full"
-                        src="https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
-                      />
-                      <div
-                        className="line my-1"
-                        style={{
-                          transform: "scale(0.9, 0.9)",
-                          opacity:
-                            activityItems[0].opacity > 0 &&
-                            activityItems[1].opacity > 0
-                              ? 1
-                              : 0,
-                        }}
-                      >
-                        <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
+                  {/* Activity Item 1 */}
+                  <div
+                    className="workflow-activity-item transition-all duration-500 ease-out"
+                    style={{
+                      transform: activityItems[0].transform,
+                      opacity: activityItems[0].opacity,
+                      transitionTimingFunction:
+                        "cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                  >
+                    <div className="flex items-start text-xs">
+                      <div className="relative flex flex-col items-center mr-2">
+                        <img
+                          alt="Facu Montanaro avatar image"
+                          loading="lazy"
+                          width="16"
+                          height="16"
+                          decoding="async"
+                          className="h-4 w-4 shrink-0 grow-0 rounded-full"
+                          src="https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
+                        />
+                        <div
+                          className="line my-1"
+                          style={{
+                            transform: "scale(0.9, 0.9)",
+                            opacity:
+                              activityItems[0].opacity > 0 &&
+                              activityItems[1].opacity > 0
+                                ? 1
+                                : 0,
+                          }}
+                        >
+                          <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-[#1D2939]">
-                      <p className="">
-                        Joe <span className="text-[#596575]">(Sales)</span>
-                      </p>
-                      <p className="">Shall we initiate the Quotation?</p>
+                      <div className="text-[#1D2939]">
+                        <p className="">
+                          Joe <span className="text-[#596575]">(Sales)</span>
+                        </p>
+                        <p className="">Shall we initiate the Quotation?</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Activity Item 2 */}
-                <div
-                  className="workflow-activity-item transition-all duration-500 ease-out"
-                  style={{
-                    transform: activityItems[1].transform,
-                    opacity: activityItems[1].opacity,
-                    transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-                  }}
-                >
-                  <div className="flex items-start text-xs">
-                    <div className="relative flex flex-col items-center mr-2">
-                      <img
-                        alt="Riya Grover avatar image"
-                        loading="lazy"
-                        width="16"
-                        height="16"
-                        decoding="async"
-                        className="h-4 w-4 shrink-0 grow-0 rounded-full"
-                        src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      />
-                      <div
-                        className="line my-1"
-                        style={{
-                          opacity:
-                            activityItems[1].opacity > 0 &&
-                            activityItems[2].opacity > 0
-                              ? 1
-                              : 0,
-                        }}
-                      >
-                        <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
+                  {/* Activity Item 2 */}
+                  <div
+                    className="workflow-activity-item transition-all duration-500 ease-out"
+                    style={{
+                      transform: activityItems[1].transform,
+                      opacity: activityItems[1].opacity,
+                      transitionTimingFunction:
+                        "cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                  >
+                    <div className="flex items-start text-xs">
+                      <div className="relative flex flex-col items-center mr-2">
+                        <img
+                          alt="Riya Grover avatar image"
+                          loading="lazy"
+                          width="16"
+                          height="16"
+                          decoding="async"
+                          className="h-4 w-4 shrink-0 grow-0 rounded-full"
+                          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        />
+                        <div
+                          className="line my-1"
+                          style={{
+                            opacity:
+                              activityItems[1].opacity > 0 &&
+                              activityItems[2].opacity > 0
+                                ? 1
+                                : 0,
+                          }}
+                        >
+                          <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-[#1D2939]">
-                      <p className="">
-                        Rohan{" "}
-                        <span className="text-[#596575]">(Finance)</span>
-                      </p>
-                      <p className="">Sure!</p>
+                      <div className="text-[#1D2939]">
+                        <p className="">
+                          Rohan{" "}
+                          <span className="text-[#596575]">(Finance)</span>
+                        </p>
+                        <p className="">Sure!</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Activity Item 3 */}
-                <div
-                  className="workflow-activity-item transition-all duration-500 ease-out"
-                  style={{
-                    transform: activityItems[2].transform,
-                    opacity: activityItems[2].opacity,
-                    transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-                  }}
-                >
-                  <div className="flex items-start text-xs">
-                    <div className="relative flex flex-col items-center mr-2">
-                      <div className="rounded-full w-4 h-4 flex items-center justify-center">
-                        <VerifiedIcon className="w-4 h-4 text-blue-600" />
+                  {/* Activity Item 3 */}
+                  <div
+                    className="workflow-activity-item transition-all duration-500 ease-out"
+                    style={{
+                      transform: activityItems[2].transform,
+                      opacity: activityItems[2].opacity,
+                      transitionTimingFunction:
+                        "cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                  >
+                    <div className="flex items-start text-xs">
+                      <div className="relative flex flex-col items-center mr-2">
+                        <div className="rounded-full w-4 h-4 flex items-center justify-center">
+                          <VerifiedIcon className="w-4 h-4 text-blue-600" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-[#1D2939]">
-                      <p>Billing schedule started</p>
+                      <div className="text-[#1D2939]">
+                        <p>Billing schedule started</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -954,7 +959,6 @@ const WorkflowAnimation = () => {
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

@@ -443,7 +443,7 @@ const HeroSection = () => {
             {/* Cursor */}
             <div
               id="hero-animation-cursor"
-              className="absolute z-20 transition-all duration-300 ease-out"
+              className="absolute z-20 transition-all duration-300 ease-out hidden md:block"
               style={{
                 transform: `translate(${cursorPosition.x}px, ${cursorPosition.y}px) scale(${cursorScale})`,
                 opacity: cursorOpacity,
