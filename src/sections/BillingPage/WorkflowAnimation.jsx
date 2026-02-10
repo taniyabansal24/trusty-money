@@ -497,7 +497,7 @@ const WorkflowAnimation = () => {
                 </div>
               </div>
               <div className="p-6">
-                <p className="pb-1 text-xs font-bold">Billing</p>
+                <p className="pb-1 text-xs font-bold">Contract</p>
                 <div
                   className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
                   style={{ opacity: 1, transform: "translate(0px, 0px)" }}

@@ -3,7 +3,7 @@ import { Container } from "../../components/ui";
 import WorkflowAnimation from "./WorkflowAnimation";
 import { motion } from "framer-motion";
 import { staggerItem } from "../../utils/animations";
-import Propogation from "./Propogation";
+import Proration from "./Proration";
 
 const DynamicBilling = () => {
   return (
@@ -36,7 +36,7 @@ const DynamicBilling = () => {
           </motion.p>
         </div>
         <div className="lg:col-[7/13]">
-          <Propogation />
+          <Proration />
         </div>
       </div>
     </Container>

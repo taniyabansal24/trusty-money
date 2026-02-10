@@ -45,22 +45,23 @@ const DotContainer = () => {
   ];
 
   const desktopXAxisLabels = [
-    "Oct 2",
-    "Oct 5",
-    "Oct 8",
-    "Oct 12",
-    "Oct 16",
-    "Oct 20",
-    "Oct 24",
+    "Jan 3",
+    "Jan 7",
+    "Jan 11",
+    "Jan 15",
+    "Jan 19",
+    "Jan 23",
+    "Jan 27",
   ];
+
   const mobileXAxisLabels = [
-    "Oct 12",
-    "Oct 14",
-    "Oct 16",
-    "Oct 18",
-    "Oct 20",
-    "Oct 22",
-    "Oct 24",
+    "Jan 13",
+    "Jan 15",
+    "Jan 17",
+    "Jan 19",
+    "Jan 21",
+    "Jan 23",
+    "Jan 25",
   ];
 
   // Function to format number with commas
@@ -106,9 +107,9 @@ const DotContainer = () => {
 
   return (
     <Container className="">
-      <div className="isolate flex w-full flex-col items-center justify-center md:flex-row">
+      <div className="isolate flex w-full flex-col items-center justify-center md:flex-row mt-10">
         {/* Left */}
-        <div className="relative h-20 w-[202px] origin-right -translate-x-1/2 translate-y-1/2 rotate-90 lg:translate-x-0 lg:translate-y-0 lg:rotate-0 lg:min-w-[40px]">
+        <div className="relative h-20 w-[202px] origin-right -translate-x-1/2 translate-y-1/2 rotate-90 lg:translate-x-0 lg:translate-y-0 lg:rotate-0 lg:min-w-[40px] ">
           <div className="absolute right-[95%] lg:right-[63%] top-1/2 w-fit -translate-y-1/2">
             <svg
               width="202"
@@ -587,6 +588,12 @@ const DotContainer = () => {
                 </linearGradient>
               </defs>
             </svg>
+          </div>
+          <div
+            className="absolute bg-white py-2 px-8 rounded-xl -left-44 lg:-left-44 top-5 txt-blue -rotate-90 lg:rotate-0 text-[#073F9E] shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+                border border-[#D6DEEB] backdrop-blur-none"
+          >
+            <p className="font-semibold tracking-wide">API</p>
           </div>
         </div>
         {/* Top */}
@@ -1071,6 +1078,14 @@ const DotContainer = () => {
               </defs>
             </svg>
           </div>
+
+          <div
+            className="absolute bg-white py-2 px-8 rounded-xl -left-48 top-[7.25rem] -rotate-90
+                text-[#073F9E] shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+                border border-[#D6DEEB] backdrop-blur-none"
+          >
+            <p className="font-semibold tracking-wide">Upload CSV</p>
+          </div>
         </div>
         {/* Right */}
         <div className="hidden lg:block  relative h-20 w-[202px] origin-right -translate-x-1/2 translate-y-1/2 rotate-180 md:translate-x-0 md:translate-y-0 lg:min-w-[40px]">
@@ -1554,13 +1569,18 @@ const DotContainer = () => {
               </defs>
             </svg>
           </div>
+          <div
+            className="absolute bg-white py-2 px-8 rounded-xl rotate-180 w-56 top-[22px] -left-14 text-[#073F9E] shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+                border border-[#D6DEEB] backdrop-blur-none"
+          >
+            <p className="font-semibold tracking-wide">100+ Data Sources</p>
+          </div>
         </div>
 
         {/* Chart Container */}
         <div className="absolute w-full max-w-[460px]">
           <div className="relative">
             <div className="absolute left-1/2 top-1/2 -z-10 h-[100%] md:h-[110%] w-[100%] md:w-[110%] -translate-x-1/2 -translate-y-1/2 transform-gpu rounded-3xl bg-gradient-to-r from-blue-600/30 via-50% to-indigo-600/10 to-90% opacity-60 blur-xl" />
-
 
             <div
               className="relative z-10 w-[90%] sm:w-full rounded-lg bg-white mx-auto"
@@ -1729,8 +1749,8 @@ const DotContainer = () => {
                                 index === 4 ||
                                 index === 5 ||
                                 index === 6
-                                  ? "30px"
-                                  : "24px",
+                                  ? "32px"
+                                  : "30px",
                               marginLeft:
                                 index === 0
                                   ? "7.64px"

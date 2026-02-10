@@ -462,7 +462,7 @@ const HeroSection = () => {
               }}
             >
               <div className="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center align-center">
-                <p className="hero-heading text-[#1B1B1B] text-left text-xl font-bold mb-0">
+                <p className="hero-heading text-[#1B1B1B] text-left feature-title mb-0">
                   Automated Billing Schedule
                 </p>
                 <div className=" flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
@@ -546,7 +546,7 @@ const HeroSection = () => {
                   <div className="flex flex-col">
                     {/* Contract title */}
                     <span
-                      className="font-bold text-base leading-5 text-[#0F172B]"
+                      className="font-bold text-sm leading-5 text-[#0F172B]"
                       style={{ marginTop: "-1.2px" }}
                     >
                       Contract
