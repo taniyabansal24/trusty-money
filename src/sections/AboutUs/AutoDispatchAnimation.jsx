@@ -1,57 +1,55 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import {
-  GiftBoxIcon,
-  GlobeIcon,
-  LayersIcon,
-  LightningSwapIcon,
-  SwapBoltIcon,
-  TagIcon,
-} from "../../components/svg/about-usSVG";
+import billingIcon from "../../components/svg/billingIcon";
+import TaxIcon02 from "../../components/svg/TaxIcon02";
+import Treasury02 from "../../components/svg/Treasury02";
+import EwalletIcon02 from "../../components/svg/EwalletIcon02";
+import PaymentsAndCollectionIcon from "../../components/svg/PaymentsAndCollectionIcon";
+import AutomationIcon from "../../components/svg/AutomationIcon";
 import Logo from "../../components/svg/Logo";
 
 const nodes = [
   {
     id: 1,
-    label: "NetSystems",
+    label: "Intelligent Billing",
     amount: "$900",
-    icon: TagIcon,
+    icon: billingIcon,
     angle: -90, // Top
   },
   {
     id: 2,
-    label: "RapidLog",
+    label: "Tax Compliance",
     amount: "$1,150",
-    icon: LightningSwapIcon,
+    icon: TaxIcon02,
     angle: -30, // Top-right
   },
   {
     id: 3,
-    label: "Acme Corp",
+    label: "Treasury Operations",
     amount: "$2,400",
-    icon: SwapBoltIcon,
+    icon: Treasury02,
     angle: 30, // Bottom-right
   },
   {
     id: 4,
-    label: "Global Ind",
+    label: "Virtual Account",
     amount: "$850",
-    icon: GiftBoxIcon,
+    icon: EwalletIcon02,
     angle: 90, // Bottom
   },
   {
     id: 5,
-    label: "TechStart",
+    label: "Payments and Collection",
     amount: "$12,000",
-    icon: LayersIcon,
+    icon: PaymentsAndCollectionIcon,
     angle: 150, // Bottom-left
   },
   {
     id: 6,
-    label: "BlueSky",
+    label: "Receivables and Automation",
     amount: "$4,300",
-    icon: GiftBoxIcon,
+    icon: AutomationIcon,
     angle: -150, // Top-left
   },
 ];
@@ -131,7 +129,7 @@ export default function AutoDispatchAnimation() {
       timeoutId = setTimeout(() => {
         setActive((prev) => {
           const next = (prev + 1) % nodes.length;
-          
+
           // When loop restarts (back to node 0), clear ALL completed states
           if (next === 0) {
             // Clear completed set - this will make ALL nodes gray
@@ -144,7 +142,7 @@ export default function AutoDispatchAnimation() {
               // Now node 0 will activate fresh
             }, 100);
           }
-          
+
           return next;
         });
         dispatchNext();
@@ -180,8 +178,11 @@ export default function AutoDispatchAnimation() {
           if (isActive) opacity = 1;
 
           // Calculate stroke width - stays scaled while active, returns to normal when completed
-          const strokeWidth = isActive ? (lineScales[i] || 1) * 2 : 
-                            isCompleted && active !== 0 ? 2 : 2; // Completed items return to normal width
+          const strokeWidth = isActive
+            ? (lineScales[i] || 1) * 2
+            : isCompleted && active !== 0
+              ? 2
+              : 2; // Completed items return to normal width
 
           return (
             <line
@@ -279,11 +280,7 @@ export default function AutoDispatchAnimation() {
                 >
                   <div
                     className={`transition-all duration-300
-    ${
-      showActiveState
-        ? "opacity-100 filter-none"
-        : "opacity-40 grayscale"
-    }
+    ${showActiveState ? "opacity-100 filter-none" : "opacity-40 grayscale"}
   `}
                   >
                     <IconComponent className="w-12 h-12" />
@@ -305,11 +302,11 @@ export default function AutoDispatchAnimation() {
                   scale: isActive ? 1.05 : 1,
                 }}
                 transition={{
-                  scale: { 
+                  scale: {
                     type: "spring",
                     stiffness: 200,
                     damping: 10,
-                    duration: 0.3 
+                    duration: 0.3,
                   },
                 }}
               >
@@ -320,9 +317,9 @@ export default function AutoDispatchAnimation() {
                   <p className="text-xs font-semibold text-gray-800">
                     {node.label}
                   </p>
-                  <p className="text-[10px] text-gray-500 mt-0.5">
+                  {/* <p className="text-[10px] text-gray-500 mt-0.5">
                     {node.amount}
-                  </p>
+                  </p> */}
                 </div>
               </motion.div>
             </div>
