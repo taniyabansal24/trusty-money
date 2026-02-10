@@ -69,13 +69,13 @@ const HeroSection = () => {
         }}
       >
         {/* Container - Primary gradient background */}
-        <div
+        {/* <div
           className="absolute inset-0"
           style={{
             background: "linear-gradient(180deg, #E9F8FF 0%, #FDFEFF 100%)",
             zIndex: "0",
           }}
-        ></div>
+        ></div> */}
 
         {/* Background+Blur - Circle on right side - RESPONSIVE */}
         <div

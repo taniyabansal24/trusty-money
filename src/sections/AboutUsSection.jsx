@@ -161,8 +161,8 @@ const AboutUsSection = () => {
                 </div>
               </div>
 
-              {/* Right Column - Solar System Orbital Motion */}
-              <div className="relative mx-auto top-[-37%] ">
+              {/* Right Column */}
+              <div className="relative mx-auto top-0 lg:top-[-37%] hidden sm:block">
                   <AutoDispatchAnimation/>
               </div>
             </div>

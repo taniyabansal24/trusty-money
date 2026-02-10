@@ -174,7 +174,6 @@ export function ReportingModule() {
           isVisible={isVisible}
           y={y}
           onAnimationComplete={() => {
-            console.log("Reporting dashboard wireframe completed!");
           }}
         />
       </Container>

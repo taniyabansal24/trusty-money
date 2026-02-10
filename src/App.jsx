@@ -13,6 +13,7 @@ import AboutUs from "./sections/AboutUsSection";
 import { Footer, Navbar } from "./components/layout";
 import AboutUsPage from "./pages/AboutUsPage";
 import BillingPage from "./pages/BillingPage";
+import ReceivablesAutomation from "./pages/ReceivablesAutomation";
 
 function App() {
   return (
@@ -31,8 +32,11 @@ function App() {
           {/* About-us route */}
           <Route path="/about-us" element={<AboutUsPage/>} />
 
-          {/* About-us route */}
+          {/* Billing route */}
           <Route path="/products/billing" element={<BillingPage/>} />
+          
+          {/* Receivables-Automation route */}
+          <Route path="/products/receivables-automation" element={<ReceivablesAutomation/>} />
 
           {/* Redirect any unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />

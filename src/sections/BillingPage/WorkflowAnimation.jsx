@@ -123,7 +123,6 @@ const WorkflowAnimation = () => {
 
   // Manual restart function
   const handleRestart = () => {
-    console.log("Restarting workflow animation...");
     clearAllAnimations();
     hasStartedRef.current = false;
 
@@ -142,7 +141,6 @@ const WorkflowAnimation = () => {
 
   // Stop animation function
   const handleStop = () => {
-    console.log("Stopping workflow animation...");
     clearAllAnimations();
     hasStartedRef.current = false;
     isAnimatingRef.current = false;
@@ -158,8 +156,6 @@ const WorkflowAnimation = () => {
     isAnimatingRef.current = true;
     hasStartedRef.current = true;
     clearAllAnimations();
-
-    console.log("Starting workflow animation sequence...");
 
     // Scene 1: Invoice shows (0s)
     setAnimationStage(1);
@@ -373,12 +369,10 @@ const WorkflowAnimation = () => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
         // Page is hidden - pause animations
-        console.log("Page hidden, pausing animations");
         clearAllAnimations();
       } else {
         // Page is visible again - restart if we were animating
         if (hasStartedRef.current && !isAnimatingRef.current) {
-          console.log("Page visible again, restarting animation");
           setTimeout(() => {
             if (componentMountedRef.current) {
               startAnimation();
@@ -402,7 +396,6 @@ const WorkflowAnimation = () => {
 
     // Cleanup function
     return () => {
-      console.log("Cleaning up workflow animation");
       componentMountedRef.current = false;
       clearAllAnimations();
       document.removeEventListener("visibilitychange", handleVisibilityChange);

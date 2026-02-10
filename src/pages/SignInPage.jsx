@@ -89,7 +89,6 @@ const SignInCard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Sign in attempt with:", { email, password, rememberMe });
   };
 
   return (
@@ -168,7 +167,6 @@ const SignInCard = () => {
                     className="text-sm txt-blue hover:text-blue-600 transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log("Forgot password clicked");
                     }}
                   >
                     Forgot password?

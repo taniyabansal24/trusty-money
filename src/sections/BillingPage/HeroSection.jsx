@@ -443,7 +443,7 @@ const HeroSection = () => {
             {/* Cursor */}
             <div
               id="hero-animation-cursor"
-              className="absolute z-20 transition-all duration-300 ease-out hidden md:block"
+              className="absolute z-20 transition-all duration-300 ease-out"
               style={{
                 transform: `translate(${cursorPosition.x}px, ${cursorPosition.y}px) scale(${cursorScale})`,
                 opacity: cursorOpacity,
@@ -703,9 +703,9 @@ const HeroSection = () => {
                       </div>
                       <div className="relative w-full overflow-hidden px-2">
                         <div className="flex h-9 items-center justify-end gap-2">
-                          <p className="text-muted flex-grow text-right text-sm text-[#7483a0] line-through">
+                          {/* <p className="text-muted flex-grow text-right text-sm text-[#7483a0] line-through">
                             $2,000.00
-                          </p>
+                          </p> */}
                           <p className="feature-title flex-grow text-right text-[#1B1B1B]">
                             $1,000.00
                           </p>

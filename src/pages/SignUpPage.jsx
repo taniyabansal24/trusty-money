@@ -96,7 +96,6 @@ const SignUpCard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Sign up attempt with:", formData);
   };
 
   const handleChange = (e) => {

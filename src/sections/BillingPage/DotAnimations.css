@@ -1,0 +1,109 @@
+/* ===============================
+   CORE DOT STYLE (CLEAN & STABLE)
+================================ */
+
+.path-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  background: #073F9E;
+
+  /* 🔑 THIS IS THE KEY */
+  offset-path: var(--path);
+  offset-rotate: 0deg;
+  offset-anchor: center center;
+
+  transform: translate(-50%, -50%);
+  will-change: offset-distance, opacity;
+
+  animation: dot-flow var(--duration) linear infinite;
+  animation-delay: var(--delay);
+
+  opacity: 0;
+}
+
+/* ===============================
+   FLOW ANIMATION (VIDEO-LIKE)
+================================ */
+
+@keyframes dot-flow {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* ===============================
+   EXACT SVG PATH MATCHES
+================================ */
+
+/* CENTER */
+.dot-center {
+  --path: path("M0 144.5L201 144.5");
+  --duration: 2.6s;
+}
+
+/* TOP CURVE */
+.dot-top {
+  --path: path("M0 1H41.5946C56.3171 1 69.8495 9.08744 76.823 22.0537L118.177 98.9463C125.15 111.913 138.683 120 153.405 120H201.5");
+  --duration: 3.4s;
+}
+
+/* BOTTOM CURVE */
+.dot-bottom {
+  --path: path("M0 287H41.7852C56.4929 287 70.0142 278.929 76.994 265.983L118.49 189.017C125.47 176.071 138.991 168 153.699 168H202");
+  --duration: 3.2s;
+}
+
+/* DIAGONAL TOP */
+.dot-diag-top {
+  --path: path("M0 60H48.2171C59.2463 60 69.7861 64.5539 77.3451 72.5854L117.655 115.415C125.214 123.446 135.754 128 146.783 128H201.5");
+  --duration: 3s;
+}
+
+/* DIAGONAL BOTTOM */
+.dot-diag-bottom {
+  --path: path("M0 228H48.2171C59.2463 228 69.7861 223.446 77.3451 215.415L117.655 172.585C125.214 164.554 135.754 160 146.783 160H201.5");
+  --duration: 3s;
+}
+
+/* CURVE TOP MID */
+.dot-curve-top {
+  --path: path("M0 100H55.022C61.8914 100 68.6451 101.769 74.6324 105.137L120.368 130.863C126.355 134.231 133.109 136 139.978 136H201.5");
+  --duration: 3.6s;
+}
+
+/* CURVE BOTTOM MID */
+.dot-curve-bottom {
+  --path: path("M0 188H55.022C61.8914 188 68.6451 186.231 74.6324 182.863L120.368 157.137C126.355 153.769 133.109 152 139.978 152H201.5");
+  --duration: 3.4s;
+}
+
+/* ===============================
+   MOBILE POLISH
+================================ */
+
+@media (max-width: 768px) {
+  .path-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
