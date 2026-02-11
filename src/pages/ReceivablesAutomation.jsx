@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar } from "../components/layout";
 import HeroSection from '../sections/ReceivablesAutomation/HeroSection'
 import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
+import TrackBilling from '../sections/ReceivablesAutomation/TrackBilling';
 
 const ReceivablesAutomation = () => {
   return (
@@ -11,7 +12,7 @@ const ReceivablesAutomation = () => {
         <HeroSection />
       </section>
       <section className="pt-20 pb-20 md:pt-24 md:pb-24 lg:pt-32">
-        
+        <TrackBilling/>
       </section>
       <section className="py-20 md:py-24">
         

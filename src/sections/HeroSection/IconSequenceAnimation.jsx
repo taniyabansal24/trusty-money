@@ -65,6 +65,10 @@ export default function CircularShiftAnimation() {
     if (isAnimatingScreen || screenIndex === currentScreenIndex) {
       return;
     }
+
+    console.log(
+      `Updating screen from ${currentScreenIndex} to index: ${screenIndex}`,
+    );
     setIsAnimatingScreen(true);
 
     // Fade out current screen
@@ -156,6 +160,8 @@ export default function CircularShiftAnimation() {
       (pos) => (pos + 1) % TOTAL_ICONS,
     );
 
+    console.log("New positions:", currentPositionsRef.current);
+
     // Animate all icons and find highlighted one
     const animations = [];
     let highlightedScreenIndex = -1;
@@ -178,6 +184,9 @@ export default function CircularShiftAnimation() {
       if (isHighlighted) {
         const iconData = ICONS[iconIndex];
         highlightedScreenIndex = iconData.screenIndex;
+        console.log(
+          `Highlighted icon: ${iconData.Icon.name}, Screen index: ${highlightedScreenIndex}`,
+        );
       }
 
       const animation = gsap.to(icon, {
@@ -198,6 +207,8 @@ export default function CircularShiftAnimation() {
       highlightedScreenIndex !== -1 &&
       highlightedScreenIndex !== currentScreenIndex
     ) {
+      console.log(`Changing screen to: ${highlightedScreenIndex}`);
+      updateScreen(highlightedScreenIndex);
     }
 
     // Reset animation flag after all animations complete
@@ -263,6 +274,9 @@ export default function CircularShiftAnimation() {
       // If this icon is highlighted initially, set the screen
       if (isHighlighted) {
         initialHighlightedScreenIndex = iconData.screenIndex;
+        console.log(
+          `Initial highlighted icon: ${iconData.Icon.name}, Screen: ${initialHighlightedScreenIndex}`,
+        );
       }
     });
 
@@ -279,8 +293,11 @@ export default function CircularShiftAnimation() {
 
     // Set a timeout to START ANIMATIONS after delay
     initializationRef.current = setTimeout(() => {
+      console.log("Starting animations after 3 second delay");
+
       // Start gradient animation
       animateGradient();
+
       // Start the main animation timer
       startAnimationTimer();
     }, INITIAL_DELAY);
@@ -304,6 +321,7 @@ export default function CircularShiftAnimation() {
 
   // Debug logging
   useEffect(() => {
+    console.log("Current screen index:", currentScreenIndex);
   }, [currentScreenIndex]);
 
   return (
