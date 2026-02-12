@@ -17,10 +17,9 @@ const WorkflowAnimation = () => {
   const [invoiceTransform, setInvoiceTransform] = useState(
     "translate(0px, 0px)",
   );
-  const [invoiceScale, setInvoiceScale] = useState(1);
 
   // Quotation version state
-  const [quotationVersion, setQuotationVersion] = useState(1); // 1, 2, or 3
+  const [quotationVersion, setQuotationVersion] = useState(1);
 
   const [dashboardOpacity, setDashboardOpacity] = useState(0);
   const [dashboardTransform, setDashboardTransform] = useState("scale(0.95)");
@@ -28,11 +27,15 @@ const WorkflowAnimation = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorScale, setCursorScale] = useState(1);
 
-  // Activity card states
+  // Activity card states - SIMPLIFIED
   const [activityOpacity, setActivityOpacity] = useState(0);
   const [activityTransform, setActivityTransform] =
     useState("translateY(20px)");
-  const [activityHeight, setActivityHeight] = useState("32px");
+  const [currentMessages, setCurrentMessages] = useState([]);
+
+  // Refs for smooth height
+  const contentRef = useRef(null);
+  const [contentHeight, setContentHeight] = useState(0);
 
   // Button state variables
   const [loadingOpacity, setLoadingOpacity] = useState(0);
@@ -42,56 +45,9 @@ const WorkflowAnimation = () => {
   const [startTextOpacity, setStartTextOpacity] = useState(1);
   const [startTextTransform, setStartTextTransform] = useState("scale(1)");
 
-  // Activity items with slower transitions
-  const [activityItems, setActivityItems] = useState([
-    {
-      id: 1,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-    {
-      id: 2,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-    {
-      id: 3,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-    {
-      id: 4,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-    {
-      id: 5,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-    {
-      id: 6,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-    {
-      id: 7,
-      opacity: 0,
-      transform: "translateY(15px)",
-      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-    },
-  ]);
-
   // Animation management refs
   const animationRef = useRef(null);
   const activeTimeoutsRef = useRef([]);
-  const activeIntervalsRef = useRef([]);
   const componentMountedRef = useRef(true);
   const isAnimatingRef = useRef(false);
   const hasStartedRef = useRef(false);
@@ -110,11 +66,6 @@ const WorkflowAnimation = () => {
     });
     activeTimeoutsRef.current = [];
 
-    activeIntervalsRef.current.forEach((intervalId) => {
-      if (intervalId) clearInterval(intervalId);
-    });
-    activeIntervalsRef.current = [];
-
     if (animationRef.current) {
       clearTimeout(animationRef.current);
       animationRef.current = null;
@@ -123,43 +74,60 @@ const WorkflowAnimation = () => {
     isAnimatingRef.current = false;
   };
 
-  // Reset activity items for a new round - ONLY show current round messages
-  const resetActivityItemsForRound = (startIndex, endIndex) => {
-    setActivityItems((prevItems) => {
-      const newItems = [...prevItems];
-      // Reset ALL items first
-      for (let i = 0; i < newItems.length; i++) {
-        newItems[i] = {
-          ...newItems[i],
-          opacity: 0,
-          transform: "translateY(15px)",
-          transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-        };
-      }
-      return newItems;
-    });
-    setActivityHeight("32px");
+  // SIMPLIFIED: Update height based on content
+  const updateHeight = () => {
+    if (contentRef.current && activityOpacity === 1) {
+      const height = contentRef.current.scrollHeight;
+      setContentHeight(height);
+    } else {
+      setContentHeight(0);
+    }
   };
 
-  // Close activity card
+  // Update height when messages change
+  useEffect(() => {
+    if (activityOpacity === 1) {
+      // Use requestAnimationFrame for silky smooth height updates
+      requestAnimationFrame(() => {
+        if (contentRef.current) {
+          setContentHeight(contentRef.current.scrollHeight);
+        }
+      });
+    }
+  }, [currentMessages, activityOpacity]);
+
+  // SIMPLIFIED: Close activity card
   const closeActivityCard = () => {
     setActivityOpacity(0);
     setActivityTransform("translateY(20px)");
+    setContentHeight(0);
+    // Clear messages AFTER card closes
+    setTimeout(() => {
+      setCurrentMessages([]);
+    }, 700); // Match transition duration
   };
 
-  // Open activity card
+  // SIMPLIFIED: Open activity card
   const openActivityCard = () => {
     setActivityOpacity(1);
     setActivityTransform("translateY(0px)");
   };
 
-  // EXIT animation for invoice (fade out + scale down + slide left)
+  // SIMPLIFIED: Add message - NO OPACITY TOGGLING, just push
+  const addMessage = (message) => {
+    setCurrentMessages((prev) => [
+      ...prev,
+      { ...message, id: Date.now() + Math.random() },
+    ]);
+  };
+
+  // EXIT animation for invoice
   const exitInvoice = () => {
     setInvoiceOpacity(0);
     setInvoiceTransform("translateX(-20px) scale(0.9)");
   };
 
-  // ENTRANCE animation for invoice (fade in + scale up + slide from right)
+  // ENTRANCE animation for invoice
   const enterInvoice = (version) => {
     setQuotationVersion(version);
     setInvoiceOpacity(1);
@@ -174,7 +142,6 @@ const WorkflowAnimation = () => {
     setQuotationVersion(1);
     setInvoiceOpacity(1);
     setInvoiceTransform("translate(0px, 0px)");
-    setInvoiceScale(1);
     setDashboardOpacity(0);
     setDashboardTransform("scale(0.95)");
     setCursorOpacity(0);
@@ -182,7 +149,8 @@ const WorkflowAnimation = () => {
     setCursorScale(1);
     setActivityOpacity(0);
     setActivityTransform("translateY(20px)");
-    setActivityHeight("32px");
+    setContentHeight(0);
+    setCurrentMessages([]);
 
     // Reset button states
     setLoadingOpacity(0);
@@ -191,52 +159,6 @@ const WorkflowAnimation = () => {
     setStartedTransform("translateX(-25%)");
     setStartTextOpacity(1);
     setStartTextTransform("scale(1)");
-
-    // Reset all activity items
-    setActivityItems([
-      {
-        id: 1,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      {
-        id: 2,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      {
-        id: 3,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      {
-        id: 4,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      {
-        id: 5,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      {
-        id: 6,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      {
-        id: 7,
-        opacity: 0,
-        transform: "translateY(15px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-    ]);
   };
 
   // Manual restart
@@ -257,27 +179,8 @@ const WorkflowAnimation = () => {
     resetAllStates();
   };
 
-  // Helper function to show activity item smoothly
-  const showActivityItem = (index) => {
-    setActivityItems((prevItems) => {
-      const newItems = [...prevItems];
-      newItems[index] = {
-        ...newItems[index],
-        opacity: 1,
-        transform: "translateY(0px)",
-        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-      };
-      return newItems;
-    });
-  };
-
-  // Helper function to set activity height smoothly
-  const setActivityHeightSmooth = (height) => {
-    setActivityHeight(height);
-  };
-
   // ========== MAIN ANIMATION SEQUENCE ==========
-  // SLOWER animation with invoice exit/entrance and only current round messages
+  // SIMPLIFIED: Clean rounds with proper timing
   // ==============================================
   const startAnimation = () => {
     if (!componentMountedRef.current || isAnimatingRef.current) return;
@@ -286,389 +189,272 @@ const WorkflowAnimation = () => {
     hasStartedRef.current = true;
     clearAllAnimations();
 
-    // --- SCENE 1: QUOTATION 1 (Round 1) ---
+    // --- ROUND 1: QUOTATION 1 ---
     setAnimationStage(1);
     setQuotationVersion(1);
+    setCurrentMessages([]);
 
-    // PAUSE - Show Quotation 1 (1.5s)
     const pause1 = setTimeout(() => {
       if (!componentMountedRef.current) return;
 
-      // Activity card appears for Round 1
       openActivityCard();
       setAnimationStage(2);
 
-      // Show Activity 1: Sales asks about Quotation 1 (after 1s)
-      const showActivity1 = setTimeout(() => {
+      // Message 1: Sales asks
+      const msg1 = setTimeout(() => {
         if (!componentMountedRef.current) return;
-
-        showActivityItem(0);
-        setActivityHeightSmooth("64px");
+        addMessage({
+          person: "Joe",
+          role: "(Sales)",
+          message: "Shall we initiate Quotation 1?",
+        });
         setAnimationStage(3);
 
-        // Show Activity 2: Finance REJECTS Quotation 1 (after 1.5s)
-        const showActivity2 = setTimeout(() => {
+        // Message 2: Finance REJECTS
+        const msg2 = setTimeout(() => {
           if (!componentMountedRef.current) return;
-
-          showActivityItem(1);
-          setActivityHeightSmooth("96px");
+          addMessage({
+            person: "Rohan",
+            role: "(Finance)",
+            message: "Need adjustments - please revise",
+          });
           setAnimationStage(4);
 
-          // PAUSE - Show rejection (1.5s)
-
-          // CLOSE activity card (after 1s)
-          const closeCard1 = setTimeout(() => {
+          // Close card - clears messages after animation
+          const close1 = setTimeout(() => {
             if (!componentMountedRef.current) return;
-
             closeActivityCard();
             setAnimationStage(5);
 
-            // PAUSE - Card closed (0.8s)
-
-            // EXIT animation for Quotation 1 (after 0.8s)
-            const exitQuotation1 = setTimeout(() => {
+            // Exit Quotation 1
+            const exit1 = setTimeout(() => {
               if (!componentMountedRef.current) return;
-
               exitInvoice();
               setAnimationStage(6);
 
-              // PAUSE - Quotation 1 fades out (1s)
-
-              // ENTRANCE animation for Quotation 2 (after 1s)
-              const enterQuotation2 = setTimeout(() => {
+              // Enter Quotation 2
+              const enter2 = setTimeout(() => {
                 if (!componentMountedRef.current) return;
-
                 enterInvoice(2);
                 setAnimationStage(7);
 
-                // PAUSE - Show Quotation 2 (1.5s)
-
-                // Reset activity items for Round 2 - ONLY show messages 2 & 3
-                const resetForRound2 = setTimeout(() => {
+                // --- ROUND 2: QUOTATION 2 ---
+                // Reopen card - FRESH START
+                const reopen2 = setTimeout(() => {
                   if (!componentMountedRef.current) return;
-
-                  resetActivityItemsForRound(2, 4);
+                  openActivityCard();
                   setAnimationStage(8);
 
-                  // PAUSE - Reset complete (0.8s)
-
-                  // REOPEN activity card for Round 2 (after 0.8s)
-                  const reopenCard2 = setTimeout(() => {
+                  // Message 3: Sales asks about Quotation 2
+                  const msg3 = setTimeout(() => {
                     if (!componentMountedRef.current) return;
-
-                    openActivityCard();
+                    addMessage({
+                      person: "Joe",
+                      role: "(Sales)",
+                      message: "How about Quotation 2 with revised terms?",
+                    });
                     setAnimationStage(9);
 
-                    // Show Activity 3: Sales asks about Quotation 2 (after 1s)
-                    const showActivity3 = setTimeout(() => {
+                    // Message 4: Finance REJECTS Quotation 2
+                    const msg4 = setTimeout(() => {
                       if (!componentMountedRef.current) return;
-
-                      showActivityItem(2);
-                      setActivityHeightSmooth("64px");
+                      addMessage({
+                        person: "Rohan",
+                        role: "(Finance)",
+                        message: "Still need to adjust pricing",
+                      });
                       setAnimationStage(10);
 
-                      // Show Activity 4: Finance REJECTS Quotation 2 (after 1.5s)
-                      const showActivity4 = setTimeout(() => {
+                      // Close card
+                      const close2 = setTimeout(() => {
                         if (!componentMountedRef.current) return;
-
-                        showActivityItem(3);
-                        setActivityHeightSmooth("96px");
+                        closeActivityCard();
                         setAnimationStage(11);
 
-                        // PAUSE - Show rejection (1.5s)
-
-                        // CLOSE activity card again (after 1s)
-                        const closeCard2 = setTimeout(() => {
+                        // Exit Quotation 2
+                        const exit2 = setTimeout(() => {
                           if (!componentMountedRef.current) return;
-
-                          closeActivityCard();
+                          exitInvoice();
                           setAnimationStage(12);
 
-                          // PAUSE - Card closed (0.8s)
-
-                          // EXIT animation for Quotation 2 (after 0.8s)
-                          const exitQuotation2 = setTimeout(() => {
+                          // Enter Quotation 3
+                          const enter3 = setTimeout(() => {
                             if (!componentMountedRef.current) return;
-
-                            exitInvoice();
+                            enterInvoice(3);
                             setAnimationStage(13);
 
-                            // PAUSE - Quotation 2 fades out (1s)
-
-                            // ENTRANCE animation for Quotation 3 (after 1s)
-                            const enterQuotation3 = setTimeout(() => {
+                            // --- ROUND 3: QUOTATION 3 ---
+                            // Reopen card - FRESH START
+                            const reopen3 = setTimeout(() => {
                               if (!componentMountedRef.current) return;
-
-                              enterInvoice(3);
+                              openActivityCard();
                               setAnimationStage(14);
 
-                              // PAUSE - Show Quotation 3 (1.5s)
-
-                              // Reset activity items for Round 3 - ONLY show messages 4,5,6
-                              const resetForRound3 = setTimeout(() => {
+                              // Message 5: Sales asks about Quotation 3
+                              const msg5 = setTimeout(() => {
                                 if (!componentMountedRef.current) return;
-
-                                resetActivityItemsForRound(4, 7);
+                                addMessage({
+                                  person: "Joe",
+                                  role: "(Sales)",
+                                  message:
+                                    "Final version - Quotation 3, can we proceed?",
+                                });
                                 setAnimationStage(15);
 
-                                // PAUSE - Reset complete (0.8s)
-
-                                // REOPEN activity card for Round 3 (after 0.8s)
-                                const reopenCard3 = setTimeout(() => {
+                                // Message 6: Finance ACCEPTS
+                                const msg6 = setTimeout(() => {
                                   if (!componentMountedRef.current) return;
-
-                                  openActivityCard();
+                                  addMessage({
+                                    person: "Rohan",
+                                    role: "(Finance)",
+                                    message: "Looks good, approved!",
+                                  });
                                   setAnimationStage(16);
 
-                                  // Show Activity 5: Sales asks about Quotation 3 (after 1s)
-                                  const showActivity5 = setTimeout(() => {
+                                  // --- DASHBOARD TRANSITION ---
+                                  const toDashboard = setTimeout(() => {
                                     if (!componentMountedRef.current) return;
 
-                                    showActivityItem(4);
-                                    setActivityHeightSmooth("64px");
+                                    setInvoiceOpacity(0);
+                                    setInvoiceTransform("scale(0.95)");
+                                    setDashboardOpacity(1);
+                                    setDashboardTransform("scale(1)");
                                     setAnimationStage(17);
 
-                                    // Show Activity 6: Finance ACCEPTS Quotation 3 (after 1.5s)
-                                    const showActivity6 = setTimeout(() => {
+                                    // Cursor animation
+                                    const showCursor = setTimeout(() => {
                                       if (!componentMountedRef.current) return;
-
-                                      showActivityItem(5);
-                                      setActivityHeightSmooth("96px");
+                                      setCursorOpacity(1);
+                                      setCursorPosition({ x: 0, y: 0 });
                                       setAnimationStage(18);
 
-                                      // PAUSE - Show acceptance (1.5s)
+                                      const moveCursor = setTimeout(() => {
+                                        if (!componentMountedRef.current)
+                                          return;
+                                        setCursorPosition({ x: 150, y: -103 });
+                                        setCursorScale(0.9);
+                                        setAnimationStage(19);
 
-                                      // --- SCENE 4: TRANSITION TO DASHBOARD ---
-                                      // Keep activity card open during dashboard transition
-                                      const transitionToDashboard = setTimeout(
-                                        () => {
+                                        const click = setTimeout(() => {
                                           if (!componentMountedRef.current)
                                             return;
+                                          setCursorScale(0.7);
+                                          setAnimationStage(20);
 
-                                          // Fade out invoice (Quotation 3 fades)
-                                          setInvoiceOpacity(0);
-                                          setInvoiceTransform("scale(0.95)");
-
-                                          // Fade in dashboard
-                                          setDashboardOpacity(1);
-                                          setDashboardTransform("scale(1)");
-                                          setAnimationStage(19);
-
-                                          // Show cursor (after 1s)
-                                          const showCursor = setTimeout(() => {
+                                          const loading = setTimeout(() => {
                                             if (!componentMountedRef.current)
                                               return;
+                                            setStartTextOpacity(0);
+                                            setStartTextTransform("scale(0.9)");
+                                            setLoadingOpacity(1);
+                                            setCursorScale(0.9);
+                                            setAnimationStage(21);
 
-                                            setCursorOpacity(1);
-                                            setCursorPosition({ x: 0, y: 0 });
-                                            setAnimationStage(20);
+                                            const done = setTimeout(() => {
+                                              if (!componentMountedRef.current)
+                                                return;
+                                              setLoadingOpacity(0);
+                                              setCheckOpacity(1);
 
-                                            // Move cursor to Start billing button (after 1.2s)
-                                            const moveToButton = setTimeout(
-                                              () => {
+                                              const started = setTimeout(() => {
                                                 if (
                                                   !componentMountedRef.current
                                                 )
                                                   return;
+                                                setStartedOpacity(1);
+                                                setStartedTransform(
+                                                  "translateX(0px)",
+                                                );
+                                              }, 500);
+                                              trackTimeout(started);
 
-                                                setCursorPosition({
-                                                  x: 150,
-                                                  y: -103,
+                                              setAnimationStage(22);
+
+                                              // FINAL MESSAGE: Billing started
+                                              const msg7 = setTimeout(() => {
+                                                if (
+                                                  !componentMountedRef.current
+                                                )
+                                                  return;
+                                                addMessage({
+                                                  person: "",
+                                                  role: "",
+                                                  message:
+                                                    "Billing schedule started with Quotation 3",
+                                                  isSystem: true,
                                                 });
-                                                setCursorScale(0.9);
-                                                setAnimationStage(21);
+                                                setAnimationStage(23);
 
-                                                // Click animation (after 1s)
-                                                const pauseBeforeClick =
-                                                  setTimeout(() => {
+                                                // Fade out cursor
+                                                const fadeCursor = setTimeout(
+                                                  () => {
                                                     if (
                                                       !componentMountedRef.current
                                                     )
                                                       return;
+                                                    setCursorOpacity(0);
+                                                    setAnimationStage(24);
 
-                                                    setCursorScale(0.7);
-                                                    setAnimationStage(22);
-
-                                                    // Show loading spinner (after 0.4s)
-                                                    const showLoading =
-                                                      setTimeout(() => {
+                                                    // Restart animation
+                                                    const restart = setTimeout(
+                                                      () => {
                                                         if (
                                                           !componentMountedRef.current
                                                         )
                                                           return;
-
-                                                        setStartTextOpacity(0);
-                                                        setStartTextTransform(
-                                                          "scale(0.9)",
-                                                        );
-                                                        setLoadingOpacity(1);
-                                                        setCursorScale(0.9);
-                                                        setAnimationStage(23);
-
-                                                        // Loading duration (1.5s)
-                                                        const loadingDuration =
-                                                          setTimeout(() => {
-                                                            if (
-                                                              !componentMountedRef.current
-                                                            )
-                                                              return;
-
-                                                            setLoadingOpacity(
-                                                              0,
-                                                            );
-                                                            setCheckOpacity(1);
-
-                                                            // Show "Started" text (after 0.5s)
-                                                            const showStarted =
-                                                              setTimeout(() => {
-                                                                if (
-                                                                  !componentMountedRef.current
-                                                                )
-                                                                  return;
-                                                                setStartedOpacity(
-                                                                  1,
-                                                                );
-                                                                setStartedTransform(
-                                                                  "translateX(0px)",
-                                                                );
-                                                              }, 500);
-                                                            trackTimeout(
-                                                              showStarted,
-                                                            );
-
-                                                            setAnimationStage(
-                                                              24,
-                                                            );
-
-                                                            // --- SCENE 5: FINAL CONFIRMATION ---
-                                                            // Show Activity 7: Billing started with Quotation 3 (after 1s)
-                                                            const showActivity7 =
-                                                              setTimeout(() => {
-                                                                if (
-                                                                  !componentMountedRef.current
-                                                                )
-                                                                  return;
-
-                                                                showActivityItem(
-                                                                  6,
-                                                                );
-                                                                setActivityHeightSmooth(
-                                                                  "128px",
-                                                                );
-                                                                setAnimationStage(
-                                                                  25,
-                                                                );
-
-                                                                // Fade out cursor (after 2s)
-                                                                const fadeOutCursor =
-                                                                  setTimeout(
-                                                                    () => {
-                                                                      if (
-                                                                        !componentMountedRef.current
-                                                                      )
-                                                                        return;
-
-                                                                      setCursorOpacity(
-                                                                        0,
-                                                                      );
-                                                                      setAnimationStage(
-                                                                        26,
-                                                                      );
-
-                                                                      // PAUSE - Show final state (3s)
-
-                                                                      // LOOP: Reset and restart
-                                                                      const resetAndRestart =
-                                                                        setTimeout(
-                                                                          () => {
-                                                                            if (
-                                                                              !componentMountedRef.current
-                                                                            )
-                                                                              return;
-
-                                                                            resetAllStates();
-                                                                            isAnimatingRef.current = false;
-
-                                                                            const restart =
-                                                                              setTimeout(
-                                                                                () => {
-                                                                                  if (
-                                                                                    !componentMountedRef.current
-                                                                                  )
-                                                                                    return;
-                                                                                  startAnimation();
-                                                                                },
-                                                                                2500,
-                                                                              );
-                                                                            trackTimeout(
-                                                                              restart,
-                                                                            );
-                                                                          },
-                                                                          3000,
-                                                                        );
-                                                                      trackTimeout(
-                                                                        resetAndRestart,
-                                                                      );
-                                                                    },
-                                                                    2000,
-                                                                  );
-                                                                trackTimeout(
-                                                                  fadeOutCursor,
-                                                                );
-                                                              }, 1000);
-                                                            trackTimeout(
-                                                              showActivity7,
-                                                            );
-                                                          }, 1500);
-                                                        trackTimeout(
-                                                          loadingDuration,
-                                                        );
-                                                      }, 400);
-                                                    trackTimeout(showLoading);
-                                                  }, 1000);
-                                                trackTimeout(pauseBeforeClick);
-                                              },
-                                              1200,
-                                            );
-                                            trackTimeout(moveToButton);
-                                          }, 1000);
-                                          trackTimeout(showCursor);
-                                        },
-                                        1500,
-                                      );
-                                      trackTimeout(transitionToDashboard);
-                                    }, 1500);
-                                    trackTimeout(showActivity6);
-                                  }, 1000);
-                                  trackTimeout(showActivity5);
-                                }, 800);
-                                trackTimeout(reopenCard3);
-                              }, 800);
-                              trackTimeout(resetForRound3);
+                                                        resetAllStates();
+                                                        isAnimatingRef.current = false;
+                                                        startAnimation();
+                                                      },
+                                                      3000,
+                                                    );
+                                                    trackTimeout(restart);
+                                                  },
+                                                  2000,
+                                                );
+                                                trackTimeout(fadeCursor);
+                                              }, 1000);
+                                              trackTimeout(msg7);
+                                            }, 1500);
+                                            trackTimeout(done);
+                                          }, 400);
+                                          trackTimeout(loading);
+                                        }, 1000);
+                                        trackTimeout(click);
+                                      }, 1200);
+                                      trackTimeout(moveCursor);
+                                    }, 1000);
+                                    trackTimeout(showCursor);
+                                  }, 1500);
+                                  trackTimeout(toDashboard);
+                                }, 1500);
+                                trackTimeout(msg6);
+                              }, 1000);
+                              trackTimeout(msg5);
                             }, 800);
-                            trackTimeout(enterQuotation3);
-                          }, 1000);
-                          trackTimeout(exitQuotation2);
-                        }, 800);
-                        trackTimeout(closeCard2);
-                      }, 1500);
-                      trackTimeout(showActivity4);
-                    }, 1000);
-                    trackTimeout(showActivity3);
-                  }, 800);
-                  trackTimeout(reopenCard2);
+                            trackTimeout(reopen3);
+                          }, 800);
+                          trackTimeout(enter3);
+                        }, 1000);
+                        trackTimeout(exit2);
+                      }, 800);
+                      trackTimeout(close2);
+                    }, 1500);
+                    trackTimeout(msg4);
+                  }, 1000);
+                  trackTimeout(msg3);
                 }, 800);
-                trackTimeout(resetForRound2);
+                trackTimeout(reopen2);
               }, 800);
-              trackTimeout(enterQuotation2);
+              trackTimeout(enter2);
             }, 1000);
-            trackTimeout(exitQuotation1);
+            trackTimeout(exit1);
           }, 800);
-          trackTimeout(closeCard1);
+          trackTimeout(close1);
         }, 1500);
-        trackTimeout(showActivity2);
+        trackTimeout(msg2);
       }, 1000);
-      trackTimeout(showActivity1);
+      trackTimeout(msg1);
     }, 1500);
     trackTimeout(pause1);
 
@@ -724,76 +510,40 @@ const WorkflowAnimation = () => {
           Stop
         </button>
         <div className="px-2 py-1 text-xs font-mono bg-gray-100 rounded">
-          Q{quotationVersion} | Stage: {animationStage}
+          Q{quotationVersion} | Stage: {animationStage} | Msgs:{" "}
+          {currentMessages.length}
         </div>
       </div>
     );
   };
 
-  // Helper function to get activity message based on index
-  const getActivityMessage = (index) => {
-    const messages = [
-      {
-        person: "Joe",
-        role: "(Sales)",
-        message: "Shall we initiate Quotation 1?",
-      },
-      {
-        person: "Rohan",
-        role: "(Finance)",
-        message: "Need adjustments - please revise",
-      },
-      {
-        person: "Joe",
-        role: "(Sales)",
-        message: "How about Quotation 2 with revised terms?",
-      },
-      {
-        person: "Rohan",
-        role: "(Finance)",
-        message: "Still need to adjust pricing",
-      },
-      {
-        person: "Joe",
-        role: "(Sales)",
-        message: "Final version - Quotation 3, can we proceed?",
-      },
-      { person: "Rohan", role: "(Finance)", message: "Looks good, approved!" },
-      {
-        person: "",
-        role: "",
-        message: "Billing schedule started with Quotation 3",
-        isSystem: true,
-      },
-    ];
-    return messages[index] || messages[0];
-  };
-
-  // Get avatar or icon for activity item
-  const getActivityAvatar = (index, message) => {
-    if (index === 6) {
-      return <VerifiedIcon className="w-4 h-4 text-blue-600" />;
+  // Get avatar URL
+  const getAvatar = (person) => {
+    if (person === "Joe") {
+      return "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww";
     }
-
-    return (
-      <img
-        alt={`${message.person} avatar`}
-        loading="lazy"
-        width="16"
-        height="16"
-        className="h-4 w-4 shrink-0 grow-0 rounded-full"
-        src={
-          index % 2 === 0
-            ? "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
-            : "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        }
-      />
-    );
+    return "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   };
 
   return (
     <>
       {/* <DebugControls /> */}
+
+      <style jsx>{`
+        @keyframes slideIn {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0px);
+          }
+        }
+        .message-item {
+          animation: slideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+      `}</style>
 
       <div className="">
         <div className="relative w-full">
@@ -811,7 +561,7 @@ const WorkflowAnimation = () => {
               <ArrowIcon width={30} height={30} />
             </div>
 
-            {/* Invoice with Dynamic Quotation Version and Exit/Entrance Animations */}
+            {/* Invoice - unchanged */}
             <div
               id="workflow-invoice"
               className="mx-auto w-full max-w-[360px] overflow-hidden rounded transition-all duration-800 ease-out"
@@ -1220,118 +970,89 @@ const WorkflowAnimation = () => {
               </div>
             </div>
 
-            {/* Activity Card - Only shows current round messages */}
+            {/* SIMPLIFIED: Activity Card - BUTTER SMOOTH */}
             <div className="absolute h-full w-full max-w-[calc(512px+40px*2)]">
               <div
                 id="workflow-activity"
-                className="absolute left-0 top-[50%] rounded-lg bg-white p-4 transition-all duration-800 ease-out"
+                className="absolute left-0 top-[50%] rounded-lg bg-white p-4 transition-all duration-700 ease-out"
                 style={{
                   boxShadow:
                     "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
                   transform: activityTransform,
                   opacity: activityOpacity,
-                  transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+                  transition: "all 700ms cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 <p className="text-xs font-bold">Activity</p>
                 <div
+                  ref={contentRef}
                   id="workflow-activity-list"
-                  className="mt-3 min-w-[262px] overflow-hidden transition-all duration-800 ease-out"
+                  className="mt-3 min-w-[262px] overflow-hidden transition-all duration-700 ease-out"
                   style={{
-                    height: activityHeight,
-                    transition: "height 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+                    height: contentHeight ? `${contentHeight}px` : "0px",
+                    transition: "height 700ms cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
                 >
-                  {/* Dynamic rendering of activity items - Only show current round */}
-                  {activityItems.map((item, index) => {
-                    if (index >= 7) return null;
-                    const message = getActivityMessage(index);
+                  {/* ONLY CURRENT MESSAGES - NO OPACITY HACKS */}
+                  {currentMessages.map((msg, idx) => (
+                    <div
+                      key={msg.id}
+                      className="workflow-activity-item message-item"
+                    >
+                      <div className="flex items-start text-xs">
+                        <div className="relative flex flex-col items-center mr-2">
+                          {msg.isSystem ? (
+                            <div className="rounded-full w-4 h-4 flex items-center justify-center">
+                              <VerifiedIcon className="w-4 h-4 text-blue-600" />
+                            </div>
+                          ) : (
+                            <>
+                              <img
+                                alt={`${msg.person} avatar`}
+                                loading="lazy"
+                                width="16"
+                                height="16"
+                                className="h-4 w-4 shrink-0 grow-0 rounded-full"
+                                src={getAvatar(msg.person)}
+                              />
 
-                    // Only render if opacity > 0 (prevents empty space)
-                    if (item.opacity === 0) return null;
-
-                    return (
-                      <div
-                        key={index}
-                        className="workflow-activity-item"
-                        style={{
-                          transform: item.transform,
-                          opacity: item.opacity,
-                          transition:
-                            item.transition ||
-                            "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
-                          willChange: "transform, opacity",
-                        }}
-                      >
-                        <div className="flex items-start text-xs">
-                          <div className="relative flex flex-col items-center mr-2">
-                            {index === 6 ? (
-                              <div className="rounded-full w-4 h-4 flex items-center justify-center">
-                                {getActivityAvatar(index, message)}
-                              </div>
-                            ) : (
-                              <>
-                                <img
-                                  alt={`${message.person} avatar`}
-                                  loading="lazy"
-                                  width="16"
-                                  height="16"
-                                  decoding="async"
-                                  className="h-4 w-4 shrink-0 grow-0 rounded-full"
-                                  src={
-                                    index % 2 === 0
-                                      ? "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
-                                      : "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                  }
-                                />
-                                
-                                  <div
-                                    className="line my-1"
-                                    style={{
-                                      opacity:
-                                        item.opacity > 0 &&
-                                        index + 1 < activityItems.length &&
-                                        activityItems[index + 1]?.opacity > 0
-                                          ? 1
-                                          : 0,
-                                      transition: "opacity 500ms ease",
-                                    }}
-                                  >
-                                    <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
-                                  </div>
-                                
-                              </>
-                            )}
-                          </div>
-                          <div className="text-[#1D2939]">
-                            {!message.isSystem ? (
-                              <>
-                                <p className="">
-                                  {message.person}{" "}
-                                  <span className="text-[#596575]">
-                                    {message.role}
-                                  </span>
-                                </p>
-                                <p
-                                  className={
-                                    index === 5
-                                      ? "text-green-600 font-medium"
-                                      : ""
-                                  }
-                                >
-                                  {message.message}
-                                </p>
-                              </>
-                            ) : (
-                              <p className="flex items-center gap-1">
-                                <span>{message.message}</span>
+                              {/* Line between messages - only if not last */}
+                              {idx < currentMessages.length - 1 && idx < 5 && (
+                                <div className="line my-1">
+                                  <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </div>
+                        <div className="text-[#1D2939]">
+                          {!msg.isSystem ? (
+                            <>
+                              <p className="">
+                                {msg.person}{" "}
+                                <span className="text-[#596575]">
+                                  {msg.role}
+                                </span>
                               </p>
-                            )}
-                          </div>
+                              <p
+                                className={
+                                  msg.message.includes("approved")
+                                    ? "text-green-600 font-medium"
+                                    : ""
+                                }
+                              >
+                                {msg.message}
+                              </p>
+                            </>
+                          ) : (
+                            <p className="flex items-center gap-1">
+                              <span>{msg.message}</span>
+                            </p>
+                          )}
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
