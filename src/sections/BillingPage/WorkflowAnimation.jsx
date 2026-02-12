@@ -17,11 +17,18 @@ const WorkflowAnimation = () => {
   const [invoiceTransform, setInvoiceTransform] = useState(
     "translate(0px, 0px)",
   );
+  const [invoiceScale, setInvoiceScale] = useState(1);
+
+  // Quotation version state
+  const [quotationVersion, setQuotationVersion] = useState(1); // 1, 2, or 3
+
   const [dashboardOpacity, setDashboardOpacity] = useState(0);
   const [dashboardTransform, setDashboardTransform] = useState("scale(0.95)");
   const [cursorOpacity, setCursorOpacity] = useState(0);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorScale, setCursorScale] = useState(1);
+
+  // Activity card states
   const [activityOpacity, setActivityOpacity] = useState(0);
   const [activityTransform, setActivityTransform] =
     useState("translateY(20px)");
@@ -35,13 +42,53 @@ const WorkflowAnimation = () => {
   const [startTextOpacity, setStartTextOpacity] = useState(1);
   const [startTextTransform, setStartTextTransform] = useState("scale(1)");
 
+  // Activity items with slower transitions
   const [activityItems, setActivityItems] = useState([
-    { id: 1, opacity: 0, transform: "translateY(10px)", scale: 1 },
-    { id: 2, opacity: 0, transform: "translateY(10px)", scale: 1 },
-    { id: 3, opacity: 0, transform: "translateY(10px)", scale: 1 },
+    {
+      id: 1,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    {
+      id: 2,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    {
+      id: 3,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    {
+      id: 4,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    {
+      id: 5,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    {
+      id: 6,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    {
+      id: 7,
+      opacity: 0,
+      transform: "translateY(15px)",
+      transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+    },
   ]);
 
-  // ========== ENHANCED: Animation Management System ==========
+  // Animation management refs
   const animationRef = useRef(null);
   const activeTimeoutsRef = useRef([]);
   const activeIntervalsRef = useRef([]);
@@ -57,31 +104,17 @@ const WorkflowAnimation = () => {
     return timeoutId;
   };
 
-  const trackInterval = (intervalId) => {
-    if (intervalId) {
-      activeIntervalsRef.current.push(intervalId);
-    }
-    return intervalId;
-  };
-
   const clearAllAnimations = () => {
-    // Clear all timeouts
     activeTimeoutsRef.current.forEach((timeoutId) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      if (timeoutId) clearTimeout(timeoutId);
     });
     activeTimeoutsRef.current = [];
 
-    // Clear all intervals
     activeIntervalsRef.current.forEach((intervalId) => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
+      if (intervalId) clearInterval(intervalId);
     });
     activeIntervalsRef.current = [];
 
-    // Clear main animation ref
     if (animationRef.current) {
       clearTimeout(animationRef.current);
       animationRef.current = null;
@@ -90,13 +123,58 @@ const WorkflowAnimation = () => {
     isAnimatingRef.current = false;
   };
 
+  // Reset activity items for a new round - ONLY show current round messages
+  const resetActivityItemsForRound = (startIndex, endIndex) => {
+    setActivityItems((prevItems) => {
+      const newItems = [...prevItems];
+      // Reset ALL items first
+      for (let i = 0; i < newItems.length; i++) {
+        newItems[i] = {
+          ...newItems[i],
+          opacity: 0,
+          transform: "translateY(15px)",
+          transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+        };
+      }
+      return newItems;
+    });
+    setActivityHeight("32px");
+  };
+
+  // Close activity card
+  const closeActivityCard = () => {
+    setActivityOpacity(0);
+    setActivityTransform("translateY(20px)");
+  };
+
+  // Open activity card
+  const openActivityCard = () => {
+    setActivityOpacity(1);
+    setActivityTransform("translateY(0px)");
+  };
+
+  // EXIT animation for invoice (fade out + scale down + slide left)
+  const exitInvoice = () => {
+    setInvoiceOpacity(0);
+    setInvoiceTransform("translateX(-20px) scale(0.9)");
+  };
+
+  // ENTRANCE animation for invoice (fade in + scale up + slide from right)
+  const enterInvoice = (version) => {
+    setQuotationVersion(version);
+    setInvoiceOpacity(1);
+    setInvoiceTransform("translateX(0px) scale(1)");
+  };
+
   // Reset all states
   const resetAllStates = () => {
     if (!componentMountedRef.current) return;
 
     setAnimationStage(0);
+    setQuotationVersion(1);
     setInvoiceOpacity(1);
     setInvoiceTransform("translate(0px, 0px)");
+    setInvoiceScale(1);
     setDashboardOpacity(0);
     setDashboardTransform("scale(0.95)");
     setCursorOpacity(0);
@@ -114,42 +192,93 @@ const WorkflowAnimation = () => {
     setStartTextOpacity(1);
     setStartTextTransform("scale(1)");
 
+    // Reset all activity items
     setActivityItems([
-      { id: 1, opacity: 0, transform: "translateY(10px)", scale: 1 },
-      { id: 2, opacity: 0, transform: "translateY(10px)", scale: 1 },
-      { id: 3, opacity: 0, transform: "translateY(10px)", scale: 1 },
+      {
+        id: 1,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      {
+        id: 2,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      {
+        id: 3,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      {
+        id: 4,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      {
+        id: 5,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      {
+        id: 6,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      {
+        id: 7,
+        opacity: 0,
+        transform: "translateY(15px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      },
     ]);
   };
 
-  // Manual restart function
+  // Manual restart
   const handleRestart = () => {
     clearAllAnimations();
     hasStartedRef.current = false;
-
-    // Reset states immediately
     resetAllStates();
-
-    // Small delay before restarting to ensure clean state
     const restartTimeout = setTimeout(() => {
-      if (componentMountedRef.current) {
-        startAnimation();
-      }
+      if (componentMountedRef.current) startAnimation();
     }, 100);
-
     trackTimeout(restartTimeout);
   };
 
-  // Stop animation function
   const handleStop = () => {
     clearAllAnimations();
     hasStartedRef.current = false;
     isAnimatingRef.current = false;
-
-    // Reset to initial state
     resetAllStates();
   };
 
-  // Start animation sequence
+  // Helper function to show activity item smoothly
+  const showActivityItem = (index) => {
+    setActivityItems((prevItems) => {
+      const newItems = [...prevItems];
+      newItems[index] = {
+        ...newItems[index],
+        opacity: 1,
+        transform: "translateY(0px)",
+        transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+      };
+      return newItems;
+    });
+  };
+
+  // Helper function to set activity height smoothly
+  const setActivityHeightSmooth = (height) => {
+    setActivityHeight(height);
+  };
+
+  // ========== MAIN ANIMATION SEQUENCE ==========
+  // SLOWER animation with invoice exit/entrance and only current round messages
+  // ==============================================
   const startAnimation = () => {
     if (!componentMountedRef.current || isAnimatingRef.current) return;
 
@@ -157,207 +286,392 @@ const WorkflowAnimation = () => {
     hasStartedRef.current = true;
     clearAllAnimations();
 
-    // Scene 1: Invoice shows (0s)
+    // --- SCENE 1: QUOTATION 1 (Round 1) ---
     setAnimationStage(1);
+    setQuotationVersion(1);
 
-    // Pause for 1 second
+    // PAUSE - Show Quotation 1 (1.5s)
     const pause1 = setTimeout(() => {
       if (!componentMountedRef.current) return;
 
-      // Scene 2: Activity card appears with first notification (1s → 1.8s)
-      setActivityOpacity(1);
-      setActivityTransform("translateY(0px)");
+      // Activity card appears for Round 1
+      openActivityCard();
       setAnimationStage(2);
 
-      // Show first activity item after card appears
-      const showFirstActivity = setTimeout(() => {
+      // Show Activity 1: Sales asks about Quotation 1 (after 1s)
+      const showActivity1 = setTimeout(() => {
         if (!componentMountedRef.current) return;
 
-        const updatedItems = [...activityItems];
-        updatedItems[0] = {
-          ...updatedItems[0],
-          opacity: 1,
-          transform: "translateY(0px)",
-        };
-        setActivityItems(updatedItems);
-        setActivityHeight("64px");
+        showActivityItem(0);
+        setActivityHeightSmooth("64px");
         setAnimationStage(3);
 
-        // Pause then show second notification (communication)
-        const pauseForSecond = setTimeout(() => {
+        // Show Activity 2: Finance REJECTS Quotation 1 (after 1.5s)
+        const showActivity2 = setTimeout(() => {
           if (!componentMountedRef.current) return;
 
-          updatedItems[1] = {
-            ...updatedItems[1],
-            opacity: 1,
-            transform: "translateY(0px)",
-          };
-          setActivityItems(updatedItems);
-          setActivityHeight("96px");
+          showActivityItem(1);
+          setActivityHeightSmooth("96px");
           setAnimationStage(4);
 
-          // Pause then transition to dashboard (3.5s → 4.2s)
-          const transitionToDashboard = setTimeout(() => {
+          // PAUSE - Show rejection (1.5s)
+
+          // CLOSE activity card (after 1s)
+          const closeCard1 = setTimeout(() => {
             if (!componentMountedRef.current) return;
 
-            // Fade out invoice
-            setInvoiceOpacity(0);
-            setInvoiceTransform("scale(0.95)");
-
-            // Fade in dashboard
-            setDashboardOpacity(1);
-            setDashboardTransform("scale(1)");
+            closeActivityCard();
             setAnimationStage(5);
 
-            // Show cursor and move to start button (4.2s → 5.0s)
-            const showCursor = setTimeout(() => {
+            // PAUSE - Card closed (0.8s)
+
+            // EXIT animation for Quotation 1 (after 0.8s)
+            const exitQuotation1 = setTimeout(() => {
               if (!componentMountedRef.current) return;
 
-              setCursorOpacity(1);
-              setCursorPosition({ x: 0, y: 0 });
+              exitInvoice();
               setAnimationStage(6);
 
-              // Move cursor to start button (5.0s → 5.8s)
-              const moveToButton = setTimeout(() => {
+              // PAUSE - Quotation 1 fades out (1s)
+
+              // ENTRANCE animation for Quotation 2 (after 1s)
+              const enterQuotation2 = setTimeout(() => {
                 if (!componentMountedRef.current) return;
 
-                // Adjusted position for your new button layout
-                setCursorPosition({ x: 150, y: -103 });
-                setCursorScale(0.9);
+                enterInvoice(2);
                 setAnimationStage(7);
 
-                // Pause then click (5.8s → 6.3s)
-                const pauseBeforeClick = setTimeout(() => {
+                // PAUSE - Show Quotation 2 (1.5s)
+
+                // Reset activity items for Round 2 - ONLY show messages 2 & 3
+                const resetForRound2 = setTimeout(() => {
                   if (!componentMountedRef.current) return;
 
-                  // Click animation
-                  setCursorScale(0.7);
+                  resetActivityItemsForRound(2, 4);
                   setAnimationStage(8);
 
-                  // Show loading spinner (6.3s → 6.5s)
-                  const showLoading = setTimeout(() => {
+                  // PAUSE - Reset complete (0.8s)
+
+                  // REOPEN activity card for Round 2 (after 0.8s)
+                  const reopenCard2 = setTimeout(() => {
                     if (!componentMountedRef.current) return;
 
-                    // Hide start text
-                    setStartTextOpacity(0);
-                    setStartTextTransform("scale(0.9)");
-
-                    // Show loading spinner
-                    setLoadingOpacity(1);
-                    setCursorScale(0.9);
+                    openActivityCard();
                     setAnimationStage(9);
 
-                    // Loading animation (6.5s → 7.5s)
-                    const loadingDuration = setTimeout(() => {
+                    // Show Activity 3: Sales asks about Quotation 2 (after 1s)
+                    const showActivity3 = setTimeout(() => {
                       if (!componentMountedRef.current) return;
 
-                      // Hide loading spinner
-                      setLoadingOpacity(0);
-
-                      // Show checkmark
-                      setCheckOpacity(1);
-
-                      // Show "Started" text
-                      const showStarted = setTimeout(() => {
-                        if (!componentMountedRef.current) return;
-                        setStartedOpacity(1);
-                        setStartedTransform("translateX(0px)");
-                      }, 300);
-                      trackTimeout(showStarted);
-
+                      showActivityItem(2);
+                      setActivityHeightSmooth("64px");
                       setAnimationStage(10);
 
-                      // Add third activity notification (7.5s → 8.0s)
-                      const addThirdActivity = setTimeout(() => {
+                      // Show Activity 4: Finance REJECTS Quotation 2 (after 1.5s)
+                      const showActivity4 = setTimeout(() => {
                         if (!componentMountedRef.current) return;
 
-                        const finalItems = [...updatedItems];
-                        finalItems[2] = {
-                          ...finalItems[2],
-                          opacity: 1,
-                          transform: "translateY(0px)",
-                        };
-                        setActivityItems(finalItems);
-                        setActivityHeight("128px");
+                        showActivityItem(3);
+                        setActivityHeightSmooth("96px");
                         setAnimationStage(11);
 
-                        // Pause then fade out cursor (8.0s → 8.5s)
-                        const fadeOutCursor = setTimeout(() => {
+                        // PAUSE - Show rejection (1.5s)
+
+                        // CLOSE activity card again (after 1s)
+                        const closeCard2 = setTimeout(() => {
                           if (!componentMountedRef.current) return;
 
-                          setCursorOpacity(0);
+                          closeActivityCard();
                           setAnimationStage(12);
 
-                          // Fade out activity box (8.5s → 9.0s)
-                          const fadeOutActivity = setTimeout(() => {
+                          // PAUSE - Card closed (0.8s)
+
+                          // EXIT animation for Quotation 2 (after 0.8s)
+                          const exitQuotation2 = setTimeout(() => {
                             if (!componentMountedRef.current) return;
 
-                            setActivityOpacity(0);
-                            setActivityTransform("translateY(20px)");
+                            exitInvoice();
                             setAnimationStage(13);
 
-                            // Fade out dashboard (9.0s → 9.5s)
-                            const fadeOutDashboard = setTimeout(() => {
+                            // PAUSE - Quotation 2 fades out (1s)
+
+                            // ENTRANCE animation for Quotation 3 (after 1s)
+                            const enterQuotation3 = setTimeout(() => {
                               if (!componentMountedRef.current) return;
 
-                              setDashboardOpacity(0);
-                              setDashboardTransform("scale(0.95)");
+                              enterInvoice(3);
                               setAnimationStage(14);
 
-                              // Show invoice again (9.5s → 10.0s)
-                              const showInvoiceAgain = setTimeout(() => {
+                              // PAUSE - Show Quotation 3 (1.5s)
+
+                              // Reset activity items for Round 3 - ONLY show messages 4,5,6
+                              const resetForRound3 = setTimeout(() => {
                                 if (!componentMountedRef.current) return;
 
-                                setInvoiceOpacity(1);
-                                setInvoiceTransform("translate(0px, 0px)");
+                                resetActivityItemsForRound(4, 7);
                                 setAnimationStage(15);
 
-                                // Reset for loop (10.0s → 12.0s)
-                                const resetDelay = setTimeout(() => {
+                                // PAUSE - Reset complete (0.8s)
+
+                                // REOPEN activity card for Round 3 (after 0.8s)
+                                const reopenCard3 = setTimeout(() => {
                                   if (!componentMountedRef.current) return;
 
-                                  // Reset states before restarting
-                                  resetAllStates();
-                                  isAnimatingRef.current = false;
+                                  openActivityCard();
+                                  setAnimationStage(16);
 
-                                  // Restart animation after pause
-                                  const restart = setTimeout(() => {
+                                  // Show Activity 5: Sales asks about Quotation 3 (after 1s)
+                                  const showActivity5 = setTimeout(() => {
                                     if (!componentMountedRef.current) return;
-                                    startAnimation();
-                                  }, 2000); // 2 second pause before restart
-                                  trackTimeout(restart);
-                                }, 1000);
-                                trackTimeout(resetDelay);
-                              }, 500);
-                              trackTimeout(showInvoiceAgain);
-                            }, 500);
-                            trackTimeout(fadeOutDashboard);
-                          }, 500);
-                          trackTimeout(fadeOutActivity);
-                        }, 500);
-                        trackTimeout(fadeOutCursor);
-                      }, 500);
-                      trackTimeout(addThirdActivity);
-                    }, 1000); // 1 second loading
-                    trackTimeout(loadingDuration);
-                  }, 200);
-                  trackTimeout(showLoading);
-                }, 500);
-                trackTimeout(pauseBeforeClick);
-              }, 800); // 800ms cursor movement
-              trackTimeout(moveToButton);
-            }, 800); // 800ms delay before cursor appears
-            trackTimeout(showCursor);
-          }, 1300); // 1300ms pause before transition
-          trackTimeout(transitionToDashboard);
-        }, 1500); // 1500ms pause before second activity
-        trackTimeout(pauseForSecond);
-      }, 800); // 800ms after activity card appears
-      trackTimeout(showFirstActivity);
-    }, 1000); // Initial 1 second pause
+
+                                    showActivityItem(4);
+                                    setActivityHeightSmooth("64px");
+                                    setAnimationStage(17);
+
+                                    // Show Activity 6: Finance ACCEPTS Quotation 3 (after 1.5s)
+                                    const showActivity6 = setTimeout(() => {
+                                      if (!componentMountedRef.current) return;
+
+                                      showActivityItem(5);
+                                      setActivityHeightSmooth("96px");
+                                      setAnimationStage(18);
+
+                                      // PAUSE - Show acceptance (1.5s)
+
+                                      // --- SCENE 4: TRANSITION TO DASHBOARD ---
+                                      // Keep activity card open during dashboard transition
+                                      const transitionToDashboard = setTimeout(
+                                        () => {
+                                          if (!componentMountedRef.current)
+                                            return;
+
+                                          // Fade out invoice (Quotation 3 fades)
+                                          setInvoiceOpacity(0);
+                                          setInvoiceTransform("scale(0.95)");
+
+                                          // Fade in dashboard
+                                          setDashboardOpacity(1);
+                                          setDashboardTransform("scale(1)");
+                                          setAnimationStage(19);
+
+                                          // Show cursor (after 1s)
+                                          const showCursor = setTimeout(() => {
+                                            if (!componentMountedRef.current)
+                                              return;
+
+                                            setCursorOpacity(1);
+                                            setCursorPosition({ x: 0, y: 0 });
+                                            setAnimationStage(20);
+
+                                            // Move cursor to Start billing button (after 1.2s)
+                                            const moveToButton = setTimeout(
+                                              () => {
+                                                if (
+                                                  !componentMountedRef.current
+                                                )
+                                                  return;
+
+                                                setCursorPosition({
+                                                  x: 150,
+                                                  y: -103,
+                                                });
+                                                setCursorScale(0.9);
+                                                setAnimationStage(21);
+
+                                                // Click animation (after 1s)
+                                                const pauseBeforeClick =
+                                                  setTimeout(() => {
+                                                    if (
+                                                      !componentMountedRef.current
+                                                    )
+                                                      return;
+
+                                                    setCursorScale(0.7);
+                                                    setAnimationStage(22);
+
+                                                    // Show loading spinner (after 0.4s)
+                                                    const showLoading =
+                                                      setTimeout(() => {
+                                                        if (
+                                                          !componentMountedRef.current
+                                                        )
+                                                          return;
+
+                                                        setStartTextOpacity(0);
+                                                        setStartTextTransform(
+                                                          "scale(0.9)",
+                                                        );
+                                                        setLoadingOpacity(1);
+                                                        setCursorScale(0.9);
+                                                        setAnimationStage(23);
+
+                                                        // Loading duration (1.5s)
+                                                        const loadingDuration =
+                                                          setTimeout(() => {
+                                                            if (
+                                                              !componentMountedRef.current
+                                                            )
+                                                              return;
+
+                                                            setLoadingOpacity(
+                                                              0,
+                                                            );
+                                                            setCheckOpacity(1);
+
+                                                            // Show "Started" text (after 0.5s)
+                                                            const showStarted =
+                                                              setTimeout(() => {
+                                                                if (
+                                                                  !componentMountedRef.current
+                                                                )
+                                                                  return;
+                                                                setStartedOpacity(
+                                                                  1,
+                                                                );
+                                                                setStartedTransform(
+                                                                  "translateX(0px)",
+                                                                );
+                                                              }, 500);
+                                                            trackTimeout(
+                                                              showStarted,
+                                                            );
+
+                                                            setAnimationStage(
+                                                              24,
+                                                            );
+
+                                                            // --- SCENE 5: FINAL CONFIRMATION ---
+                                                            // Show Activity 7: Billing started with Quotation 3 (after 1s)
+                                                            const showActivity7 =
+                                                              setTimeout(() => {
+                                                                if (
+                                                                  !componentMountedRef.current
+                                                                )
+                                                                  return;
+
+                                                                showActivityItem(
+                                                                  6,
+                                                                );
+                                                                setActivityHeightSmooth(
+                                                                  "128px",
+                                                                );
+                                                                setAnimationStage(
+                                                                  25,
+                                                                );
+
+                                                                // Fade out cursor (after 2s)
+                                                                const fadeOutCursor =
+                                                                  setTimeout(
+                                                                    () => {
+                                                                      if (
+                                                                        !componentMountedRef.current
+                                                                      )
+                                                                        return;
+
+                                                                      setCursorOpacity(
+                                                                        0,
+                                                                      );
+                                                                      setAnimationStage(
+                                                                        26,
+                                                                      );
+
+                                                                      // PAUSE - Show final state (3s)
+
+                                                                      // LOOP: Reset and restart
+                                                                      const resetAndRestart =
+                                                                        setTimeout(
+                                                                          () => {
+                                                                            if (
+                                                                              !componentMountedRef.current
+                                                                            )
+                                                                              return;
+
+                                                                            resetAllStates();
+                                                                            isAnimatingRef.current = false;
+
+                                                                            const restart =
+                                                                              setTimeout(
+                                                                                () => {
+                                                                                  if (
+                                                                                    !componentMountedRef.current
+                                                                                  )
+                                                                                    return;
+                                                                                  startAnimation();
+                                                                                },
+                                                                                2500,
+                                                                              );
+                                                                            trackTimeout(
+                                                                              restart,
+                                                                            );
+                                                                          },
+                                                                          3000,
+                                                                        );
+                                                                      trackTimeout(
+                                                                        resetAndRestart,
+                                                                      );
+                                                                    },
+                                                                    2000,
+                                                                  );
+                                                                trackTimeout(
+                                                                  fadeOutCursor,
+                                                                );
+                                                              }, 1000);
+                                                            trackTimeout(
+                                                              showActivity7,
+                                                            );
+                                                          }, 1500);
+                                                        trackTimeout(
+                                                          loadingDuration,
+                                                        );
+                                                      }, 400);
+                                                    trackTimeout(showLoading);
+                                                  }, 1000);
+                                                trackTimeout(pauseBeforeClick);
+                                              },
+                                              1200,
+                                            );
+                                            trackTimeout(moveToButton);
+                                          }, 1000);
+                                          trackTimeout(showCursor);
+                                        },
+                                        1500,
+                                      );
+                                      trackTimeout(transitionToDashboard);
+                                    }, 1500);
+                                    trackTimeout(showActivity6);
+                                  }, 1000);
+                                  trackTimeout(showActivity5);
+                                }, 800);
+                                trackTimeout(reopenCard3);
+                              }, 800);
+                              trackTimeout(resetForRound3);
+                            }, 800);
+                            trackTimeout(enterQuotation3);
+                          }, 1000);
+                          trackTimeout(exitQuotation2);
+                        }, 800);
+                        trackTimeout(closeCard2);
+                      }, 1500);
+                      trackTimeout(showActivity4);
+                    }, 1000);
+                    trackTimeout(showActivity3);
+                  }, 800);
+                  trackTimeout(reopenCard2);
+                }, 800);
+                trackTimeout(resetForRound2);
+              }, 800);
+              trackTimeout(enterQuotation2);
+            }, 1000);
+            trackTimeout(exitQuotation1);
+          }, 800);
+          trackTimeout(closeCard1);
+        }, 1500);
+        trackTimeout(showActivity2);
+      }, 1000);
+      trackTimeout(showActivity1);
+    }, 1500);
     trackTimeout(pause1);
 
-    // Store main animation ref
     animationRef.current = pause1;
   };
 
@@ -365,36 +679,25 @@ const WorkflowAnimation = () => {
   useEffect(() => {
     componentMountedRef.current = true;
 
-    // Handle visibility changes
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        // Page is hidden - pause animations
         clearAllAnimations();
       } else {
-        // Page is visible again - restart if we were animating
         if (hasStartedRef.current && !isAnimatingRef.current) {
           setTimeout(() => {
-            if (componentMountedRef.current) {
-              startAnimation();
-            }
+            if (componentMountedRef.current) startAnimation();
           }, 500);
         }
       }
     };
 
-    // Add visibility change listener
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    // Start animation on mount
     const startDelay = setTimeout(() => {
-      if (componentMountedRef.current) {
-        startAnimation();
-      }
-    }, 1000); // Give time for initial render
-
+      if (componentMountedRef.current) startAnimation();
+    }, 1000);
     trackTimeout(startDelay);
 
-    // Cleanup function
     return () => {
       componentMountedRef.current = false;
       clearAllAnimations();
@@ -402,42 +705,94 @@ const WorkflowAnimation = () => {
     };
   }, []);
 
-  // ========== ADDED: Debug Controls Component ==========
+  // Debug Controls
   const DebugControls = () => {
     if (process.env.NODE_ENV !== "development") return null;
 
     return (
-      <div
-        className="fixed bottom-4 right-4 z-50 flex gap-2 opacity-70 transition-opacity hover:opacity-100"
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
-          padding: "8px",
-          borderRadius: "8px",
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-        }}
-      >
+      <div className="fixed bottom-4 right-4 z-50 flex gap-2 opacity-70 transition-opacity hover:opacity-100 bg-white bg-opacity-90 p-2 rounded shadow">
         <button
           onClick={handleRestart}
-          className="px-3 py-1 text-xs font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors"
+          className="px-3 py-1 text-xs font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"
         >
           Restart
         </button>
         <button
           onClick={handleStop}
-          className="px-3 py-1 text-xs font-semibold text-white bg-red-600 rounded hover:bg-red-700 transition-colors"
+          className="px-3 py-1 text-xs font-semibold text-white bg-red-600 rounded hover:bg-red-700"
         >
           Stop
         </button>
         <div className="px-2 py-1 text-xs font-mono bg-gray-100 rounded">
-          Stage: {animationStage}
+          Q{quotationVersion} | Stage: {animationStage}
         </div>
       </div>
     );
   };
 
+  // Helper function to get activity message based on index
+  const getActivityMessage = (index) => {
+    const messages = [
+      {
+        person: "Joe",
+        role: "(Sales)",
+        message: "Shall we initiate Quotation 1?",
+      },
+      {
+        person: "Rohan",
+        role: "(Finance)",
+        message: "Need adjustments - please revise",
+      },
+      {
+        person: "Joe",
+        role: "(Sales)",
+        message: "How about Quotation 2 with revised terms?",
+      },
+      {
+        person: "Rohan",
+        role: "(Finance)",
+        message: "Still need to adjust pricing",
+      },
+      {
+        person: "Joe",
+        role: "(Sales)",
+        message: "Final version - Quotation 3, can we proceed?",
+      },
+      { person: "Rohan", role: "(Finance)", message: "Looks good, approved!" },
+      {
+        person: "",
+        role: "",
+        message: "Billing schedule started with Quotation 3",
+        isSystem: true,
+      },
+    ];
+    return messages[index] || messages[0];
+  };
+
+  // Get avatar or icon for activity item
+  const getActivityAvatar = (index, message) => {
+    if (index === 6) {
+      return <VerifiedIcon className="w-4 h-4 text-blue-600" />;
+    }
+
+    return (
+      <img
+        alt={`${message.person} avatar`}
+        loading="lazy"
+        width="16"
+        height="16"
+        className="h-4 w-4 shrink-0 grow-0 rounded-full"
+        src={
+          index % 2 === 0
+            ? "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
+            : "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        }
+      />
+    );
+  };
+
   return (
     <>
-      {/* Debug Controls - Only in development */}
       {/* <DebugControls /> */}
 
       <div className="">
@@ -446,7 +801,7 @@ const WorkflowAnimation = () => {
             {/* Cursor */}
             <div
               id="hero-animation-cursor"
-              className="absolute z-20 transition-all duration-500 ease-out"
+              className="absolute z-20 transition-all duration-700 ease-out"
               style={{
                 transform: `translate(${cursorPosition.x}px, ${cursorPosition.y}px) scale(${cursorScale})`,
                 opacity: cursorOpacity,
@@ -456,19 +811,18 @@ const WorkflowAnimation = () => {
               <ArrowIcon width={30} height={30} />
             </div>
 
-            {/* Invoice */}
+            {/* Invoice with Dynamic Quotation Version and Exit/Entrance Animations */}
             <div
               id="workflow-invoice"
-              className="mx-auto w-full max-w-[360px] overflow-hidden rounded transition-all duration-500 ease-out"
+              className="mx-auto w-full max-w-[360px] overflow-hidden rounded transition-all duration-800 ease-out"
               style={{
                 boxShadow:
                   "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px",
                 opacity: invoiceOpacity,
                 transform: invoiceTransform,
-                transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
-              {/* Invoice content (same as before) */}
               <div className="bg-[#FBFBFB] px-6 py-8">
                 <img
                   alt="Trusty Money"
@@ -479,16 +833,9 @@ const WorkflowAnimation = () => {
                   className="ml-auto w-[76px] shrink-0 grow-0 object-contain"
                   src="https://demo.trustymoney.in/assets/newLOGO-Cj83E8a4.svg"
                 />
-
                 <div className="mt-[14px] flex justify-between">
-                  <div
-                    className="h-2 rounded-full bg-[#D4D4D4] invoice-row basis-[25%]"
-                    style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                  ></div>
-                  <div
-                    className="invoice-row flex basis-[24%] flex-col gap-y-1.5"
-                    style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                  >
+                  <div className="h-2 rounded-full bg-[#D4D4D4] invoice-row basis-[25%]"></div>
+                  <div className="invoice-row flex basis-[24%] flex-col gap-y-1.5">
                     <div className="h-2 rounded-full bg-[#D4D4D4]"></div>
                     <div className="h-2 rounded-full bg-[#F1F1F1] w-[50%]"></div>
                     <div className="h-2 rounded-full bg-[#F1F1F1] w-[60%]"></div>
@@ -496,86 +843,148 @@ const WorkflowAnimation = () => {
                   </div>
                 </div>
               </div>
+
+              {/* DYNAMIC QUOTATION HEADER */}
               <div className="p-6">
-                <p className="pb-1 text-xs font-bold">Contract</p>
-                <div
-                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
+                <p className="pb-1 text-xs font-bold">
+                  Quotation {quotationVersion}
+                </p>
+
+                {/* Invoice content with version differences */}
+                <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0">
                   <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[30%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
-                  </div>
-                </div>
-                <div
-                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
-                  <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                  </div>
-                  <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[30%]`}
+                    ></div>
                   </div>
                 </div>
-                <div
-                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
+                <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0">
                   <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[30%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                  </div>
-                </div>
-                <div
-                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
-                  <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
-                  </div>
-                  <div className="flex basis-1/2">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[30%]`}
+                    ></div>
                   </div>
                 </div>
+
+                {/* Version-specific content */}
+                {quotationVersion === 1 && (
+                  <>
+                    <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[30%]"></div>
+                      </div>
+                    </div>
+                    <div className="invoice-row flex justify-between py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[35%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[25%]"></div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {quotationVersion === 2 && (
+                  <>
+                    <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#E5E5E5] basis-[45%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#E5E5E5] basis-[35%]"></div>
+                      </div>
+                    </div>
+                    <div className="invoice-row flex justify-between py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#E5E5E5] basis-[40%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#E5E5E5] basis-[30%]"></div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {quotationVersion === 3 && (
+                  <>
+                    <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#D9D9D9] basis-[50%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#D9D9D9] basis-[40%]"></div>
+                      </div>
+                    </div>
+                    <div className="invoice-row flex justify-between py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#D9D9D9] basis-[45%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#D9D9D9] basis-[35%]"></div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="p-6">
-                <div
-                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
+
+              {/* Footer section */}
+              <div className="p-6 pt-0">
+                <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0">
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#D4D4D4] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                    ></div>
                   </div>
                 </div>
-                <div
-                  className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0"
-                  style={{ opacity: 1, transform: "translate(0px, 0px)" }}
-                >
+                <div className="invoice-row flex justify-between py-3">
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                    ></div>
                   </div>
                   <div className="flex basis-1/4">
-                    <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                    <div
+                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -584,13 +993,14 @@ const WorkflowAnimation = () => {
             {/* Dashboard */}
             <div
               id="workflow-dashboard"
-              className="absolute w-full max-w-[512px] transition-all duration-500 ease-out"
+              className="absolute w-full max-w-[512px] transition-all duration-700 ease-out"
               style={{
                 opacity: dashboardOpacity,
                 transform: dashboardTransform,
                 transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
+              {/* Dashboard content - unchanged */}
               <div
                 className="relative w-full overflow-hidden rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white py-5 pl-6 pr-4"
                 style={{
@@ -598,6 +1008,7 @@ const WorkflowAnimation = () => {
                     "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
                 }}
               >
+                {/* Dashboard header */}
                 <div className="flex w-full justify-between gap-x-3">
                   <div className="flex items-center gap-2">
                     <a href="/">
@@ -606,12 +1017,10 @@ const WorkflowAnimation = () => {
                         alt="Trusty Money Logo"
                         width="155"
                         height="24"
-                        fetchpriority="high"
-                        decoding="async"
                       />
                     </a>
                   </div>
-                  <div className=" flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
+                  <div className="flex w-full items-center justify-stretch gap-2 text-sm font-bold sm:mt-0 sm:w-auto">
                     <div
                       className="flex h-9 w-full items-center justify-center rounded-lg border border-[#e4e8ef] border-opacity-10 bg-white px-3"
                       style={{
@@ -629,32 +1038,29 @@ const WorkflowAnimation = () => {
                         maxWidth: "120px",
                       }}
                     >
-                      {/* Loading Spinner - Updated with opacity control */}
                       <LoadingSpinner
                         opacity={loadingOpacity}
                         spinning={loadingOpacity === 1}
-                        className="loading absolute transition-opacity duration-300"
+                        className="loading absolute transition-opacity duration-500"
                         style={{
                           opacity: loadingOpacity,
                           animation:
                             loadingOpacity === 1
-                              ? "spin 0.4s linear infinite"
+                              ? "spin 0.6s linear infinite"
                               : "none",
                         }}
                       />
-
-                      {/* Checkmark and Started text - Updated with opacity control */}
                       <div className="absolute flex items-center space-x-2 whitespace-nowrap">
                         <CheckIcon
                           opacity={checkOpacity}
                           style={{
                             opacity: checkOpacity,
-                            transitionDelay: checkOpacity === 1 ? "0.3s" : "0s",
+                            transition: "opacity 500ms ease",
+                            transitionDelay: checkOpacity === 1 ? "0.5s" : "0s",
                           }}
                         />
-
                         <span
-                          className="started inline-block transition-all duration-300 ease-out"
+                          className="started inline-block transition-all duration-500 ease-out"
                           style={{
                             opacity: startedOpacity,
                             transform: startedTransform,
@@ -665,10 +1071,8 @@ const WorkflowAnimation = () => {
                           Started
                         </span>
                       </div>
-
-                      {/* Start Billing text - Updated with opacity control */}
                       <p
-                        className="start whitespace-nowrap transition-all duration-300 ease-out absolute inset-0 flex items-center justify-center"
+                        className="start whitespace-nowrap transition-all duration-500 ease-out absolute inset-0 flex items-center justify-center"
                         style={{
                           opacity: startTextOpacity,
                           transform: startTextTransform,
@@ -694,13 +1098,14 @@ const WorkflowAnimation = () => {
                       "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
                   }}
                 >
+                  {/* Pricing table */}
                   <div className="relative flex items-center justify-start self-stretch px-6">
                     <p className="text-left text-base font-bold text-[#14171c]">
                       Pricing
                     </p>
                   </div>
                   <div className="flex w-full items-start justify-between px-4">
-                    {/* Dashboard content remains the same */}
+                    {/* Product column */}
                     <div className="flex flex-col items-start justify-start text-[#14171c]">
                       <div className="relative flex h-9 items-center gap-2 px-2">
                         <p className="text-left text-xs font-bold uppercase text-[#7483a0]">
@@ -726,17 +1131,16 @@ const WorkflowAnimation = () => {
                           <p className="min-w-0 flex-shrink overflow-hidden text-ellipsis whitespace-nowrap text-right text-sm">
                             API Usage (Tier 1)
                           </p>
-                          {/* <LayersIcon size={24} color="#073F9E" /> */}
                         </div>
                       </div>
                     </div>
+                    {/* Frequency column */}
                     <div className="flex flex-col items-start justify-start">
                       <div className="relative hidden sm:flex h-9 items-center justify-start gap-2 self-stretch px-2">
                         <p className="hero-badge text-left text-xs font-bold uppercase text-[#7483a0]">
                           frequency
                         </p>
                       </div>
-
                       <div className="hidden sm:block relative self-stretch overflow-hidden px-2">
                         <div className="flex h-9 items-center justify-start gap-2">
                           <CalendarArrowIcon size={24} color="#073F9E" />
@@ -762,6 +1166,7 @@ const WorkflowAnimation = () => {
                         </div>
                       </div>
                     </div>
+                    {/* Price column */}
                     <div className="flex">
                       <div className="flex flex-col items-start justify-start">
                         <div className="relative flex h-9 items-center justify-end gap-2 self-stretch px-2">
@@ -815,137 +1220,118 @@ const WorkflowAnimation = () => {
               </div>
             </div>
 
-            {/* Activity Card */}
+            {/* Activity Card - Only shows current round messages */}
             <div className="absolute h-full w-full max-w-[calc(512px+40px*2)]">
               <div
                 id="workflow-activity"
-                className="absolute left-0 top-[68%] rounded-lg bg-white p-4 transition-all duration-500 ease-out"
+                className="absolute left-0 top-[50%] rounded-lg bg-white p-4 transition-all duration-800 ease-out"
                 style={{
                   boxShadow:
                     "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
                   transform: activityTransform,
                   opacity: activityOpacity,
-                  transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                  transition: "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 <p className="text-xs font-bold">Activity</p>
                 <div
                   id="workflow-activity-list"
-                  className="mt-3 min-w-[262px] overflow-hidden transition-all duration-500 ease-out"
+                  className="mt-3 min-w-[262px] overflow-hidden transition-all duration-800 ease-out"
                   style={{
                     height: activityHeight,
-                    transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                    transition: "height 800ms cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
                 >
-                  {/* Activity Item 1 */}
-                  <div
-                    className="workflow-activity-item transition-all duration-500 ease-out"
-                    style={{
-                      transform: activityItems[0].transform,
-                      opacity: activityItems[0].opacity,
-                      transitionTimingFunction:
-                        "cubic-bezier(0.22, 1, 0.36, 1)",
-                    }}
-                  >
-                    <div className="flex items-start text-xs">
-                      <div className="relative flex flex-col items-center mr-2">
-                        <img
-                          alt="Facu Montanaro avatar image"
-                          loading="lazy"
-                          width="16"
-                          height="16"
-                          decoding="async"
-                          className="h-4 w-4 shrink-0 grow-0 rounded-full"
-                          src="https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
-                        />
-                        <div
-                          className="line my-1"
-                          style={{
-                            transform: "scale(0.9, 0.9)",
-                            opacity:
-                              activityItems[0].opacity > 0 &&
-                              activityItems[1].opacity > 0
-                                ? 1
-                                : 0,
-                          }}
-                        >
-                          <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
-                        </div>
-                      </div>
-                      <div className="text-[#1D2939]">
-                        <p className="">
-                          Joe <span className="text-[#596575]">(Sales)</span>
-                        </p>
-                        <p className="">Shall we initiate the Quotation?</p>
-                      </div>
-                    </div>
-                  </div>
+                  {/* Dynamic rendering of activity items - Only show current round */}
+                  {activityItems.map((item, index) => {
+                    if (index >= 7) return null;
+                    const message = getActivityMessage(index);
 
-                  {/* Activity Item 2 */}
-                  <div
-                    className="workflow-activity-item transition-all duration-500 ease-out"
-                    style={{
-                      transform: activityItems[1].transform,
-                      opacity: activityItems[1].opacity,
-                      transitionTimingFunction:
-                        "cubic-bezier(0.22, 1, 0.36, 1)",
-                    }}
-                  >
-                    <div className="flex items-start text-xs">
-                      <div className="relative flex flex-col items-center mr-2">
-                        <img
-                          alt="Riya Grover avatar image"
-                          loading="lazy"
-                          width="16"
-                          height="16"
-                          decoding="async"
-                          className="h-4 w-4 shrink-0 grow-0 rounded-full"
-                          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        />
-                        <div
-                          className="line my-1"
-                          style={{
-                            opacity:
-                              activityItems[1].opacity > 0 &&
-                              activityItems[2].opacity > 0
-                                ? 1
-                                : 0,
-                          }}
-                        >
-                          <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
-                        </div>
-                      </div>
-                      <div className="text-[#1D2939]">
-                        <p className="">
-                          Rohan{" "}
-                          <span className="text-[#596575]">(Finance)</span>
-                        </p>
-                        <p className="">Sure!</p>
-                      </div>
-                    </div>
-                  </div>
+                    // Only render if opacity > 0 (prevents empty space)
+                    if (item.opacity === 0) return null;
 
-                  {/* Activity Item 3 */}
-                  <div
-                    className="workflow-activity-item transition-all duration-500 ease-out"
-                    style={{
-                      transform: activityItems[2].transform,
-                      opacity: activityItems[2].opacity,
-                      transitionTimingFunction:
-                        "cubic-bezier(0.22, 1, 0.36, 1)",
-                    }}
-                  >
-                    <div className="flex items-start text-xs">
-                      <div className="relative flex flex-col items-center mr-2">
-                        <div className="rounded-full w-4 h-4 flex items-center justify-center">
-                          <VerifiedIcon className="w-4 h-4 text-blue-600" />
+                    return (
+                      <div
+                        key={index}
+                        className="workflow-activity-item"
+                        style={{
+                          transform: item.transform,
+                          opacity: item.opacity,
+                          transition:
+                            item.transition ||
+                            "all 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+                          willChange: "transform, opacity",
+                        }}
+                      >
+                        <div className="flex items-start text-xs">
+                          <div className="relative flex flex-col items-center mr-2">
+                            {index === 6 ? (
+                              <div className="rounded-full w-4 h-4 flex items-center justify-center">
+                                {getActivityAvatar(index, message)}
+                              </div>
+                            ) : (
+                              <>
+                                <img
+                                  alt={`${message.person} avatar`}
+                                  loading="lazy"
+                                  width="16"
+                                  height="16"
+                                  decoding="async"
+                                  className="h-4 w-4 shrink-0 grow-0 rounded-full"
+                                  src={
+                                    index % 2 === 0
+                                      ? "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww"
+                                      : "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                  }
+                                />
+                                
+                                  <div
+                                    className="line my-1"
+                                    style={{
+                                      opacity:
+                                        item.opacity > 0 &&
+                                        index + 1 < activityItems.length &&
+                                        activityItems[index + 1]?.opacity > 0
+                                          ? 1
+                                          : 0,
+                                      transition: "opacity 500ms ease",
+                                    }}
+                                  >
+                                    <div className="h-6 w-0.5 rounded-full bg-[#D1D9E4]"></div>
+                                  </div>
+                                
+                              </>
+                            )}
+                          </div>
+                          <div className="text-[#1D2939]">
+                            {!message.isSystem ? (
+                              <>
+                                <p className="">
+                                  {message.person}{" "}
+                                  <span className="text-[#596575]">
+                                    {message.role}
+                                  </span>
+                                </p>
+                                <p
+                                  className={
+                                    index === 5
+                                      ? "text-green-600 font-medium"
+                                      : ""
+                                  }
+                                >
+                                  {message.message}
+                                </p>
+                              </>
+                            ) : (
+                              <p className="flex items-center gap-1">
+                                <span>{message.message}</span>
+                              </p>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div className="text-[#1D2939]">
-                        <p>Billing schedule started</p>
-                      </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
