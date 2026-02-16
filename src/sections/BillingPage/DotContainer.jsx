@@ -190,7 +190,7 @@ const DotContainer = () => {
 
               {/* ================= ANIMATED DOTS ================= */}
               {/* Center horizontal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="2.6s"
                   repeatCount="indefinite"
@@ -206,7 +206,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Top curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.4s"
                   repeatCount="indefinite"
@@ -222,7 +222,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Bottom curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="4s"
                   repeatCount="indefinite"
@@ -240,7 +240,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Top diagonal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.5s"
                   repeatCount="indefinite"
@@ -258,7 +258,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Bottom diagonal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="2.8s"
                   repeatCount="indefinite"
@@ -276,7 +276,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Middle top curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.2s"
                   repeatCount="indefinite"
@@ -294,7 +294,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Middle bottom curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.8s"
                   repeatCount="indefinite"
@@ -679,7 +679,7 @@ const DotContainer = () => {
 
               {/* ================= ANIMATED DOTS ================= */}
               {/* Center horizontal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="2.6s"
                   repeatCount="indefinite"
@@ -695,7 +695,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Top curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.4s"
                   repeatCount="indefinite"
@@ -711,7 +711,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Bottom curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="4s"
                   repeatCount="indefinite"
@@ -729,7 +729,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Top diagonal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.5s"
                   repeatCount="indefinite"
@@ -747,7 +747,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Bottom diagonal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="2.8s"
                   repeatCount="indefinite"
@@ -765,7 +765,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Middle top curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.2s"
                   repeatCount="indefinite"
@@ -783,7 +783,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Middle bottom curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.8s"
                   repeatCount="indefinite"
@@ -1170,7 +1170,7 @@ const DotContainer = () => {
 
               {/* ================= ANIMATED DOTS ================= */}
               {/* Center horizontal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="2.6s"
                   repeatCount="indefinite"
@@ -1186,7 +1186,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Top curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.4s"
                   repeatCount="indefinite"
@@ -1202,7 +1202,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Bottom curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="4s"
                   repeatCount="indefinite"
@@ -1220,7 +1220,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Top diagonal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.5s"
                   repeatCount="indefinite"
@@ -1238,7 +1238,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Bottom diagonal dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="2.8s"
                   repeatCount="indefinite"
@@ -1256,7 +1256,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Middle top curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.2s"
                   repeatCount="indefinite"
@@ -1274,7 +1274,7 @@ const DotContainer = () => {
               </circle>
 
               {/* Middle bottom curve dot */}
-              <circle r="3.5" fill="#073F9E">
+              <circle r="3.5" fill="#4C7DFF">
                 <animateMotion
                   dur="3.8s"
                   repeatCount="indefinite"

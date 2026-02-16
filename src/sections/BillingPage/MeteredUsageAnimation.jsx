@@ -184,8 +184,8 @@ const MeteredUsageAnimation = () => {
             setHeadingVisible(false);
             setUsageContentVisible(false);
 
-            // Change button text to "Pay Now" at the same time as invoice appears
-            setButtonText("Pay Now");
+            // Change button text to "Send Invoice" at the same time as invoice appears
+            setButtonText("Send Invoice");
 
             // Show invoice with entrance animation
             setInvoiceState({
@@ -197,7 +197,7 @@ const MeteredUsageAnimation = () => {
             setCursorScale(1);
             setAnimationStage(5);
 
-            // Move cursor to Pay Now button
+            // Move cursor to "Send Invoice" button
             const moveToPayNow = setTimeout(() => {
               if (!componentMountedRef.current) return;
               setCursorPosition({ x: 470, y: 10 });
@@ -635,25 +635,25 @@ const MeteredUsageAnimation = () => {
               className="text-[20px] font-bold text-[#1B1B1B] mb-1 transition-all duration-500"
               style={{ opacity: paidSectionState.opacity }}
             >
-              Paid
+              Invoice Sent
             </h3>
             <p
               className="text-[12px] font-bold text-[#1B1B1B] mb-2 transition-all duration-500"
               style={{ opacity: paidSectionState.opacity }}
             >
-              Your transaction is Successful.....!
+              Your invoice has been successfully delivered!
             </p>
             <p
               className="text-[10px] text-[#1B1B1B] transition-all duration-500"
               style={{ opacity: paidSectionState.opacity }}
             >
-              Payment Received by: Zoho
+              Sent via: Zoho
             </p>
             <p
               className="text-[10px] text-[#1B1B1B] mb-6 transition-all duration-500"
               style={{ opacity: paidSectionState.opacity }}
             >
-              Transaction ID: ZB-TXN-89321
+              Invoice ID: ZB-INV-89321
             </p>
 
             <div className="flex flex-col gap-2">
@@ -664,7 +664,7 @@ const MeteredUsageAnimation = () => {
                   transform: `scale(${paidSectionState.opacity})`,
                 }}
               >
-                Got It
+                Done
               </button>
               <button
                 className="w-[164px] h-[26px] bg-white text-[#073F9E] text-[9px] font-semibold rounded-full shadow transition-all duration-500"
@@ -673,7 +673,7 @@ const MeteredUsageAnimation = () => {
                   transform: `scale(${paidSectionState.opacity})`,
                 }}
               >
-                Download Payment Receipts
+                View Invoice
               </button>
             </div>
           </div>
