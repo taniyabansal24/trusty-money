@@ -19,10 +19,10 @@ const BillingPage = () => {
       <section className="py-20 md:py-24">
         <UsageMetering />
       </section>
-      <section className="pb-20 pt-44 lg:pt-52 lg:pb-24">
+      <section className="pb-20 pt-44 lg:pt-72 lg:pb-24">
         <SalesToFinance />
       </section>
-      <section className="pt-20 md:pt-24">
+      <section className="pt-20 md:pt-28">
         <MapBackgroundWrapper />
       </section>
     </div>
