@@ -382,7 +382,7 @@ const MeteredUsageAnimation = () => {
           {/* Heading - fades out independently */}
           {headingVisible && (
             <h2
-              className="text-base font-bold text-blue-600 transition-all duration-500 ease-out"
+              className="text-base font-bold txt-blue transition-all duration-500 ease-out"
               style={{
                 opacity: headingOpacity,
                 transitionTimingFunction: ANIMATION.EASING,
@@ -476,19 +476,19 @@ const MeteredUsageAnimation = () => {
                 <div />
                 <div />
                 <div className="text-gray-700">Subtotal:</div>
-                <div className="text-blue-600">$2,320.00</div>
+                <div className="txt-blue">$2,320.00</div>
 
                 <div />
                 <div />
                 <div className="text-gray-700">Sales Tax (8%):</div>
-                <div className="text-blue-600">$185.60</div>
+                <div className="txt-blue">$185.60</div>
               </div>
-
-              <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] text-[13px] font-medium mt-2">
+              <div className="border-t my-1 w-[230px] ml-[50%]"></div>
+              <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] text-[13px] font-medium">
                 <div />
                 <div />
                 <div>Total Amount:</div>
-                <div className="text-blue-600">$2,505.60</div>
+                <div className="txt-blue">$2,505.60</div>
               </div>
             </div>
           </div>
@@ -610,7 +610,7 @@ const MeteredUsageAnimation = () => {
             }}
           >
             {/* Success Icon with its own subtle animation */}
-            <div 
+            <div
               className="relative flex items-center justify-center mb-4 transition-all duration-500"
               style={{
                 transform: `scale(${paidSectionState.opacity})`,
@@ -631,22 +631,48 @@ const MeteredUsageAnimation = () => {
               </div>
             </div>
 
-            <h3 className="text-[20px] font-bold text-[#1B1B1B] mb-1 transition-all duration-500" style={{ opacity: paidSectionState.opacity }}>Paid</h3>
-            <p className="text-[12px] font-bold text-[#1B1B1B] mb-2 transition-all duration-500" style={{ opacity: paidSectionState.opacity }}>
+            <h3
+              className="text-[20px] font-bold text-[#1B1B1B] mb-1 transition-all duration-500"
+              style={{ opacity: paidSectionState.opacity }}
+            >
+              Paid
+            </h3>
+            <p
+              className="text-[12px] font-bold text-[#1B1B1B] mb-2 transition-all duration-500"
+              style={{ opacity: paidSectionState.opacity }}
+            >
               Your transaction is Successful.....!
             </p>
-            <p className="text-[10px] text-[#1B1B1B] transition-all duration-500" style={{ opacity: paidSectionState.opacity }}>
+            <p
+              className="text-[10px] text-[#1B1B1B] transition-all duration-500"
+              style={{ opacity: paidSectionState.opacity }}
+            >
               Payment Received by: Zoho
             </p>
-            <p className="text-[10px] text-[#1B1B1B] mb-6 transition-all duration-500" style={{ opacity: paidSectionState.opacity }}>
+            <p
+              className="text-[10px] text-[#1B1B1B] mb-6 transition-all duration-500"
+              style={{ opacity: paidSectionState.opacity }}
+            >
               Transaction ID: ZB-TXN-89321
             </p>
 
             <div className="flex flex-col gap-2">
-              <button className="w-[164px] h-[25px] bg-[#073F9E] text-white text-[10px] font-semibold rounded-full shadow transition-all duration-500" style={{ opacity: paidSectionState.opacity, transform: `scale(${paidSectionState.opacity})` }}>
+              <button
+                className="w-[164px] h-[25px] bg-[#073F9E] text-white text-[10px] font-semibold rounded-full shadow transition-all duration-500"
+                style={{
+                  opacity: paidSectionState.opacity,
+                  transform: `scale(${paidSectionState.opacity})`,
+                }}
+              >
                 Got It
               </button>
-              <button className="w-[164px] h-[26px] bg-white text-[#073F9E] text-[9px] font-semibold rounded-full shadow transition-all duration-500" style={{ opacity: paidSectionState.opacity, transform: `scale(${paidSectionState.opacity})` }}>
+              <button
+                className="w-[164px] h-[26px] bg-white text-[#073F9E] text-[9px] font-semibold rounded-full shadow transition-all duration-500"
+                style={{
+                  opacity: paidSectionState.opacity,
+                  transform: `scale(${paidSectionState.opacity})`,
+                }}
+              >
                 Download Payment Receipts
               </button>
             </div>
