@@ -219,7 +219,7 @@ const WorkflowAnimation = () => {
         addMessage({
           person: "Joe",
           role: "(Sales)",
-          message: "Shall we initiate Quotation 1?",
+          message: "Sharing Quotation 1 for your review",
         });
         setAnimationStage(3);
 
@@ -274,7 +274,7 @@ const WorkflowAnimation = () => {
                       addMessage({
                         person: "Rohan",
                         role: "(Finance)",
-                        message: "Still need to adjust pricing",
+                        message: "Can we refine it once more?",
                       });
                       setAnimationStage(10);
 
@@ -320,7 +320,7 @@ const WorkflowAnimation = () => {
                                   addMessage({
                                     person: "Rohan",
                                     role: "(Finance)",
-                                    message: "Looks good, approved!",
+                                    message: "Yes, this works. Approved.",
                                   });
                                   setAnimationStage(16);
 
@@ -393,7 +393,7 @@ const WorkflowAnimation = () => {
                                                   person: "",
                                                   role: "",
                                                   message:
-                                                    "Billing schedule started with Quotation 3",
+                                                    "Converted to contract. Billing initiated.",
                                                   isSystem: true,
                                                 });
                                                 setAnimationStage(23);
