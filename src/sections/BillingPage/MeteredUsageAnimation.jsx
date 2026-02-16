@@ -531,7 +531,7 @@ const MeteredUsageAnimation = () => {
                 </div>
               </div>
               <div className="p-6">
-                <p className="pb-1 text-xs font-bold">Contract</p>
+                <p className="pb-1 text-xs font-bold">Invoice</p>
                 <div className="flex justify-between border-b border-[#F0F0F0] py-3">
                   <div className="flex basis-1/2">
                     <div className="h-2 rounded-full bg-[#D4D4D4] basis-[30%]"></div>
