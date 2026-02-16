@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./DotAnimations.css";
 import { Container } from "../../components/ui";
+import MeteredUsageAnimation from "./MeteredUsageAnimation";
 
 const DotContainer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -107,7 +108,7 @@ const DotContainer = () => {
 
   return (
     <Container className="">
-      <div className="isolate flex w-full flex-col items-center justify-center md:flex-row mt-10">
+      <div className="isolate flex w-full flex-col items-center justify-center md:flex-row mt-14">
         {/* Left */}
         <div className="relative h-20 w-[202px] origin-right -translate-x-1/2 translate-y-1/2 rotate-90 lg:translate-x-0 lg:translate-y-0 lg:rotate-0 lg:min-w-[40px] ">
           <div className="absolute right-[95%] lg:right-[63%] top-1/2 w-fit -translate-y-1/2">
@@ -598,7 +599,7 @@ const DotContainer = () => {
         </div>
         {/* Top */}
         <div className="hidden lg:block relative h-20 w-[202px] origin-right -translate-x-1/2 translate-y-1/2 rotate-90 md:translate-x-0 md:translate-y-0 lg:min-w-[40px]">
-          <div className="absolute right-[63%] -top-[4%] w-fit">
+          <div className="absolute right-[94%] -top-[4%] w-fit">
             {/* Use the same SVG structure as above with adjusted paths */}
             <svg
               width="202"
@@ -1080,7 +1081,7 @@ const DotContainer = () => {
           </div>
 
           <div
-            className="absolute bg-white py-2 px-8 rounded-xl -left-48 top-[7.25rem] -rotate-90
+            className="absolute bg-white py-2 px-8 rounded-xl -left-52 top-[7.25rem] -rotate-90
                 text-[#073F9E] shadow-[0_8px_30px_rgba(0,0,0,0.12)]
                 border border-[#D6DEEB] backdrop-blur-none"
           >
@@ -1578,221 +1579,8 @@ const DotContainer = () => {
         </div>
 
         {/* Chart Container */}
-        <div className="absolute w-full max-w-[460px]">
-          <div className="relative">
-            <div className="absolute left-1/2 top-1/2 -z-10 h-[100%] md:h-[110%] w-[100%] md:w-[110%] -translate-x-1/2 -translate-y-1/2 transform-gpu rounded-3xl bg-gradient-to-r from-blue-600/30 via-50% to-indigo-600/10 to-90% opacity-60 blur-xl" />
-
-            <div
-              className="relative z-10 w-[90%] sm:w-full rounded-lg bg-white mx-auto"
-              style={{
-                boxShadow:
-                  "rgba(17, 26, 37, 0.05) 0px 0px 0px 1px, rgba(16, 25, 36, 0.1) 0px 2px 5px 0px, rgba(16, 25, 36, 0.1) 0px 5px 20px 0px",
-              }}
-            >
-              <div className="flex items-center justify-between border-b border-[#e4e8ef] px-4 py-3">
-                <div className="relative text-sm font-bold h-6">
-                  {metricsData.map((metric, index) => (
-                    <p
-                      key={metric.title}
-                      className={`absolute top-0 transition-all duration-500 ${
-                        index === currentIndex ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      {metric.title}
-                    </p>
-                  ))}
-                </div>
-                <p className="text-sm font-extrabold tabular-nums transition-all duration-500">
-                  ${formatNumber(currentNumber)}
-                </p>
-              </div>
-
-              {/* Chart Content */}
-              <div className="flex h-[260px] items-center justify-center px-4 pb-8">
-                <div className="w-full">
-                  {/* Mobile Chart */}
-                  <div className="w-full sm:hidden">
-                    <div className="relative w-full h-[170px]">
-                      {/* Y-axis labels */}
-                      <div className="absolute left-0 top-0 flex flex-col justify-between h-[170px] text-[10px] text-[#90A1B9]">
-                        <span className="text-right pr-2">4,500</span>
-                        <span className="text-right pr-2">3,000</span>
-                        <span className="text-right pr-2">1,500</span>
-                        <span className="text-right pr-2">0</span>
-                      </div>
-
-                      {/* Chart bars container */}
-                      <div className="absolute left-8 top-0 w-[90%] pr-4">
-                        <div className="relative flex h-[170px] items-end justify-between">
-                          {/* Horizontal grid lines */}
-                          <div className="absolute inset-0 flex flex-col justify-between">
-                            {[...Array(4)].map((_, i) => (
-                              <div
-                                key={`mobile-grid-${i}`}
-                                className={`h-px w-full border-t border-dashed border-[#E4E8EF] ${
-                                  i === 3 ? "invisible" : ""
-                                }`}
-                              />
-                            ))}
-                          </div>
-
-                          {/* Chart bars */}
-                          {mobileChartData.map((bar, index) => (
-                            <div
-                              key={`mobile-bar-${index}`}
-                              className="flex flex-col items-center"
-                              style={{
-                                width: "16px",
-                              }}
-                            >
-                              {/* Bar container */}
-                              <div
-                                className="flex flex-col items-start w-[14px] rounded-t-lg"
-                                style={{
-                                  height: `${bar.height * 0.75}px`, // Scale down for mobile
-                                  backgroundColor: "#073F9E",
-                                  opacity: bar.opacity,
-                                }}
-                              >
-                                {/* Top colored section */}
-                                <div
-                                  className="w-[14px] h-[3px] rounded-t-lg"
-                                  style={{
-                                    backgroundColor: "#073F9E",
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Bottom border line */}
-                        <div className="mt-2 h-px w-full border-b border-[#D1D9E4]" />
-
-                        {/* X-axis labels */}
-                        <div className="flex justify-between px-2 pt-2">
-                          {mobileXAxisLabels.map((label, index) => (
-                            <span
-                              key={`mobile-label-${index}`}
-                              className="text-[10px] text-[#90A1B9] whitespace-nowrap"
-                              style={{
-                                fontFamily: "Arial, sans-serif",
-                              }}
-                            >
-                              {label}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Desktop Chart */}
-                  <div className="hidden w-full sm:block">
-                    <div className="relative w-full h-[224px]">
-                      {/* Y-axis labels */}
-                      <div className="absolute left-0 top-0 flex flex-col justify-between h-[224px] text-[10px] text-[#90A1B9]">
-                        <span className="text-right pr-2">4,500</span>
-                        <span className="text-right pr-2">3,000</span>
-                        <span className="text-right pr-2">1,500</span>
-                        <span className="text-right pr-2">0</span>
-                      </div>
-
-                      {/* Chart bars container */}
-                      <div className="absolute left-[40px] top-0 w-[344.4px] h-[224px]">
-                        {/* Chart bars */}
-                        {desktopChartData.map((bar, index) => (
-                          <div
-                            key={`desktop-bar-${index}`}
-                            className="absolute flex flex-col items-start"
-                            style={{
-                              width: "23.46px",
-                              height: "224px",
-                              left: `${index * 27.46}px`,
-                              top: "0px",
-                            }}
-                          >
-                            {/* Bar container */}
-                            <div
-                              className="flex flex-col items-start w-[19.46px] rounded-t-lg"
-                              style={{
-                                height: `${bar.height}px`,
-                                backgroundColor: "#073F9E",
-                                opacity: bar.opacity,
-                                marginLeft: "2px",
-                                marginTop: `${224 - bar.height}px`,
-                              }}
-                            >
-                              {/* Top colored section */}
-                              <div
-                                className="w-[19.46px] h-[4px] rounded-t-lg"
-                                style={{
-                                  backgroundColor: "#073F9E",
-                                }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* X-axis labels */}
-                      <div className="absolute left-[40px] top-[232px] w-[70px] flex justify-between">
-                        {desktopXAxisLabels.map((label, index) => (
-                          <div
-                            key={`desktop-label-${index}`}
-                            className="text-[10px] text-[#90A1B9] font-normal"
-                            style={{
-                              fontFamily: "Arial, sans-serif",
-                              textAlign: "center",
-                              width:
-                                index === 3 ||
-                                index === 4 ||
-                                index === 5 ||
-                                index === 6
-                                  ? "32px"
-                                  : "30px",
-                              marginLeft:
-                                index === 0
-                                  ? "7.64px"
-                                  : index === 1
-                                    ? "54.56px"
-                                    : index === 2
-                                      ? "101.49px"
-                                      : index === 3
-                                        ? "146.4px"
-                                        : index === 4
-                                          ? "193.3px"
-                                          : index === 5
-                                            ? "239.47px"
-                                            : "286.3px",
-                              transform: "translateX(-50%)",
-                              position: "absolute",
-                              left:
-                                index === 0
-                                  ? "0%"
-                                  : index === 1
-                                    ? "18.5%"
-                                    : index === 2
-                                      ? "37%"
-                                      : index === 3
-                                        ? "55.5%"
-                                        : index === 4
-                                          ? "74%"
-                                          : index === 5
-                                            ? "92.5%"
-                                            : "110%",
-                            }}
-                          >
-                            {label}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="absolute w-full max-w-[530px]">
+          <MeteredUsageAnimation />
         </div>
       </div>
     </Container>

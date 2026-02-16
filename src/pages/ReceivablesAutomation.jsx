@@ -3,6 +3,8 @@ import { Navbar } from "../components/layout";
 import HeroSection from '../sections/ReceivablesAutomation/HeroSection'
 import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
 import TrackBilling from '../sections/ReceivablesAutomation/TrackBilling';
+import RemindersAutomation from '../sections/ReceivablesAutomation/RemindersAutomation';
+import SyncSection from '../sections/ReceivablesAutomation/SyncSection';
 
 const ReceivablesAutomation = () => {
   return (
@@ -15,10 +17,10 @@ const ReceivablesAutomation = () => {
         <TrackBilling/>
       </section>
       <section className="py-20 md:py-24">
-        
+        <RemindersAutomation/>
       </section>
       <section className="pb-20 pt-44 lg:pt-52 lg:pb-24">
-        
+        <SyncSection/>
       </section>
       <section className="pt-20 md:pt-24">
         <MapBackgroundWrapper />

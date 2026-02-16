@@ -21,6 +21,9 @@ const WorkflowAnimation = () => {
   // Quotation version state
   const [quotationVersion, setQuotationVersion] = useState(1);
 
+  // NEW: Contract mode state
+  const [isContractMode, setIsContractMode] = useState(false);
+
   const [dashboardOpacity, setDashboardOpacity] = useState(0);
   const [dashboardTransform, setDashboardTransform] = useState("scale(0.95)");
   const [cursorOpacity, setCursorOpacity] = useState(0);
@@ -130,6 +133,14 @@ const WorkflowAnimation = () => {
   // ENTRANCE animation for invoice
   const enterInvoice = (version) => {
     setQuotationVersion(version);
+    setIsContractMode(false);
+    setInvoiceOpacity(1);
+    setInvoiceTransform("translateX(0px) scale(1)");
+  };
+
+  // NEW: ENTRANCE animation for contract
+  const enterContract = () => {
+    setIsContractMode(true);
     setInvoiceOpacity(1);
     setInvoiceTransform("translateX(0px) scale(1)");
   };
@@ -140,6 +151,7 @@ const WorkflowAnimation = () => {
 
     setAnimationStage(0);
     setQuotationVersion(1);
+    setIsContractMode(false);
     setInvoiceOpacity(1);
     setInvoiceTransform("translate(0px, 0px)");
     setDashboardOpacity(0);
@@ -192,6 +204,7 @@ const WorkflowAnimation = () => {
     // --- ROUND 1: QUOTATION 1 ---
     setAnimationStage(1);
     setQuotationVersion(1);
+    setIsContractMode(false);
     setCurrentMessages([]);
 
     const pause1 = setTimeout(() => {
@@ -395,20 +408,37 @@ const WorkflowAnimation = () => {
                                                     setCursorOpacity(0);
                                                     setAnimationStage(24);
 
-                                                    // Restart animation
-                                                    const restart = setTimeout(
-                                                      () => {
-                                                        if (
-                                                          !componentMountedRef.current
-                                                        )
-                                                          return;
+                                                    // Hide dashboard and activity at the same time
+                                                    setDashboardOpacity(0);
+                                                    setDashboardTransform("scale(0.95)");
+                                                    setActivityOpacity(0);
+                                                    setActivityTransform("translateY(20px)");
+                                                    setAnimationStage(25);
+                                                    
+                                                    // Clear messages after activity closes
+                                                    setTimeout(() => {
+                                                      if (!componentMountedRef.current) return;
+                                                      setCurrentMessages([]);
+                                                    }, 700);
+
+                                                    // Show contract after a brief pause
+                                                    const showContract = setTimeout(() => {
+                                                      if (!componentMountedRef.current) return;
+                                                      
+                                                      // Show contract
+                                                      enterContract();
+                                                      setAnimationStage(26);
+                                                      
+                                                      // Show contract for a moment then restart
+                                                      const restartAfterContract = setTimeout(() => {
+                                                        if (!componentMountedRef.current) return;
                                                         resetAllStates();
                                                         isAnimatingRef.current = false;
                                                         startAnimation();
-                                                      },
-                                                      3000,
-                                                    );
-                                                    trackTimeout(restart);
+                                                      }, 3000);
+                                                      trackTimeout(restartAfterContract);
+                                                    }, 500);
+                                                    trackTimeout(showContract);
                                                   },
                                                   2000,
                                                 );
@@ -510,8 +540,8 @@ const WorkflowAnimation = () => {
           Stop
         </button>
         <div className="px-2 py-1 text-xs font-mono bg-gray-100 rounded">
-          Q{quotationVersion} | Stage: {animationStage} | Msgs:{" "}
-          {currentMessages.length}
+          {isContractMode ? "Contract" : `Q${quotationVersion}`} | Stage:{" "}
+          {animationStage} | Msgs: {currentMessages.length}
         </div>
       </div>
     );
@@ -561,7 +591,7 @@ const WorkflowAnimation = () => {
               <ArrowIcon width={30} height={30} />
             </div>
 
-            {/* Invoice - unchanged */}
+            {/* Invoice */}
             <div
               id="workflow-invoice"
               className="mx-auto w-full max-w-[360px] overflow-hidden rounded transition-all duration-800 ease-out"
@@ -594,40 +624,61 @@ const WorkflowAnimation = () => {
                 </div>
               </div>
 
-              {/* DYNAMIC QUOTATION HEADER */}
+              {/* DYNAMIC HEADER - Now supports Contract mode */}
               <div className="p-6">
                 <p className="pb-1 text-xs font-bold">
-                  Quotation {quotationVersion}
+                  {isContractMode
+                    ? "Contract"
+                    : `Quotation ${quotationVersion}`}
                 </p>
 
                 {/* Invoice content with version differences */}
                 <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0">
                   <div className="flex basis-1/2">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[30%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#D4D4D4]" : quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[30%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/2">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[30%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#D4D4D4]" : quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[30%]`}
                     ></div>
                   </div>
                 </div>
                 <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0">
                   <div className="flex basis-1/2">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[30%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#F1F1F1]" : quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[30%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/2">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[30%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#F1F1F1]" : quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[30%]`}
                     ></div>
                   </div>
                 </div>
 
-                {/* Version-specific content */}
-                {quotationVersion === 1 && (
+                {/* Version-specific content - Show Contract styling when in contract mode */}
+                {isContractMode ? (
+                  <>
+                    <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[50%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[40%]"></div>
+                      </div>
+                    </div>
+                    <div className="invoice-row flex justify-between py-3">
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[45%]"></div>
+                      </div>
+                      <div className="flex basis-1/2">
+                        <div className="h-2 rounded-full bg-[#F1F1F1] basis-[35%]"></div>
+                      </div>
+                    </div>
+                  </>
+                ) : quotationVersion === 1 ? (
                   <>
                     <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
                       <div className="flex basis-1/2">
@@ -646,9 +697,7 @@ const WorkflowAnimation = () => {
                       </div>
                     </div>
                   </>
-                )}
-
-                {quotationVersion === 2 && (
+                ) : quotationVersion === 2 ? (
                   <>
                     <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
                       <div className="flex basis-1/2">
@@ -667,9 +716,7 @@ const WorkflowAnimation = () => {
                       </div>
                     </div>
                   </>
-                )}
-
-                {quotationVersion === 3 && (
+                ) : (
                   <>
                     <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3">
                       <div className="flex basis-1/2">
@@ -696,44 +743,44 @@ const WorkflowAnimation = () => {
                 <div className="invoice-row flex justify-between border-b border-[#F0F0F0] py-3 last:border-b-0">
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#D4D4D4]" : quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#D4D4D4]" : quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#D4D4D4]" : quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#D4D4D4]" : quotationVersion === 1 ? "bg-[#D4D4D4]" : quotationVersion === 2 ? "bg-[#B8C5D0]" : "bg-[#9AA6B2]"} basis-[40%]`}
                     ></div>
                   </div>
                 </div>
                 <div className="invoice-row flex justify-between py-3">
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#F1F1F1]" : quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#F1F1F1]" : quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#F1F1F1]" : quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
                     ></div>
                   </div>
                   <div className="flex basis-1/4">
                     <div
-                      className={`h-2 rounded-full ${quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
+                      className={`h-2 rounded-full ${isContractMode ? "bg-[#F1F1F1]" : quotationVersion === 1 ? "bg-[#F1F1F1]" : quotationVersion === 2 ? "bg-[#E5E5E5]" : "bg-[#D9D9D9]"} basis-[40%]`}
                     ></div>
                   </div>
                 </div>
