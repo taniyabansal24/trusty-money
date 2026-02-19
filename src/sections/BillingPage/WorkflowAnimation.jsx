@@ -192,7 +192,7 @@ const WorkflowAnimation = () => {
   };
 
   // ========== MAIN ANIMATION SEQUENCE ==========
-  // SIMPLIFIED: Clean rounds with proper timing
+  // MODIFIED: Quotation 2 is now the final accepted version
   // ==============================================
   const startAnimation = () => {
     if (!componentMountedRef.current || isAnimatingRef.current) return;
@@ -251,7 +251,7 @@ const WorkflowAnimation = () => {
                 enterInvoice(2);
                 setAnimationStage(7);
 
-                // --- ROUND 2: QUOTATION 2 ---
+                // --- ROUND 2: QUOTATION 2 (FINAL - ACCEPTED) ---
                 // Reopen card - FRESH START
                 const reopen2 = setTimeout(() => {
                   if (!componentMountedRef.current) return;
@@ -264,211 +264,141 @@ const WorkflowAnimation = () => {
                     addMessage({
                       person: "Joe",
                       role: "(Sales)",
-                      message: "How about Quotation 2 with revised terms?",
+                      message: "Here's Quotation 2 with revised terms",
                     });
                     setAnimationStage(9);
 
-                    // Message 4: Finance REJECTS Quotation 2
+                    // Message 4: Finance ACCEPTS Quotation 2 (instead of reject)
                     const msg4 = setTimeout(() => {
                       if (!componentMountedRef.current) return;
                       addMessage({
                         person: "Rohan",
                         role: "(Finance)",
-                        message: "Can we refine it once more?",
+                        message: "Perfect! This works. Approved.",
                       });
                       setAnimationStage(10);
 
-                      // Close card
-                      const close2 = setTimeout(() => {
+                      // --- DASHBOARD TRANSITION (directly after acceptance) ---
+                      const toDashboard = setTimeout(() => {
                         if (!componentMountedRef.current) return;
-                        closeActivityCard();
+
+                        setInvoiceOpacity(0);
+                        setInvoiceTransform("scale(0.95)");
+                        setDashboardOpacity(1);
+                        setDashboardTransform("scale(1)");
                         setAnimationStage(11);
 
-                        // Exit Quotation 2
-                        const exit2 = setTimeout(() => {
+                        // Cursor animation
+                        const showCursor = setTimeout(() => {
                           if (!componentMountedRef.current) return;
-                          exitInvoice();
+                          setCursorOpacity(1);
+                          setCursorPosition({ x: 0, y: 0 });
                           setAnimationStage(12);
 
-                          // Enter Quotation 3
-                          const enter3 = setTimeout(() => {
+                          const moveCursor = setTimeout(() => {
                             if (!componentMountedRef.current) return;
-                            enterInvoice(3);
+                            setCursorPosition({ x: 150, y: -103 });
+                            setCursorScale(0.9);
                             setAnimationStage(13);
 
-                            // --- ROUND 3: QUOTATION 3 ---
-                            // Reopen card - FRESH START
-                            const reopen3 = setTimeout(() => {
+                            const click = setTimeout(() => {
                               if (!componentMountedRef.current) return;
-                              openActivityCard();
+                              setCursorScale(0.7);
                               setAnimationStage(14);
 
-                              // Message 5: Sales asks about Quotation 3
-                              const msg5 = setTimeout(() => {
+                              const loading = setTimeout(() => {
                                 if (!componentMountedRef.current) return;
-                                addMessage({
-                                  person: "Joe",
-                                  role: "(Sales)",
-                                  message:
-                                    "Final version - Quotation 3, can we proceed?",
-                                });
+                                setStartTextOpacity(0);
+                                setStartTextTransform("scale(0.9)");
+                                setLoadingOpacity(1);
+                                setCursorScale(0.9);
                                 setAnimationStage(15);
 
-                                // Message 6: Finance ACCEPTS
-                                const msg6 = setTimeout(() => {
+                                const done = setTimeout(() => {
                                   if (!componentMountedRef.current) return;
-                                  addMessage({
-                                    person: "Rohan",
-                                    role: "(Finance)",
-                                    message: "Yes, this works. Approved.",
-                                  });
+                                  setLoadingOpacity(0);
+                                  setCheckOpacity(1);
+
+                                  const started = setTimeout(() => {
+                                    if (!componentMountedRef.current) return;
+                                    setStartedOpacity(1);
+                                    setStartedTransform("translateX(0px)");
+                                  }, 500);
+                                  trackTimeout(started);
+
                                   setAnimationStage(16);
 
-                                  // --- DASHBOARD TRANSITION ---
-                                  const toDashboard = setTimeout(() => {
+                                  // FINAL MESSAGE: Billing started
+                                  const msg7 = setTimeout(() => {
                                     if (!componentMountedRef.current) return;
-
-                                    setInvoiceOpacity(0);
-                                    setInvoiceTransform("scale(0.95)");
-                                    setDashboardOpacity(1);
-                                    setDashboardTransform("scale(1)");
+                                    addMessage({
+                                      person: "",
+                                      role: "",
+                                      message:
+                                        "Converted to contract. Billing initiated.",
+                                      isSystem: true,
+                                    });
                                     setAnimationStage(17);
 
-                                    // Cursor animation
-                                    const showCursor = setTimeout(() => {
+                                    // Fade out cursor
+                                    const fadeCursor = setTimeout(() => {
                                       if (!componentMountedRef.current) return;
-                                      setCursorOpacity(1);
-                                      setCursorPosition({ x: 0, y: 0 });
+                                      setCursorOpacity(0);
                                       setAnimationStage(18);
 
-                                      const moveCursor = setTimeout(() => {
+                                      // Hide dashboard and activity at the same time
+                                      setDashboardOpacity(0);
+                                      setDashboardTransform("scale(0.95)");
+                                      setActivityOpacity(0);
+                                      setActivityTransform("translateY(20px)");
+                                      setAnimationStage(19);
+
+                                      // Clear messages after activity closes
+                                      setTimeout(() => {
                                         if (!componentMountedRef.current)
                                           return;
-                                        setCursorPosition({ x: 150, y: -103 });
-                                        setCursorScale(0.9);
-                                        setAnimationStage(19);
+                                        setCurrentMessages([]);
+                                      }, 700);
 
-                                        const click = setTimeout(() => {
-                                          if (!componentMountedRef.current)
-                                            return;
-                                          setCursorScale(0.7);
-                                          setAnimationStage(20);
+                                      // Show contract after a brief pause
+                                      const showContract = setTimeout(() => {
+                                        if (!componentMountedRef.current)
+                                          return;
 
-                                          const loading = setTimeout(() => {
+                                        // Show contract
+                                        enterContract();
+                                        setAnimationStage(20);
+
+                                        // Show contract for a moment then restart
+                                        const restartAfterContract = setTimeout(
+                                          () => {
                                             if (!componentMountedRef.current)
                                               return;
-                                            setStartTextOpacity(0);
-                                            setStartTextTransform("scale(0.9)");
-                                            setLoadingOpacity(1);
-                                            setCursorScale(0.9);
-                                            setAnimationStage(21);
-
-                                            const done = setTimeout(() => {
-                                              if (!componentMountedRef.current)
-                                                return;
-                                              setLoadingOpacity(0);
-                                              setCheckOpacity(1);
-
-                                              const started = setTimeout(() => {
-                                                if (
-                                                  !componentMountedRef.current
-                                                )
-                                                  return;
-                                                setStartedOpacity(1);
-                                                setStartedTransform(
-                                                  "translateX(0px)",
-                                                );
-                                              }, 500);
-                                              trackTimeout(started);
-
-                                              setAnimationStage(22);
-
-                                              // FINAL MESSAGE: Billing started
-                                              const msg7 = setTimeout(() => {
-                                                if (
-                                                  !componentMountedRef.current
-                                                )
-                                                  return;
-                                                addMessage({
-                                                  person: "",
-                                                  role: "",
-                                                  message:
-                                                    "Converted to contract. Billing initiated.",
-                                                  isSystem: true,
-                                                });
-                                                setAnimationStage(23);
-
-                                                // Fade out cursor
-                                                const fadeCursor = setTimeout(
-                                                  () => {
-                                                    if (
-                                                      !componentMountedRef.current
-                                                    )
-                                                      return;
-                                                    setCursorOpacity(0);
-                                                    setAnimationStage(24);
-
-                                                    // Hide dashboard and activity at the same time
-                                                    setDashboardOpacity(0);
-                                                    setDashboardTransform("scale(0.95)");
-                                                    setActivityOpacity(0);
-                                                    setActivityTransform("translateY(20px)");
-                                                    setAnimationStage(25);
-                                                    
-                                                    // Clear messages after activity closes
-                                                    setTimeout(() => {
-                                                      if (!componentMountedRef.current) return;
-                                                      setCurrentMessages([]);
-                                                    }, 700);
-
-                                                    // Show contract after a brief pause
-                                                    const showContract = setTimeout(() => {
-                                                      if (!componentMountedRef.current) return;
-                                                      
-                                                      // Show contract
-                                                      enterContract();
-                                                      setAnimationStage(26);
-                                                      
-                                                      // Show contract for a moment then restart
-                                                      const restartAfterContract = setTimeout(() => {
-                                                        if (!componentMountedRef.current) return;
-                                                        resetAllStates();
-                                                        isAnimatingRef.current = false;
-                                                        startAnimation();
-                                                      }, 3000);
-                                                      trackTimeout(restartAfterContract);
-                                                    }, 500);
-                                                    trackTimeout(showContract);
-                                                  },
-                                                  2000,
-                                                );
-                                                trackTimeout(fadeCursor);
-                                              }, 1000);
-                                              trackTimeout(msg7);
-                                            }, 1500);
-                                            trackTimeout(done);
-                                          }, 400);
-                                          trackTimeout(loading);
-                                        }, 1000);
-                                        trackTimeout(click);
-                                      }, 1200);
-                                      trackTimeout(moveCursor);
-                                    }, 1000);
-                                    trackTimeout(showCursor);
-                                  }, 1500);
-                                  trackTimeout(toDashboard);
+                                            resetAllStates();
+                                            isAnimatingRef.current = false;
+                                            startAnimation();
+                                          },
+                                          3000,
+                                        );
+                                        trackTimeout(restartAfterContract);
+                                      }, 500);
+                                      trackTimeout(showContract);
+                                    }, 2000);
+                                    trackTimeout(fadeCursor);
+                                  }, 1000);
+                                  trackTimeout(msg7);
                                 }, 1500);
-                                trackTimeout(msg6);
-                              }, 1000);
-                              trackTimeout(msg5);
-                            }, 800);
-                            trackTimeout(reopen3);
-                          }, 800);
-                          trackTimeout(enter3);
+                                trackTimeout(done);
+                              }, 400);
+                              trackTimeout(loading);
+                            }, 1000);
+                            trackTimeout(click);
+                          }, 1200);
+                          trackTimeout(moveCursor);
                         }, 1000);
-                        trackTimeout(exit2);
-                      }, 800);
-                      trackTimeout(close2);
+                        trackTimeout(showCursor);
+                      }, 1500);
+                      trackTimeout(toDashboard);
                     }, 1500);
                     trackTimeout(msg4);
                   }, 1000);

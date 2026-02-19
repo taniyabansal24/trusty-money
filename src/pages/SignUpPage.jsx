@@ -132,7 +132,7 @@ const SignUpCard = () => {
               </p>
             </div>
 
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <button
                 className="w-full flex items-center justify-center gap-3 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 hover:bg-gray-100 transition-all duration-300 text-gray-700 shadow-sm font-medium"
                 type="button"
@@ -157,17 +157,17 @@ const SignUpCard = () => {
                 </svg>
                 <span className="font-medium">Sign up with Google</span>
               </button>
-            </div>
+            </div> */}
 
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
+            <div className="relative my-12">
+              {/* <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-3 bg-white text-gray-500 text-body">
                   or register with email
                 </span>
-              </div>
+              </div> */}
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
