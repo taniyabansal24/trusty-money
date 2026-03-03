@@ -41,6 +41,14 @@ const ProblemSection = () => {
   const [activeSidebar, setActiveSidebar] = useState(-1);
   const activeSidebarRef = useRef(-1);
 
+  // ===== FIX: Define trackTimeout function =====
+  const trackTimeout = (timeoutId) => {
+    if (timeoutId) {
+      activeTimeoutsRef.current.push(timeoutId);
+    }
+    return timeoutId;
+  };
+
   const trackTween = (tween) => {
     if (!tween) return tween;
     activeTweensRef.current.push(tween);
@@ -615,8 +623,6 @@ const ProblemSection = () => {
         );
       };
 
-      // Screen transitions (same as before, but only for desktop)
-      // ... [rest of the transition code remains the same] ...
       // Screen 1 → Screen 2
       masterTl
         .to(screensRef.current[0], {
