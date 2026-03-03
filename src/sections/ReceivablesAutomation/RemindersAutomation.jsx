@@ -2,13 +2,14 @@ import React from "react";
 import { Container } from "../../components/ui";
 import { motion } from "framer-motion";
 import { staggerItem } from "../../utils/animations";
+import ReminderVisual from "./ReminderVisual";
 
 const RemindersAutomation = () => {
   return (
-    <Container className="mx-auto flex items-start gap-x-10">
+    <Container className="mx-auto flex items-start gap-x-10 relative">
       <div className="grid w-full grid-cols-1 items-center gap-8 sm:gap-6 lg:grid-cols-12 lg:flex-row">
         {/* Content - Right on desktop, Left on mobile */}
-        <div className="row-[1] lg:col-[7/13] order-2 lg:order-2">
+        <div className="row-[1] lg:col-[8/13] order-2 lg:order-2">
           {/* Badge - RESPONSIVE */}
           <motion.div
             variants={staggerItem}
@@ -21,22 +22,20 @@ const RemindersAutomation = () => {
 
           {/* Headline - RESPONSIVE */}
           <motion.h1 className="section-hero-heading w-full text-center lg:text-left text-[#1b1b1b]">
-            Trigger personalised
+           Automate Payment 
             <br />
-            <span className="gradient-text relative">payment reminders</span>
+            <span className="gradient-text relative">follow -ups</span>
           </motion.h1>
 
           {/* Subheadline line - RESPONSIVE */}
           <motion.p className="section-subtitle mb-6 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
-            Send emails at the right moment so your customers pay on time. Keep
-            track of your ageing balance to improve collection against targeted
-            forecast.
+            Trigger personalized reminders based on invoice status and ageing data to improve recovery and forecast accuracy.
           </motion.p>
         </div>
         
         {/* Image Space - Left on desktop, Right on mobile */}
-        <div className="lg:col-[1/7] order-1 lg:order-1">
-          {/* Add your image or other content here */}
+        <div className="lg:col-[1/7] order-1 lg:order-1 ">
+          <ReminderVisual/>
         </div>
       </div>
     </Container>

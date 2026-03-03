@@ -7,8 +7,14 @@ import { RandomGlobe } from "../components/layout/randomglobe";
 import { GlobeCards } from "../components/layout/GlobeCards.tsx"; // Import the new component
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "../utils/animations";
+import ErrorBoundary from "../components/layout/ErrorBoundary.jsx";
+import { useLocation } from "react-router-dom";
 
 export function SolutionOverview() {
+  const location = useLocation();
+  const isAuthPage =
+    location.pathname.includes("/login") ||
+    location.pathname.includes("/signup");
   return (
     <section className="relative w-full overflow-hidden">
       {/* Hero Section */}
@@ -74,15 +80,18 @@ export function SolutionOverview() {
             {/* Outer container for positioning */}
             <div className=" overflow-visible">
               {/* Globe Container - Fixed, isolated */}
-              <div className="absolute inset-0 z-10">
-                <div className=" w-full h-full overflow-visible">
-                  <div className="flex absolute w-[100%] h-[123%] sm:h-[250%] md:h-[314%] top-[21.5rem] sm:top-[13.5rem]  lg:top-[14.5rem] inset-x-0 -bottom-10/12 justify-center mask-globe">
-                  {/* <div className="flex absolute w-[100%] h-[146%] sm:h-[254%] md:h-[338%] top-[19.5rem] md:top-[10.5rem] lg:top-[14.5rem] inset-x-0 -bottom-10/12 justify-center mask-globe"> */}
-                    <RandomGlobe />
+              {!isAuthPage && (
+                <div className="absolute inset-0 z-10">
+                  <div className=" w-full h-full overflow-visible">
+                    <div className="flex absolute w-[100%] h-[123%] sm:h-[250%] md:h-[314%] top-[21.5rem] sm:top-[13.5rem]  lg:top-[14.5rem] inset-x-0 -bottom-10/12 justify-center mask-globe">
+                      {/* <div className="flex absolute w-[100%] h-[146%] sm:h-[254%] md:h-[338%] top-[19.5rem] md:top-[10.5rem] lg:top-[14.5rem] inset-x-0 -bottom-10/12 justify-center mask-globe"> */}
+                      <ErrorBoundary>
+                        <RandomGlobe />
+                      </ErrorBoundary>
+                    </div>
                   </div>
                 </div>
-              </div>
-
+              )}
               {/* Cards Component - Completely separate layer */}
               <div className="absolute inset-0 z-20 top-[28rem] sm:top-[25rem] md:top-[28rem] lg:top-[35rem]">
                 <GlobeCards />

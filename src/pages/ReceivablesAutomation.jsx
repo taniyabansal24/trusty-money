@@ -13,9 +13,9 @@ const ReceivablesAutomation = () => {
       <section className="section">
         <HeroSection />
       </section>
-      <section className="pt-20 pb-20 md:pt-24 md:pb-24 lg:pt-32">
+      {/* <section className="pt-20 pb-20 md:pt-24 md:pb-24 lg:pt-32">
         <TrackBilling/>
-      </section>
+      </section> */}
       <section className="py-20 md:py-24">
         <RemindersAutomation/>
       </section>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { staggerContainer, staggerItem } from "../../utils/animations";
 import { motion } from "framer-motion";
-import ExcelTable from "./ExcelTable";
+import BillingTypes from "./HeroSectionAnimation/BillingTypes";
+import OneTimePayment from "./HeroSectionAnimation/OneTimePayment";
+import SubscriptionCard from "./HeroSectionAnimation/SubscriptionCard";
 
 const HeroSection = () => {
   return (
@@ -44,7 +46,9 @@ const HeroSection = () => {
 
         {/* API call visual container */}
         <div className="relative z-[-1] w-full">
-          <ExcelTable/>
+          <BillingTypes/>
+          {/* <OneTimePayment/> */}
+          {/* <SubscriptionCard/> */}
         </div>
       </div>
     </>

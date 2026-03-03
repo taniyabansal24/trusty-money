@@ -5,7 +5,6 @@ import { useThree, Canvas, extend } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import countries from "../../data/globe.json";
 
-
 extend({ ThreeGlobe });
 
 const RING_PROPAGATION_SPEED = 3;
@@ -17,6 +16,8 @@ let numbersOfRings = [0];
 export function Globe({ globeConfig, data }) {
   const [globeData, setGlobeData] = useState(null);
   const globeRef = useRef(null);
+  const intervalRef = useRef(null);
+  const animationIntervalRef = useRef(null);
 
   const defaultProps = {
     pointSize: 1,
@@ -34,6 +35,37 @@ export function Globe({ globeConfig, data }) {
     maxRings: 3,
     ...globeConfig,
   };
+
+  // Main cleanup effect for intervals and Three.js resources
+  useEffect(() => {
+    return () => {
+      // Clear all intervals
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      if (animationIntervalRef.current) {
+        clearInterval(animationIntervalRef.current);
+        animationIntervalRef.current = null;
+      }
+      
+      // Clean up Three.js resources
+      if (globeRef.current) {
+        // Dispose geometries and materials if they exist
+        if (globeRef.current._destruct) {
+          globeRef.current._destruct();
+        }
+        
+        // Remove event listeners if any
+        if (globeRef.current.removeEventListener) {
+          globeRef.current.removeEventListener();
+        }
+        
+        // Clear references
+        globeRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (globeRef.current) {
@@ -134,22 +166,35 @@ export function Globe({ globeConfig, data }) {
       );
   };
 
+  // Updated interval with cleanup using intervalRef
   useEffect(() => {
     if (!globeRef.current || !globeData) return;
 
-    const interval = setInterval(() => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
       numbersOfRings = genRandomNumbers(
         0,
         globeData.length,
         Math.floor((globeData.length * 4) / 5)
       );
 
-      globeRef.current.ringsData(
-        globeData.filter((_, i) => numbersOfRings.includes(i))
-      );
+      if (globeRef.current) {
+        globeRef.current.ringsData(
+          globeData.filter((_, i) => numbersOfRings.includes(i))
+        );
+      }
     }, 2000);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, [globeData]);
 
   return <threeGlobe ref={globeRef} />;
@@ -162,7 +207,12 @@ export function WebGLRendererConfig() {
     gl.setPixelRatio(window.devicePixelRatio);
     gl.setSize(size.width, size.height);
     gl.setClearColor(0xffaaff, 0);
-  }, []);
+
+    // Cleanup renderer
+    return () => {
+      gl.dispose();
+    };
+  }, [gl, size]);
 
   return null;
 }
