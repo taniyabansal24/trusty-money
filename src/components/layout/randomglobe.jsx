@@ -1,9 +1,7 @@
 import React, { lazy, Suspense } from "react";
-import { motion } from "framer-motion";
 
-// ✅ React lazy loading instead of next/dynamic
 const World = lazy(() =>
-  import("../ui/globe").then((m) => ({ default: m.World }))
+  import("../ui/globe").then((m) => ({ default: m.World })),
 );
 
 export function RandomGlobe() {
@@ -29,7 +27,9 @@ export function RandomGlobe() {
     autoRotate: true,
     autoRotateSpeed: 0.5,
   };
+
   const colors = ["#06b6d4", "#3b82f6", "#6366f1"];
+  // Validate sampleArcs data
   const sampleArcs = [
     {
       order: 1,
@@ -391,11 +391,22 @@ export function RandomGlobe() {
       arcAlt: 0.3,
       color: colors[Math.floor(Math.random() * (colors.length - 1))],
     },
-  ];
+  ].map((arc) => ({
+    ...arc,
+    // Ensure all values are numbers
+    startLat: Number(arc.startLat) || 0,
+    startLng: Number(arc.startLng) || 0,
+    endLat: Number(arc.endLat) || 0,
+    endLng: Number(arc.endLng) || 0,
+    arcAlt: Number(arc.arcAlt) || 0.1,
+    order: Number(arc.order) || 0,
+  }));
 
   return (
     <div className="relative w-[120vw] flex justify-center overflow-hidden">
-      <Suspense fallback={<div className="text-center py-20">Loading Globe...</div>}>
+      <Suspense
+        fallback={<div className="text-center py-20">Loading Globe...</div>}
+      >
         <World data={sampleArcs} globeConfig={globeConfig} />
       </Suspense>
     </div>
