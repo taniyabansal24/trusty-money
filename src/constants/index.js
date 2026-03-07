@@ -20,7 +20,7 @@ export const PRODUCT_LINKS = [
     name: "Receivables & Automation",
     description: "Automate receivables, cash collection, and reconciliation",
     icon: ReceivablesAutomation,
-    href: "/products/receivables",
+    href: "/products/receivables-automation",
   },
   {
     name: "Global Tax Compliance",
