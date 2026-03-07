@@ -1,7 +1,9 @@
 import React from "react";
 
-const CardIcon = ({ className = "", ...props }) => (
+const CardIcon = ({ size = 20, className = "", ...props }) => (
   <svg
+    width={size}
+    height={(size * 16) / 20}
     viewBox="0 0 20 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

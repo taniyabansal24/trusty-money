@@ -4,10 +4,7 @@ import MoreOptionsIcon from "../../../components/svg/MoreOptionsIcon";
 import CheckCircleIcon from "../../../components/svg/CheckCircleIcon";
 import RefreshSwapIcon from "../../../components/svg/RefreshSwapIcon";
 import AnalyticsSquareIcon from "../../../components/svg/AnalyticsSquareIcon";
-import BillingStats from "./BillingStats";
-import OneTimePayment from "./OneTimePayment";
-import SubscriptionCard from "./SubscriptionCard";
-import UsageBasedBilling from "./UsageBasedBilling";
+import BillingOptions from "./BillingOptions";
 
 const BillingTypes = () => {
   return (
@@ -128,10 +125,7 @@ const BillingTypes = () => {
         </div>
       </div>
       <div className="relative mt-14 ">
-        {/* <BillingStats/> */}
-        {/* <OneTimePayment/>  */}
-        {/* <SubscriptionCard/> */}
-        {/* <UsageBasedBilling /> */}
+       <BillingOptions/>
       </div>
     </>
   );

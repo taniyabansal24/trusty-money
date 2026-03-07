@@ -1,37 +1,49 @@
 import React from "react";
 import { Container } from "../../components/ui";
 import { motion } from "framer-motion";
-import { staggerItem } from "../../utils/animations";
+import { staggerContainer, staggerItem } from "../../utils/animations";
+import FlowChat from "./FlowChat";
 
 const SyncSection = () => {
   return (
     <Container className="mx-auto flex items-start gap-x-10">
-      <div className="grid w-full grid-cols-1 items-center gap-8 sm:gap-6 lg:grid-cols-12 lg:flex-row">
-        <div className="row-[1] lg:col-[1/7]">
+      <div class="relative mt-8 flex flex-col w-full max-w-full justify-center sm:mt-20 ">
+        {/* Text Content */}
+        <motion.div
+          variants={staggerContainer}
+          initial="false"
+          animate="animate"
+          className="text-center relative"
+        >
           {/* Badge - RESPONSIVE */}
           <motion.div
             variants={staggerItem}
-            className="mb-6 lg:mb-8 flex justify-center lg:justify-start items-center gap-3"
+            className="mb-6 flex justify-center items-center gap-3"
           >
             <span className="inline-block px-4 py-2 rounded-full hero-badge txt-blue light-bg text-center">
-              Bi-directional connectors
+              Financial data sync
             </span>
           </motion.div>
 
           {/* Headline - RESPONSIVE */}
-          <motion.h1 className="section-hero-heading w-full text-center lg:text-left text-[#1b1b1b]">
-           Sync with{" "}
+          <motion.h1 className="hero-heading w-full text-center">
+            Your financial {" "}
             <span className="gradient-text relative">
-              your<br /> accounting software
+             data,<br />perfectly synced
             </span>
           </motion.h1>
 
           {/* Subheadline line - RESPONSIVE */}
-          <motion.p className="section-subtitle mb-6 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
-            Pre-built integrations to keep invoicing, payments and reconciliation synced in real time.
+          <motion.p className="section-subtitle mb-6 max-w-xl mx-auto text-center">
+            Automate invoicing, payment collection and reconciliation with
+            real-time integrations across your financial stack.
           </motion.p>
+        </motion.div>
+
+        {/* API call visual container */}
+        <div className=" w-full mt-14">
+          <FlowChat />
         </div>
-        <div className="lg:col-[7/13]"></div>
       </div>
     </Container>
   );

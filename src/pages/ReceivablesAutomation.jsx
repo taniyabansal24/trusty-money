@@ -5,6 +5,7 @@ import MapBackgroundWrapper from "../components/layout/MapBackgroundWrapper";
 import TrackBilling from '../sections/ReceivablesAutomation/TrackBilling';
 import RemindersAutomation from '../sections/ReceivablesAutomation/RemindersAutomation';
 import SyncSection from '../sections/ReceivablesAutomation/SyncSection';
+import FlowChat from '../sections/ReceivablesAutomation/FlowChat';
 
 const ReceivablesAutomation = () => {
   return (
@@ -16,10 +17,10 @@ const ReceivablesAutomation = () => {
       {/* <section className="pt-20 pb-20 md:pt-24 md:pb-24 lg:pt-32">
         <TrackBilling/>
       </section> */}
-      <section className="py-20 md:py-24">
+      <section className="">
         <RemindersAutomation/>
       </section>
-      <section className="pb-20 pt-44 lg:pt-52 lg:pb-24">
+      <section className="section">
         <SyncSection/>
       </section>
       <section className="pt-20 md:pt-24">

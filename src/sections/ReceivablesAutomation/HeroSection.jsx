@@ -25,30 +25,28 @@ const HeroSection = () => {
             className="mb-6 flex justify-center items-center gap-3"
           >
             <span className="inline-block px-4 py-2 rounded-full hero-badge txt-blue light-bg text-center">
-              Automated receivables
+              Receivables Automation
             </span>
           </motion.div>
 
           {/* Headline - RESPONSIVE */}
           <motion.h1 className="hero-heading w-full text-center">
-            Invoicing designed{" "}
+            Freedom to choose,{" "}
             <span className="gradient-text relative">
-              for <br /> modern tech teams
+               <br /> flexibility to grow
             </span>
           </motion.h1>
 
           {/* Subheadline line - RESPONSIVE */}
           <motion.p className="section-subtitle mb-6 max-w-xl mx-auto text-center">
-            Generate and deliver invoices in minutes. Offer a seamless billing
-            experience with branded, hosted invoices tailored to your business.
+            Whether you pay once, subscribe, or use as you go—our billing adapts
+            to your needs, not the other way around.
           </motion.p>
         </motion.div>
 
         {/* API call visual container */}
         <div className="relative z-[-1] w-full">
-          <BillingTypes/>
-          {/* <OneTimePayment/> */}
-          {/* <SubscriptionCard/> */}
+          <BillingTypes />
         </div>
       </div>
     </>
@@ -56,26 +54,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
