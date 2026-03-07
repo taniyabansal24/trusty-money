@@ -40,14 +40,14 @@ const nodes = [
   },
   {
     id: 5,
-    label: "Payments and Collection",
+    label: "Payments & Collection",
     amount: "$12,000",
     icon: PaymentsAndCollectionIcon,
     angle: 150, // Bottom-left
   },
   {
     id: 6,
-    label: "Receivables and Automation",
+    label: "Receivables & Automation",
     amount: "$4,300",
     icon: AutomationIcon,
     angle: -150, // Top-left
@@ -311,7 +311,7 @@ export default function AutoDispatchAnimation() {
                 }}
               >
                 <div
-                  className={`bg-white rounded-lg px-3 py-2 text-center min-w-[100px] border 
+                  className={`bg-white rounded-lg px-3 py-2 text-center min-w-[110px] border 
                                ${isActive ? "border-blue-200 shadow-md" : "border-gray-100 shadow-sm"}`}
                 >
                   <p className="text-xs font-semibold text-gray-800">
