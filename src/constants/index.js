@@ -8,6 +8,7 @@ import DocumentIcon from "../components/svg/DocumentIcon";
 import ReceivablesAutomation from "../components/svg/ReceivablesAutomation";
 import TaxIcon03 from "../components/svg/TaxIcon03";
 import UserCardIcon from "../components/svg/UserCardIcon";
+import TreasuryIcon from "../components/svg/TreasuryIcon";
 
 export const PRODUCT_LINKS = [
   {
@@ -37,7 +38,7 @@ export const PRODUCT_LINKS = [
   {
     name: "Treasury & Working Capital",
     description: "Optimize liquidity, manage cash flow, and maximize returns",
-    icon: Wallet,
+    icon: TreasuryIcon,
     href: "/products/treasury",
   },
 ];
