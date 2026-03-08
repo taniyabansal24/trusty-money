@@ -41,7 +41,7 @@ const SyncSection = () => {
         </motion.div>
 
         {/* API call visual container */}
-        <div className=" w-full mt-14">
+        <div className="w-full mt-14 hidden md:block">
           <FlowChat />
         </div>
       </div>

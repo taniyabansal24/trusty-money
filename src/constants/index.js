@@ -46,7 +46,7 @@ export const PRODUCT_LINKS = [
 export const NAVIGATION_LINKS = [
   { name: "About", href: "/about-us" },
   { name: "Resources", href: "#resources" },
-  { name: "Join Us", href: "/about-us" },
+  { name: "Join Us", href: "/about-us#join-us" },
 ];
 
 export const COMPANY_NAME = "Trusty Money";

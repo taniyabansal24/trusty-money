@@ -9,7 +9,7 @@ import BillingOptions from "./BillingOptions";
 const BillingTypes = () => {
   return (
     <>
-      <div className="flex gap-14 p-6 justify-center">
+      <div className="flex gap-14 p-6 justify-center flex-col md:flex-row items-center">
         {/* First Card - Active Users */}
         <div className="w-[288px] bg-white border border-[#F1F5F9] rounded-2xl p-5 shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
           <div className="flex justify-between items-start mb-6">

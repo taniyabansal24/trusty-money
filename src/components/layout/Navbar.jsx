@@ -137,6 +137,16 @@ const Navbar = () => {
     (link) => link.name !== "Careers" && link.name !== "Career",
   );
 
+  const handleJoinUsClick = () => {
+    if (window.location.pathname === "/about-us") {
+      const section = document.getElementById("join-us");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      window.location.href = "/about-us#join-us";
+    }
+  };
   // Animation variants
   const menuVariants = {
     hidden: {
@@ -312,7 +322,11 @@ const Navbar = () => {
                             >
                               {/* Icon with background */}
                               <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-[#EFF4FF] rounded-xl group-hover:bg-white transition-colors duration-200">
-                                <Icon size={20} stroke={"#073f9e"} className="text-[#073f9e]" />
+                                <Icon
+                                  size={20}
+                                  stroke={"#073f9e"}
+                                  className="text-[#073f9e]"
+                                />
                               </div>
 
                               {/* Content */}
@@ -360,12 +374,12 @@ const Navbar = () => {
               </button>
 
               {/* JOIN US LINK */}
-              <a
-                href="/about-us"
+              <button
+                onClick={handleJoinUsClick}
                 className="text-body transition-colors duration-200 text-[#1B1B1B] hover:text-[#073f9e]"
               >
                 Join Us
-              </a>
+              </button>
             </div>
 
             {/* Desktop CTA */}
@@ -536,7 +550,7 @@ const Navbar = () => {
                       {/* Join Us Link */}
                       <motion.div variants={itemVariants}>
                         <a
-                          href="/about-us"
+                          href="/about-us#join-us"
                           className="flex items-center justify-between w-full text-left px-4 py-3 text-body rounded-xl transition-all duration-200 active:scale-[0.98] hover:bg-[#EFF4FF] hover:text-[#0B43A0] group"
                           style={{ color: "#1b1b1b" }}
                           onClick={() => setIsOpen(false)}

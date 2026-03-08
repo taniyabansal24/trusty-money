@@ -87,11 +87,11 @@ const OneTimePayment = () => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="max-w-[541px] mx-auto relative"
+          className="max-w-[450px] mx-auto relative"
         >
           {/* Main Card Container */}
           <motion.div 
-            className="bg-white border border-[#E2E8F0] shadow-md rounded-xl p-5 relative overflow-hidden w-[28rem] mx-auto"
+            className="bg-white border border-[#E2E8F0] shadow-md rounded-xl p-5 relative overflow-hidden mx-auto"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
