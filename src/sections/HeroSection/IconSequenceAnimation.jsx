@@ -408,7 +408,7 @@ export default function CircularShiftAnimation() {
                     willChange: "transform, opacity, filter",
                   }}
                 >
-                  <Icon className="w-full h-full" />
+                 <Icon size={80} />
                 </div>
               );
             })}

@@ -10,7 +10,7 @@ import {
   DollarSign,
   Heart,
 } from "lucide-react";
-import { Button } from "../components/ui";
+import { Button, Container } from "../components/ui";
 
 const JoinUsSection = () => {
   const jobOpenings = [
@@ -125,117 +125,100 @@ const JoinUsSection = () => {
   return (
     <>
       {/* Job Openings Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-            <div>
-              <h2
-                className="section-hero-heading font-bold"
-                style={{ color: "#0A2540" }}
-              >
-                Open Positions
-              </h2>
-              <p className="subsection-subtitle" style={{ color: "#425466" }}>
-                {jobOpenings.length} roles across{" "}
-                {
-                  Array.from(new Set(jobOpenings.map((job) => job.department)))
-                    .length
-                }{" "}
-                departments
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
-              <button
-                className="px-4 py-2 rounded-full font-medium bg-[#F2F7FF] text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
-              >
-                All Roles
-              </button>
-              <button
-                className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
-              
-              >
-                Engineering
-              </button>
-              <button
-                className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
-              
-              >
-                Design
-              </button>
-              <button
-                className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 "
-                
-              >
-                Product
-              </button>
-            </div>
+      <Container className="py-20">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+          <div>
+            <h2
+              className="section-hero-heading"
+              style={{ color: "#0A2540" }}
+            >
+              Open Positions
+            </h2>
+            <p className="subsection-subtitle" style={{ color: "#425466" }}>
+              {jobOpenings.length} roles across{" "}
+              {
+                Array.from(new Set(jobOpenings.map((job) => job.department)))
+                  .length
+              }{" "}
+              departments
+            </p>
           </div>
-
-          <div className="grid gap-6">
-            {jobOpenings.map((job) => (
-              <div
-                key={job.id}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 cursor-pointer group"
-              >
-                <div className="flex flex-col md:flex-row md:items-center justify-between">
-                  <div className="mb-4 md:mb-0">
-                    <div className="flex flex-col sm:flex-row gap-3 mb-2">
-                      <h3
-                        className="feature-title group-hover:underline"
-                        style={{ color: "#0A2540" }}
-                      >
-                        {job.title}
-                      </h3>
-                      <span className="px-3 py-1 rounded-full hero-badge bg-blue-100 text-blue-800 w-fit">
-                        {job.type}
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-4 mt-3">
-                      <div className="flex items-center gap-2">
-                        <Briefcase
-                          className="w-4 h-4"
-                          style={{ color: "#425466" }}
-                        />
-                        <span className="text-muted">
-                          {job.department}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Globe
-                          className="w-4 h-4"
-                          style={{ color: "#425466" }}
-                        />
-                        <span className="text-muted">{job.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <TrendingUp
-                          className="w-4 h-4"
-                          style={{ color: "#425466" }}
-                        />
-                        <span className="text-muted">
-                          {job.experience}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="mt-4 max-w-2xl feature-description" style={{ color: "#425466" }}>
-                      {job.description}
-                    </p>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <div className="text-sm mb-3" style={{ color: "#425466" }}>
-                      Posted {job.posted}
-                    </div>
-                    <Button variant="primary" shimmer size="md"  >
-                      Apply Now
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
+            <button className="px-4 py-2 rounded-full font-medium bg-[#F2F7FF] text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 ">
+              All Roles
+            </button>
+            <button className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 ">
+              Engineering
+            </button>
+            <button className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 ">
+              Design
+            </button>
+            <button className="px-4 py-2 rounded-full font-medium text-blue-800 border border-[#073F9E] shadow-sm hover:shadow-md hover:bg-gray-50 ">
+              Product
+            </button>
           </div>
         </div>
-      </section>
+
+        <div className="grid gap-6">
+          {jobOpenings.map((job) => (
+            <div
+              key={job.id}
+              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 cursor-pointer group"
+            >
+              <div className="flex flex-col md:flex-row md:items-center justify-between">
+                <div className="mb-4 md:mb-0">
+                  <div className="flex flex-col sm:flex-row gap-3 mb-2">
+                    <h3
+                      className="feature-title group-hover:underline"
+                      style={{ color: "#0A2540" }}
+                    >
+                      {job.title}
+                    </h3>
+                    <span className="px-3 py-1 rounded-full hero-badge bg-blue-100 text-blue-800 w-fit">
+                      {job.type}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-4 mt-3">
+                    <div className="flex items-center gap-2">
+                      <Briefcase
+                        className="w-4 h-4"
+                        style={{ color: "#425466" }}
+                      />
+                      <span className="text-muted">{job.department}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4" style={{ color: "#425466" }} />
+                      <span className="text-muted">{job.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp
+                        className="w-4 h-4"
+                        style={{ color: "#425466" }}
+                      />
+                      <span className="text-muted">{job.experience}</span>
+                    </div>
+                  </div>
+                  <p
+                    className="mt-4 max-w-2xl feature-description"
+                    style={{ color: "#425466" }}
+                  >
+                    {job.description}
+                  </p>
+                </div>
+                <div className="flex flex-col items-end">
+                  <div className="text-sm mb-3" style={{ color: "#425466" }}>
+                    Posted {job.posted}
+                  </div>
+                  <Button variant="primary" shimmer size="md">
+                    Apply Now
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Container>
     </>
   );
 };
