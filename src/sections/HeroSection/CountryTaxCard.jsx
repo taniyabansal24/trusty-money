@@ -82,29 +82,29 @@ const CountryTaxCard = () => {
                       </div>
                     </div>
 
-                    {/* Amount Details - Horizontal Scroll */}
-                    <div className="mt-2 overflow-x-auto pb-1">
-                      <div className="flex space-x-1.5 min-w-max justify-between">
+                    {/* Amount Details - Responsive Grid */}
+                    <div className="mt-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                         {/* Net Amount */}
-                        <div className="w-28 h-14 bg-[#EFF7FF] border border-[#E2E8F0] rounded-lg p-2 flex-shrink-0">
+                        <div className="h-14 bg-[#EFF7FF] border border-[#E2E8F0] rounded-lg p-2">
                           <p className="text-[#073F9E] text-xs">Net Amount</p>
-                          <p className="text-[#0F172B] text-sm font-normal mt-0.5">
+                          <p className="text-[#0F172B] text-sm font-normal mt-0.5 truncate">
                             {country.netAmount} {country.currency}
                           </p>
                         </div>
 
                         {/* Tax */}
-                        <div className="w-28 h-14 bg-[#EFF7FF] border border-[#E2E8F0] rounded-lg p-2 flex-shrink-0">
+                        <div className="h-14 bg-[#EFF7FF] border border-[#E2E8F0] rounded-lg p-2">
                           <p className="text-[#073F9E] text-xs">Tax</p>
-                          <p className="text-[#0F172B] text-sm font-normal mt-0.5">
+                          <p className="text-[#0F172B] text-sm font-normal mt-0.5 truncate">
                             {country.tax} {country.currency}
                           </p>
                         </div>
 
-                        {/* Total Amount */}
-                        <div className="w-28 h-14 bg-[#EFF7FF] border border-[#E2E8F0] rounded-lg p-2 flex-shrink-0">
+                        {/* Total Amount - Hidden on mobile, visible on sm and above */}
+                        <div className="h-14 bg-[#EFF7FF] border border-[#E2E8F0] rounded-lg p-2 hidden sm:block">
                           <p className="text-[#073F9E] text-xs">Total Amount</p>
-                          <p className="text-[#0F172B] text-sm font-normal mt-0.5">
+                          <p className="text-[#0F172B] text-sm font-normal mt-0.5 truncate">
                             {country.totalAmount} {country.currency}
                           </p>
                         </div>

@@ -3,6 +3,7 @@ import { Container } from "../../components/ui";
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "../../utils/animations";
 import FlowChat from "./FlowChat";
+import ERPCardWithSync from "./ERPCardWithSync";
 
 const SyncSection = () => {
   return (
@@ -41,8 +42,12 @@ const SyncSection = () => {
         </motion.div>
 
         {/* API call visual container */}
-        <div className="w-full mt-14 hidden md:block">
+        <div className="w-full mt-14 hidden lg:block">
           <FlowChat />
+        </div>
+        {/* API call visual container */}
+        <div className="w-full mt-14 lg:hidden block">
+         <ERPCardWithSync/>
         </div>
       </div>
     </Container>

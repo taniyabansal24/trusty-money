@@ -596,7 +596,20 @@ const DotContainer = () => {
           >
             <p className="font-semibold tracking-wide">API</p>
           </div>
+          <div
+            className=" inline-block lg:hidden absolute bg-white py-2 px-2 rounded-xl -left-[16rem] top-[8rem] txt-blue -rotate-90 lg:rotate-0 text-[#073F9E] shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+                border border-[#D6DEEB] backdrop-blur-none"
+          >
+            <p className="font-semibold tracking-wide">Upload CSV</p>
+          </div>
+          <div
+            className=" inline-block lg:hidden w-[100px] sm:w-fit absolute bg-white py-2 px-2 rounded-xl -left-[15rem] sm:-left-[18rem] -top-[7rem] txt-blue -rotate-90 lg:rotate-0 text-[#073F9E] shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+                border border-[#D6DEEB] backdrop-blur-none"
+          >
+            <p className="font-semibold tracking-wide">100+ Data Sources</p>
+          </div>
         </div>
+        
         {/* Top */}
         <div className="hidden lg:block relative h-20 w-[202px] origin-right -translate-x-1/2 translate-y-1/2 rotate-90 md:translate-x-0 md:translate-y-0 lg:min-w-[40px]">
           <div className="absolute right-[94%] -top-[4%] w-fit">

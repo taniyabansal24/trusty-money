@@ -34,7 +34,7 @@ const UsageMetering = () => {
           </motion.h1>
 
           {/* Subheadline line - RESPONSIVE */}
-          <motion.p className="section-subtitle mb-6 max-w-xl mx-auto text-center ">
+          <motion.p className="section-subtitle mb-14 sm:mb-20 lg:mb-6 max-w-xl mx-auto text-center ">
             Spend more time building your core product and less time managing
             custom pipelines, data processing, and usage calculations. Built for
             businesses with flexible pricing models and custom contracts.
